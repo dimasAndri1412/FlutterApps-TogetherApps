@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:faker/faker.dart';
 
-class UserPage extends StatefulWidget {
-  const UserPage({super.key});
+class DetailUser extends StatefulWidget {
+  const DetailUser({super.key});
 
   @override
-  State<UserPage> createState() => _UserPageState();
+  State<DetailUser> createState() => _DetailUserState();
 }
 
-class _UserPageState extends State<UserPage> {
+class _DetailUserState extends State<DetailUser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

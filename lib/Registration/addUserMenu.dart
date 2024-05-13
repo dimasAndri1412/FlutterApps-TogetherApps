@@ -1,6 +1,6 @@
 import 'package:absent_project/Registration/addUserHeader.dart';
 import 'package:absent_project/Registration/addUserWrapper.dart';
-import 'package:absent_project/login/login_page.dart';
+import 'package:absent_project/login/LoginPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

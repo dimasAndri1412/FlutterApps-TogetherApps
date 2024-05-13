@@ -1,4 +1,4 @@
-import 'package:absent_project/menu/admin/admin.dart';
+import 'package:absent_project/menu/adminManagement/ListUser.dart';
 // import 'package:first_project/login/setting/admin.dart' as admin;
 import 'package:flutter/material.dart';
 
@@ -20,7 +20,7 @@ class _MenuPageState extends State<MenuPage> {
               onTap: (){
                   Navigator.push(
                      context,
-                      MaterialPageRoute(builder: (context) => const Admin()),
+                      MaterialPageRoute(builder: (context) => const ListUser()),
                     );
                 }, 
             ),
