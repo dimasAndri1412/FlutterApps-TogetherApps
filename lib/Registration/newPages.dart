@@ -11,7 +11,7 @@ class testPagesNew extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.blueAccent,
+          backgroundColor: Colors.tealAccent,
           leading: IconButton(
             onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => addUserMenu())),
             icon: Icon(Icons.arrow_back, color: Colors.white,),
