@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:absent_project/controller/LoginController.dart';
 import 'package:absent_project/home/Userhome.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -14,21 +15,22 @@ class myForm extends StatefulWidget {
 }
 
 class _myFormState extends State<myForm> {
-  Future loginAdmin() async{
-    var url = Uri.parse("http://192.168.100.214/FlutterAPI/AdminLogin.php");
-    var response = await http.post(url, body:{
-      "username": emailController.text,
-      "password": passwordController.text,
-    });
-    var data = jsonDecode(response.body);
-    if(data == "Success") {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const BottomBar()),);
-    }else{
-      print ("Error cuk");
-    }
-  }
+  // Future loginAdmin() async{
+  //   var url = Uri.parse("http://192.168.2.159/FlutterAPI/AdminLogin.php");
+  //   var response = await http.post(url, body:{
+  //     "username": emailController.text,
+  //     "password": passwordController.text,
+  //   });
+  //   var data = jsonDecode(response.body);
+  //   if(data == "Success") {
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => const BottomBar()),);
+  //   }else{
+  //     print ("Error cuk");
+  //   }
+  // }
+  // bool isAdmin =
   bool passwordObscured = true;
   // final _formKey = GlobalKey<FormState>();
 
@@ -142,6 +144,7 @@ class _myFormState extends State<myForm> {
                         ),
                         const SizedBox(height: 20,),
                         MaterialButton(
+
                           // onTap: (){
                           //   check();
                           //    // if (check()) {
@@ -152,10 +155,13 @@ class _myFormState extends State<myForm> {
                           //    //  }
                           //   },
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const BottomBar()),
-                            );},
+                            LoginController().doLogin();
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(builder: (context) => const BottomBar()),
+                                  // );
+                            // loginAdmin();
+                            },
                           child: Container(
                             // child: Padding(padding: EdgeInsets.all(135)),
                             height: 60,

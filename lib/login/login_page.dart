@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:absent_project/login/form.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 
 void main() => runApp(
-  MaterialApp(
+  GetMaterialApp(
     debugShowCheckedModeBanner: false,
     home: LoginPage(),
   )
