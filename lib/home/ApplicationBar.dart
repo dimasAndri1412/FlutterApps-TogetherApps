@@ -24,7 +24,7 @@ class _ApplicationBarState extends State<ApplicationBar> {
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
                   colors: [
                     Color.fromARGB(255, 147, 195, 234),
