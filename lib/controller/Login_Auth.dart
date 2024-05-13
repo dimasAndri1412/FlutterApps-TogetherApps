@@ -38,7 +38,7 @@ Future loginAdmin() async{
     // Navigator.push(
     //   context,
     //   MaterialPageRoute(builder: (context) => const BottomBar()),);
-    Get.ofAll(BottomBar());
+    // Get.ofAll(BottomBar());
   }else{
     print ("Error cuk");
   }
