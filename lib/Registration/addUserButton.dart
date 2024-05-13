@@ -16,10 +16,7 @@ class _addUserButtonState extends State<addUserButton> {
       children: <Widget>[
         GestureDetector(
           onTap: () {
-            if (addUserField.emailKeys.currentState!.validate() && addUserField.userKeys.currentState!.validate()
-                && addUserField.passKeys.currentState!.validate() && addUserField.confirmpassKeys.currentState!.validate()
-                && addUserField.addressKeys.currentState!.validate() && addUserField.birthdateKeys.currentState!.validate()
-                && addUserField.projectOption.currentState!.validate()) {
+            if (addUserField.formKeys.currentState!.validate()) {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) => testPagesNew()));
             }
           },
