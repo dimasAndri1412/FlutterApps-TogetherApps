@@ -15,7 +15,7 @@ class myForm extends StatefulWidget {
 
 class _myFormState extends State<myForm> {
   Future loginAdmin() async{
-    var url = Uri.parse("http://192.168.43.226/FlutterAPI/AdminLogin.php");
+    var url = Uri.parse("http://192.168.100.214/FlutterAPI/AdminLogin.php");
     var response = await http.post(url, body:{
       "username": emailController.text,
       "password": passwordController.text,
@@ -152,8 +152,10 @@ class _myFormState extends State<myForm> {
                           //    //  }
                           //   },
                           onPressed: () {
-                            loginAdmin();
-                            },
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const BottomBar()),
+                            );},
                           child: Container(
                             // child: Padding(padding: EdgeInsets.all(135)),
                             height: 60,
