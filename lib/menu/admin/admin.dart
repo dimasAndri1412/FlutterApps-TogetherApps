@@ -15,8 +15,10 @@ class Admin extends StatefulWidget {
 }
 
 class _AdminState extends State<Admin> {
+
   List<dynamic> users = [];
   var faker = new Faker();
+
   @override
   Widget build(BuildContext context) {
     const rowSpacer=TableRow(

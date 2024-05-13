@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:absent_project/home/home.dart';
-import 'package:absent_project/menu/main.dart';
+import 'package:absent_project/menu/menu.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({super.key});
@@ -14,7 +14,7 @@ class _BottomBarState extends State<BottomBar> {
   List<Widget> body = const [
     Home(),
     Icon(Icons.lock_clock),
-    SettingPage()
+    MenuPage()
   ];
 
 
@@ -34,10 +34,10 @@ class _BottomBarState extends State<BottomBar> {
           ),
         ),
         elevation: 0,
-        leading: IconButton(
-            onPressed: (){},
-            icon: Icon(Icons.menu),
-          ),
+        // leading: IconButton(
+        //     onPressed: (){},
+        //     icon: Icon(Icons.menu),
+        //   ),
       ),
       body: Center(
         child: body[currentIndex],
@@ -59,8 +59,8 @@ class _BottomBarState extends State<BottomBar> {
               icon: Icon(Icons.lock_clock),
             ),
             BottomNavigationBarItem(
-              label: "Setting",
-              icon: Icon(Icons.settings),
+              label: "Menu",
+              icon: Icon(Icons.menu),
             )
           ],
         ),

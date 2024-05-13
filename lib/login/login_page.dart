@@ -45,7 +45,7 @@ class LoginPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Center(
-                        child: Image.asset('assets/images/BRIIT.png', width: 200,),
+                        child: Image.asset('assets/images/LogoBIT.png', width: 200,),
                       ),
                     ],
                   ),      
