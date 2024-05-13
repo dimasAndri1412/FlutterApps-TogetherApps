@@ -107,46 +107,6 @@ class _UserPageState extends State<UserPage> {
               itemProfile('Timezone', '-'),
               const SizedBox(height: 20),
               itemProfile('Timesheet Timezone', '-'),
-              // ListTile(
-              //   title: Text("Name"),
-              //   subtitle: Text(
-              //   "Rara Zahra Urava",
-              //   overflow: TextOverflow.ellipsis
-              //   ),
-              // ),
-              // Divider(
-              //   color: Colors.black.withOpacity(0.5),
-              // ),
-              // ListTile(
-              //   title: Text("Preferred name"),
-              //   subtitle: Text(
-              //   "Rara",
-              //   overflow: TextOverflow.ellipsis
-              //   ),
-              // ),
-              // Divider(
-              //   color: Colors.black.withOpacity(0.5),
-              // ),
-              // ListTile(
-              //   title: Text("Role"),
-              //   subtitle: Text(
-              //   "Admin",
-              //   overflow: TextOverflow.ellipsis
-              //   ),
-              // ),
-              // Divider(
-              //   color: Colors.black.withOpacity(0.5),
-              // ),
-              // ListTile(
-              //   title: Text("Group"),
-              //   subtitle: Text(
-              //   "-",
-              //   overflow: TextOverflow.ellipsis
-              //   ),
-              // ),
-              // Divider(
-              //   color: Colors.black.withOpacity(0.5),
-              // ),
             ],
           ),
         ),
