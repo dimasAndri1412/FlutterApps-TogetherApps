@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:absent_project/Registration/addUserMenu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -120,7 +121,9 @@ class _AdminState extends State<Admin> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
+        onPressed: (){
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => addUserMenu()));
+        },
         backgroundColor: Color.fromARGB(255, 139, 190, 232),
         child: const Icon(Icons.add),
       ),
