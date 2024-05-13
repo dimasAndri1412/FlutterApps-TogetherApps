@@ -1,8 +1,10 @@
 import 'package:absent_project/Registration/addUserHeader.dart';
 import 'package:absent_project/Registration/addUserWrapper.dart';
-import 'package:absent_project/home/home.dart';
-import 'package:absent_project/login/login_page.dart';
-import 'package:absent_project/menu/admin/admin.dart';
+
+import 'package:absent_project/home/Home.dart';
+import 'package:absent_project/login/LoginPage.dart';
+import 'package:absent_project/menu/adminManagement/ListUser.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +19,7 @@ class addUserMenu extends StatelessWidget{
 
         backgroundColor: Color.fromARGB(255, 98, 171, 232),
         leading: IconButton(
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => Admin())),
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ListUser())),
             icon: Icon(Icons.arrow_back, color: Colors.white,)
         ),
         title: Text("REGISTRATION PAGE",

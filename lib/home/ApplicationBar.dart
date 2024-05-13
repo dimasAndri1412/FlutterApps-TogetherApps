@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:absent_project/home/home.dart';
-import 'package:absent_project/menu/menu.dart';
+import 'package:absent_project/home/Home.dart';
+import 'package:absent_project/menu/MenuPage.dart';
 
-class BottomBar extends StatefulWidget {
-  const BottomBar({super.key});
+class ApplicationBar extends StatefulWidget {
+  const ApplicationBar({super.key});
 
   @override
-  State<BottomBar> createState() => _BottomBarState();
+  State<ApplicationBar> createState() => _ApplicationBarState();
 }
 
-class _BottomBarState extends State<BottomBar> {
+class _ApplicationBarState extends State<ApplicationBar> {
 
   int currentIndex = 0;
   List<Widget> body = const [

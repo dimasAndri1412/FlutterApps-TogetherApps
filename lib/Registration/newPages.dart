@@ -1,5 +1,5 @@
 import 'package:absent_project/Registration/addUserMenu.dart';
-import 'package:absent_project/login/login_page.dart';
+import 'package:absent_project/login/LoginPage.dart';
 import 'package:flutter/material.dart';
 
 class testPagesNew extends StatelessWidget {
