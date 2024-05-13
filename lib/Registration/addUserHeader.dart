@@ -10,13 +10,8 @@ class addUserHeader extends StatelessWidget{
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Center(
-            child: Text("PERSONAL DATA",
-              style: TextStyle(
-                  color: Colors.white ,
-                  fontSize: 16,
-                  fontWeight:
-                  FontWeight.bold),
-            ),
+            child: Image.asset('assets/images/Contract.png',
+                    width: 150,)
           ),
         ],
       ),

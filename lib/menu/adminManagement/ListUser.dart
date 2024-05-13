@@ -6,16 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:faker/faker.dart';
 import 'package:http/http.dart' as http;
-import 'package:absent_project/menu/admin/user.dart';
+import 'package:absent_project/menu/adminManagement/DetailUser.dart';
 
-class Admin extends StatefulWidget {
-  const Admin({super.key});
+class ListUser extends StatefulWidget {
+  const ListUser({super.key});
 
   @override
-  State<Admin> createState() => _AdminState();
+  State<ListUser> createState() => _ListUserState();
 }
 
-class _AdminState extends State<Admin> {
+class _ListUserState extends State<ListUser> {
 
   List<dynamic> users = [];
   var faker = new Faker();
@@ -176,7 +176,7 @@ class UserItem
       onTap: (){
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const UserPage()),
+          MaterialPageRoute(builder: (context) => const DetailUser()),
         );
       },
     );
