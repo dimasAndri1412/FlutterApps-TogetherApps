@@ -30,7 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
+  intl: ^0.19.0
+  flutter_datetime_picker: ^1.5.1
   faker: ^2.1.0
   wave: ^0.2.2
 
