@@ -1,6 +1,10 @@
 import 'package:absent_project/Registration/addUserHeader.dart';
 import 'package:absent_project/Registration/addUserWrapper.dart';
+
+import 'package:absent_project/home/Home.dart';
 import 'package:absent_project/login/LoginPage.dart';
+import 'package:absent_project/menu/adminManagement/ListUser.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,9 +16,9 @@ class addUserMenu extends StatelessWidget{
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Color.fromARGB(255, 98, 171, 232),
         leading: IconButton(
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginPage())),
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ListUser())),
             icon: Icon(Icons.arrow_back, color: Colors.white,)
         ),
         title: Text("REGISTRATION PAGE",
@@ -29,9 +33,10 @@ class addUserMenu extends StatelessWidget{
         width: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(begin: Alignment.topCenter,colors: [
-            Colors.blueAccent,
-            Colors.lightBlueAccent,
-            Colors.cyan
+            Color.fromARGB(255, 145, 201, 247),
+            Color.fromARGB(255, 98, 171, 232),
+            Color.fromARGB(255, 123, 185, 235),
+            Color.fromARGB(255, 255, 255, 255),
           ]),
         ),
         child: Column(
