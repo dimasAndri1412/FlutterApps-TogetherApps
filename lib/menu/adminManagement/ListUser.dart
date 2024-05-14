@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:faker/faker.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:http/http.dart' as http;
 import 'package:absent_project/menu/adminManagement/DetailUser.dart';
 
@@ -86,12 +87,25 @@ class _ListUserState extends State<ListUser> {
             child : ListView.builder(
             itemCount: 35,
             itemBuilder: (context, index){
-              return UserItem
+              return Slidable(
+                endActionPane: ActionPane(
+                  motion: BehindMotion(), 
+                  children: [
+                    SlidableAction(
+                      backgroundColor: Colors.red,
+                      icon: Icons.delete,
+                      label: "Delete",
+                      onPressed: (context) => _onDissmissed(),
+                    )
+                  ]
+                ),
+                child: UserItem
                (
                 imageUrl: "https://picsum.photos/id/$index/200/300",
                 title: faker.person.name(),
                 subtitle: "-",
-              );
+              ),
+            );   
             }
           )
           )
@@ -146,6 +160,7 @@ class _ListUserState extends State<ListUser> {
 //     print('fetchUsers Completed');
 //   }
 // }
+void _onDissmissed () {}
 
 class UserItem
  extends StatelessWidget {

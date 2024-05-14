@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:absent_project/login/form.dart';
-import 'package:flutter/widgets.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 
 void main() => runApp(
-  MaterialApp(
+   const GetMaterialApp(
     debugShowCheckedModeBanner: false,
     home: LoginPage(),
   )
 );
 
 class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container( 
-        padding:  EdgeInsets.symmetric(vertical: 30),
+        padding: const EdgeInsets.symmetric(vertical: 30),
         width: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -38,9 +40,9 @@ class LoginPage extends StatelessWidget {
               child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                SizedBox(height: 80,),
+                const SizedBox(height: 80,),
                 Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -50,8 +52,8 @@ class LoginPage extends StatelessWidget {
                     ],
                   ),      
                 ),
-                SizedBox(height: 20),
-                myForm()
+                const SizedBox(height: 20),
+                const myForm()
               ],
             )
             )

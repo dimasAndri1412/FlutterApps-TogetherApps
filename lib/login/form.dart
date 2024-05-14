@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:absent_project/home/Userhome.dart';
+import 'package:absent_project/controller/LoginController.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../controller/Keys.dart';
@@ -14,21 +14,21 @@ class myForm extends StatefulWidget {
 }
 
 class _myFormState extends State<myForm> {
-  Future loginAdmin() async{
-    var url = Uri.parse("http://192.168.100.214/FlutterAPI/AdminLogin.php");
-    var response = await http.post(url, body:{
-      "username": emailController.text,
-      "password": passwordController.text,
-    });
-    var data = jsonDecode(response.body);
-    if(data == "Success") {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const ApplicationBar()),);
-    }else{
-      print ("Error cuk");
-    }
-  }
+  // Future loginAdmin() async{
+  //   var url = Uri.parse("http://192.168.100.214/FlutterAPI/AdminLogin.php");
+  //   var response = await http.post(url, body:{
+  //     "username": emailController.text,
+  //     "password": passwordController.text,
+  //   });
+  //   var data = jsonDecode(response.body);
+  //   if(data == "Success") {
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => const ApplicationBar()),);
+  //   }else{
+  //     print ("Error cuk");
+  //   }
+  // }
   bool passwordObscured = true;
   // final _formKey = GlobalKey<FormState>();
 
@@ -152,10 +152,8 @@ class _myFormState extends State<myForm> {
                           //    //  }
                           //   },
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const ApplicationBar()),
-                            );},
+                            LoginController().doLogin();
+                          },
                           child: Container(
                             // child: Padding(padding: EdgeInsets.all(135)),
                             height: 60,
