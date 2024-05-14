@@ -44,6 +44,9 @@ dependencies:
   http: ^1.2.1
   shared_preferences: ^2.2.3
   get: ^4.6.6
+  drop_shadow_image: ^0.9.1
+  intl_phone_field: ^3.2.0
+  flutter_slidable: ^3.1.0
   # flutter_svg: ^0.19.1 #it helps us to use SVG
 
 dev_dependencies:
