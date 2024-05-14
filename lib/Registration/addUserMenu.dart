@@ -16,13 +16,9 @@ class addUserMenu extends StatelessWidget{
 
     return Scaffold(
       appBar: AppBar(
-
         backgroundColor: Color.fromARGB(255, 98, 171, 232),
-        leading: IconButton(
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ListUser())),
-            icon: Icon(Icons.arrow_back, color: Colors.white,)
-        ),
-        title: Text("REGISTRATION PAGE",
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Text("PERSONAL INFORMATION",
           style: TextStyle(
               fontSize: 24,
               color: Colors.white,

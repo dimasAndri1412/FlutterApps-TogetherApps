@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:intl_phone_field/phone_number.dart';
 
 class addUserField extends StatefulWidget {
   const addUserField({super.key});
@@ -13,6 +16,15 @@ class addUserField extends StatefulWidget {
   static final GlobalKey<FormState>addressKeys = GlobalKey<FormState>();
   static final GlobalKey<FormState>projectOption = GlobalKey<FormState>();
 
+  static final UserNameController = TextEditingController();
+  static final FullNameController = TextEditingController();
+  static final AddressController = TextEditingController();
+  static final PhoneNumbersController = TextEditingController();
+  static final EmailController = TextEditingController();
+  static final BirthDateController = TextEditingController();
+  static final PassController = TextEditingController();
+  static final ConfPassController = TextEditingController();
+
 
   @override
   State<addUserField> createState() => _addUserFieldState();
@@ -21,7 +33,12 @@ class addUserField extends StatefulWidget {
 class _addUserFieldState extends State<addUserField> {
 
   TextEditingController dateInput = TextEditingController();
+  final userNAmeController = TextEditingController();
+  final fullNameController = TextEditingController();
+  final addressController = TextEditingController();
+  final phoneNumberController = TextEditingController();
   final emailController = TextEditingController();
+  final birthDateController = TextEditingController();
   final passController = TextEditingController();
   final confPassController = TextEditingController();
   bool  passHiding = false;
@@ -55,8 +72,30 @@ class _addUserFieldState extends State<addUserField> {
                     border: Border(bottom: BorderSide( color: Colors.black87))
                 ),
                 child: TextFormField(
+                  controller: addUserField.FullNameController,
                   decoration: InputDecoration(
                       labelText: "Fullname",
+                      hintText: "Please Insert Fullname",
+                      hintStyle: TextStyle(color: Colors.black26),
+                      border: InputBorder.none,
+                      prefixIcon: Icon(Icons.people)
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Username Can not Empty!";
+                    }
+                  },
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    border: Border(bottom: BorderSide( color: Colors.black87))
+                ),
+                child: TextFormField(
+                  controller: addUserField.UserNameController,
+                  decoration: InputDecoration(
+                      labelText: "UserName",
                       hintText: "Please Insert Username",
                       hintStyle: TextStyle(color: Colors.black26),
                       border: InputBorder.none,
@@ -86,6 +125,22 @@ class _addUserFieldState extends State<addUserField> {
                   readOnly: true,
                   onTap: () async {
                     DateTime? pickedDates = await showDatePicker(
+                      builder: (context, child) {
+                        return Theme(
+                            data: Theme.of(context).copyWith(
+                              colorScheme: ColorScheme.light(
+                                  primary: Colors.lightBlue,
+                                  onPrimary: Colors.white,
+                                  onSurface: Colors.black),
+                              textButtonTheme: TextButtonThemeData(
+                                style: TextButton.styleFrom(
+                                  foregroundColor: Colors.blueAccent
+                                ),
+                              ),
+                            ),
+                            child: child!,
+                        );
+                      },
                         context: context,
                         initialDate: DateTime.now(),
                         firstDate: DateTime(1950),
@@ -106,11 +161,12 @@ class _addUserFieldState extends State<addUserField> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(15),
+                padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     border: Border(bottom: BorderSide(color: Colors.black87))
                 ),
                 child: TextFormField(
+                  controller: addUserField.AddressController,
                   decoration: InputDecoration(
                       labelText: "Address",
                       hintText: "Please Insert you address",
@@ -133,7 +189,7 @@ class _addUserFieldState extends State<addUserField> {
                   child: DropdownButtonFormField<String>(
                     value: dropDownValues,
                     items: [
-                      DropdownMenuItem( child: Text("--Selected Project--",style: TextStyle(color: Colors.black26),),value: ""),
+                      DropdownMenuItem( child: Text("--Selected Group--",style: TextStyle(color: Colors.black26),),value: ""),
                       DropdownMenuItem( child: Text("MSDO Project"), value: "1",),
                       DropdownMenuItem( child: Text("Development Project"), value: "2",),
                     ],
@@ -153,11 +209,39 @@ class _addUserFieldState extends State<addUserField> {
                   )
               ),
               Container(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                decoration: BoxDecoration(
+                    border: Border(bottom: BorderSide(color: Colors.black87))
+                ),
+                child: IntlPhoneField(
+                  controller: phoneNumberController,
+                  keyboardType: TextInputType.phone,
+                  focusNode: FocusNode(),
+                  dropdownTextStyle: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 18),
+                  decoration: InputDecoration(
+                    hintText: "Please insert you phone nummber",
+                    hintStyle: TextStyle(color: Colors.black26),
+                    border: InputBorder.none,
+                  ),
+                  initialCountryCode: 'ID',
+                  onChanged: (phone) {
+                    print(phone.completeNumber);
+                  },
+                  validator: (value) {
+                    if (value.isBlank! || value == null) {
+                      return "Phone Nummber Can not empty";
+                    }
+                  },
+                )
+              ),
+              Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     border: Border(bottom: BorderSide(color: Colors.black87))
                 ),
                 child: TextFormField(
+                  controller: addUserField.EmailController,
                   decoration: InputDecoration(
                       labelText: "Email",
                       hintText: "Please Insert Your Email",
@@ -187,7 +271,7 @@ class _addUserFieldState extends State<addUserField> {
                   child:TextFormField(
                     obscureText: passHiding,
                     keyboardType: TextInputType.emailAddress,
-                    controller: passController,
+                    controller: addUserField.PassController,
                     decoration: InputDecoration(
                       labelText: 'Password',
                       hintText: 'Please Insert your password',
@@ -206,6 +290,8 @@ class _addUserFieldState extends State<addUserField> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Password can not empty!';
+                      } else if (value.length <= 8) {
+                        return 'Password Should be greater than 8 characters';
                       }
                       return null;
                     },
@@ -219,7 +305,7 @@ class _addUserFieldState extends State<addUserField> {
                 child: TextFormField(
                   obscureText: passHiding,
                   keyboardType: TextInputType.emailAddress,
-                  controller: confPassController,
+                  controller: addUserField.ConfPassController,
                   decoration: InputDecoration(
                     labelText: ' Confirm Password',
                     hintText: 'Please Insert your password',
@@ -238,7 +324,7 @@ class _addUserFieldState extends State<addUserField> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Password can not empty!';
-                    } else if (value != passController.text) {
+                    } else if (value != addUserField.PassController) {
                       return "Sorry Password Not Match!";
                     }
                     return null;

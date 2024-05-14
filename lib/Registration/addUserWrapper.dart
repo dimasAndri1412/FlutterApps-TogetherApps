@@ -1,6 +1,7 @@
 import 'package:absent_project/Registration/addMenuFlied.dart';
 import 'package:flutter/material.dart';
 import 'AddUserButton.dart';
+import 'addMenuFlied.dart';
 
 class addUserWrapper extends StatefulWidget {
   const addUserWrapper({super.key});
@@ -28,9 +29,23 @@ class _addUserWrapperState extends State<addUserWrapper> {
           SizedBox(
             height: 30,
           ),
-          Text(
-            "CANCELED",
-            style: TextStyle(color: Colors.black38),
+          TextButton(onPressed: () {
+            setState(() {
+              addUserField.PassController.clear();
+              addUserField.ConfPassController.clear();
+              addUserField.UserNameController.clear();
+              addUserField.FullNameController.clear();
+              addUserField.UserNameController.clear();
+              addUserField.EmailController.clear();
+              addUserField.AddressController.clear();
+            });
+          },
+              child: Text(
+                "RESET",
+                style: TextStyle(color: Colors.lightBlue,
+                fontSize: 15,
+                fontWeight: FontWeight.bold),
+              )
           ),
           SizedBox(
             height: 30,

@@ -1,3 +1,4 @@
+import 'package:drop_shadow_image/drop_shadow_image.dart';
 import 'package:flutter/material.dart';
 
 class addUserHeader extends StatelessWidget{
@@ -9,9 +10,13 @@ class addUserHeader extends StatelessWidget{
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Center(
-            child: Image.asset('assets/images/Contract.png',
-                    width: 150,)
+          Container(
+            child: DropShadowImage(
+              image: Image.asset('assets/images/Untitled-1.png',
+                  width: 165),
+              blurRadius: 5,
+              scale: 1.05,
+            )
           ),
         ],
       ),
