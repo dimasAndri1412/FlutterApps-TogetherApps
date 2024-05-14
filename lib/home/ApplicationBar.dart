@@ -15,6 +15,8 @@ class _ApplicationBarState extends State<ApplicationBar> {
   List<Widget> body = const [
     Home(),
     Icon(Icons.lock_clock),
+    Icon(Icons.lock_clock),
+    Icon(Icons.lock_clock),
     MenuPage()
   ];
 
@@ -35,15 +37,12 @@ class _ApplicationBarState extends State<ApplicationBar> {
           ),
         ),
         elevation: 0,
-        // leading: IconButton(
-        //     onPressed: (){},
-        //     icon: Icon(Icons.menu),
-        //   ),
       ),
       body: Center(
         child: body[currentIndex],
         ),
         bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: const Color.fromARGB(255, 21, 60, 93),
           currentIndex: currentIndex,
           onTap: (int newIndex) {
             setState(() {
@@ -53,15 +52,23 @@ class _ApplicationBarState extends State<ApplicationBar> {
           items: const [
             BottomNavigationBarItem(
               label: "Home",
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.home, color: Color.fromARGB(255, 121, 184, 236),),
             ),
             BottomNavigationBarItem(
               label: "Time Clock",
-              icon: Icon(Icons.lock_clock),
+              icon: Icon(Icons.lock_clock, color: Color.fromARGB(255, 121, 184, 236),),
+            ),
+            BottomNavigationBarItem(
+              label: "Timesheets",
+              icon: Icon(Icons.note, color: Color.fromARGB(255, 121, 184, 236),),
+            ),
+            BottomNavigationBarItem(
+              label: "Approvals",
+              icon: Icon(Icons.check_rounded, color: Color.fromARGB(255, 121, 184, 236),),
             ),
             BottomNavigationBarItem(
               label: "Menu",
-              icon: Icon(Icons.menu),
+              icon: Icon(Icons.menu, color: Color.fromARGB(255, 121, 184, 236),),
             )
           ],
         ),
