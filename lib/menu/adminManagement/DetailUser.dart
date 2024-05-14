@@ -84,9 +84,9 @@ class _DetailUserState extends State<DetailUser> {
                 ),
               ),
               const SizedBox(height: 20),
-              itemProfile('Name', 'Rara Zahra Urava'),
+              itemProfile('Username', 'Rarazu'),
               const SizedBox(height: 10),
-              itemProfile('Preffered Name', 'Rara'),
+              itemProfile('Name', 'Rara Zahra Urava'),
               const SizedBox(height: 10),
               itemProfile('Role', 'Member'),
               const SizedBox(height: 10),
@@ -133,32 +133,6 @@ class _DetailUserState extends State<DetailUser> {
         subtitle: Text(subtitle),
         trailing: Icon(Icons.chevron_right, color: Colors.grey.shade400),
         tileColor: Colors.white,
-      ),
-    );
-  }
-}
-
-class UserItem
- extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  final String subtitle;
-
-  UserItem
-  ({super.key, 
-    required this.imageUrl, 
-    required this.subtitle, 
-    required this.title 
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(title),
-      subtitle: Text(
-      subtitle,
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
       ),
     );
   }

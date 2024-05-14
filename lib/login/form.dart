@@ -152,6 +152,15 @@ class _myFormState extends State<myForm> {
                           //    //  }
                           //   },
                           onPressed: () {
+                            // masi erawrrr //
+                            // showDialog(
+                            //   context: context, 
+                            //   builder: (context){
+                            //     return Center(
+                            //       child: CircularProgressIndicator(),
+                            //     );
+                            //   }
+                            // );
                             LoginController().doLogin();
                           },
                           child: Container(

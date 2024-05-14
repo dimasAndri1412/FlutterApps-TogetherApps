@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:absent_project/home/Home.dart';
 import 'package:absent_project/menu/MenuPage.dart';
+import 'package:absent_project/approvalls/Approvalls.dart';
 
 class ApplicationBar extends StatefulWidget {
   const ApplicationBar({super.key});
@@ -15,8 +16,8 @@ class _ApplicationBarState extends State<ApplicationBar> {
   List<Widget> body = const [
     Home(),
     Icon(Icons.lock_clock),
-    Icon(Icons.lock_clock),
-    Icon(Icons.lock_clock),
+    Icon(Icons.note),
+    Approvalls(),
     MenuPage()
   ];
 
@@ -42,7 +43,8 @@ class _ApplicationBarState extends State<ApplicationBar> {
         child: body[currentIndex],
         ),
         bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: const Color.fromARGB(255, 21, 60, 93),
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: Color.fromARGB(255, 64, 157, 234),
           currentIndex: currentIndex,
           onTap: (int newIndex) {
             setState(() {
@@ -52,23 +54,23 @@ class _ApplicationBarState extends State<ApplicationBar> {
           items: const [
             BottomNavigationBarItem(
               label: "Home",
-              icon: Icon(Icons.home, color: Color.fromARGB(255, 121, 184, 236),),
+              icon: Icon(Icons.home),
             ),
             BottomNavigationBarItem(
               label: "Time Clock",
-              icon: Icon(Icons.lock_clock, color: Color.fromARGB(255, 121, 184, 236),),
+              icon: Icon(Icons.lock_clock),
             ),
             BottomNavigationBarItem(
               label: "Timesheets",
-              icon: Icon(Icons.note, color: Color.fromARGB(255, 121, 184, 236),),
+              icon: Icon(Icons.note),
             ),
             BottomNavigationBarItem(
               label: "Approvals",
-              icon: Icon(Icons.check_rounded, color: Color.fromARGB(255, 121, 184, 236),),
+              icon: Icon(Icons.check_circle), 
             ),
             BottomNavigationBarItem(
               label: "Menu",
-              icon: Icon(Icons.menu, color: Color.fromARGB(255, 121, 184, 236),),
+              icon: Icon(Icons.menu),
             )
           ],
         ),

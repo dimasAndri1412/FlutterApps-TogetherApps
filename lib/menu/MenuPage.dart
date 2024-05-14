@@ -14,9 +14,17 @@ class _MenuPageState extends State<MenuPage> {
   Widget build(BuildContext context) {
     return ListView(
           children:  [
+            SizedBox(height: 20,),
+            Container(
+              margin: EdgeInsets.only(left: 20),
+              child: Text("Setting", style: TextStyle(fontWeight: FontWeight.bold),),
+            ),
+            Divider(
+              color: Colors.grey,
+            ),
             ListTile(
               title: Text("Admin Management"),
-              leading:Icon(Icons.admin_panel_settings),
+              leading:Icon(Icons.people_outline_rounded),
               onTap: (){
                   Navigator.push(
                      context,
@@ -30,4 +38,26 @@ class _MenuPageState extends State<MenuPage> {
           ],
         );
   }
+
+  itemMenu(String title, String subtitle, IconData iconData) {
+    return Column(
+      children: [
+        ListTile(
+          title: Text(title),
+          leading:Icon(iconData),
+          onTap: (){
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ListUser()),
+                );
+            }, 
+        ),
+        Divider(
+          color: Colors.grey,
+        ),
+      ],
+    );
+  }
 }
+
+
