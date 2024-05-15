@@ -38,6 +38,7 @@ class _addUserWrapperState extends State<addUserWrapper> {
               addUserField.UserNameController.clear();
               addUserField.EmailController.clear();
               addUserField.AddressController.clear();
+              addUserField.RolesController.clear();
             });
           },
               child: Text(

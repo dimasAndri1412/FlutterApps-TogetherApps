@@ -2,26 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:intl_phone_field/phone_number.dart';
 
 class addUserField extends StatefulWidget {
   const addUserField({super.key});
 
   static final GlobalKey<FormState>formKeys = GlobalKey<FormState>();
-  static final GlobalKey<FormState>emailKeys = GlobalKey<FormState>();
-  static final GlobalKey<FormState>passKeys = GlobalKey<FormState>();
-  static final GlobalKey<FormState>confirmpassKeys = GlobalKey<FormState>();
-  static final GlobalKey<FormState>userKeys = GlobalKey<FormState>();
-  static final GlobalKey<FormState>birthdateKeys = GlobalKey<FormState>();
-  static final GlobalKey<FormState>addressKeys = GlobalKey<FormState>();
-  static final GlobalKey<FormState>projectOption = GlobalKey<FormState>();
 
   static final UserNameController = TextEditingController();
   static final FullNameController = TextEditingController();
   static final AddressController = TextEditingController();
   static final PhoneNumbersController = TextEditingController();
   static final EmailController = TextEditingController();
-  static final BirthDateController = TextEditingController();
+  static final TextEditingController BirthDateController = TextEditingController();
+  static final RolesController = TextEditingController();
   static final PassController = TextEditingController();
   static final ConfPassController = TextEditingController();
 
@@ -33,25 +26,18 @@ class addUserField extends StatefulWidget {
 class _addUserFieldState extends State<addUserField> {
 
   TextEditingController dateInput = TextEditingController();
-  final userNAmeController = TextEditingController();
-  final fullNameController = TextEditingController();
-  final addressController = TextEditingController();
   final phoneNumberController = TextEditingController();
-  final emailController = TextEditingController();
   final birthDateController = TextEditingController();
-  final passController = TextEditingController();
-  final confPassController = TextEditingController();
+
   bool  passHiding = false;
 
   String dropDownValues = "";
-
-  var _values = "-1";
 
   @override
   void iniState(){
     super.initState();
     passHiding = true;
-    dateInput.text="";
+    addUserField.BirthDateController.text="";
     dropDownValues = "";
   }
 
@@ -84,6 +70,7 @@ class _addUserFieldState extends State<addUserField> {
                     if (value == null || value.isEmpty) {
                       return "Username Can not Empty!";
                     }
+                    return null;
                   },
                 ),
               ),
@@ -105,6 +92,7 @@ class _addUserFieldState extends State<addUserField> {
                     if (value == null || value.isEmpty) {
                       return "Username Can not Empty!";
                     }
+                    return null;
                   },
                 ),
               ),
@@ -114,7 +102,7 @@ class _addUserFieldState extends State<addUserField> {
                     border: Border(bottom: BorderSide(color: Colors.black87))
                 ),
                 child: TextFormField(
-                  controller: dateInput,
+                  controller: addUserField.BirthDateController,
                   decoration: InputDecoration(
                       labelText: "BirthDate",
                       hintText: "Pleas Enter Your BirthDate",
@@ -149,7 +137,7 @@ class _addUserFieldState extends State<addUserField> {
                     if (pickedDates != null) {
                       String formatedDates = DateFormat('yyyy-MM-dd').format(pickedDates);
                       setState(() {
-                        dateInput.text = formatedDates;
+                        addUserField.BirthDateController.text = formatedDates;
                       });
                     } else {}
                   },
@@ -157,6 +145,7 @@ class _addUserFieldState extends State<addUserField> {
                     if (value!.isEmpty || value == null) {
                       return "BirtDate Can Not Empty!";
                     }
+                    return null;
                   },
                 ),
               ),
@@ -178,6 +167,7 @@ class _addUserFieldState extends State<addUserField> {
                     if (value == null || value.isEmpty) {
                       return "Address Can not Empty!";
                     }
+                    return null;
                   },
                 ),
               ),
@@ -199,14 +189,40 @@ class _addUserFieldState extends State<addUserField> {
                     onChanged: (value){
                       setState(() {
                         dropDownValues = value!;
+                        if (value.isNotEmpty) {
+                          addUserField.RolesController.text = "MEMBER";
+                        }
                       });
                     },
                     validator: (value){
                       if (value == null || value.isEmpty) {
                         return "Please Select Project";
                       }
+                      return null;
                     },
                   )
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    border: Border(bottom: BorderSide( color: Colors.black87))
+                ),
+                child: TextFormField(
+                  controller: addUserField.RolesController,
+                  decoration: InputDecoration(
+                      labelText: "Roles",
+                      hintText: "Please Insert Roles",
+                      hintStyle: TextStyle(color: Colors.black26),
+                      border: InputBorder.none,
+                      prefixIcon: Icon(Icons.people)
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Roles Can not Empty!";
+                    }
+                    return null;
+                  },
+                ),
               ),
               Container(
                 padding: EdgeInsets.symmetric(vertical: 10),
@@ -214,7 +230,7 @@ class _addUserFieldState extends State<addUserField> {
                     border: Border(bottom: BorderSide(color: Colors.black87))
                 ),
                 child: IntlPhoneField(
-                  controller: phoneNumberController,
+                  controller: addUserField.PhoneNumbersController,
                   keyboardType: TextInputType.phone,
                   focusNode: FocusNode(),
                   dropdownTextStyle: TextStyle(fontSize: 18),
@@ -229,9 +245,10 @@ class _addUserFieldState extends State<addUserField> {
                     print(phone.completeNumber);
                   },
                   validator: (value) {
-                    if (value.isBlank! || value == null) {
+                    if (value == null || value.completeNumber.isEmpty) {
                       return "Phone Nummber Can not empty";
                     }
+                    return null;
                   },
                 )
               ),
@@ -260,6 +277,7 @@ class _addUserFieldState extends State<addUserField> {
                     } else if (!inValidEmail) {
                       return "Incorrect Email format";
                     }
+                    return null;
                   },
                 ),
               ),
@@ -283,7 +301,7 @@ class _addUserFieldState extends State<addUserField> {
                             passHiding ? Icons.visibility_off
                                 : Icons.visibility),
                         onPressed: () { setState( () {
-                          passHiding =!passHiding; },);
+                          passHiding = !passHiding; },);
                         },
                       ),
                     ),
@@ -317,7 +335,7 @@ class _addUserFieldState extends State<addUserField> {
                           passHiding ? Icons.visibility_off
                               : Icons.visibility),
                       onPressed: () { setState( () {
-                        passHiding =!passHiding; },);
+                        passHiding = !passHiding; },);
                       },
                     ),
                   ),
