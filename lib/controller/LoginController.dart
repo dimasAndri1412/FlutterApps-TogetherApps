@@ -1,28 +1,42 @@
 import 'dart:convert';
 import 'package:absent_project/controller/Keys.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-
 import '../home/ApplicationBar.dart';
 
-class LoginController {
+class LoginController{
+  String? alert, username, password, role;
+  var dataUser;
 
   Future doLogin() async {
-    String email = emailController.text;
-    String password = passwordController.text;
+    String usernameInput = emailController.text;
+    String passwordInput = passwordController.text;
 
-    var url = Uri.parse("http://192.168.2.159/FlutterAPI/AdminLogin.php");
-    var response = await http.post(url, body: {
-      "username": email,
-      "password": password
-    });
-    var data = jsonDecode(response.body);
-    if (data == "Success") {
-      Get.to(() => const ApplicationBar());
-    } else {
-      print("Error cuk");
-    }
+    try{
+      if (formKey.currentState!.validate()) {
+        var url = Uri.parse("http://192.168.100.214/FlutterAPI/AdminLogin.php");
+        var response = await http.post(url, body: {
+          "username": usernameInput,
+          "password": passwordInput
+        });
+        dataUser = jsonDecode(response.body);
+
+        if (dataUser.length < 1) {
+            alert = "Can't login";
+        } else {
+            username = dataUser[0]['USERNAME'];
+            password = dataUser[0]['PASSWORD'];
+            role = dataUser[0]['ROLE'];
+          };
+
+          if (role == "admin") {
+            Get.to(() => const ApplicationBar());
+          } else {
+            print("Go to userhome page");
+          }
+        }
+    }catch(Exception){
+      return "Failed Request!";}
   }
 }
+
