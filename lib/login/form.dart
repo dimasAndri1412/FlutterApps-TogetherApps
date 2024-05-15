@@ -162,6 +162,7 @@ class _myFormState extends State<myForm> {
                         GestureDetector(
                           onTap: () {
                             LoginController().doLogin();
+
                           },
                           // onTap: (){
                           //   check();
