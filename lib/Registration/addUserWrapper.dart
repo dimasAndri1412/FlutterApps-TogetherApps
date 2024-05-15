@@ -1,7 +1,7 @@
 import 'package:absent_project/Registration/addMenuFlied.dart';
 import 'package:flutter/material.dart';
 import 'AddUserButton.dart';
-import 'addMenuFlied.dart';
+import '../controller/Keys.dart';
 
 class addUserWrapper extends StatefulWidget {
   const addUserWrapper({super.key});
@@ -11,6 +11,7 @@ class addUserWrapper extends StatefulWidget {
 }
 
 class _addUserWrapperState extends State<addUserWrapper> {
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,28 +26,6 @@ class _addUserWrapperState extends State<addUserWrapper> {
             child: SingleChildScrollView(
               child: addUserField(),
             ),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          TextButton(onPressed: () {
-            setState(() {
-              addUserField.PassController.clear();
-              addUserField.ConfPassController.clear();
-              addUserField.UserNameController.clear();
-              addUserField.FullNameController.clear();
-              addUserField.UserNameController.clear();
-              addUserField.EmailController.clear();
-              addUserField.AddressController.clear();
-              addUserField.RolesController.clear();
-            });
-          },
-              child: Text(
-                "RESET",
-                style: TextStyle(color: Colors.lightBlue,
-                fontSize: 15,
-                fontWeight: FontWeight.bold),
-              )
           ),
           SizedBox(
             height: 30,

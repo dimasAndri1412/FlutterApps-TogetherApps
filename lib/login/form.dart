@@ -71,8 +71,16 @@ class _myFormState extends State<myForm> {
                                 child: TextFormField(
                                   controller: emailController,
                                   validator: (value) {
+                                    bool inValidEmail = RegExp(
+                                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"
+                                    ).hasMatch(value!);
                                     if (value == null || value.isEmpty) {
                                       return 'Please enter your Email or Phone Number';
+                                    } else if (value.isNotEmpty) {
+                                      emailController.text;
+                                    } else if (inValidEmail){
+                                      emailController.clear();
+                                      return 'Please Insert valid email format';
                                     }
                                     return null;
                                   },
@@ -94,6 +102,7 @@ class _myFormState extends State<myForm> {
                                 child: TextFormField(
                                   controller: passwordController,
                                   validator: (value) {
+
                                     if (value == null || value.isEmpty) {
                                       return 'Please enter your Password';
                                     }

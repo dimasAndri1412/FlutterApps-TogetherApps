@@ -1,27 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import '../controller/Keys.dart';
 
 class addUserField extends StatefulWidget {
   const addUserField({super.key});
 
-  static final GlobalKey<FormState>formKeys = GlobalKey<FormState>();
-
-  static final UserNameController = TextEditingController();
-  static final FullNameController = TextEditingController();
-  static final AddressController = TextEditingController();
-  static final PhoneNumbersController = TextEditingController();
-  static final EmailController = TextEditingController();
-  static final TextEditingController BirthDateController = TextEditingController();
-  static final RolesController = TextEditingController();
-  static final PassController = TextEditingController();
-  static final ConfPassController = TextEditingController();
-
-
   @override
   State<addUserField> createState() => _addUserFieldState();
 }
+
 
 class _addUserFieldState extends State<addUserField> {
 
@@ -37,7 +25,7 @@ class _addUserFieldState extends State<addUserField> {
   void iniState(){
     super.initState();
     passHiding = true;
-    addUserField.BirthDateController.text="";
+    BirthDateController.text="";
     dropDownValues = "";
   }
 
@@ -49,7 +37,7 @@ class _addUserFieldState extends State<addUserField> {
       children: <Widget>[
 
         Form(
-          key: addUserField.formKeys,
+          key: formKeys,
           child: Column(
             children: <Widget>[
               Container(
@@ -58,7 +46,7 @@ class _addUserFieldState extends State<addUserField> {
                     border: Border(bottom: BorderSide( color: Colors.black87))
                 ),
                 child: TextFormField(
-                  controller: addUserField.FullNameController,
+                  controller: FullNameController,
                   decoration: InputDecoration(
                       labelText: "Fullname",
                       hintText: "Please Insert Fullname",
@@ -80,7 +68,7 @@ class _addUserFieldState extends State<addUserField> {
                     border: Border(bottom: BorderSide( color: Colors.black87))
                 ),
                 child: TextFormField(
-                  controller: addUserField.UserNameController,
+                  controller: UserNameController,
                   decoration: InputDecoration(
                       labelText: "UserName",
                       hintText: "Please Insert Username",
@@ -102,7 +90,7 @@ class _addUserFieldState extends State<addUserField> {
                     border: Border(bottom: BorderSide(color: Colors.black87))
                 ),
                 child: TextFormField(
-                  controller: addUserField.BirthDateController,
+                  controller: BirthDateController,
                   decoration: InputDecoration(
                       labelText: "BirthDate",
                       hintText: "Pleas Enter Your BirthDate",
@@ -137,7 +125,7 @@ class _addUserFieldState extends State<addUserField> {
                     if (pickedDates != null) {
                       String formatedDates = DateFormat('yyyy-MM-dd').format(pickedDates);
                       setState(() {
-                        addUserField.BirthDateController.text = formatedDates;
+                        BirthDateController.text = formatedDates;
                       });
                     } else {}
                   },
@@ -155,7 +143,7 @@ class _addUserFieldState extends State<addUserField> {
                     border: Border(bottom: BorderSide(color: Colors.black87))
                 ),
                 child: TextFormField(
-                  controller: addUserField.AddressController,
+                  controller: AddressController,
                   decoration: InputDecoration(
                       labelText: "Address",
                       hintText: "Please Insert you address",
@@ -190,7 +178,9 @@ class _addUserFieldState extends State<addUserField> {
                       setState(() {
                         dropDownValues = value!;
                         if (value.isNotEmpty) {
-                          addUserField.RolesController.text = "MEMBER";
+                          RolesController.text = "MEMBER";
+                        } else {
+                          RolesController.text = "";
                         }
                       });
                     },
@@ -208,7 +198,7 @@ class _addUserFieldState extends State<addUserField> {
                     border: Border(bottom: BorderSide( color: Colors.black87))
                 ),
                 child: TextFormField(
-                  controller: addUserField.RolesController,
+                  controller: RolesController,
                   decoration: InputDecoration(
                       labelText: "Roles",
                       hintText: "Please Insert Roles",
@@ -230,7 +220,7 @@ class _addUserFieldState extends State<addUserField> {
                     border: Border(bottom: BorderSide(color: Colors.black87))
                 ),
                 child: IntlPhoneField(
-                  controller: addUserField.PhoneNumbersController,
+                  controller: PhoneNumbersController,
                   keyboardType: TextInputType.phone,
                   focusNode: FocusNode(),
                   dropdownTextStyle: TextStyle(fontSize: 18),
@@ -258,7 +248,7 @@ class _addUserFieldState extends State<addUserField> {
                     border: Border(bottom: BorderSide(color: Colors.black87))
                 ),
                 child: TextFormField(
-                  controller: addUserField.EmailController,
+                  controller: EmailController,
                   decoration: InputDecoration(
                       labelText: "Email",
                       hintText: "Please Insert Your Email",
@@ -275,6 +265,7 @@ class _addUserFieldState extends State<addUserField> {
                     if (value == null || value.isEmpty) {
                       return 'Email Can not empty!';
                     } else if (!inValidEmail) {
+                      EmailController.clear();
                       return "Incorrect Email format";
                     }
                     return null;
@@ -289,7 +280,7 @@ class _addUserFieldState extends State<addUserField> {
                   child:TextFormField(
                     obscureText: passHiding,
                     keyboardType: TextInputType.emailAddress,
-                    controller: addUserField.PassController,
+                    controller: PassController,
                     decoration: InputDecoration(
                       labelText: 'Password',
                       hintText: 'Please Insert your password',
@@ -309,6 +300,7 @@ class _addUserFieldState extends State<addUserField> {
                       if (value == null || value.isEmpty) {
                         return 'Password can not empty!';
                       } else if (value.length <= 8) {
+                        PassController.clear();
                         return 'Password Should be greater than 8 characters';
                       }
                       return null;
@@ -323,7 +315,7 @@ class _addUserFieldState extends State<addUserField> {
                 child: TextFormField(
                   obscureText: passHiding,
                   keyboardType: TextInputType.emailAddress,
-                  controller: addUserField.ConfPassController,
+                  controller: ConfPassController,
                   decoration: InputDecoration(
                     labelText: ' Confirm Password',
                     hintText: 'Please Insert your password',
@@ -342,7 +334,8 @@ class _addUserFieldState extends State<addUserField> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Password can not empty!';
-                    } else if (value != addUserField.PassController) {
+                    } else if (value != PassController.text) {
+                      ConfPassController.clear();
                       return "Sorry Password Not Match!";
                     }
                     return null;
