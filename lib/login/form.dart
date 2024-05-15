@@ -2,9 +2,8 @@ import 'dart:convert';
 
 import 'package:absent_project/controller/LoginController.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter/widgets.dart';
 import '../controller/Keys.dart';
-import '../home/ApplicationBar.dart';
 
 class myForm extends StatefulWidget {
   const myForm({super.key});
@@ -14,23 +13,42 @@ class myForm extends StatefulWidget {
 }
 
 class _myFormState extends State<myForm> {
-  // Future loginAdmin() async{
-  //   var url = Uri.parse("http://192.168.100.214/FlutterAPI/AdminLogin.php");
-  //   var response = await http.post(url, body:{
-  //     "username": emailController.text,
-  //     "password": passwordController.text,
-  //   });
-  //   var data = jsonDecode(response.body);
-  //   if(data == "Success") {
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => const ApplicationBar()),);
-  //   }else{
-  //     print ("Error cuk");
-  //   }
-  // }
+
+ /* String? alert, username, password, role;
+  Future doLogin() async {
+    String usernameInput = emailController.text;
+    String passwordInput = passwordController.text;
+
+    if(formKey.currentState!.validate()) {
+      var url = Uri.parse("http://192.168.100.214/FlutterAPI/AdminLogin.php");
+      var response = await http.post(url, body: {
+        "username": usernameInput,
+        "password": passwordInput
+      });
+
+      var dataUser = jsonDecode(response.body);
+      if(LoginController().dataUser.length > 1){
+        setState(() {
+          alert = "You can't login";
+        });
+      }else{
+        setState(() {
+          username = LoginController().dataUser[0]['USERNAME'];
+          password = LoginController().dataUser[0]['PASSWORD'];
+          role = LoginController().dataUser[0]['ROLE'];
+        });
+
+        if(role == "admin"){
+          Get.to(() => ApplicationBar());
+        }else{
+          Get.to(const UserHome());
+        }
+      }
+    }
+  }*/
+
   bool passwordObscured = true;
-  // final _formKey = GlobalKey<FormState>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +168,11 @@ class _myFormState extends State<myForm> {
                           child: const Text('Forgot Password ? '),
                         ),
                         const SizedBox(height: 20,),
-                        MaterialButton(
+                        GestureDetector(
+                          onTap: () {
+                            LoginController().doLogin();
+
+                          },
                           // onTap: (){
                           //   check();
                           //    // if (check()) {
@@ -160,18 +182,6 @@ class _myFormState extends State<myForm> {
                           //    //    );
                           //    //  }
                           //   },
-                          onPressed: () {
-                            // masi erawrrr //
-                            // showDialog(
-                            //   context: context, 
-                            //   builder: (context){
-                            //     return Center(
-                            //       child: CircularProgressIndicator(),
-                            //     );
-                            //   }
-                            // );
-                            LoginController().doLogin();
-                          },
                           child: Container(
                             // child: Padding(padding: EdgeInsets.all(135)),
                             height: 60,
