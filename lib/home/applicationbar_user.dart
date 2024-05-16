@@ -1,22 +1,23 @@
+import 'package:absent_project/approvalls/approvalls_user.dart';
 import 'package:absent_project/home/Userhome.dart';
 import 'package:flutter/material.dart';
 import 'package:absent_project/menu/MenuPage.dart';
 import 'package:absent_project/approvalls/Approvalls.dart';
 
-class ApplicationBar extends StatefulWidget {
-  const ApplicationBar({super.key});
+class ApplicationBarUser extends StatefulWidget {
+  const ApplicationBarUser({super.key});
 
   @override
-  State<ApplicationBar> createState() => _ApplicationBarState();
+  State<ApplicationBarUser> createState() => _ApplicationBarUserState();
 }
 
-class _ApplicationBarState extends State<ApplicationBar> {
+class _ApplicationBarUserState extends State<ApplicationBarUser> {
   int currentIndex = 0;
   List<Widget> body = const [
     UserHome(),
     Icon(Icons.lock_clock),
     Icon(Icons.note),
-    Approvalls(),
+    ApprovallsUser(),
     MenuPage()
   ];
 
