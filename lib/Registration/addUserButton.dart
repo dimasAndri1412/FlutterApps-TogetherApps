@@ -1,4 +1,6 @@
+import 'package:absent_project/Registration/addUserMenu.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'addMenuFlied.dart';
 import 'newPages.dart';
 import '../controller/Keys.dart';
@@ -19,6 +21,10 @@ _simpan() async {
       "PASSWORD": PassController.text
     },
   );
+  if (response.statusCode == 200) {
+    return true;
+  }
+  return false;
 }
 
 class addUserButton extends StatefulWidget {
@@ -41,10 +47,13 @@ class _addUserButtonState extends State<addUserButton> {
                   final snackBar = SnackBar(
                     content: const Text('Data Berhasil Disimpan'),
                   );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  // Get.to(() => addUserMenu());
                 } else {
                   final snackBar = SnackBar(
                     content: const Text('Data Gagal Disimpan'),
                   );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
               });
               // Navigator.of(context).push(
