@@ -6,6 +6,7 @@ import '../home/ApplicationBar.dart';
 
 class LoginController{
   String? alert, username, password, role;
+
   var dataUser;
 
   Future doLogin() async {
@@ -32,7 +33,8 @@ class LoginController{
           if (role == "admin") {
             Get.to(() => const ApplicationBar());
           } else {
-            print("Go to userhome page");
+            print("Go to member home page, cuk");
+            /*Get.to(() => const UserHome());*/
           }
         }
     }catch(Exception){

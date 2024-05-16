@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ListUserLembur extends StatefulWidget {
-  const ListUserLembur({super.key});
+class PengajuanLembur extends StatefulWidget {
+  const PengajuanLembur({super.key});
 
   @override
-  State<ListUserLembur> createState() => _ListUserLemburState();
+  State<PengajuanLembur> createState() => _PengajuanLemburState();
 }
 
-class _ListUserLemburState extends State<ListUserLembur> {
+class _PengajuanLemburState extends State<PengajuanLembur> {
   final reasonLemburController = TextEditingController();
 
   @override
@@ -71,6 +71,11 @@ class _ListUserLemburState extends State<ListUserLembur> {
                             return null;
                           },
                         ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(color: Colors.black))),
                       ),
                     ],
                   )),

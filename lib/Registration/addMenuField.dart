@@ -1,7 +1,10 @@
+import 'package:absent_project/Registration/Functions/fucntionKey.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:dropdownfield2/dropdownfield2.dart';
 import '../controller/Keys.dart';
+import '../controller/projectListContoller.dart';
 
 class addUserField extends StatefulWidget {
   const addUserField({super.key});
@@ -12,7 +15,6 @@ class addUserField extends StatefulWidget {
 
 class _addUserFieldState extends State<addUserField> {
   bool passHiding = false;
-
   String dropDownValues = "";
 
   @override
@@ -160,24 +162,29 @@ class _addUserFieldState extends State<addUserField> {
                           value: ""),
                       DropdownMenuItem(
                         child: Text("MSDO Project"),
-                        value: "1",
+                        value: "MSDO Project",
                       ),
                       DropdownMenuItem(
                         child: Text("Development Project"),
-                        value: "2",
+                        value: "Development Project",
                       ),
                     ],
                     decoration: InputDecoration(
                         border: InputBorder.none, prefixIcon: Icon(Icons.work)),
                     onChanged: (value) {
                       setState(() {
+                        String passwordValue = functionKeys.GeneratedPassword();
                         dropDownValues = value!;
                         if (value.isNotEmpty) {
                           RolesController.text = "MEMBER";
+                          PassController.text = passwordValue;
+                          ProjectController.text = value;
                         } else {
-                          RolesController.text = "";
+                          RolesController.clear();
+                          PassController.clear();
                         }
-                      });
+                      }
+                      );
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -185,7 +192,8 @@ class _addUserFieldState extends State<addUserField> {
                       }
                       return null;
                     },
-                  )),
+                  )
+              ),
               Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -201,6 +209,26 @@ class _addUserFieldState extends State<addUserField> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Roles Can not Empty!";
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    border: Border(bottom: BorderSide(color: Colors.black87))),
+                child: TextFormField(
+                  controller: ProjectController,
+                  decoration: InputDecoration(
+                      labelText: "Project",
+                      hintText: "Please Insert Project",
+                      hintStyle: TextStyle(color: Colors.black26),
+                      border: InputBorder.none,
+                      prefixIcon: Icon(Icons.people)),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Roles Can not Project!";
                     }
                     return null;
                   },
@@ -292,7 +320,7 @@ class _addUserFieldState extends State<addUserField> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Password can not empty!';
-                      } else if (value.length <= 8) {
+                      } else if (value.length < 8) {
                         PassController.clear();
                         return 'Password Should be greater than 8 characters';
                       }
@@ -306,7 +334,7 @@ class _addUserFieldState extends State<addUserField> {
                 child: TextFormField(
                   obscureText: passHiding,
                   keyboardType: TextInputType.emailAddress,
-                  controller: ConfPassController,
+                  controller: PassController,
                   decoration: InputDecoration(
                     labelText: ' Confirm Password',
                     hintText: 'Please Insert your password',
@@ -325,15 +353,15 @@ class _addUserFieldState extends State<addUserField> {
                       },
                     ),
                   ),
-                  // validator: (value) {
-                  //   if (value == null || value.isEmpty) {
-                  //     return 'Password can not empty!';
-                  //   } else if (value != PassController.text) {
-                  //     ConfPassController.clear();
-                  //     return "Sorry Password Not Match!";
-                  //   }
-                  //   return null;
-                  // },
+                   validator: (value) {
+                     if (value == null || value.isEmpty) {
+                       return 'Password can not empty!';
+                     } else if (value != PassController.text) {
+                       ConfPassController.clear();
+                       return "Sorry Password Not Match!";
+                     }
+                     return null;
+                   },
                 ),
               )
             ],
@@ -343,3 +371,5 @@ class _addUserFieldState extends State<addUserField> {
     );
   }
 }
+
+

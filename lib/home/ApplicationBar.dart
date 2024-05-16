@@ -14,6 +14,7 @@ class _ApplicationBarState extends State<ApplicationBar> {
 
   int currentIndex = 0;
   List<Widget> body = const [
+
     Home(),
     Icon(Icons.lock_clock),
     Icon(Icons.note),

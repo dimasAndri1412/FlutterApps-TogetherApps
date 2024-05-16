@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
-class ListUserCuti extends StatefulWidget {
-  const ListUserCuti({super.key});
+class PengajuanCuti extends StatefulWidget {
+  const PengajuanCuti({super.key});
 
   @override
-  State<ListUserCuti> createState() => _ListUserCutiState();
+  State<PengajuanCuti> createState() => _PengajuanCutiState();
 }
 
-class _ListUserCutiState extends State<ListUserCuti> {
+class _PengajuanCutiState extends State<PengajuanCuti> {
   final reasonCutiController = TextEditingController();
   final _dateFromController = TextEditingController();
   final _dateUntilController = TextEditingController();
