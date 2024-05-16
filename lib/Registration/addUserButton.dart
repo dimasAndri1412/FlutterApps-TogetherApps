@@ -6,6 +6,18 @@ import 'newPages.dart';
 import '../controller/Keys.dart';
 import 'package:http/http.dart' as http;
 
+void _clearUserData() {
+  FullNameController.clear();
+  UserNameController.clear();
+  BirthDateController.clear();
+  AddressController.clear();
+  RolesController.clear();
+  PhoneNumbersController.clear();
+  EmailController.clear();
+  PassController.clear();
+  ConfPassController.clear();
+}
+
 _simpan() async {
   final response = await http.post(
     Uri.parse("http://192.168.2.159/FlutterAPI/create.php"),
@@ -48,7 +60,7 @@ class _addUserButtonState extends State<addUserButton> {
                     content: const Text('Data Berhasil Disimpan'),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  // Get.to(() => addUserMenu());
+                  _clearUserData();
                 } else {
                   final snackBar = SnackBar(
                     content: const Text('Data Gagal Disimpan'),
@@ -56,6 +68,7 @@ class _addUserButtonState extends State<addUserButton> {
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
               });
+
               // Navigator.of(context).push(
               //     MaterialPageRoute(builder: (context) => testPagesNew()));
             }
