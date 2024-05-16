@@ -10,12 +10,7 @@ class addUserField extends StatefulWidget {
   State<addUserField> createState() => _addUserFieldState();
 }
 
-
 class _addUserFieldState extends State<addUserField> {
-
-  TextEditingController dateInput = TextEditingController();
-  final phoneNumberController = TextEditingController();
-  final birthDateController = TextEditingController();
 
   bool  passHiding = false;
 
