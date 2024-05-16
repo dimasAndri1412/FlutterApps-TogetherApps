@@ -1,6 +1,8 @@
+import 'package:absent_project/Registration/Functions/fucntionKey.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:dropdownfield2/dropdownfield2.dart';
 import '../controller/Keys.dart';
 
 class addUserField extends StatefulWidget {
@@ -22,6 +24,13 @@ class _addUserFieldState extends State<addUserField> {
     BirthDateController.text = "";
     dropDownValues = "";
   }
+
+
+
+  List<String> projects = [
+    "MSDO Projects",
+    "Development Projects"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -171,13 +180,22 @@ class _addUserFieldState extends State<addUserField> {
                         border: InputBorder.none, prefixIcon: Icon(Icons.work)),
                     onChanged: (value) {
                       setState(() {
+                        String passwordValue = functionKeys.GeneratedPassword();
                         dropDownValues = value!;
                         if (value.isNotEmpty) {
                           RolesController.text = "MEMBER";
+                          PassController.text = passwordValue;
+                        } else if (value == "1") {
+                          ProjectController.text = "MSDO Project";
+                        } else if (value == "2") {
+                          ProjectController.text = "Development Project";
                         } else {
-                          RolesController.text = "";
+                          RolesController.clear();
+                          PassController.clear();
+                          ProjectController.clear();
                         }
-                      });
+                      }
+                      );
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -185,7 +203,17 @@ class _addUserFieldState extends State<addUserField> {
                       }
                       return null;
                     },
-                  )),
+                  )
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    border:
+                    Border(bottom: BorderSide(color: Colors.black87))),
+                child: DropDownField(
+                  
+                ),
+              ),
               Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -201,6 +229,26 @@ class _addUserFieldState extends State<addUserField> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Roles Can not Empty!";
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    border: Border(bottom: BorderSide(color: Colors.black87))),
+                child: TextFormField(
+                  controller: ProjectController,
+                  decoration: InputDecoration(
+                      labelText: "Project",
+                      hintText: "Please Insert project",
+                      hintStyle: TextStyle(color: Colors.black26),
+                      border: InputBorder.none,
+                      prefixIcon: Icon(Icons.people)),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Project Can not Empty!";
                     }
                     return null;
                   },
@@ -292,7 +340,7 @@ class _addUserFieldState extends State<addUserField> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Password can not empty!';
-                      } else if (value.length <= 8) {
+                      } else if (value.length < 8) {
                         PassController.clear();
                         return 'Password Should be greater than 8 characters';
                       }
@@ -306,7 +354,7 @@ class _addUserFieldState extends State<addUserField> {
                 child: TextFormField(
                   obscureText: passHiding,
                   keyboardType: TextInputType.emailAddress,
-                  controller: ConfPassController,
+                  controller: PassController,
                   decoration: InputDecoration(
                     labelText: ' Confirm Password',
                     hintText: 'Please Insert your password',
@@ -325,15 +373,15 @@ class _addUserFieldState extends State<addUserField> {
                       },
                     ),
                   ),
-                  // validator: (value) {
-                  //   if (value == null || value.isEmpty) {
-                  //     return 'Password can not empty!';
-                  //   } else if (value != PassController.text) {
-                  //     ConfPassController.clear();
-                  //     return "Sorry Password Not Match!";
-                  //   }
-                  //   return null;
-                  // },
+                   validator: (value) {
+                     if (value == null || value.isEmpty) {
+                       return 'Password can not empty!';
+                     } else if (value != PassController.text) {
+                       ConfPassController.clear();
+                       return "Sorry Password Not Match!";
+                     }
+                     return null;
+                   },
                 ),
               )
             ],
@@ -343,3 +391,5 @@ class _addUserFieldState extends State<addUserField> {
     );
   }
 }
+
+
