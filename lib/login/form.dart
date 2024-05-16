@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:absent_project/controller/LoginController.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import '../controller/Keys.dart';
 
 class myForm extends StatefulWidget {
@@ -139,7 +136,6 @@ class _myFormState extends State<myForm> {
                         GestureDetector(
                           onTap: () {
                             LoginController().doLogin();
-
                           },
                           // onTap: (){
                           //   check();

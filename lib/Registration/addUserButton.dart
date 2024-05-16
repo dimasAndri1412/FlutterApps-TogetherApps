@@ -1,43 +1,6 @@
-import 'package:absent_project/Registration/addUserMenu.dart';
+import 'package:absent_project/controller/save_data_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'addMenuFlied.dart';
-import 'newPages.dart';
 import '../controller/Keys.dart';
-import 'package:http/http.dart' as http;
-
-void _clearUserData() {
-  FullNameController.clear();
-  UserNameController.clear();
-  BirthDateController.clear();
-  AddressController.clear();
-  RolesController.clear();
-  PhoneNumbersController.clear();
-  EmailController.clear();
-  PassController.clear();
-  ConfPassController.clear();
-}
-
-_simpan() async {
-  final response = await http.post(
-    Uri.parse("http://192.168.2.159/FlutterAPI/create.php"),
-    body: {
-      "full_name": FullNameController.text,
-      "USERNAME": UserNameController.text,
-      "birth_date": BirthDateController.text,
-      "address": AddressController.text,
-      // "grup": addUserField.grupController.text,
-      "ROLE": RolesController.text,
-      "phone_number": PhoneNumbersController.text,
-      "email_address": EmailController.text,
-      "PASSWORD": PassController.text
-    },
-  );
-  if (response.statusCode == 200) {
-    return true;
-  }
-  return false;
-}
 
 class addUserButton extends StatefulWidget {
   const addUserButton({super.key});
@@ -54,13 +17,13 @@ class _addUserButtonState extends State<addUserButton> {
         GestureDetector(
           onTap: () {
             if (formKeys.currentState!.validate()) {
-              _simpan().then((value) {
+              save_func().savefunc().then((value) {
                 if (value) {
                   final snackBar = SnackBar(
                     content: const Text('Data Berhasil Disimpan'),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  _clearUserData();
+                  save_func().clear_func();
                 } else {
                   final snackBar = SnackBar(
                     content: const Text('Data Gagal Disimpan'),
