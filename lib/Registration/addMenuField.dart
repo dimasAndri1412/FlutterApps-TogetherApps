@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:dropdownfield2/dropdownfield2.dart';
 import '../controller/Keys.dart';
+import '../controller/projectListContoller.dart';
 
 class addUserField extends StatefulWidget {
   const addUserField({super.key});
@@ -14,7 +15,6 @@ class addUserField extends StatefulWidget {
 
 class _addUserFieldState extends State<addUserField> {
   bool passHiding = false;
-
   String dropDownValues = "";
 
   @override
@@ -24,13 +24,6 @@ class _addUserFieldState extends State<addUserField> {
     BirthDateController.text = "";
     dropDownValues = "";
   }
-
-
-
-  List<String> projects = [
-    "MSDO Projects",
-    "Development Projects"
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -169,11 +162,11 @@ class _addUserFieldState extends State<addUserField> {
                           value: ""),
                       DropdownMenuItem(
                         child: Text("MSDO Project"),
-                        value: "1",
+                        value: "MSDO Project",
                       ),
                       DropdownMenuItem(
                         child: Text("Development Project"),
-                        value: "2",
+                        value: "Development Project",
                       ),
                     ],
                     decoration: InputDecoration(
@@ -185,14 +178,10 @@ class _addUserFieldState extends State<addUserField> {
                         if (value.isNotEmpty) {
                           RolesController.text = "MEMBER";
                           PassController.text = passwordValue;
-                        } else if (value == "1") {
-                          ProjectController.text = "MSDO Project";
-                        } else if (value == "2") {
-                          ProjectController.text = "Development Project";
+                          ProjectController.text = value;
                         } else {
                           RolesController.clear();
                           PassController.clear();
-                          ProjectController.clear();
                         }
                       }
                       );
@@ -204,15 +193,6 @@ class _addUserFieldState extends State<addUserField> {
                       return null;
                     },
                   )
-              ),
-              Container(
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    border:
-                    Border(bottom: BorderSide(color: Colors.black87))),
-                child: DropDownField(
-                  
-                ),
               ),
               Container(
                 padding: EdgeInsets.all(10),
@@ -242,13 +222,13 @@ class _addUserFieldState extends State<addUserField> {
                   controller: ProjectController,
                   decoration: InputDecoration(
                       labelText: "Project",
-                      hintText: "Please Insert project",
+                      hintText: "Please Insert Project",
                       hintStyle: TextStyle(color: Colors.black26),
                       border: InputBorder.none,
                       prefixIcon: Icon(Icons.people)),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Project Can not Empty!";
+                      return "Roles Can not Project!";
                     }
                     return null;
                   },
