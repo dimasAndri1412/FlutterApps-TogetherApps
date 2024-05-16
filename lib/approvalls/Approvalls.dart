@@ -58,7 +58,7 @@ class _ApprovallsState extends State<Approvalls> {
                           )),
                       Container(
                         margin: EdgeInsets.only(top: 0),
-                        child: Text("Pengajuan Lembur"),
+                        child: Text("Overtime Approval"),
                       )
                     ],
                   ),
@@ -97,7 +97,7 @@ class _ApprovallsState extends State<Approvalls> {
                           )),
                       Container(
                         margin: EdgeInsets.only(top: 0),
-                        child: Text("Pengajuan Cuti"),
+                        child: Text("Leave Approval"),
                       )
                     ],
                   ),
