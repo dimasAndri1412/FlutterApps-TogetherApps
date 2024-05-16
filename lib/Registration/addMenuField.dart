@@ -183,8 +183,7 @@ class _addUserFieldState extends State<addUserField> {
                           RolesController.clear();
                           PassController.clear();
                         }
-                      }
-                      );
+                      });
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -192,8 +191,7 @@ class _addUserFieldState extends State<addUserField> {
                       }
                       return null;
                     },
-                  )
-              ),
+                  )),
               Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -298,72 +296,73 @@ class _addUserFieldState extends State<addUserField> {
                     obscureText: passHiding,
                     keyboardType: TextInputType.emailAddress,
                     controller: PassController,
+                    readOnly: true,
                     decoration: InputDecoration(
                       labelText: 'Password',
                       hintText: 'Please Insert your password',
                       hintStyle: TextStyle(color: Colors.black26),
                       border: InputBorder.none,
                       prefixIcon: Icon(Icons.lock),
-                      suffixIcon: IconButton(
-                        icon: Icon(passHiding
-                            ? Icons.visibility_off
-                            : Icons.visibility),
-                        onPressed: () {
-                          setState(
-                            () {
-                              passHiding = !passHiding;
-                            },
-                          );
-                        },
-                      ),
+                      // suffixIcon: IconButton(
+                      //   icon: Icon(passHiding
+                      //       ? Icons.visibility_off
+                      //       : Icons.visibility),
+                      //   onPressed: () {
+                      //     setState(
+                      //       () {
+                      //         passHiding = !passHiding;
+                      //       },
+                      //     );
+                      //   },
+                      // ),
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Password can not empty!';
-                      } else if (value.length < 8) {
-                        PassController.clear();
-                        return 'Password Should be greater than 8 characters';
-                      }
-                      return null;
-                    },
+                    // validator: (value) {
+                    //   if (value == null || value.isEmpty) {
+                    //     return 'Password can not empty!';
+                    //   } else if (value.length < 8) {
+                    //     PassController.clear();
+                    //     return 'Password Should be greater than 8 characters';
+                    //   }
+                    //   return null;
+                    // },
                   )),
-              Container(
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.black87))),
-                child: TextFormField(
-                  obscureText: passHiding,
-                  keyboardType: TextInputType.emailAddress,
-                  controller: PassController,
-                  decoration: InputDecoration(
-                    labelText: ' Confirm Password',
-                    hintText: 'Please Insert your password',
-                    hintStyle: TextStyle(color: Colors.black26),
-                    border: InputBorder.none,
-                    prefixIcon: Icon(Icons.lock),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                          passHiding ? Icons.visibility_off : Icons.visibility),
-                      onPressed: () {
-                        setState(
-                          () {
-                            passHiding = !passHiding;
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                   validator: (value) {
-                     if (value == null || value.isEmpty) {
-                       return 'Password can not empty!';
-                     } else if (value != PassController.text) {
-                       ConfPassController.clear();
-                       return "Sorry Password Not Match!";
-                     }
-                     return null;
-                   },
-                ),
-              )
+              // Container(
+              //   padding: EdgeInsets.all(10),
+              //   decoration: BoxDecoration(
+              //       border: Border(bottom: BorderSide(color: Colors.black87))),
+              //   child: TextFormField(
+              //     obscureText: passHiding,
+              //     keyboardType: TextInputType.emailAddress,
+              //     controller: PassController,
+              //     decoration: InputDecoration(
+              //       labelText: ' Confirm Password',
+              //       hintText: 'Please Insert your password',
+              //       hintStyle: TextStyle(color: Colors.black26),
+              //       border: InputBorder.none,
+              //       prefixIcon: Icon(Icons.lock),
+              //       suffixIcon: IconButton(
+              //         icon: Icon(
+              //             passHiding ? Icons.visibility_off : Icons.visibility),
+              //         onPressed: () {
+              //           setState(
+              //             () {
+              //               passHiding = !passHiding;
+              //             },
+              //           );
+              //         },
+              //       ),
+              //     ),
+              //      validator: (value) {
+              //        if (value == null || value.isEmpty) {
+              //          return 'Password can not empty!';
+              //        } else if (value != PassController.text) {
+              //          ConfPassController.clear();
+              //          return "Sorry Password Not Match!";
+              //        }
+              //        return null;
+              //      },
+              //   ),
+              // )
             ],
           ),
         )
@@ -371,5 +370,3 @@ class _addUserFieldState extends State<addUserField> {
     );
   }
 }
-
-
