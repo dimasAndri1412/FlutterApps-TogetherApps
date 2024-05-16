@@ -11,7 +11,7 @@ class save_func {
         "USERNAME": UserNameController.text,
         "birth_date": BirthDateController.text,
         "address": AddressController.text,
-        // "grup": addUserField.grupController.text,
+        "grup": ProjectController.text,
         "ROLE": RolesController.text,
         "phone_number": PhoneNumbersController.text,
         "email_address": EmailController.text,
@@ -34,6 +34,7 @@ class save_func {
     EmailController.clear();
     PassController.clear();
     ConfPassController.clear();
+    ProjectController.clear();
   }
 }
 
