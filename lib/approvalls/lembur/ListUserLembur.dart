@@ -10,6 +10,6 @@ class ListUserLembur extends StatefulWidget {
 class _ListUserLemburState extends State<ListUserLembur> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return const Placeholder();
   }
 }

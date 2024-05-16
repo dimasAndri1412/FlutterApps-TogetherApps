@@ -10,6 +10,6 @@ class ListUserCuti extends StatefulWidget {
 class _ListUserCutiState extends State<ListUserCuti> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return const Placeholder();
   }
 }

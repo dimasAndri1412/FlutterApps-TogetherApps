@@ -1,43 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import '../controller/Keys.dart';
 
 class addUserField extends StatefulWidget {
   const addUserField({super.key});
-
-  static final GlobalKey<FormState>formKeys = GlobalKey<FormState>();
-
-  static final UserNameController = TextEditingController();
-  static final FullNameController = TextEditingController();
-  static final AddressController = TextEditingController();
-  static final PhoneNumbersController = TextEditingController();
-  static final EmailController = TextEditingController();
-  static final TextEditingController BirthDateController = TextEditingController();
-  static final RolesController = TextEditingController();
-  static final PassController = TextEditingController();
-  static final ConfPassController = TextEditingController();
-
 
   @override
   State<addUserField> createState() => _addUserFieldState();
 }
 
 class _addUserFieldState extends State<addUserField> {
-
-  TextEditingController dateInput = TextEditingController();
-  final phoneNumberController = TextEditingController();
-  final birthDateController = TextEditingController();
-
-  bool  passHiding = false;
+  bool passHiding = false;
 
   String dropDownValues = "";
 
   @override
-  void iniState(){
+  void iniState() {
     super.initState();
     passHiding = true;
-    addUserField.BirthDateController.text="";
+    BirthDateController.text = "";
     dropDownValues = "";
   }
 
@@ -47,25 +29,22 @@ class _addUserFieldState extends State<addUserField> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-
         Form(
-          key: addUserField.formKeys,
+          key: formKeys,
           child: Column(
             children: <Widget>[
               Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide( color: Colors.black87))
-                ),
+                    border: Border(bottom: BorderSide(color: Colors.black87))),
                 child: TextFormField(
-                  controller: addUserField.FullNameController,
+                  controller: FullNameController,
                   decoration: InputDecoration(
                       labelText: "Fullname",
                       hintText: "Please Insert Fullname",
                       hintStyle: TextStyle(color: Colors.black26),
                       border: InputBorder.none,
-                      prefixIcon: Icon(Icons.people)
-                  ),
+                      prefixIcon: Icon(Icons.people)),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Username Can not Empty!";
@@ -77,17 +56,15 @@ class _addUserFieldState extends State<addUserField> {
               Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide( color: Colors.black87))
-                ),
+                    border: Border(bottom: BorderSide(color: Colors.black87))),
                 child: TextFormField(
-                  controller: addUserField.UserNameController,
+                  controller: UserNameController,
                   decoration: InputDecoration(
                       labelText: "UserName",
                       hintText: "Please Insert Username",
                       hintStyle: TextStyle(color: Colors.black26),
                       border: InputBorder.none,
-                      prefixIcon: Icon(Icons.people)
-                  ),
+                      prefixIcon: Icon(Icons.people)),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Username Can not Empty!";
@@ -99,22 +76,20 @@ class _addUserFieldState extends State<addUserField> {
               Container(
                 padding: EdgeInsets.all(15),
                 decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.black87))
-                ),
+                    border: Border(bottom: BorderSide(color: Colors.black87))),
                 child: TextFormField(
-                  controller: addUserField.BirthDateController,
+                  controller: BirthDateController,
                   decoration: InputDecoration(
                       labelText: "BirthDate",
                       hintText: "Pleas Enter Your BirthDate",
                       hintStyle: TextStyle(color: Colors.black26),
                       border: InputBorder.none,
-                      icon: Icon(Icons.calendar_today)
-                  ),
+                      icon: Icon(Icons.calendar_today)),
                   readOnly: true,
                   onTap: () async {
                     DateTime? pickedDates = await showDatePicker(
-                      builder: (context, child) {
-                        return Theme(
+                        builder: (context, child) {
+                          return Theme(
                             data: Theme.of(context).copyWith(
                               colorScheme: ColorScheme.light(
                                   primary: Colors.lightBlue,
@@ -122,22 +97,22 @@ class _addUserFieldState extends State<addUserField> {
                                   onSurface: Colors.black),
                               textButtonTheme: TextButtonThemeData(
                                 style: TextButton.styleFrom(
-                                  foregroundColor: Colors.blueAccent
-                                ),
+                                    foregroundColor: Colors.blueAccent),
                               ),
                             ),
                             child: child!,
-                        );
-                      },
+                          );
+                        },
                         context: context,
                         initialDate: DateTime.now(),
                         firstDate: DateTime(1950),
                         lastDate: DateTime(2100));
 
                     if (pickedDates != null) {
-                      String formatedDates = DateFormat('yyyy-MM-dd').format(pickedDates);
+                      String formatedDates =
+                          DateFormat('yyyy-MM-dd').format(pickedDates);
                       setState(() {
-                        addUserField.BirthDateController.text = formatedDates;
+                        BirthDateController.text = formatedDates;
                       });
                     } else {}
                   },
@@ -152,17 +127,15 @@ class _addUserFieldState extends State<addUserField> {
               Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.black87))
-                ),
+                    border: Border(bottom: BorderSide(color: Colors.black87))),
                 child: TextFormField(
-                  controller: addUserField.AddressController,
+                  controller: AddressController,
                   decoration: InputDecoration(
                       labelText: "Address",
                       hintText: "Please Insert you address",
                       hintStyle: TextStyle(color: Colors.black26),
                       border: InputBorder.none,
-                      prefixIcon: Icon(Icons.location_city)
-                  ),
+                      prefixIcon: Icon(Icons.location_city)),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Address Can not Empty!";
@@ -174,48 +147,57 @@ class _addUserFieldState extends State<addUserField> {
               Container(
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      border: Border(bottom: BorderSide(color: Colors.black87))
-                  ),
+                      border:
+                          Border(bottom: BorderSide(color: Colors.black87))),
                   child: DropdownButtonFormField<String>(
                     value: dropDownValues,
                     items: [
-                      DropdownMenuItem( child: Text("--Selected Group--",style: TextStyle(color: Colors.black26),),value: ""),
-                      DropdownMenuItem( child: Text("MSDO Project"), value: "1",),
-                      DropdownMenuItem( child: Text("Development Project"), value: "2",),
+                      DropdownMenuItem(
+                          child: Text(
+                            "--Selected Group--",
+                            style: TextStyle(color: Colors.black26),
+                          ),
+                          value: ""),
+                      DropdownMenuItem(
+                        child: Text("MSDO Project"),
+                        value: "1",
+                      ),
+                      DropdownMenuItem(
+                        child: Text("Development Project"),
+                        value: "2",
+                      ),
                     ],
                     decoration: InputDecoration(
-                        border: InputBorder.none,
-                        prefixIcon: Icon(Icons.work)),
-                    onChanged: (value){
+                        border: InputBorder.none, prefixIcon: Icon(Icons.work)),
+                    onChanged: (value) {
                       setState(() {
                         dropDownValues = value!;
                         if (value.isNotEmpty) {
-                          addUserField.RolesController.text = "MEMBER";
+                          RolesController.text = "MEMBER";
+                        } else {
+                          RolesController.text = "";
                         }
                       });
                     },
-                    validator: (value){
+                    validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Please Select Project";
                       }
                       return null;
                     },
-                  )
-              ),
+                  )),
               Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide( color: Colors.black87))
-                ),
+                    border: Border(bottom: BorderSide(color: Colors.black87))),
                 child: TextFormField(
-                  controller: addUserField.RolesController,
+                  controller: RolesController,
                   decoration: InputDecoration(
                       labelText: "Roles",
                       hintText: "Please Insert Roles",
                       hintStyle: TextStyle(color: Colors.black26),
                       border: InputBorder.none,
-                      prefixIcon: Icon(Icons.people)
-                  ),
+                      prefixIcon: Icon(Icons.people)),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Roles Can not Empty!";
@@ -225,56 +207,54 @@ class _addUserFieldState extends State<addUserField> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.black87))
-                ),
-                child: IntlPhoneField(
-                  controller: addUserField.PhoneNumbersController,
-                  keyboardType: TextInputType.phone,
-                  focusNode: FocusNode(),
-                  dropdownTextStyle: TextStyle(fontSize: 18),
-                  style: TextStyle(fontSize: 18),
-                  decoration: InputDecoration(
-                    hintText: "Please insert you phone nummber",
-                    hintStyle: TextStyle(color: Colors.black26),
-                    border: InputBorder.none,
-                  ),
-                  initialCountryCode: 'ID',
-                  onChanged: (phone) {
-                    print(phone.completeNumber);
-                  },
-                  validator: (value) {
-                    if (value == null || value.completeNumber.isEmpty) {
-                      return "Phone Nummber Can not empty";
-                    }
-                    return null;
-                  },
-                )
-              ),
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  decoration: BoxDecoration(
+                      border:
+                          Border(bottom: BorderSide(color: Colors.black87))),
+                  child: IntlPhoneField(
+                    controller: PhoneNumbersController,
+                    keyboardType: TextInputType.phone,
+                    focusNode: FocusNode(),
+                    dropdownTextStyle: TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 18),
+                    decoration: InputDecoration(
+                      hintText: "Please insert you phone nummber",
+                      hintStyle: TextStyle(color: Colors.black26),
+                      border: InputBorder.none,
+                    ),
+                    initialCountryCode: 'ID',
+                    onChanged: (phone) {
+                      print(phone.completeNumber);
+                    },
+                    validator: (value) {
+                      if (value == null || value.completeNumber.isEmpty) {
+                        return "Phone Nummber Can not empty";
+                      }
+                      return null;
+                    },
+                  )),
               Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.black87))
-                ),
+                    border: Border(bottom: BorderSide(color: Colors.black87))),
                 child: TextFormField(
-                  controller: addUserField.EmailController,
+                  controller: EmailController,
                   decoration: InputDecoration(
                       labelText: "Email",
                       hintText: "Please Insert Your Email",
                       hintStyle: TextStyle(color: Colors.black26),
                       border: InputBorder.none,
-                      prefixIcon: Icon(Icons.mail)
-                  ),
+                      prefixIcon: Icon(Icons.mail)),
                   validator: (value) {
                     //validator format email
                     bool inValidEmail = RegExp(
-                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"
-                    ).hasMatch(value!);
+                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                        .hasMatch(value!);
 
                     if (value == null || value.isEmpty) {
                       return 'Email Can not empty!';
                     } else if (!inValidEmail) {
+                      EmailController.clear();
                       return "Incorrect Email format";
                     }
                     return null;
@@ -284,12 +264,12 @@ class _addUserFieldState extends State<addUserField> {
               Container(
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      border: Border(bottom: BorderSide(color: Colors.black87))
-                  ),
-                  child:TextFormField(
+                      border:
+                          Border(bottom: BorderSide(color: Colors.black87))),
+                  child: TextFormField(
                     obscureText: passHiding,
                     keyboardType: TextInputType.emailAddress,
-                    controller: addUserField.PassController,
+                    controller: PassController,
                     decoration: InputDecoration(
                       labelText: 'Password',
                       hintText: 'Please Insert your password',
@@ -297,11 +277,15 @@ class _addUserFieldState extends State<addUserField> {
                       border: InputBorder.none,
                       prefixIcon: Icon(Icons.lock),
                       suffixIcon: IconButton(
-                        icon: Icon(
-                            passHiding ? Icons.visibility_off
-                                : Icons.visibility),
-                        onPressed: () { setState( () {
-                          passHiding = !passHiding; },);
+                        icon: Icon(passHiding
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                        onPressed: () {
+                          setState(
+                            () {
+                              passHiding = !passHiding;
+                            },
+                          );
                         },
                       ),
                     ),
@@ -309,21 +293,20 @@ class _addUserFieldState extends State<addUserField> {
                       if (value == null || value.isEmpty) {
                         return 'Password can not empty!';
                       } else if (value.length <= 8) {
+                        PassController.clear();
                         return 'Password Should be greater than 8 characters';
                       }
                       return null;
                     },
-                  )
-              ),
+                  )),
               Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.black87))
-                ),
+                    border: Border(bottom: BorderSide(color: Colors.black87))),
                 child: TextFormField(
                   obscureText: passHiding,
                   keyboardType: TextInputType.emailAddress,
-                  controller: addUserField.ConfPassController,
+                  controller: ConfPassController,
                   decoration: InputDecoration(
                     labelText: ' Confirm Password',
                     hintText: 'Please Insert your password',
@@ -332,21 +315,25 @@ class _addUserFieldState extends State<addUserField> {
                     prefixIcon: Icon(Icons.lock),
                     suffixIcon: IconButton(
                       icon: Icon(
-                          passHiding ? Icons.visibility_off
-                              : Icons.visibility),
-                      onPressed: () { setState( () {
-                        passHiding = !passHiding; },);
+                          passHiding ? Icons.visibility_off : Icons.visibility),
+                      onPressed: () {
+                        setState(
+                          () {
+                            passHiding = !passHiding;
+                          },
+                        );
                       },
                     ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Password can not empty!';
-                    } else if (value != addUserField.PassController) {
-                      return "Sorry Password Not Match!";
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (value == null || value.isEmpty) {
+                  //     return 'Password can not empty!';
+                  //   } else if (value != PassController.text) {
+                  //     ConfPassController.clear();
+                  //     return "Sorry Password Not Match!";
+                  //   }
+                  //   return null;
+                  // },
                 ),
               )
             ],

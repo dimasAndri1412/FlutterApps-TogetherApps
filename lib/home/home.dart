@@ -1,3 +1,4 @@
+import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -63,9 +64,11 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     TextField(
+                      controller: emailController,
+                      style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.bold),
                       decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(left: 35, top: 46),
-                      hintText: "Razu",
+                      hintText: "RAZU",
                       hintStyle: TextStyle(color: Colors.white, fontSize: 25),
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,
