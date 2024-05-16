@@ -92,6 +92,12 @@ class _ListUserState extends State<ListUser> {
                   motion: BehindMotion(), 
                   children: [
                     SlidableAction(
+                      backgroundColor: Colors.blue,
+                      icon: Icons.edit,
+                      label: "Edit",
+                      onPressed: (context) => _onDissmissed(),
+                    ),
+                    SlidableAction(
                       backgroundColor: Colors.red,
                       icon: Icons.delete,
                       label: "Delete",
