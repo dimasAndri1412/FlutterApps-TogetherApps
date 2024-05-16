@@ -7,6 +7,7 @@ import '../home/ApplicationBar.dart';
 
 class LoginController{
   String? alert, username, password, role;
+
   var dataUser;
 
   Future doLogin() async {
