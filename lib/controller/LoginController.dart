@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:absent_project/controller/Keys.dart';
+import 'package:absent_project/home/Userhome.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../home/ApplicationBar.dart';
@@ -32,7 +33,8 @@ class LoginController{
           if (role == "admin") {
             Get.to(() => const ApplicationBar());
           } else {
-            print("Go to userhome page");
+            print("Go to member home page, cuk");
+            /*Get.to(() => const UserHome());*/
           }
         }
     }catch(Exception){

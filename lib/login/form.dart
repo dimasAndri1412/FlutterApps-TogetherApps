@@ -14,38 +14,6 @@ class myForm extends StatefulWidget {
 
 class _myFormState extends State<myForm> {
 
- /* String? alert, username, password, role;
-  Future doLogin() async {
-    String usernameInput = emailController.text;
-    String passwordInput = passwordController.text;
-
-    if(formKey.currentState!.validate()) {
-      var url = Uri.parse("http://192.168.100.214/FlutterAPI/AdminLogin.php");
-      var response = await http.post(url, body: {
-        "username": usernameInput,
-        "password": passwordInput
-      });
-
-      var dataUser = jsonDecode(response.body);
-      if(LoginController().dataUser.length > 1){
-        setState(() {
-          alert = "You can't login";
-        });
-      }else{
-        setState(() {
-          username = LoginController().dataUser[0]['USERNAME'];
-          password = LoginController().dataUser[0]['PASSWORD'];
-          role = LoginController().dataUser[0]['ROLE'];
-        });
-
-        if(role == "admin"){
-          Get.to(() => ApplicationBar());
-        }else{
-          Get.to(const UserHome());
-        }
-      }
-    }
-  }*/
 
   bool passwordObscured = true;
 
