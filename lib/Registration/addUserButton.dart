@@ -5,18 +5,20 @@ import '../controller/Keys.dart';
 import 'package:http/http.dart' as http;
 
 _simpan() async {
-  final response = await http
-      .post(Uri.parse("http://192.168.2.159/FlutterAPI/create.php"), body: {
-    "full_name": FullNameController.text,
-    "USERNAME": UserNameController.text,
-    "birth_date": BirthDateController.text,
-    "address": AddressController.text,
-    // "grup": addUserField.grupController.text,
-    "ROLE": RolesController.text,
-    "phone_number": PhoneNumbersController.text,
-    "email_address": EmailController.text,
-    "PASSWORD": PassController.text
-  });
+  final response = await http.post(
+    Uri.parse("http://192.168.2.159/FlutterAPI/create.php"),
+    body: {
+      "full_name": FullNameController.text,
+      "USERNAME": UserNameController.text,
+      "birth_date": BirthDateController.text,
+      "address": AddressController.text,
+      // "grup": addUserField.grupController.text,
+      "ROLE": RolesController.text,
+      "phone_number": PhoneNumbersController.text,
+      "email_address": EmailController.text,
+      "PASSWORD": PassController.text
+    },
+  );
 }
 
 class addUserButton extends StatefulWidget {
