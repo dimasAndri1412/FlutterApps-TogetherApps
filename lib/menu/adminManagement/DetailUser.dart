@@ -164,7 +164,7 @@ class _DetailUserState extends State<DetailUser> {
     );
   }
 
-//SCRIPT PUNYA RAZU untuk button pada form//
+//SCRIPT PUNYA RAZU untuk button pada form //
 /* itemProfile(String title, String subtitle) {
     return Container(
       decoration: BoxDecoration(
