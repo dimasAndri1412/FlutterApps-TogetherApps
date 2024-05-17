@@ -17,13 +17,13 @@ class _addUserButtonState extends State<addUserButton> {
         GestureDetector(
           onTap: () {
             if (formKeys.currentState!.validate()) {
-              save_func().savefunc().then((value) {
+              ctr_data().savefunc().then((value) {
                 if (value) {
                   final snackBar = SnackBar(
                     content: const Text('Data Berhasil Disimpan'),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  save_func().clear_func();
+                  ctr_data().clear_func();
                 } else {
                   final snackBar = SnackBar(
                     content: const Text('Data Gagal Disimpan'),
