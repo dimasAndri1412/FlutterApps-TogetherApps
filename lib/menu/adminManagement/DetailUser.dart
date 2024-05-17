@@ -95,7 +95,7 @@ class _DetailUserState extends State<DetailUser> {
               itemProfile('Work Schedule', '-'),
 
               SizedBox(height: 30,),
-              Text("Login & Security", style: TextStyle(fontWeight: FontWeight.bold),),
+              Text("LoginController & Security", style: TextStyle(fontWeight: FontWeight.bold),),
               const SizedBox(height: 10),
               itemProfile('Email', 'rarazu@gmail.com'),
               const SizedBox(height: 20),
