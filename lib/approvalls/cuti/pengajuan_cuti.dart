@@ -31,7 +31,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
         ),
         elevation: 0,
         title: Text(
-          "Form Pengajuan Cuti",
+          "Leave Application Form",
           style: TextStyle(
               fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
         ),

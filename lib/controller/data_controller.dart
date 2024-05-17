@@ -1,7 +1,8 @@
 import 'Keys.dart';
 import 'package:http/http.dart' as http;
 
-class save_func {
+class ctr_data {
+  //fungsi untuk melakukan penyimpanan data//
   savefunc() async {
     final response = await http.post(
       Uri.parse("http://192.168.2.159/FlutterAPI/create.php"),
@@ -10,7 +11,7 @@ class save_func {
         "USERNAME": UserNameController.text,
         "birth_date": BirthDateController.text,
         "address": AddressController.text,
-        // "grup": addUserField.grupController.text,
+        "grup": ProjectController.text,
         "ROLE": RolesController.text,
         "phone_number": PhoneNumbersController.text,
         "email_address": EmailController.text,
@@ -23,6 +24,7 @@ class save_func {
     return false;
   }
 
+  //fungsi untuk melakukan penghapusan data//
   clear_func() {
     FullNameController.clear();
     UserNameController.clear();
@@ -33,5 +35,33 @@ class save_func {
     EmailController.clear();
     PassController.clear();
     ConfPassController.clear();
+    ProjectController.clear();
   }
 }
+
+//funsi untuk melakukan update data//
+/*class update_func {
+  List listdata = [];
+
+  getdata() async {
+    try {
+      final response = await http
+          .get(Uri.parse("http://192.168.2.159/FlutterAPI/read.php"));
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        setState(() {
+          listdata = data;
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    getdata();
+    print(listdata)
+    super.initState();
+  }
+}*/

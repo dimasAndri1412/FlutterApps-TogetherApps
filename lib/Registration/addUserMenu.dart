@@ -3,6 +3,7 @@ import 'package:absent_project/Registration/addUserWrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../controller/Keys.dart';
+import '../controller/projectListContoller.dart';
 import 'package:get/get.dart';
 
 class addUserMenu extends StatelessWidget {
@@ -15,6 +16,12 @@ class addUserMenu extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              _showConfirmDialog(context);
+            },
+            icon: Icon(Icons.arrow_back_ios,color: Colors.white,),
+          ),
           backgroundColor: Color.fromARGB(255, 98, 171, 232),
           iconTheme: IconThemeData(color: Colors.white),
           title: Text(
@@ -92,7 +99,7 @@ class addUserMenu extends StatelessWidget {
               ),
               TextButton(onPressed: (){
                 Get.back();
-                _clearUserData();
+                CleanUserData();
                 Get.back();
               },
                   child:Text("YES",style:
@@ -104,16 +111,5 @@ class addUserMenu extends StatelessWidget {
           );
         }
     );
-  }
-  void _clearUserData() {
-    FullNameController.clear();
-    UserNameController.clear();
-    BirthDateController.clear();
-    AddressController.clear();
-    RolesController.clear();
-    PhoneNumbersController.clear();
-    EmailController.clear();
-    PassController.clear();
-    ConfPassController.clear();
   }
 }
