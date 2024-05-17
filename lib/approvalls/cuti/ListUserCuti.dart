@@ -1,3 +1,4 @@
+import 'package:absent_project/approvalls/cuti/DetailCutiUser.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -69,7 +70,17 @@ class _ListUserCutiState extends State<ListUserCuti> {
                     // DataCell(Text((index + 1).toString())), // Item Count
                     DataCell(Text(data[index]['name']! , maxLines: 2,)),
                     DataCell(Text(data[index]['date']!)),
-                    DataCell(IconButton(onPressed: (){}, icon: Icon(Icons.list_alt), color: Colors.blue,)),
+                    DataCell(IconButton(
+                      onPressed: (){
+                        Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const DetailCutiUser()),
+                      );
+                      }, 
+                      icon: Icon(Icons.timer_sharp), 
+                      color: Color.fromARGB(255, 238, 198, 42),
+                    )),
                   ],
                 ),
               ),
