@@ -1,6 +1,7 @@
 import 'package:absent_project/controller/data_controller.dart';
 import 'package:flutter/material.dart';
 import '../controller/Keys.dart';
+import '../controller/sendingEmail.dart';
 
 class addUserButton extends StatefulWidget {
   const addUserButton({super.key});
@@ -23,6 +24,7 @@ class _addUserButtonState extends State<addUserButton> {
                     content: const Text('Data Berhasil Disimpan'),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  sendingEmail().SendingEmail();
                   ctr_data().clear_func();
                 } else {
                   final snackBar = SnackBar(
