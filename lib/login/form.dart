@@ -1,4 +1,4 @@
-import 'package:absent_project/controller/LoginController.dart';
+import 'package:absent_project/controller/LoginController/LoginController.dart';
 import 'package:flutter/material.dart';
 import '../controller/Keys.dart';
 
@@ -156,7 +156,7 @@ class _myFormState extends State<myForm> {
                             ),
                             child: const Center(
                               child: Text(
-                                  "Login", style: TextStyle(
+                                  "LoginController", style: TextStyle(
                                   color: Colors.white)),
                             ),
                           ),

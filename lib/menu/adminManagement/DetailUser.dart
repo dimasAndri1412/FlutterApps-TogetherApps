@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:faker/faker.dart';
+/*import 'package:faker/faker.dart';*/
 
 class DetailUser extends StatefulWidget {
   const DetailUser({super.key});
@@ -13,12 +13,12 @@ class _DetailUserState extends State<DetailUser> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:Text(
+        title:const Text(
           "Rara Zahra Urava",
           style: TextStyle(fontSize: 15),
         ),
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
                   colors: [
                     Color.fromARGB(255, 147, 195, 234),
@@ -31,7 +31,7 @@ class _DetailUserState extends State<DetailUser> {
         elevation: 0,
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 15, top: 20, right: 15),
+        padding: const EdgeInsets.only(left: 15, top: 20, right: 15),
         child: GestureDetector(
           onTap: (){
             FocusScope.of(context).unfocus();
@@ -54,7 +54,7 @@ class _DetailUserState extends State<DetailUser> {
                           )
                         ],
                         shape: BoxShape.circle,
-                        image: DecorationImage(
+                        image: const DecorationImage(
                           fit: BoxFit.cover,
                           image : NetworkImage("https://picsum.photos/id/1/200/300")
                         )
@@ -74,7 +74,7 @@ class _DetailUserState extends State<DetailUser> {
                           ),
                           color: Colors.blue
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.edit,
                           color: Colors.white,
                         ),
@@ -94,15 +94,15 @@ class _DetailUserState extends State<DetailUser> {
               const SizedBox(height: 10,),
               itemProfile('Work Schedule', '-'),
 
-              SizedBox(height: 30,),
-              Text("Login & Security", style: TextStyle(fontWeight: FontWeight.bold),),
+              const SizedBox(height: 30,),
+              const Text("LoginController & Security", style: TextStyle(fontWeight: FontWeight.bold),),
               const SizedBox(height: 10),
               itemProfile('Email', 'rarazu@gmail.com'),
               const SizedBox(height: 20),
               itemProfile('Phone Number', '1234567'),
 
-              SizedBox(height: 30,),
-              Text("Date & Time", style: TextStyle(fontWeight: FontWeight.bold),),
+              const SizedBox(height: 30,),
+              const Text("Date & Time", style: TextStyle(fontWeight: FontWeight.bold),),
               const SizedBox(height: 10),
               itemProfile('Timezone', '-'),
               const SizedBox(height: 20),
@@ -121,8 +121,8 @@ class _DetailUserState extends State<DetailUser> {
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-                offset: Offset(0, 5),
-                color: Color.fromARGB(255, 144, 200, 245).withOpacity(.2),
+                offset: const Offset(0, 5),
+                color: const Color.fromARGB(255, 144, 200, 245).withOpacity(.2),
                 spreadRadius: 2,
                 blurRadius: 10
             )
