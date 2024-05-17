@@ -1,8 +1,8 @@
 import 'Keys.dart';
 import 'package:http/http.dart' as http;
 
-//funsi untuk melakukan penyimpanan data//
-class save_func {
+class ctr_data {
+  //fungsi untuk melakukan penyimpanan data//
   savefunc() async {
     final response = await http.post(
       Uri.parse("http://192.168.2.159/FlutterAPI/create.php"),
@@ -24,6 +24,7 @@ class save_func {
     return false;
   }
 
+  //fungsi untuk melakukan penghapusan data//
   clear_func() {
     FullNameController.clear();
     UserNameController.clear();

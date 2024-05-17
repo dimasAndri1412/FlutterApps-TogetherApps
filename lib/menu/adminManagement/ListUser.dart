@@ -9,6 +9,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:http/http.dart' as http;
 import 'package:absent_project/menu/adminManagement/DetailUser.dart';
 
+import '../../controller/ListUserController/ListUserController.dart';
+
 class ListUser extends StatefulWidget {
   const ListUser({super.key});
 
@@ -17,6 +19,12 @@ class ListUser extends StatefulWidget {
 }
 
 class _ListUserState extends State<ListUser> {
+
+  @override
+  void initState() {
+    super.initState();
+    ListUserContoller().getUsers(); // Fetch user list when the widget is initialized
+  }
 
   List<dynamic> users = [];
   var faker = new Faker();
@@ -83,38 +91,42 @@ class _ListUserState extends State<ListUser> {
             )
             ],
           ),
-          Expanded(
-            child : ListView.builder(
-            itemCount: 35,
-            itemBuilder: (context, index){
-              return Slidable(
-                endActionPane: ActionPane(
-                  motion: BehindMotion(), 
-                  children: [
-                    SlidableAction(
-                      backgroundColor: Colors.blue,
-                      icon: Icons.edit,
-                      label: "Edit",
-                      onPressed: (context) => _onDissmissed(),
-                    ),
-                    SlidableAction(
-                      backgroundColor: Colors.red,
-                      icon: Icons.delete,
-                      label: "Delete",
-                      onPressed: (context) => _onDissmissed(),
-                    )
-                  ]
-                ),
-                child: UserItem
-               (
-                imageUrl: "https://picsum.photos/id/$index/200/300",
-                title: faker.person.name(),
-                subtitle: "-",
-              ),
-            );   
-            }
-          )
-          )
+          FutureBuilder(
+              future: ListUserContoller().getUsers(),
+              builder: (context, snapshot) {
+                if (snapshot.data == null ){
+                  return const Text("Loading..");
+                }else {
+                  return Expanded(
+                      child: ListView.builder(
+                          itemCount: snapshot.data?.length,
+                          itemBuilder: (context, int index) {
+                            return Slidable(
+                              endActionPane: ActionPane(
+                                  motion: BehindMotion(),
+                                  children: [
+                                    SlidableAction(
+                                      backgroundColor: Colors.red,
+                                      icon: Icons.delete,
+                                      label: "Delete",
+                                      onPressed: (context) => _onDissmissed(),
+                                    )
+                                  ]
+                              ),
+                              child: UserItem
+                                (
+                                imageUrl: "https://picsum.photos/id/$index/200/300",
+                                subtitle: snapshot.data![index].grup,
+                                title:snapshot.data![index].username,
+                              ),
+                            );
+                          }
+                      )
+                  );
+                }
+              },
+          ),
+
           // FloatingActionButton(onPressed: fetchUser),
           // Expanded(
           //   child : ListView.builder(
@@ -149,9 +161,10 @@ class _ListUserState extends State<ListUser> {
         backgroundColor: Color.fromARGB(255, 139, 190, 232),
         child: const Icon(Icons.add),
       ),
-    ); 
+    );
   }
 }
+
 
 //   void fetchUser() async {
 //     print('tes');
@@ -173,6 +186,7 @@ class UserItem
   final String imageUrl;
   final String title;
   final String subtitle;
+
 
   UserItem
   ({super.key, 
