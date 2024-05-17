@@ -100,7 +100,7 @@ class _ListUserState extends State<ListUser> {
                   return Expanded(
                       child: ListView.builder(
                           itemCount: snapshot.data?.length,
-                          itemBuilder: (context, index) {
+                          itemBuilder: (context, int index) {
                             return Slidable(
                               endActionPane: ActionPane(
                                   motion: BehindMotion(),
@@ -116,7 +116,7 @@ class _ListUserState extends State<ListUser> {
                               child: UserItem
                                 (
                                 imageUrl: "https://picsum.photos/id/$index/200/300",
-                                subtitle: "-",
+                                subtitle: snapshot.data![index].grup,
                                 title:snapshot.data![index].username,
                               ),
                             );
@@ -165,6 +165,7 @@ class _ListUserState extends State<ListUser> {
   }
 }
 
+
 //   void fetchUser() async {
 //     print('tes');
 //     const url = 'https://randomuser.me/api/?results=20';
@@ -185,6 +186,7 @@ class UserItem
   final String imageUrl;
   final String title;
   final String subtitle;
+
 
   UserItem
   ({super.key, 
