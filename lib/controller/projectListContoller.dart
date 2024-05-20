@@ -3,19 +3,21 @@ import 'package:get/get.dart';
 import 'Keys.dart';
 
 
-//LIST Controller
-void CleanUserData() {
-  FullNameController.clear();
-  UserNameController.clear();
-  BirthDateController.clear();
-  AddressController.clear();
-  RolesController.clear();
-  PhoneNumbersController.clear();
-  EmailController.clear();
-  PassController.clear();
-  ConfPassController.clear();
-  ProjectController.clear();
-}
+final String bodyEmails = "HI,${FullNameController.text}\n"
+                          "\n"
+                          "YOUR GOT DEFAULT USER :"
+                          "\n"
+                          "====================================================\n"
+                          "USERNAME : ${UserNameController.text}\n"
+                          "PASSWORD : ${PassController.text}\n"
+                          "====================================================\n"
+                          "\n"
+                          "PLEASE CHANGES YOUR DEFAULT PASSWORD TO YOUR PASSWORD NOW!\n"
+                          "FOR NEXT LOGIN USE YOUR PASSWORD HAS CHANGES\n"
+                          "\n"
+                          "Thanks you\n"
+                          "Best Regard\n"
+                          "ADMIN";
 
 
 

@@ -2,8 +2,8 @@ import 'package:absent_project/Registration/addUserHeader.dart';
 import 'package:absent_project/Registration/addUserWrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../controller/data_controller.dart';
 import '../controller/Keys.dart';
-import '../controller/projectListContoller.dart';
 import 'package:get/get.dart';
 
 class addUserMenu extends StatelessWidget {
@@ -99,7 +99,7 @@ class addUserMenu extends StatelessWidget {
               ),
               TextButton(onPressed: (){
                 Get.back();
-                CleanUserData();
+                ctr_data().clear_func();
                 Get.back();
               },
                   child:Text("YES",style:
