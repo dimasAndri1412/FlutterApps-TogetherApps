@@ -28,7 +28,6 @@ class _addUserButtonState extends State<addUserButton> {
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   sendingEmail().sendingEmailFunc();
-                  Get.to(ChangesPasswordMenu());
                   ctr_data().clear_func();
                 } else {
                   final snackBar = SnackBar(

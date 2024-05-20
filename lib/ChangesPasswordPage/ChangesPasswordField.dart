@@ -37,6 +37,7 @@ class _ChangesPasswordFieldState extends State<ChangesPasswordField> {
                 border: Border(bottom: BorderSide(color: Colors.black87))
             ),
             child: TextFormField(
+              controller: PassController,
               obscureText: passHide,
               decoration: InputDecoration(
                   border: InputBorder.none,
