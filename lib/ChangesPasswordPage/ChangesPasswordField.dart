@@ -37,41 +37,6 @@ class _ChangesPasswordFieldState extends State<ChangesPasswordField> {
                 border: Border(bottom: BorderSide(color: Colors.black87))
             ),
             child: TextFormField(
-              controller: PassController,
-              obscureText: passHide,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  labelText: "Old Password",
-                  hintText: "Please Insert your Default password",
-                  hintStyle: TextStyle(
-                    color: Colors.black12,
-                  ),
-                  prefixIcon: Icon(Icons.lock),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                        passHide ? Icons.visibility_off :
-                        Icons.visibility
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        passHide = !passHide;
-                      });
-                    },
-                  )
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return "Password Can not Empty!";
-                }
-              },
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.black87))
-            ),
-            child: TextFormField(
               controller: NewPasswordContorller,
               obscureText: passHide,
               decoration: InputDecoration(
@@ -83,15 +48,16 @@ class _ChangesPasswordFieldState extends State<ChangesPasswordField> {
                   ),
                   prefixIcon: Icon(Icons.lock),
                   suffixIcon: IconButton(
-                    icon: Icon(
-                        passHide ? Icons.visibility_off :
-                        Icons.visibility
-                    ),
                     onPressed: () {
                       setState(() {
                         passHide = !passHide;
                       });
+
                     },
+                    icon: Icon(
+                        passHide ? Icons.visibility_off :
+                        Icons.visibility
+                    ),
                   )
               ),
               validator: (value) {
@@ -118,15 +84,15 @@ class _ChangesPasswordFieldState extends State<ChangesPasswordField> {
                   ),
                   prefixIcon: Icon(Icons.lock),
                   suffixIcon: IconButton(
-                    icon: Icon(
-                        passHide ? Icons.visibility_off :
-                        Icons.visibility
-                    ),
                     onPressed: () {
                       setState(() {
                         passHide = !passHide;
                       });
                     },
+                    icon: Icon(
+                        passHide ? Icons.visibility_off :
+                        Icons.visibility
+                    ),
                   )
               ),
               validator: (value) {
