@@ -69,6 +69,10 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                           DataCell(Text("Jalan - jalan")),
                           DataCell(Text("2024-12-12")),
                           DataCell(ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Color.fromARGB(255, 98, 171, 232),
+                            ),
                             child: Row(
                               children: [
                                 Icon(Icons.download),
@@ -84,6 +88,10 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                           DataCell(Text("Pergi ke RS")),
                           DataCell(Text("2024-12-12")),
                           DataCell(ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Color.fromARGB(255, 98, 171, 232),
+                            ),
                             child: Row(
                               children: [
                                 Icon(Icons.download),
@@ -99,6 +107,10 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                           DataCell(Text("urus SIM dan STNK")),
                           DataCell(Text("2024-12-12")),
                           DataCell(ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Color.fromARGB(255, 98, 171, 232),
+                            ),
                             child: Row(
                               children: [
                                 Icon(Icons.download),
@@ -136,7 +148,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
 
   void downloadFile() async {
     var time = DateTime.now().millisecondsSinceEpoch;
-    var path = "/storage/emulator/0/Download/images-$time.jpg";
+    var path = "/storage/emulated/0/Download/images-$time.jpg";
     var file = File(path);
     var res = await get(Uri.parse("https://source.unsplash.com/random"));
     file.writeAsBytes(res.bodyBytes);

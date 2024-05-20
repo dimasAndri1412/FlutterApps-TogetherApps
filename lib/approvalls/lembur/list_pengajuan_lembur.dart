@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:absent_project/approvalls/lembur/pengajuan_lembur.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class ListPengajuanLembur extends StatefulWidget {
   const ListPengajuanLembur({super.key});
@@ -66,17 +69,59 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                         DataRow(cells: [
                           DataCell(Text("Abie sakit")),
                           DataCell(Text("2024-12-12")),
-                          DataCell(Text("")),
+                          DataCell(ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Color.fromARGB(255, 98, 171, 232),
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(Icons.download),
+                                Text("Download PDF")
+                              ],
+                            ),
+                            onPressed: () {
+                              downloadFile();
+                            },
+                          )),
                         ]),
                         DataRow(cells: [
                           DataCell(Text("Febri pusing")),
                           DataCell(Text("2024-12-12")),
-                          DataCell(Text("")),
+                          DataCell(ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Color.fromARGB(255, 98, 171, 232),
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(Icons.download),
+                                Text("Download PDF")
+                              ],
+                            ),
+                            onPressed: () {
+                              downloadFile();
+                            },
+                          )),
                         ]),
                         DataRow(cells: [
                           DataCell(Text("Motor Iqbal meledak")),
                           DataCell(Text("2024-12-12")),
-                          DataCell(Text("")),
+                          DataCell(ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Color.fromARGB(255, 98, 171, 232),
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(Icons.download),
+                                Text("Download PDF")
+                              ],
+                            ),
+                            onPressed: () {
+                              downloadFile();
+                            },
+                          )),
                         ]),
                       ],
                     ),
@@ -100,5 +145,13 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
+  }
+
+  void downloadFile() async {
+    var time = DateTime.now().millisecondsSinceEpoch;
+    var path = "/storage/emulated/0/Download/images-$time.jpg";
+    var file = File(path);
+    var res = await get(Uri.parse("https://source.unsplash.com/random"));
+    file.writeAsBytes(res.bodyBytes);
   }
 }
