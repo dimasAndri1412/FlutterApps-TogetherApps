@@ -19,11 +19,11 @@ class _ChangesPasswordButtonsState extends State<ChangesPasswordButtons> {
       children: <Widget>[
         GestureDetector(
           onTap: () {
-            if (formsKeys.currentState!.validate()){
-              ctr_data().savefunc().then((value){
+            if (formsKeys.currentState!.validate()) {
+              ctr_data().update_pwd().then((value) {
                 if (value) {
-                  final snackBar = SnackBar(
-                      content: const Text("Password Success Changes"));
+                  final snackBar =
+                      SnackBar(content: const Text("Password Success Changes"));
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   ctr_data().clear_func();
                   Get.offAll(() => const LoginPage());
@@ -44,11 +44,14 @@ class _ChangesPasswordButtonsState extends State<ChangesPasswordButtons> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Center(
-                child: Text('SAVE',style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15, fontWeight: FontWeight.bold),),
-              )
-          ),
+                child: Text(
+                  'SAVE',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold),
+                ),
+              )),
         ),
       ],
     );
