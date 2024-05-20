@@ -33,6 +33,8 @@ class ctr_data {
     RolesController.clear();
     PhoneNumbersController.clear();
     EmailController.clear();
+    NewConfPasswordController.clear();
+    NewPasswordContorller.clear();
     PassController.clear();
     ConfPassController.clear();
     ProjectController.clear();

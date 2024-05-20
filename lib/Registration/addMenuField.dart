@@ -198,6 +198,7 @@ class _addUserFieldState extends State<addUserField> {
                     border: Border(bottom: BorderSide(color: Colors.black87))),
                 child: TextFormField(
                   controller: RolesController,
+                  readOnly: true,
                   decoration: InputDecoration(
                       labelText: "Roles",
                       hintText: "Please Insert Roles",
@@ -218,6 +219,7 @@ class _addUserFieldState extends State<addUserField> {
                     border: Border(bottom: BorderSide(color: Colors.black87))),
                 child: TextFormField(
                   controller: ProjectController,
+                  readOnly: true,
                   decoration: InputDecoration(
                       labelText: "Project",
                       hintText: "Please Insert Project",

@@ -1,5 +1,8 @@
+import 'package:absent_project/ChangesPasswordPage/ChangesPasswordMenu.dart';
 import 'package:absent_project/controller/data_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../controller/Keys.dart';
 import '../controller/sendingEmailfunc.dart';
 
@@ -25,6 +28,7 @@ class _addUserButtonState extends State<addUserButton> {
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   sendingEmail().sendingEmailFunc();
+                  Get.to(ChangesPasswordMenu());
                   ctr_data().clear_func();
                 } else {
                   final snackBar = SnackBar(
