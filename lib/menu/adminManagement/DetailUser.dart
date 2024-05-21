@@ -1,15 +1,11 @@
-import 'package:absent_project/controller/ListUserController/ListUserController.dart';
+import 'package:absent_project/controller/ListAndDetailUserController/UserList.dart';
 import 'package:flutter/material.dart';
-import 'package:faker/faker.dart';
 
-class DetailUser extends StatefulWidget {
-  const DetailUser({super.key});
+class DetailUser extends StatelessWidget {
+  final UserList userList;
+  DetailUser({super.key,
+  required this.userList});
 
-  @override
-  State<DetailUser> createState() => _DetailUserState();
-}
-
-class _DetailUserState extends State<DetailUser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,88 +25,87 @@ class _DetailUserState extends State<DetailUser> {
         ),
         elevation: 0,
       ),
-      body: Container(
-        padding: const EdgeInsets.only(left: 15, top: 20, right: 15),
-        child: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
-          child: ListView(
-            children: [
-              Center(
-                child: Stack(
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: ListView(
+                children: [ Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Container(
-                      width: 90,
-                      height: 90,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 4, color: Colors.white),
-                          boxShadow: [
-                            BoxShadow(
-                                spreadRadius: 2,
-                                blurRadius: 10,
-                                color: Colors.black.withOpacity(0.1))
-                          ],
-                          shape: BoxShape.circle,
-                          image: const DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  "https://picsum.photos/id/1/200/300"))),
-                    ),
-                    Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
+                    Center(
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: 90,
+                            height: 90,
+                            decoration: BoxDecoration(
                               border: Border.all(width: 4, color: Colors.white),
-                              color: Colors.blue),
-                          child: const Icon(
-                            Icons.edit,
-                            color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  spreadRadius: 2,
+                                  blurRadius: 10,
+                                  color: Colors.black.withOpacity(0.1),
+                                )
+                              ],
+                              shape: BoxShape.circle,
+                              image: const DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage("https://picsum.photos/id/1/200/300"),
+                              ),
+                            ),
                           ),
-                        ))
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(width: 4, color: Colors.white),
+                                color: Colors.blue,
+                              ),
+                              child: const Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    itemProfile('Username', userList.username),
+                    const SizedBox(height: 10),
+                    itemProfile('Full Name', userList.fullname),
+                    const SizedBox(height: 10),
+                    itemProfile('Role', userList.role),
+                    const SizedBox(height: 10),
+                    itemProfile('Group', userList.grup),
+                    const SizedBox(height: 10),
+                    itemProfile('Work Schedule', "tomorrow"),
+                    const SizedBox(height: 30),
+                    const Text(
+                      "Login & Security",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10),
+                    itemProfile('Email', userList.email),
+                    const SizedBox(height: 20),
+                    itemProfile('Phone Number', userList.phoneNumber),
+                    const SizedBox(height: 30),
+                    const Text(
+                      "Date & Time",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10),
+                    itemProfile('Timezone', "-"),
+                    const SizedBox(height: 20),
+                    itemProfile('Timesheet Timezone', "-"),
                   ],
                 ),
-              ),
-              const SizedBox(height: 20),
-              itemProfile('Username', 'Rarazu'),
-              const SizedBox(height: 10),
-              itemProfile('Name', 'Rara Zahra Urava'),
-              const SizedBox(height: 10),
-              itemProfile('Role', 'Member'),
-              const SizedBox(height: 10),
-              itemProfile('Group', '-'),
-              const SizedBox(
-                height: 10,
-              ),
-              itemProfile('Work Schedule', '-'),
-              const SizedBox(
-                height: 30,
-              ),
-              const Text(
-                "Login & Security",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              itemProfile('Email', 'rarazu@gmail.com'),
-              const SizedBox(height: 20),
-              itemProfile('Phone Number', '1234567'),
-              const SizedBox(
-                height: 30,
-              ),
-              const Text(
-                "Date & Time",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              itemProfile('Timezone', '-'),
-              const SizedBox(height: 20),
-              itemProfile('Timesheet Timezone', '-'),
-            ],
-          ),
+                ],
         ),
       ),
     );
@@ -119,18 +114,20 @@ class _DetailUserState extends State<DetailUser> {
   Widget itemProfile(String title, String subtitle) {
     return GestureDetector(
       onTap: () {
-        openDialog();
+        /*openDialog();*/
       },
       child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 5),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-                offset: const Offset(0, 5),
-                color: const Color.fromARGB(255, 144, 200, 245).withOpacity(.2),
-                spreadRadius: 2,
-                blurRadius: 10),
+              offset: const Offset(0, 5),
+              color: const Color.fromARGB(255, 144, 200, 245).withOpacity(.2),
+              spreadRadius: 2,
+              blurRadius: 10,
+            )
           ],
         ),
         child: ListTile(
@@ -143,9 +140,9 @@ class _DetailUserState extends State<DetailUser> {
     );
   }
 
-  void openDialog() {
+ /* void openDialog() {
     showDialog(
-      context: context,
+      context: BuildContext,
       builder: (context) => AlertDialog(
         backgroundColor: Colors.white,
         title: const Text(
@@ -156,35 +153,13 @@ class _DetailUserState extends State<DetailUser> {
         actions: [
           TextButton(
             onPressed: () {},
-            child:
-                const Text("Update", style: TextStyle(fontWeight: FontWeight.bold)),
+            child: const Text(
+              "Update",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
         ],
-      ),
-    );
-  }
-
-//SCRIPT PUNYA RAZU untuk button pada form //
-/* itemProfile(String title, String subtitle) {
-    return Container(
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-                offset: Offset(0, 5),
-                color: Color.fromARGB(255, 144, 200, 245).withOpacity(.2),
-                spreadRadius: 2,
-                blurRadius: 10
-            )
-          ]
-      ),
-      child: ListTile(
-        title: Text(title),
-        subtitle: Text(subtitle),
-        trailing: Icon(Icons.chevron_right, color: Colors.grey.shade400),
-        tileColor: Colors.white,
-      ),
+      ),*//*
     );
   }*/
 }
