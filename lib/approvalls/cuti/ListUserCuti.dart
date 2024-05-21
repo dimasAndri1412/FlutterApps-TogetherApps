@@ -12,15 +12,35 @@ class ListUserCuti extends StatefulWidget {
 }
 
 class _ListUserCutiState extends State<ListUserCuti> {
+  final faker = Faker();
+  late List<Map<String, dynamic>> data;
+
   @override
-  Widget build(BuildContext context) {
-    final faker = Faker();
-    final List<Map<String, String>> data = List.generate(20, (index) {
+  void initState() {
+    super.initState();
+    data = List.generate(20, (index) {
       return {
         'name': faker.person.name(),
         'date': DateFormat('yyyy-MM-dd').format(faker.date.dateTimeBetween(DateTime(2024, 1, 1), DateTime(2024, 12, 31))),
+        'approved': false,
       };
     });
+  }
+
+  void approveLeave(int index) {
+    setState(() {
+      data[index]['approved'] = true;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // final List<Map<String, String>> data = List.generate(20, (index) {
+    //   return {
+    //     'name': faker.person.name(),
+    //     'date': DateFormat('yyyy-MM-dd').format(faker.date.dateTimeBetween(DateTime(2024, 1, 1), DateTime(2024, 12, 31))),
+    //   };
+    // });
 
     return Scaffold(
       appBar: AppBar(
@@ -71,15 +91,15 @@ class _ListUserCutiState extends State<ListUserCuti> {
                     DataCell(Text(data[index]['name']! , maxLines: 2,)),
                     DataCell(Text(data[index]['date']!)),
                     DataCell(IconButton(
-                      onPressed: (){
-                        Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const DetailCutiUser()),
-                      );
-                      }, 
-                      icon: Icon(Icons.timer_sharp), 
-                      color: Color.fromARGB(255, 238, 198, 42),
+                      onPressed: () {
+                        DetailCutiUser(context, index, approveLeave);
+                      },
+                      icon: Icon(
+                        data[index]['approved'] ? Icons.check : Icons.timer_sharp,
+                      ),
+                      color: data[index]['approved']
+                          ? Colors.green
+                          : Color.fromARGB(255, 238, 198, 42),
                     )),
                   ],
                 ),
