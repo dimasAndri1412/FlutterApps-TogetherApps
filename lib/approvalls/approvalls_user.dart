@@ -1,9 +1,7 @@
-import 'package:absent_project/approvalls/cuti/pengajuan_cuti.dart';
-import 'package:absent_project/approvalls/lembur/ListUserLembur.dart';
-import 'package:absent_project/approvalls/lembur/pengajuan_lembur.dart';
+import 'package:absent_project/approvalls/cuti/list_pengajuan_cuti.dart';
+import 'package:absent_project/approvalls/lembur/list_pengajuan_lembur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'cuti/ListUserCuti.dart';
 
 class ApprovallsUser extends StatefulWidget {
   const ApprovallsUser({super.key});
@@ -69,7 +67,7 @@ class _ApprovallsUserState extends State<ApprovallsUser> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const PengajuanLembur()),
+                        builder: (context) => const ListPengajuanLembur()),
                   );
                 },
               ),
@@ -108,7 +106,7 @@ class _ApprovallsUserState extends State<ApprovallsUser> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const PengajuanCuti()),
+                        builder: (context) => const ListPengajuanCuti()),
                   );
                 },
               ),

@@ -1,44 +1,38 @@
-import 'package:absent_project/ChangesPasswordPage/ChangesPasswordMenu.dart';
-import 'package:absent_project/controller/data_controller.dart';
+import 'package:absent_project/controller/Keys.dart';
+import 'package:absent_project/login/LoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import '../controller/Keys.dart';
-import '../controller/sendingEmailfunc.dart';
+import '../controller/data_controller.dart';
 
-class addUserButton extends StatefulWidget {
-  const addUserButton({super.key});
+class ChangesPasswordButtons extends StatefulWidget {
+  const ChangesPasswordButtons({super.key});
 
   @override
-  State<addUserButton> createState() => _addUserButtonState();
+  State<ChangesPasswordButtons> createState() => _ChangesPasswordButtonsState();
 }
 
-class _addUserButtonState extends State<addUserButton> {
+class _ChangesPasswordButtonsState extends State<ChangesPasswordButtons> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         GestureDetector(
           onTap: () {
-            if (formKeys.currentState!.validate()) {
-              ctr_data().savefunc().then((value) {
+            if (formsKeys.currentState!.validate()) {
+              ctr_data().update_pwd().then((value) {
                 if (value) {
-                  final snackBar = SnackBar(
-                    content: const Text('Data Berhasil Disimpan'),
-                  );
+                  final snackBar =
+                      SnackBar(content: const Text("Password Success Changes"));
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  sendingEmail().sendingEmailFunc();
                   ctr_data().clear_func();
+                  Get.offAll(() => const LoginPage());
                 } else {
                   final snackBar = SnackBar(
-                    content: const Text('Data Gagal Disimpan'),
-                  );
+                      content: const Text("Password Failure Changes!"));
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
               });
-
-              // Navigator.of(context).push(
-              //     MaterialPageRoute(builder: (context) => testPagesNew()));
             }
           },
           child: Container(

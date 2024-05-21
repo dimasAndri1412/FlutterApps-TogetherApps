@@ -7,6 +7,7 @@ final TextEditingController emailController = TextEditingController();
 
 //Keys
 final GlobalKey<FormState>formKeys = GlobalKey<FormState>();
+final GlobalKey<FormState>formsKeys = GlobalKey<FormState>();
 final GlobalKey<FormState>DropDownButtonsKeys = GlobalKey<FormState>();
 
 //Controller
@@ -17,6 +18,10 @@ final PhoneNumbersController = TextEditingController();
 final EmailController = TextEditingController();
 final TextEditingController BirthDateController = TextEditingController();
 final RolesController = TextEditingController();
+final NewPasswordContorller = TextEditingController();
+final NewConfPasswordController = TextEditingController();
+final loginFlageController = TextEditingController();
 final PassController = TextEditingController();
+final IDController = TextEditingController();
 final ConfPassController = TextEditingController();
 final ProjectController = TextEditingController();

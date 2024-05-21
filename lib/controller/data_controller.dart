@@ -33,9 +33,24 @@ class ctr_data {
     RolesController.clear();
     PhoneNumbersController.clear();
     EmailController.clear();
+    NewConfPasswordController.clear();
+    NewPasswordContorller.clear();
     PassController.clear();
     ConfPassController.clear();
     ProjectController.clear();
+  }
+
+  update_pwd() async {
+    final response = await http.post(
+      Uri.parse("http://192.168.2.159/FlutterAPI/update_password.php"),
+      body: {
+        "PASSWORD": PassController.text,
+      },
+    );
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
   }
 }
 

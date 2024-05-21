@@ -1,12 +1,19 @@
-import 'package:absent_project/Registration/addUserHeader.dart';
-import 'package:absent_project/Registration/addUserWrapper.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:absent_project/ChangesPasswordPage/ChangesPasswordField.dart';
+import 'package:absent_project/ChangesPasswordPage/ChangesPasswordHeader.dart';
+import 'package:absent_project/ChangesPasswordPage/ChangesPasswordWrapper.dart';
+import 'package:absent_project/login/LoginPage.dart';
 import 'package:flutter/material.dart';
-import '../controller/data_controller.dart';
-import '../controller/Keys.dart';
 import 'package:get/get.dart';
+import '../controller/data_controller.dart';
 
-class addUserMenu extends StatelessWidget {
+class ChangesPasswordMenu extends StatefulWidget {
+  const ChangesPasswordMenu({super.key});
+
+  @override
+  State<ChangesPasswordMenu> createState() => _ChangesPasswordMenuState();
+}
+
+class _ChangesPasswordMenuState extends State<ChangesPasswordMenu> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -25,7 +32,7 @@ class addUserMenu extends StatelessWidget {
           backgroundColor: Color.fromARGB(255, 98, 171, 232),
           iconTheme: IconThemeData(color: Colors.white),
           title: Text(
-            "PERSONAL INFORMATION",
+            "CHANGES PASSWORD",
             style: TextStyle(
               fontSize: 24,
               color: Colors.white,
@@ -49,7 +56,7 @@ class addUserMenu extends StatelessWidget {
           child: Column(
             children: <Widget>[
               SizedBox(height: 10),
-              addUserHeader(),
+              ChangesPasswordHeader(),
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
@@ -60,7 +67,7 @@ class addUserMenu extends StatelessWidget {
                     ),
                   ),
                   child: SingleChildScrollView(
-                    child: addUserWrapper(),
+                    child: ChangesPasswordWrapper(),
                   ),
                 ),
               ),
@@ -77,7 +84,7 @@ class addUserMenu extends StatelessWidget {
         builder: (BuildContext context) {
           return AlertDialog(
             icon: Icon(Icons.warning_amber,
-              color: Colors.deepOrange),
+                color: Colors.deepOrange),
             title: Text(
               "Attentions!",
               style: TextStyle(
@@ -89,23 +96,23 @@ class addUserMenu extends StatelessWidget {
             content: Text("ARE YOU SURE WANT TO EXIT WITHOUT SAVE"),
             actions: <Widget>[
               TextButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  child: Text("NO",style:
-                  TextStyle(color: Colors.blueAccent,
-                      fontWeight: FontWeight.bold),
-                  ),
+                onPressed: () {
+                  Get.offAll(() => LoginPage());
+                },
+                child: Text("NO",style:
+                TextStyle(color: Colors.blueAccent,
+                    fontWeight: FontWeight.bold),
+                ),
               ),
               TextButton(onPressed: (){
-                Get.back();
+                Get.offAll(() => LoginPage());
                 ctr_data().clear_func();
-                Get.back();
+                Get.offAll(() => LoginPage());
               },
-                  child:Text("YES",style:
-                  TextStyle(color: Colors.blueAccent,
-                      fontWeight: FontWeight.bold),
-                  ),
+                child:Text("YES",style:
+                TextStyle(color: Colors.blueAccent,
+                    fontWeight: FontWeight.bold),
+                ),
               ),
             ],
           );

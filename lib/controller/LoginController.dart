@@ -1,11 +1,12 @@
 import 'dart:convert';
+import 'package:absent_project/ChangesPasswordPage/ChangesPasswordMenu.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../home/ApplicationBar.dart';
 
-class LoginController{
-  String? alert, username, password, role;
+class LoginController {
+  String? alert, username, password, role, login_flag, IDUsers;
 
   var dataUser;
 
@@ -13,32 +14,43 @@ class LoginController{
     String usernameInput = emailController.text;
     String passwordInput = passwordController.text;
 
-    try{
+    try {
       if (formKey.currentState!.validate()) {
         var url = Uri.parse("http://192.168.2.159/FlutterAPI/AdminLogin.php");
-        var response = await http.post(url, body: {
-          "username": usernameInput,
-          "password": passwordInput
-        });
+        var response = await http.post(url,
+            body: {"username": usernameInput, "password": passwordInput});
         dataUser = jsonDecode(response.body);
 
         if (dataUser.length < 1) {
-            alert = "Can't login";
+          alert = "Can't login";
         } else {
-            username = dataUser[0]['USERNAME'];
-            password = dataUser[0]['PASSWORD'];
-            role = dataUser[0]['ROLE'];
-          };
-
-          if (role == "admin") {
-            Get.to(() => const ApplicationBar());
-          } else {
-            print("Go to member home page, cuk");
-            /*Get.to(() => const UserHome());*/
-          }
+          username = dataUser[0]['USERNAME'];
+          password = dataUser[0]['PASSWORD'];
+          role = dataUser[0]['ROLE'];
+          login_flag = dataUser[0]['login_flag'];
+          IDUsers = dataUser[0]['ID'];
+        };
+        if (login_flag == "0" && role == "MEMBER" && IDUsers == IDUsers ) {
+          Get.offAll(() => const ChangesPasswordMenu());
+        } else if (login_flag == "1" && role == "MEMBER" && IDUsers == IDUsers) {
+          print("kamu itu member dengan ID = ${IDUsers}");
+          /*Get.to(() => const UserHome());*/
+        } else if (role == "ADMIN") {
+          Get.offAll(() => const ApplicationBar());
+        } else {
+          print("Go to member home page, cuk dengan id = ${IDUsers}");
+          /*Get.to(() => const UserHome());*/
         }
-    }catch(Exception){
-      return "Failed Request!";}
+
+        /*  if (role == "admin") {
+          Get.offAll(() => const ApplicationBar());
+        } else {
+          print("Go to member home page, cuk");
+          */ /*Get.to(() => const UserHome());*/ /*
+        }*/
+      }
+    } catch (Exception) {
+      return "Failed Request!";
+    }
   }
 }
-

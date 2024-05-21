@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:absent_project/Registration/addUserMenu.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:absent_project/menu/adminManagement/DetailUser.dart';
 
-import '../../controller/ListUserController/ListUserController.dart';
+import '../../controller/ListAndDetailUserController/ListUserController.dart';
 
 class ListUser extends StatefulWidget {
   const ListUser({super.key});
@@ -101,6 +101,7 @@ class _ListUserState extends State<ListUser> {
                       child: ListView.builder(
                           itemCount: snapshot.data?.length,
                           itemBuilder: (context, int index) {
+                            var user = snapshot.data![index];
                             return Slidable(
                               endActionPane: ActionPane(
                                   motion: BehindMotion(),
@@ -113,11 +114,17 @@ class _ListUserState extends State<ListUser> {
                                     )
                                   ]
                               ),
-                              child: UserItem
+                              child: ListTile
                                 (
-                                imageUrl: "https://picsum.photos/id/$index/200/300",
-                                subtitle: snapshot.data![index].grup,
-                                title:snapshot.data![index].username,
+                                /*imageUrl: "https://picsum.photos/id/$index/200/300",*/
+                                subtitle: Text(user.grup),
+                                title:Text(user.username),
+                                leading: CircleAvatar(
+                                  backgroundImage: NetworkImage(user.avatarUrl),
+                                ),
+                                onTap: (){
+                                  Get.to(() =>  DetailUser(userList: user));
+                                },
                               ),
                             );
                           }
@@ -181,7 +188,7 @@ class _ListUserState extends State<ListUser> {
 // }
 void _onDissmissed () {}
 
-class UserItem
+/*class UserItem
  extends StatelessWidget {
   final String imageUrl;
   final String title;
@@ -216,5 +223,5 @@ class UserItem
       },
     );
   }
-}
+}*/
 
