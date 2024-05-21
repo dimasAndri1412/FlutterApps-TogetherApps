@@ -10,9 +10,9 @@ class DetailUser extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Rara Zahra Urava",
-          style: TextStyle(fontSize: 15),
+        title: Text(
+          userList.fullname,
+          style: const TextStyle(fontSize: 15),
         ),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
