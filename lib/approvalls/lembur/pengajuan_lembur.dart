@@ -148,6 +148,9 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                         SizedBox(
                           height: 10,
                         ),
+                        SizedBox(
+                          height: 10,
+                        ),
                         addLemburButton(),
                       ],
                     )),

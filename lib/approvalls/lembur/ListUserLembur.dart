@@ -88,6 +88,5 @@ class _ListUserLemburState extends State<ListUserLembur> {
                 ),
               ],
             )));
-    ;
   }
 }
