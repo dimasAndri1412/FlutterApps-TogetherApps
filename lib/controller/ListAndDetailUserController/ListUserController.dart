@@ -15,7 +15,8 @@ class ListUserContoller {
     List<UserList> users = [];
 
     for (var u in jsonData) {
-      UserList user = UserList(u["USERNAME"], u["grup"]);
+      UserList user = UserList(u["USERNAME"], u["full_name"], u["ROLE"],
+          u["grup"], u["email_address"], u["phone_number"], u["image_path"]);
       users.add(user);
     }
     return users;

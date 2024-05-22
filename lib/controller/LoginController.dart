@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import '../home/ApplicationBar.dart';
 
 class LoginController {
-  String? alert, username, password, role, login_flag;
+  String? alert, username, password, role, login_flag, IDUsers;
 
   var dataUser;
 
@@ -28,18 +28,17 @@ class LoginController {
           password = dataUser[0]['PASSWORD'];
           role = dataUser[0]['ROLE'];
           login_flag = dataUser[0]['login_flag'];
-        }
-        ;
-
-        if (login_flag == "0" && role == "MEMBER") {
+          IDUsers = dataUser[0]['ID'];
+        };
+        if (login_flag == "0" && role == "MEMBER" && IDUsers == IDUsers ) {
           Get.offAll(() => const ChangesPasswordMenu());
-        } else if (login_flag == "1" && role == "MEMBER") {
-          print("kamu itu member");
+        } else if (login_flag == "1" && role == "MEMBER" && IDUsers == IDUsers) {
+          print("kamu itu member dengan ID = ${IDUsers}");
           /*Get.to(() => const UserHome());*/
         } else if (role == "ADMIN") {
           Get.offAll(() => const ApplicationBar());
         } else {
-          print("Go to member home page, cuk");
+          print("Go to member home page, cuk dengan id = ${IDUsers}");
           /*Get.to(() => const UserHome());*/
         }
 

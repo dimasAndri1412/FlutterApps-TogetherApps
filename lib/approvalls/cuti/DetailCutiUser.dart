@@ -1,79 +1,148 @@
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:open_file/open_file.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:io';
+import 'package:permission_handler/permission_handler.dart';
 
-class DetailCutiUser extends StatefulWidget {
-  const DetailCutiUser({super.key});
-
-  @override
-  State<DetailCutiUser> createState() => _DetailCutiUserState();
-}
-
-class _DetailCutiUserState extends State<DetailCutiUser> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-          margin: EdgeInsets.only(left: 50, right: 50, top: 80),
-          width: 400,
-          height: 600,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [BoxShadow(
-              color:    Color.fromARGB(255, 147, 195, 234),
-              blurRadius: 15,
-              offset: Offset(0,10),
-            )]
-          ),
-          child: Column(
+Future<void> DetailCutiUser(BuildContext context, int index, Function(int) approveLeave) {
+  String fileUrl = 'https://example.com/path/to/your/file.pdf'; // Ensure this URL is correct
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: Colors.white,
+        title: Text('Leave Detail'),
+        content: SingleChildScrollView(
+          child: ListBody(
             children: [
-              Container(
-                width: 400,
-                height: 70,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20) ),
-                  color: Color.fromARGB(255, 104, 187, 254),
+              Row(
+                children: [
+                  Text("Name  : ", style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text("Razu"),
+                ],
+              ),
+              Row(
+                children: [
+                  Text("Date  : ", style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text("19-02-2024 s.d 20-02-2024"),
+                ],
+              ),
+              Row(
+                children: [
+                  Text("Total of Days : ", style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text("2"),
+                ],
+              ),
+              Row(
+                children: [
+                  Text("Reason : ", style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text("Pulang kampung"),
+                ],
+              ),
+              SizedBox(height: 20,),
+              ElevatedButton.icon(
+                onPressed: () {
+                  openFile(
+                    url: fileUrl,
+                    fileName: 'Leave Form - Name.pdf'
+                  );
+                },
+                icon: Icon(Icons.file_open),
+                label: Text("Download Document"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromARGB(255, 246, 178, 123),
+                  foregroundColor: Colors.white,
+                  textStyle: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold)
                 ),
               ),
-              DataTable(
-                columns: [
-                  DataColumn(
-                    label: Expanded(
-                      child: Text(
-                        'Date',
-                        style: TextStyle(fontStyle: FontStyle.italic),
-                      ),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Expanded(
-                      child: Text(
-                        'Total',
-                        style: TextStyle(fontStyle: FontStyle.italic),
-                      ),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Expanded(
-                      child: Text(
-                        'Reason',
-                        style: TextStyle(fontStyle: FontStyle.italic),
-                      ),
-                    ),
-                  ),
-                ], 
-                rows: [
-                  DataRow(
-                    cells: <DataCell>[
-                       DataCell(Text('19-02-24 s.d 20-02-24')),
-                      DataCell(Text('2')),
-                      DataCell(Text('Liburan')),
-                    ],
-                  ),
-                ]
-              )
+              ElevatedButton.icon(
+                icon: Icon(Icons.file_upload),
+                label: Text("Upload Approval"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 124, 183, 230),
+                  foregroundColor: Colors.white,
+                  textStyle: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold)
+                ),
+                onPressed: () async {
+                  final result = await FilePicker.platform.pickFiles();
+                  if (result == null) return;
+                    final file = result.files.first;
+                    print('Name: ${file.name}');
+                    print('Bytes: ${file.bytes}');
+                    print('Size: ${file.size}');
+                    print('Picked file: ${file.path}');
+                  
+                },
+              ),
             ],
           ),
         ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Approve', style: TextStyle(color: Colors.black.withOpacity(1.0))),
+            onPressed: () {
+              approveLeave(index);
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
       );
+    },
+  );
+}
+
+Future<void> openFile({required String url, required String fileName}) async {
+  try {
+    final file = await downloadFile(url, fileName);
+    if (file == null) return;
+    OpenFile.open(file.path);
+  } catch (e) {
+    print("Error opening file: $e");
+  }
+}
+
+Future<File?> downloadFile(String url, String fileName) async {
+  try {
+    // Check and request storage permissions
+    if (await Permission.storage.request().isGranted) {
+      final appStorage = await getApplicationDocumentsDirectory();
+      final file = File('${appStorage.path}/$fileName');
+
+      // Log the download start
+      print('Starting download from $url');
+
+      final response = await Dio().get(
+        url,
+        options: Options(
+          responseType: ResponseType.bytes,
+          followRedirects: false,
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        final raf = file.openSync(mode: FileMode.write);
+        raf.writeFromSync(response.data);
+        await raf.close();
+
+        // Log successful download
+        print('File downloaded successfully to ${file.path}');
+        return file;
+      } else {
+        print('Failed to download file. Status code: ${response.statusCode}');
+        return null;
+      }
+    } else {
+      print('Storage permission denied.');
+      return null;
+    }
+  } catch (e) {
+    print("Error downloading file: $e");
+    return null;
   }
 }

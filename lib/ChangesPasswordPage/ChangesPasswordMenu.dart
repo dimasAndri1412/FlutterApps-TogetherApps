@@ -1,6 +1,7 @@
 import 'package:absent_project/ChangesPasswordPage/ChangesPasswordField.dart';
 import 'package:absent_project/ChangesPasswordPage/ChangesPasswordHeader.dart';
 import 'package:absent_project/ChangesPasswordPage/ChangesPasswordWrapper.dart';
+import 'package:absent_project/login/LoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/data_controller.dart';
@@ -96,7 +97,7 @@ class _ChangesPasswordMenuState extends State<ChangesPasswordMenu> {
             actions: <Widget>[
               TextButton(
                 onPressed: () {
-                  Get.back();
+                  Get.offAll(() => LoginPage());
                 },
                 child: Text("NO",style:
                 TextStyle(color: Colors.blueAccent,
@@ -104,9 +105,9 @@ class _ChangesPasswordMenuState extends State<ChangesPasswordMenu> {
                 ),
               ),
               TextButton(onPressed: (){
-                Get.back();
+                Get.offAll(() => LoginPage());
                 ctr_data().clear_func();
-                Get.back();
+                Get.offAll(() => LoginPage());
               },
                 child:Text("YES",style:
                 TextStyle(color: Colors.blueAccent,
