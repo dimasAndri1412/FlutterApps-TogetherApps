@@ -31,9 +31,10 @@ class _ApprovallsState extends State<Approvalls> {
         ),
         body: Container(
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               MaterialButton(
-                padding: EdgeInsets.only(left: 20, top: 20),
+                padding: EdgeInsets.only(top: 20),
                 child: Container(
                   width: 160,
                   height: 160,

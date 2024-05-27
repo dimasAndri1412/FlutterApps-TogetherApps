@@ -68,7 +68,7 @@ class _HomeState extends State<Home> {
                       style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.bold),
                       decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(left: 35, top: 46),
-                      hintText: "RAZU",
+                      hintText: emailController.text,
                       hintStyle: TextStyle(color: Colors.white, fontSize: 25),
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,

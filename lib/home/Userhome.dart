@@ -67,7 +67,7 @@ class _UserHomeState extends State<UserHome> {
                     TextField(
                       decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(left: 35, top: 46),
-                      hintText: UserNameController.text,
+                      hintText: emailController.text,
                       hintStyle: TextStyle(color: Colors.white, fontSize: 25),
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,
