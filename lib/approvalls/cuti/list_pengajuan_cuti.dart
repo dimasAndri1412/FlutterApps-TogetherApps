@@ -58,7 +58,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                         ),
                         DataColumn(
                           label: Text(
-                            "Download",
+                            "Download Approval",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.bold),
                           ),

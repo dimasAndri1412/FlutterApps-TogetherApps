@@ -74,7 +74,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
               child: Container(
                 width: 390,
                 // height: 400,
-                height: 700,
+                height: 550,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
@@ -202,16 +202,24 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                         height: 10,
                       ),
                       //BUTTON UPLOAD
-                      SizedBox(
-                        height: 9,
-                      ),
-                      ElevatedButton(
-                        child: Text("Upload"),
-                        onPressed: pickFiles,
+                      Container(
+                        height: 40,
+                        width: 200,
+                        child: ElevatedButton(
+                          child: Text(
+                            "Upload PDF",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  const Color.fromARGB(255, 124, 183, 230)),
+                          onPressed: pickFiles,
+                        ),
                       ),
                       SizedBox(
                         height: 5,
                       ),
+                      //NOTIFICATION HASIL UPLOAD
                       pickedFiles.isNotEmpty
                           ? ListView.builder(
                               itemCount: pickedFiles.length,
@@ -232,6 +240,9 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                               },
                             )
                           : Container(),
+                      SizedBox(
+                        height: 10,
+                      ),
                       //BUTTON SUBMIT
                       addCutiButton(),
                     ],
