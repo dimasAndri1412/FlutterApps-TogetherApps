@@ -27,56 +27,6 @@ class _forgotPasswordFieldState extends State<forgotPasswordField> {
                 Container(
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      border: Border(
-                          bottom: BorderSide(color: Colors.black87)
-                      )
-                  ),
-                  child: TextFormField(
-                    controller: FullNameController,
-                    decoration: InputDecoration(
-                        labelText: "FullName",
-                        hintText: "Please Insert FullName",
-                        hintStyle: TextStyle(
-                          color: Colors.black12,
-                        ),
-                        border: InputBorder.none,
-                        prefixIcon: Icon(Icons.person)
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "UserName can not empty!";
-                      }
-                    },
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(color: Colors.black87)
-                    )
-                  ),
-                  child: TextFormField(
-                    controller: UserNameController,
-                    decoration: InputDecoration(
-                      labelText: "UserName",
-                      hintText: "Please Insert UserName",
-                      hintStyle: TextStyle(
-                        color: Colors.black12,
-                      ),
-                      border: InputBorder.none,
-                      prefixIcon: Icon(Icons.person)
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "UserName can not empty!";
-                      }
-                    },
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
                       border: Border(bottom: BorderSide(color: Colors.black87))),
                   child: TextFormField(
                     controller: EmailController,
