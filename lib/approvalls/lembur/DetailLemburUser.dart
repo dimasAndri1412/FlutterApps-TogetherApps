@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:open_file/open_file.dart';
 
-Future<void> DetailLemburUser(BuildContext context) {
+Future<void> DetailLemburUser(BuildContext context, int index, Function(int) approveLeave) {
   return showDialog<void>(
     context: context,
     builder: (BuildContext context) {
@@ -80,6 +80,7 @@ Future<void> DetailLemburUser(BuildContext context) {
           TextButton(
             child: Text('Approve', style: TextStyle(color: Colors.black.withOpacity(1.0))),
             onPressed: () {
+              approveLeave(index);
               Navigator.of(context).pop();
             },
           ),

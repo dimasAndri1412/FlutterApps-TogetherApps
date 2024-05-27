@@ -1,3 +1,4 @@
+import 'package:absent_project/timesheets/Timesheets.dart';
 import 'package:flutter/material.dart';
 import 'package:absent_project/home/Home.dart';
 import 'package:absent_project/menu/MenuPage.dart';
@@ -17,7 +18,7 @@ class _ApplicationBarState extends State<ApplicationBar> {
 
     Home(),
     Icon(Icons.lock_clock),
-    Icon(Icons.note),
+    Timesheets(),
     Approvalls(),
     MenuPage()
   ];

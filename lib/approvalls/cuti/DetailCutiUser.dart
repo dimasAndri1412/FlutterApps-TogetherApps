@@ -78,6 +78,10 @@ Future<void> DetailCutiUser(BuildContext context, int index, Function(int) appro
                     print('Size: ${file.size}');
                     print('Picked file: ${file.path}');
                   
+                    final newFile = await saveFile(file);
+
+                    print('from path : ${file.path!}');
+                    print('to path : ${newFile.path}');
                 },
               ),
             ],
@@ -145,4 +149,12 @@ Future<File?> downloadFile(String url, String fileName) async {
     print("Error downloading file: $e");
     return null;
   }
+}
+
+
+Future<File> saveFile (PlatformFile file) async{
+  final appStorage = await getApplicationDocumentsDirectory();
+  final newFile = File('${appStorage.path}/${file.name}');
+
+  return File(file.path!).copy(newFile.path);
 }

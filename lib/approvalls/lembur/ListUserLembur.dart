@@ -12,16 +12,28 @@ class ListUserLembur extends StatefulWidget {
 }
 
 class _ListUserLemburState extends State<ListUserLembur> {
+  final faker = Faker();
+  late List<Map<String, dynamic>> data;
+
   @override
-  Widget build(BuildContext context) {
-    final faker = Faker();
-    final List<Map<String, String>> data = List.generate(10, (index) {
+  void initState() {
+    super.initState();
+    data = List.generate(10, (index) {
       return {
         'name': faker.person.name(),
-        'date': DateFormat('yyyy-MM-dd').format(faker.date
-            .dateTimeBetween(DateTime(2024, 1, 1), DateTime(2024, 12, 31))),
+        'date': DateFormat('yyyy-MM-dd').format(faker.date.dateTimeBetween(DateTime(2024, 1, 1), DateTime(2024, 12, 31))),
+        'approved': false,
       };
     });
+  }
+
+  void approveLeave(int index) {
+    setState(() {
+      data[index]['approved'] = true;
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
 
     return Scaffold(
         appBar: AppBar(
@@ -29,49 +41,6 @@ class _ListUserLemburState extends State<ListUserLembur> {
             "Overtime Approval",
             style: TextStyle(fontSize: 15),
           ),
-<<<<<<< HEAD
-        ),
-        elevation: 0,
-      ),
-      body: Container(
-        margin: EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
-            child: DataTable(
-              columns: const <DataColumn>[
-                // DataColumn(
-                //   label: Text('No.'),
-                // ),
-                DataColumn(
-                  label: Text('Name'),
-                ),
-                DataColumn(
-                  label: Text('Date'),
-                ),
-                DataColumn(
-                  label: Text('Action'),
-                ),
-              ],
-              rows: List<DataRow>.generate(
-                data.length,
-                (index) => DataRow(
-                  cells: <DataCell>[
-                    // DataCell(Text((index + 1).toString())), // Item Count
-                    DataCell(Text(data[index]['name']! , maxLines: 2,)),
-                    DataCell(Text(data[index]['date']!)),
-                    DataCell(IconButton(onPressed: (){
-                      DetailLemburUser(context);
-                    }, 
-                    icon: Icon(Icons.timer_sharp), 
-                    color: Color.fromARGB(255, 238, 198, 42),
-                    )),
-                  ],
-                ),
-              ),
-=======
           flexibleSpace: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(colors: [
@@ -79,7 +48,6 @@ class _ListUserLemburState extends State<ListUserLembur> {
                 Color.fromARGB(255, 98, 171, 232),
                 Color.fromARGB(255, 123, 185, 235),
               ]),
->>>>>>> 9897c6368ebb24e07579004b61a2ac0713f3443d
             ),
           ),
           elevation: 0,
@@ -117,9 +85,15 @@ class _ListUserLemburState extends State<ListUserLembur> {
                             )),
                             DataCell(Text(data[index]['date']!)),
                             DataCell(IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.list_alt),
-                              color: Colors.blue,
+                              onPressed: () {
+                              DetailLemburUser(context, index, approveLeave);
+                            },
+                            icon: Icon(
+                              data[index]['approved'] ? Icons.check : Icons.timer_sharp,
+                            ),
+                            color: data[index]['approved']
+                                ? Colors.green
+                                : Color.fromARGB(255, 238, 198, 42),
                             )),
                           ],
                         ),
