@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:absent_project/approvalls/cuti/add_cuti_button.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path/path.dart';
 
 class PengajuanCuti extends StatefulWidget {
   const PengajuanCuti({super.key});
@@ -15,6 +20,29 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
   final reasonCutiController = TextEditingController();
   final _dateFromController = TextEditingController();
   final _dateUntilController = TextEditingController();
+
+  //Untuk Upload File
+  List pickedFiles = [];
+
+  pickFiles() async {
+    var result = await FilePicker.platform.pickFiles(
+      allowMultiple: false,
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+
+    print(result);
+
+    if (result != null) {
+      setState(() {
+        pickedFiles = result.files.map((file) => File(file.path!)).toList();
+      });
+    }
+  }
+
+  openFile(file) {
+    OpenFile.open(file.path);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +69,12 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30, top: 160),
+              // padding: const EdgeInsets.only(left: 30, right: 30, top: 160),
+              padding: const EdgeInsets.only(left: 30, right: 30, top: 30),
               child: Container(
                 width: 390,
-                height: 400,
+                // height: 400,
+                height: 550,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
@@ -171,8 +201,50 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                       SizedBox(
                         height: 10,
                       ),
-                      //BUTTON
-                      addCutiButton()
+                      //BUTTON UPLOAD
+                      Container(
+                        height: 40,
+                        width: 200,
+                        child: ElevatedButton(
+                          child: Text(
+                            "Upload PDF",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  const Color.fromARGB(255, 124, 183, 230)),
+                          onPressed: pickFiles,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      //NOTIFICATION HASIL UPLOAD
+                      pickedFiles.isNotEmpty
+                          ? ListView.builder(
+                              itemCount: pickedFiles.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () => openFile(pickedFiles[index]),
+                                  child: Card(
+                                    child: ListTile(
+                                      leading: returnLogo(pickedFiles[index]),
+                                      subtitle: Text(
+                                        'File: ${pickedFiles[index].path}',
+                                        style: TextStyle(color: Colors.amber),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            )
+                          : Container(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      //BUTTON SUBMIT
+                      addCutiButton(),
                     ],
                   )),
                 ),
@@ -182,5 +254,22 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
         ),
       )),
     );
+  }
+
+  //LOGO hasil Upload File
+  returnLogo(file) {
+    var ex = extension(file.path);
+
+    if (ex == '.pdf') {
+      return Icon(
+        Icons.picture_as_pdf_sharp,
+        color: Colors.amber,
+      );
+    } else {
+      return Icon(
+        Icons.question_mark_outlined,
+        color: Colors.grey,
+      );
+    }
   }
 }
