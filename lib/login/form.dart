@@ -1,5 +1,7 @@
+import 'package:absent_project/ForgotPassword/forgotPasswordMenu.dart';
 import 'package:absent_project/controller/LoginController.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../controller/Keys.dart';
 
 class myForm extends StatefulWidget {
@@ -129,7 +131,11 @@ class _myFormState extends State<myForm> {
                     Column(
                       children: <Widget>[
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              Get.offAll(() => forgotPasswordMenu());
+                            });
+                          },
                           child: const Text('Forgot Password ? '),
                         ),
                         const SizedBox(height: 20,),

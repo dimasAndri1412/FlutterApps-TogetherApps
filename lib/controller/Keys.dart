@@ -25,3 +25,6 @@ final PassController = TextEditingController();
 final IDController = TextEditingController();
 final ConfPassController = TextEditingController();
 final ProjectController = TextEditingController();
+
+//Key ForgotPassword
+final GlobalKey<FormState>formsForgotKeys = GlobalKey<FormState>();
