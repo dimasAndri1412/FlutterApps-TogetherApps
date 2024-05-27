@@ -53,6 +53,20 @@ class ctr_data {
     }
     return false;
   }
+  
+  forgot_pwd() async {
+    final response = await http.post(
+      Uri.parse("http://192.168.2.159/FlutterAPI/forgot_password.php"),
+      body: {
+        "email_address" : EmailController.text,
+        "PASSWORD" : NewPasswordContorller.text
+      },
+    );
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
 }
 //funsi untuk melakukan update data//
 /*class update_func {

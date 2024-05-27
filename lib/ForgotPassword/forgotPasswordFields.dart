@@ -81,6 +81,8 @@ class _forgotPasswordFieldState extends State<forgotPasswordField> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Password Can not Empty!";
+                      } else if (value.length >= 10) {
+                        return "Passowrd must be 10 character or more";
                       }
                     },
                   ),

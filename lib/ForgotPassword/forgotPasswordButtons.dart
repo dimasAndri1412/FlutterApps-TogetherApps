@@ -27,8 +27,8 @@ class _forgotPasswordButtonsState extends State<forgotPasswordButtons> {
                   SnackBar(content: const Text("Password Success Changes"));
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   sendingEmailForgotPassword().sendingEmailForgotPasswordFunc();
+                  ctr_data().forgot_pwd();
                   ctr_data().clear_func();
-                  Get.offAll(() => const LoginPage());
                 } else {
                   final snackBar = SnackBar(
                       content: const Text("Password Failure Changes!"));

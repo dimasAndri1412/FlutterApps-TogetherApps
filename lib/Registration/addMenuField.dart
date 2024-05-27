@@ -14,13 +14,12 @@ class addUserField extends StatefulWidget {
 }
 
 class _addUserFieldState extends State<addUserField> {
-  bool passHiding = false;
+  bool passHiding = true;
   String dropDownValues = "";
 
   @override
   void iniState() {
     super.initState();
-    passHiding = true;
     BirthDateController.text = "";
     dropDownValues = "";
   }
@@ -296,7 +295,6 @@ class _addUserFieldState extends State<addUserField> {
                           Border(bottom: BorderSide(color: Colors.black87))),
                   child: TextFormField(
                     obscureText: passHiding,
-                    keyboardType: TextInputType.emailAddress,
                     controller: PassController,
                     readOnly: true,
                     decoration: InputDecoration(
