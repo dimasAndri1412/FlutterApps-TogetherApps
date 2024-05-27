@@ -18,10 +18,13 @@ class _addCutiButtonState extends State<addCutiButton> {
             width: 80,
             decoration: BoxDecoration(
               color: const Color.fromARGB(255, 124, 185, 236),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(20),
             ),
             child: Center(
-              child: Text("Submit"),
+              child: Text(
+                "Submit",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ),
           onPressed: () {

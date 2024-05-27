@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:absent_project/approvalls/lembur/add_lembur_button.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+// import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path/path.dart';
 
 class PengajuanLembur extends StatefulWidget {
   const PengajuanLembur({super.key});
@@ -14,6 +19,29 @@ class PengajuanLembur extends StatefulWidget {
 class _PengajuanLemburState extends State<PengajuanLembur> {
   final reasonLemburController = TextEditingController();
   final _dateLemburController = TextEditingController();
+
+  //Untuk Upload File
+  List pickedFiles = [];
+
+  pickFiles() async {
+    var result = await FilePicker.platform.pickFiles(
+      allowMultiple: false,
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+
+    print(result);
+
+    if (result != null) {
+      setState(() {
+        pickedFiles = result.files.map((file) => File(file.path!)).toList();
+      });
+    }
+  }
+
+  openFile(file) {
+    OpenFile.open(file.path);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +71,8 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                 padding: const EdgeInsets.only(top: 160, left: 30, right: 30),
                 child: Container(
                   width: 390,
-                  height: 300,
+                  // height: 300,
+                  height: 450,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
@@ -148,6 +177,39 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                         SizedBox(
                           height: 10,
                         ),
+                        ElevatedButton(
+                          child: Text(
+                            "Upload PDF",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: pickFiles,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        //NOTIFICATION HASIL UPLOAD
+                        pickedFiles.isNotEmpty
+                            ? ListView.builder(
+                                itemCount: pickedFiles.length,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return GestureDetector(
+                                    onTap: () => openFile(pickedFiles[index]),
+                                    child: Card(
+                                      child: ListTile(
+                                        leading: returnLogo(pickedFiles[index]),
+                                        subtitle: Text(
+                                          'File: ${pickedFiles[index].path}',
+                                          style: TextStyle(color: Colors.amber),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              )
+                            : Container(),
+                        SizedBox(height: 10),
+                        //BUTTON SUBMIT
                         addLemburButton(),
                       ],
                     )),
@@ -159,5 +221,22 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
         ),
       ),
     );
+  }
+
+  //LOGO hasil Upload File
+  returnLogo(file) {
+    var ex = extension(file.path);
+
+    if (ex == '.pdf') {
+      return Icon(
+        Icons.picture_as_pdf_sharp,
+        color: Colors.amber,
+      );
+    } else {
+      return Icon(
+        Icons.question_mark_outlined,
+        color: Colors.grey,
+      );
+    }
   }
 }

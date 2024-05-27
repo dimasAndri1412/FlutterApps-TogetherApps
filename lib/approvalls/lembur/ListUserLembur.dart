@@ -1,3 +1,4 @@
+import 'package:absent_project/approvalls/lembur/DetailLemburUser.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -11,16 +12,28 @@ class ListUserLembur extends StatefulWidget {
 }
 
 class _ListUserLemburState extends State<ListUserLembur> {
+  final faker = Faker();
+  late List<Map<String, dynamic>> data;
+
   @override
-  Widget build(BuildContext context) {
-    final faker = Faker();
-    final List<Map<String, String>> data = List.generate(10, (index) {
+  void initState() {
+    super.initState();
+    data = List.generate(10, (index) {
       return {
         'name': faker.person.name(),
-        'date': DateFormat('yyyy-MM-dd').format(faker.date
-            .dateTimeBetween(DateTime(2024, 1, 1), DateTime(2024, 12, 31))),
+        'date': DateFormat('yyyy-MM-dd').format(faker.date.dateTimeBetween(DateTime(2024, 1, 1), DateTime(2024, 12, 31))),
+        'approved': false,
       };
     });
+  }
+
+  void approveLeave(int index) {
+    setState(() {
+      data[index]['approved'] = true;
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
 
     return Scaffold(
         appBar: AppBar(
@@ -72,9 +85,15 @@ class _ListUserLemburState extends State<ListUserLembur> {
                             )),
                             DataCell(Text(data[index]['date']!)),
                             DataCell(IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.list_alt),
-                              color: Colors.blue,
+                              onPressed: () {
+                              DetailLemburUser(context, index, approveLeave);
+                            },
+                            icon: Icon(
+                              data[index]['approved'] ? Icons.check : Icons.timer_sharp,
+                            ),
+                            color: data[index]['approved']
+                                ? Colors.green
+                                : Color.fromARGB(255, 238, 198, 42),
                             )),
                           ],
                         ),
@@ -88,6 +107,5 @@ class _ListUserLemburState extends State<ListUserLembur> {
                 ),
               ],
             )));
-    ;
   }
 }

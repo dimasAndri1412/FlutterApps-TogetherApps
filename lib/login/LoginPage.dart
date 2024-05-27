@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:absent_project/login/form.dart';
+import 'package:absent_project/home/ApplicationBar.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 
 void main() => runApp(
    const GetMaterialApp(
     debugShowCheckedModeBanner: false,
-    home: LoginPage(),
+    home: ApplicationBar(),
   )
 );
 

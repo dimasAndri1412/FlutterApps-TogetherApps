@@ -59,7 +59,7 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                         ),
                         DataColumn(
                           label: Text(
-                            "Download",
+                            "Download Approval",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.bold),
                           ),
