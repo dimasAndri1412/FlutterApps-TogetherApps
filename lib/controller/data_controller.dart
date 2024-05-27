@@ -44,16 +44,16 @@ class ctr_data {
     final response = await http.post(
       Uri.parse("http://192.168.2.159/FlutterAPI/update_password.php"),
       body: {
-        "PASSWORD": PassController.text,
+        "OLD_PASSWORD": passwordController.text,
+        "PASSWORD": NewPasswordContorller.text,
       },
     );
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200){
       return true;
     }
     return false;
   }
 }
-
 //funsi untuk melakukan update data//
 /*class update_func {
   List listdata = [];

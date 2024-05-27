@@ -4,6 +4,7 @@ import 'package:absent_project/controller/Keys.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../home/ApplicationBar.dart';
+import '../home/applicationbar_user.dart';
 
 class LoginController {
   String? alert, username, password, role, login_flag, IDUsers;
@@ -33,6 +34,7 @@ class LoginController {
         if (login_flag == "0" && role == "MEMBER" && IDUsers == IDUsers ) {
           Get.offAll(() => const ChangesPasswordMenu());
         } else if (login_flag == "1" && role == "MEMBER" && IDUsers == IDUsers) {
+          Get.offAll(() => const ApplicationBarUser());
           print("kamu itu member dengan ID = ${IDUsers}");
           /*Get.to(() => const UserHome());*/
         } else if (role == "ADMIN") {

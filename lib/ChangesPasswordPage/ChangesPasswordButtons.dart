@@ -2,7 +2,6 @@ import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/login/LoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controller/Keys.dart';
 import '../controller/data_controller.dart';
 
 class ChangesPasswordButtons extends StatefulWidget {

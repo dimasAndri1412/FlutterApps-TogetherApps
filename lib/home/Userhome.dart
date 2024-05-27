@@ -2,6 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import '../controller/Keys.dart';
+
 class _ChartData {
   _ChartData(this.x, this.y);
   final String x;
@@ -65,7 +67,7 @@ class _UserHomeState extends State<UserHome> {
                     TextField(
                       decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(left: 35, top: 46),
-                      hintText: "User",
+                      hintText: UserNameController.text,
                       hintStyle: TextStyle(color: Colors.white, fontSize: 25),
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,
