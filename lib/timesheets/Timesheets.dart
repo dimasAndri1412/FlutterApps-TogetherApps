@@ -9,7 +9,7 @@ class Timesheets extends StatefulWidget {
 }
 
 class _TimesheetsState extends State<Timesheets> {
-  CalendarFormat _calendarFormat =CalendarFormat.month;
+  CalendarFormat _calendarFormat =CalendarFormat.week;
   DateTime today = DateTime.now();
   void _onDaySelected(DateTime day,DateTime focusedDay){
     setState(() {
@@ -35,11 +35,18 @@ class _TimesheetsState extends State<Timesheets> {
               child: ListTile (
                 /*imageUrl: "https://picsum.photos/id/$index/200/300",*/
                 title:Text("Razu"),
-                subtitle: Text("Did not clock in"),
+                subtitle: Text("8:13 - Ongoing"),
                 leading: CircleAvatar(
                   backgroundColor: const Color.fromARGB(255, 150, 199, 239),
                 ),
-                trailing:Icon(Icons.chevron_right, color: Colors.grey,),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text('2h 21m'),
+                    SizedBox(width: 10,),
+                    Icon(Icons.chevron_right, color: Colors.grey,),
+                  ],
+                ),
               ),
             )
           ],
