@@ -1,5 +1,6 @@
 import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class forgotPasswordField extends StatefulWidget {
   const forgotPasswordField({super.key});
@@ -79,10 +80,15 @@ class _forgotPasswordFieldState extends State<forgotPasswordField> {
                           },
                         )),
                     validator: (value) {
+                      
+                      bool inValidPass = RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d@$!%*?&]{10,}$').hasMatch(value!);
+                      
                       if (value == null || value.isEmpty) {
                         return "Password Can not Empty!";
-                      } else if (value.length >= 10) {
+                      } else if (value.length < 10) {
                         return "Passowrd must be 10 character or more";
+                      } else if (!inValidPass) {
+                        return "Password must include an uppercase letter, a lowercase letter, a number";
                       }
                     },
                   ),
@@ -126,5 +132,6 @@ class _forgotPasswordFieldState extends State<forgotPasswordField> {
             ))
       ],
     );
+
   }
 }

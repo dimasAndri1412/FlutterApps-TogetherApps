@@ -13,11 +13,10 @@ class ChangesPasswordField extends StatefulWidget {
 }
 
 class _ChangesPasswordFieldState extends State<ChangesPasswordField> {
-  bool passHide = false;
+  bool passHide = true;
 
   void iniState() {
     super.initState();
-    passHide = true;
   }
 
   @override
@@ -57,8 +56,15 @@ class _ChangesPasswordFieldState extends State<ChangesPasswordField> {
                           },
                         )),
                     validator: (value) {
+
+                      bool inValidPass = RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d@$!%*?&]{10,}$').hasMatch(value!);
+
                       if (value == null || value.isEmpty) {
                         return "Password Can not Empty!";
+                      } else if (value.length < 10) {
+                        return "Password must 10 character or more";
+                      } else if (!inValidPass) {
+                        return "Password must include an uppercase letter, a lowercase letter, a number";
                       }
                     },
                   ),

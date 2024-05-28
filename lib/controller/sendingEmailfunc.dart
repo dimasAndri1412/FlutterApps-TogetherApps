@@ -10,12 +10,12 @@ class sendingEmail extends StatelessWidget {
   Future<void> sendingEmailFunc() async{
     try{
       var userEmail = AdminEmail;
-      final smptServer = gmail(userEmail, TokenAcces);
+      final smptServer = gmail(userEmail, TokenAcces2);
 
       final messages = Message()
       ..from = Address(userEmail)
       ..recipients.add(EmailController.text)
-      ..subject = "ATTENTION YOU DEFAULT PASSWORD AND PLEASE CHANGES DEALUT PASSWORD NOW!"
+      ..subject = "ATTENTION YOU DEFAULT PASSWORD AND PLEASE CHANGES DEFAULT PASSWORD NOW!"
       ..text = bodyEmails;
 
       final sendReport = await send(messages, smptServer);
