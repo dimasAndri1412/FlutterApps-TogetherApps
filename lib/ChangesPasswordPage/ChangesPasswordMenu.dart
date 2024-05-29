@@ -107,7 +107,6 @@ class _ChangesPasswordMenuState extends State<ChangesPasswordMenu> {
               TextButton(onPressed: (){
                 Get.offAll(() => LoginPage());
                 ctr_data().clear_func();
-                Get.offAll(() => LoginPage());
               },
                 child:Text("YES",style:
                 TextStyle(color: Colors.blueAccent,
