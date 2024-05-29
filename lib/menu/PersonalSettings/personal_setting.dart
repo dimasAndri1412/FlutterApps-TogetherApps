@@ -1,4 +1,7 @@
+import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/material.dart';
+
+import '../../controller/MemberInfoController/detailMember.dart';
 
 class PersonalSetting extends StatefulWidget {
   const PersonalSetting({super.key});
@@ -17,72 +20,92 @@ class _PersonalSettingState extends State<PersonalSetting> {
           onTap: () {
             FocusScope.of(context).unfocus();
           },
-          child: ListView(
-            children: [
-              Center(
-                child: Stack(
-                  children: [
-                    Container(
-                      width: 90,
-                      height: 90,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 4, color: Colors.white),
-                          boxShadow: [
-                            BoxShadow(
-                                spreadRadius: 2,
-                                blurRadius: 10,
-                                color: Colors.black.withOpacity(0.1))
-                          ],
-                          shape: BoxShape.circle,
-                          image: const DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage("assets/images/LogoBIT.png"))),
-                    ),
-                    Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(width: 4, color: Colors.white),
-                              color: Colors.blue),
-                          child: const Icon(
-                            Icons.edit,
-                            color: Colors.white,
+          child: FutureBuilder(
+            future: detailMember().getUsers(),
+            builder: (context, snapshot) {
+              if (snapshot.data == null) {
+                return const Text("Loading");
+              } else {
+                return
+                  ListView.builder(
+                    itemCount: snapshot.data?.length,
+                    itemBuilder: (context , int index) {
+                      var user = snapshot.data![index];
+                      return Column(
+                      children:
+                      [
+                        Center(
+                          child: Stack(
+                            children: [
+                              Container(
+                                width: 90,
+                                height: 90,
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 4, color: Colors.white),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          spreadRadius: 2,
+                                          blurRadius: 10,
+                                          color: Colors.black.withOpacity(0.1))
+                                    ],
+                                    shape: BoxShape.circle,
+                                    image: const DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: AssetImage(
+                                            "assets/images/LogoBIT.png"))),
+                              ),
+                              Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: Container(
+                                    height: 40,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                            width: 4, color: Colors.white),
+                                        color: Colors.blue),
+                                    child: const Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                    ),
+                                  ))
+                            ],
                           ),
-                        ))
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-              SettingProfile('Username', 'Rarazu'),
-              const SizedBox(height: 10),
-              SettingProfile('Name', 'Rara Zahra Urava'),
-              const SizedBox(height: 10),
-              SettingProfile('Role', 'Member'),
-              const SizedBox(height: 10),
-              SettingProfile('Group', '-'),
-              const SizedBox(
-                height: 10,
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              const Text(
-                "Login & Security",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              SettingProfile('Email', 'rarazu@gmail.com'),
-              const SizedBox(height: 20),
-              itemProfile('Phone Number', '1234567'),
-              const SizedBox(
-                height: 20,
-              ),
-              itemProfile('Password', ''),
-            ],
+                        ),
+                        const SizedBox(height: 20),
+                        SettingProfile('Username', user.username),
+                        const SizedBox(height: 10),
+                        SettingProfile('Name', user.fullname),
+                        const SizedBox(height: 10),
+                        SettingProfile('Role', user.role),
+                        const SizedBox(height: 10),
+                        SettingProfile('Group', user.grup),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        const Text(
+                          "Login & Security",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 10),
+                        SettingProfile('Email', user.email),
+                        const SizedBox(height: 20),
+                        itemProfile('Phone Number', user.phoneNumber),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        itemProfile('Password', passwordController.text),
+                      ],
+                      );
+                    }
+                  );
+            }
+            }
           ),
         ),
       ),
