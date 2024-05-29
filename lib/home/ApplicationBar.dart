@@ -26,6 +26,16 @@ class _ApplicationBarState extends State<ApplicationBar> {
 
   @override
   Widget build(BuildContext context) {
+    // contoh notifikasi
+    int notificationCount = 5;
+    List<String> notifications = [
+    "Notification 1",
+    "Notification 2",
+    "Notification 3",
+    "Notification 4",
+    "Notification 5"
+  ];
+
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Container(
@@ -37,9 +47,58 @@ class _ApplicationBarState extends State<ApplicationBar> {
                     Color.fromARGB(255, 123, 185, 235),
                   ]
                 ),
+                
           ),
+          
         ),
         elevation: 0,
+        actions: [
+          Stack(
+            children: [
+              PopupMenuButton<String>(
+                icon: Icon(Icons.notifications, color: Colors.white,),
+                onSelected: (String result) {
+                  setState(() {
+                    notifications.remove(result);
+                    notificationCount--;
+                  });
+                },
+                itemBuilder: (BuildContext context) {
+                  return notifications.map((String choice) {
+                    return PopupMenuItem<String>(
+                      value: choice,
+                      child: Text(choice),
+                    );
+                  }).toList();
+                },
+              ),
+              if (notificationCount > 0)
+                Positioned(
+                  right: 11,
+                  top: 11,
+                  child: Container(
+                    padding: EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    constraints: BoxConstraints(
+                      minWidth: 12,
+                      minHeight: 12,
+                    ),
+                    child: Text(
+                      '$notificationCount',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 8,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ],
       ),
       body: Center(
         child: body[currentIndex],
