@@ -90,7 +90,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
               height: 10,
             ),
             Container(
-              margin: EdgeInsets.only(right: 5, top: 10),
+              margin: EdgeInsets.only(right: 5, top: 10, bottom: 85),
               child: Center(
                 child: Column(
                   children: [
@@ -307,7 +307,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
           child: Icon(Icons.add),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
     );
   }
 

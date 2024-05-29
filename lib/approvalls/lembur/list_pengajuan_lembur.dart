@@ -34,7 +34,7 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
       body: SingleChildScrollView(
         // scrollDirection: Axis.horizontal,
         child: Container(
-          margin: EdgeInsets.only(right: 5, top: 10),
+          margin: EdgeInsets.only(right: 5, top: 10, bottom: 85),
           child: Center(
             child: Column(
               children: [
@@ -113,7 +113,7 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
           child: Icon(Icons.add),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
     );
   }
 

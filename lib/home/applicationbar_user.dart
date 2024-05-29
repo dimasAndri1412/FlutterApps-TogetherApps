@@ -1,8 +1,8 @@
 import 'package:absent_project/approvalls/approvalls_user.dart';
 import 'package:absent_project/home/Userhome.dart';
 import 'package:absent_project/menu/menu_page_user.dart';
+import 'package:absent_project/timesheets/timesheets_user.dart';
 import 'package:flutter/material.dart';
-import 'package:absent_project/approvalls/Approvalls.dart';
 
 class ApplicationBarUser extends StatefulWidget {
   const ApplicationBarUser({super.key});
@@ -16,7 +16,7 @@ class _ApplicationBarUserState extends State<ApplicationBarUser> {
   List<Widget> body = const [
     UserHome(),
     Icon(Icons.lock_clock),
-    Icon(Icons.note),
+    TimesheetsUser(),
     ApprovallsUser(),
     MenuPageUser()
   ];
