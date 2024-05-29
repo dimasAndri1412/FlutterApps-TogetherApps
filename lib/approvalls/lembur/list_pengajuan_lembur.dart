@@ -69,59 +69,29 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                         DataRow(cells: [
                           DataCell(Text("Abie sakit")),
                           DataCell(Text("2024-12-12")),
-                          DataCell(ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Color.fromARGB(255, 98, 171, 232),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(Icons.download),
-                                Text("Download PDF")
-                              ],
-                            ),
-                            onPressed: () {
-                              downloadFile();
-                            },
-                          )),
+                          DataCell(Center(
+                              child: Text(
+                            "Approved",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ))),
                         ]),
                         DataRow(cells: [
                           DataCell(Text("Febri pusing")),
                           DataCell(Text("2024-12-12")),
-                          DataCell(ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Color.fromARGB(255, 98, 171, 232),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(Icons.download),
-                                Text("Download PDF")
-                              ],
-                            ),
-                            onPressed: () {
-                              downloadFile();
-                            },
-                          )),
+                          DataCell(Center(
+                              child: Text(
+                            "Approved",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ))),
                         ]),
                         DataRow(cells: [
                           DataCell(Text("Motor Iqbal meledak")),
                           DataCell(Text("2024-12-12")),
-                          DataCell(ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Color.fromARGB(255, 98, 171, 232),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(Icons.download),
-                                Text("Download PDF")
-                              ],
-                            ),
-                            onPressed: () {
-                              downloadFile();
-                            },
-                          )),
+                          DataCell(Center(
+                              child: Text(
+                            "Approved",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ))),
                         ]),
                       ],
                     ),
@@ -147,11 +117,11 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
     );
   }
 
-  void downloadFile() async {
-    var time = DateTime.now().millisecondsSinceEpoch;
-    var path = "/storage/emulated/0/Download/images-$time.jpg";
-    var file = File(path);
-    var res = await get(Uri.parse("https://source.unsplash.com/random"));
-    file.writeAsBytes(res.bodyBytes);
-  }
+  // void downloadFile() async {
+  //   var time = DateTime.now().millisecondsSinceEpoch;
+  //   var path = "/storage/emulated/0/Download/images-$time.jpg";
+  //   var file = File(path);
+  //   var res = await get(Uri.parse("https://source.unsplash.com/random"));
+  //   file.writeAsBytes(res.bodyBytes);
+  // }
 }

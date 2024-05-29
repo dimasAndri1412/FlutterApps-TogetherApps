@@ -17,7 +17,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "List Leave Request",
+          "List Paid Leave Request",
           style: TextStyle(fontSize: 15),
         ),
         flexibleSpace: Container(
@@ -32,103 +32,268 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        child: Container(
-          margin: EdgeInsets.only(right: 5, top: 10),
-          child: Center(
-            child: Column(
-              children: [
-                SingleChildScrollView(
-                  // scrollDirection: Axis.horizontal,
-                  child: FittedBox(
-                    child: DataTable(
-                      columns: [
-                        DataColumn(
-                          label: Text(
-                            "Reason of Leave",
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
+              child: Container(
+                width: 350,
+                height: 100,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Color.fromARGB(255, 147, 195, 234),
+                          blurRadius: 5,
+                          offset: Offset(0, 0))
+                    ]),
+                /////////
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 100, top: 30),
+                  child: Table(
+                    columnWidths: {
+                      0: FixedColumnWidth(120),
+                      1: FixedColumnWidth(20),
+                      // 2: FixedColumnWidth(50),
+                    },
+                    children: [
+                      TableRow(children: [
+                        Text(
+                          "Leave Used ",
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        DataColumn(
-                          label: Text(
-                            "Date",
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
+                        Text(
+                          ":",
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        DataColumn(
-                          label: Text(
-                            "Download Approval",
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
+                        Text("2"),
+                      ]),
+                      TableRow(children: [
+                        Text(
+                          "Remaining Leave ",
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                      ],
-                      rows: [
-                        DataRow(cells: [
-                          DataCell(Text("Jalan - jalan")),
-                          DataCell(Text("2024-12-12")),
-                          DataCell(ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Color.fromARGB(255, 98, 171, 232),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(Icons.download),
-                                Text("Download PDF")
-                              ],
-                            ),
-                            onPressed: () {
-                              downloadFile();
-                            },
-                          )),
-                        ]),
-                        DataRow(cells: [
-                          DataCell(Text("Pergi ke RS")),
-                          DataCell(Text("2024-12-12")),
-                          DataCell(ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Color.fromARGB(255, 98, 171, 232),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(Icons.download),
-                                Text("Download PDF")
-                              ],
-                            ),
-                            onPressed: () {
-                              downloadFile();
-                            },
-                          )),
-                        ]),
-                        DataRow(cells: [
-                          DataCell(Text("urus SIM dan STNK")),
-                          DataCell(Text("2024-12-12")),
-                          DataCell(ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Color.fromARGB(255, 98, 171, 232),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(Icons.download),
-                                Text("Download PDF")
-                              ],
-                            ),
-                            onPressed: () {
-                              downloadFile();
-                            },
-                          )),
-                        ]),
-                      ],
-                    ),
+                        Text(
+                          ":",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text("10"),
+                      ]),
+                    ],
                   ),
-                )
-              ],
+                ),
+              ),
             ),
-          ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              margin: EdgeInsets.only(right: 5, top: 10),
+              child: Center(
+                child: Column(
+                  children: [
+                    SingleChildScrollView(
+                      // scrollDirection: Axis.horizontal,
+                      child: FittedBox(
+                        child: DataTable(
+                          columns: [
+                            DataColumn(
+                              label: Text(
+                                "Reason of Leave",
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            DataColumn(
+                              label: Text(
+                                "Date",
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            DataColumn(
+                              label: Text(
+                                "Status Approval",
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ],
+                          rows: [
+                            DataRow(cells: [
+                              DataCell(Text("Jalan - jalan")),
+                              DataCell(Text("2024-12-12")),
+                              DataCell(Center(
+                                  child: Text(
+                                "Approved",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))),
+                            ]),
+                            DataRow(cells: [
+                              DataCell(Text("Pergi ke RS")),
+                              DataCell(Text("2024-12-12")),
+                              DataCell(Center(
+                                  child: Text(
+                                "Approved",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))),
+                            ]),
+                            DataRow(cells: [
+                              DataCell(Text("urus SIM dan STNK")),
+                              DataCell(Text("2024-12-12")),
+                              DataCell(Center(
+                                  child: Text(
+                                "Approved",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))),
+                            ]),
+                            //////////////////////////////////
+                            DataRow(cells: [
+                              DataCell(Text("urus SIM dan STNK")),
+                              DataCell(Text("2024-12-12")),
+                              DataCell(Center(
+                                  child: Text(
+                                "Approved",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))),
+                            ]),
+                            DataRow(cells: [
+                              DataCell(Text("urus SIM dan STNK")),
+                              DataCell(Text("2024-12-12")),
+                              DataCell(Center(
+                                  child: Text(
+                                "Approved",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))),
+                            ]),
+                            DataRow(cells: [
+                              DataCell(Text("urus SIM dan STNK")),
+                              DataCell(Text("2024-12-12")),
+                              DataCell(Center(
+                                  child: Text(
+                                "Approved",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))),
+                            ]),
+                            DataRow(cells: [
+                              DataCell(Text("urus SIM dan STNK")),
+                              DataCell(Text("2024-12-12")),
+                              DataCell(Center(
+                                  child: Text(
+                                "Approved",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))),
+                            ]),
+                            DataRow(cells: [
+                              DataCell(Text("urus SIM dan STNK")),
+                              DataCell(Text("2024-12-12")),
+                              DataCell(Center(
+                                  child: Text(
+                                "Approved",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))),
+                            ]),
+                            DataRow(cells: [
+                              DataCell(Text("urus SIM dan STNK")),
+                              DataCell(Text("2024-12-12")),
+                              DataCell(Center(
+                                  child: Text(
+                                "Approved",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))),
+                            ]),
+                            DataRow(cells: [
+                              DataCell(Text("urus SIM dan STNK")),
+                              DataCell(Text("2024-12-12")),
+                              DataCell(Center(
+                                  child: Text(
+                                "Approved",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))),
+                            ]),
+                            DataRow(cells: [
+                              DataCell(Text("urus SIM dan STNK")),
+                              DataCell(Text("2024-12-12")),
+                              DataCell(Center(
+                                  child: Text(
+                                "Approved",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))),
+                            ]),
+                            DataRow(cells: [
+                              DataCell(Text("urus SIM dan STNK")),
+                              DataCell(Text("2024-12-12")),
+                              DataCell(Center(
+                                  child: Text(
+                                "Approved",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))),
+                            ]),
+                            DataRow(cells: [
+                              DataCell(Text("urus SIM dan STNK")),
+                              DataCell(Text("2024-12-12")),
+                              DataCell(Center(
+                                  child: Text(
+                                "Approved",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))),
+                            ]),
+                            DataRow(cells: [
+                              DataCell(Text("urus SIM dan STNK")),
+                              DataCell(Text("2024-12-12")),
+                              DataCell(Center(
+                                  child: Text(
+                                "Approved",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))),
+                            ]),
+                            DataRow(cells: [
+                              DataCell(Text("urus SIM dan STNK")),
+                              DataCell(Text("2024-12-12")),
+                              DataCell(Center(
+                                  child: Text(
+                                "Approved",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))),
+                            ]),
+                            DataRow(cells: [
+                              DataCell(Text("urus SIM dan STNK")),
+                              DataCell(Text("2024-12-12")),
+                              DataCell(Center(
+                                  child: Text(
+                                "Approved",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))),
+                            ]),
+                            DataRow(cells: [
+                              DataCell(Text("urus SIM dan STNK")),
+                              DataCell(Text("2024-12-12")),
+                              DataCell(Center(
+                                  child: Text(
+                                "Approved",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))),
+                            ]),
+                            DataRow(cells: [
+                              DataCell(Text("urus SIM dan STNK")),
+                              DataCell(Text("2024-12-12")),
+                              DataCell(Center(
+                                  child: Text(
+                                "Approved",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))),
+                            ]),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
       floatingActionButton: Padding(
@@ -146,11 +311,11 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
     );
   }
 
-  void downloadFile() async {
-    var time = DateTime.now().millisecondsSinceEpoch;
-    var path = "/storage/emulated/0/Download/images-$time.jpg";
-    var file = File(path);
-    var res = await get(Uri.parse("https://source.unsplash.com/random"));
-    file.writeAsBytes(res.bodyBytes);
-  }
+  // void downloadFile() async {
+  //   var time = DateTime.now().millisecondsSinceEpoch;
+  //   var path = "/storage/emulated/0/Download/images-$time.jpg";
+  //   var file = File(path);
+  //   var res = await get(Uri.parse("https://source.unsplash.com/random"));
+  //   file.writeAsBytes(res.bodyBytes);
+  // }
 }

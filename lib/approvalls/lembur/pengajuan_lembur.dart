@@ -182,6 +182,9 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                             "Upload PDF",
                             style: TextStyle(color: Colors.white),
                           ),
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  const Color.fromARGB(255, 124, 183, 230)),
                           onPressed: pickFiles,
                         ),
                         SizedBox(
