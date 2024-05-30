@@ -16,11 +16,11 @@ class _ListUserCutiState extends State<ListUserCuti> {
 
   final List<Map<String, String>> requests = [
     {"reqNo": "REQ-1023", "submittedBy": "Rara Zahra Urava", "date": "03 Des 2024 - 12:30", "status": "Approved"},
-    {"reqNo": "REQ-1024", "submittedBy": "John Doe", "date": "04 Des 2024 - 14:00", "status": "Rejected"},
-    {"reqNo": "REQ-1025", "submittedBy": "Jane Smith", "date": "05 Des 2024 - 09:15", "status": "New"},
-    {"reqNo": "REQ-1025", "submittedBy": "Jane Smith", "date": "05 Des 2024 - 09:15", "status": "New"},
-    {"reqNo": "REQ-1025", "submittedBy": "Jane Smith", "date": "05 Des 2024 - 09:15", "status": "New"},
-    {"reqNo": "REQ-1025", "submittedBy": "Jane Smith", "date": "05 Des 2024 - 09:15", "status": "New"},
+    {"reqNo": "REQ-1024", "submittedBy": "Kim Sunoo", "date": "04 Des 2024 - 14:00", "status": "Rejected"},
+    {"reqNo": "REQ-1025", "submittedBy": "Choi Beomgyu", "date": "05 Des 2024 - 09:15", "status": "New"},
+    {"reqNo": "REQ-1025", "submittedBy": "Jeon Jungkook", "date": "06 Des 2024 - 12:15", "status": "New"},
+    {"reqNo": "REQ-1025", "submittedBy": "Kim Yoon Woo", "date": "06 Des 2024 - 13:55", "status": "New"},
+    {"reqNo": "REQ-1025", "submittedBy": "Byeon Woo Seok", "date": "06 Des 2024 - 10:15", "status": "New"},
     // Add more request items as needed
   ];
 
@@ -181,7 +181,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
                       ListTile(
                         leading: CircleAvatar(
                           backgroundImage: AssetImage(
-                              'assets/images/document.png',
+                              'assets/images/document.png', 
                             )
                         ),
                         title: Text(

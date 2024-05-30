@@ -11,160 +11,336 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text("halo"),
+      appBar: AppBar(
+        title:Center(
+          child: Text(
+            "Detail Approval",
+            style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+        ),
+        automaticallyImplyLeading: false,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                  colors: [
+                    Color.fromARGB(255, 147, 195, 234),
+                    Color.fromARGB(255, 98, 171, 232),
+                    Color.fromARGB(255, 123, 185, 235),
+                  ]
+                ),
+          ),
+        ),
+        elevation: 0,
+      ),
+      body: Column(
+        children: [
+          Center(
+            child: Container(
+              margin: EdgeInsets.all(10),
+              height: 40,
+              width: 200,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(20)
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(Icons.notifications_active, color: Colors.orange,),
+                  SizedBox(width: 5,),
+                  Text(
+                    "Status : ",
+                  ),
+                  Text(
+                    "NEW",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(20),
+            height: 70,
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 152, 188, 210).withOpacity(0.2),
+            ),
+            child: ListTile(
+              leading: CircleAvatar(
+                radius: 18, 
+                backgroundColor: Colors.blue, 
+                child: Icon(
+                  Icons.document_scanner_sharp, 
+                  color: Colors.white, 
+                ),
+              ),
+              title:Row(
+                children: [
+                   Text(
+                    "No Request : ",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 14),
+                    ),
+                  Text("Req-1023",
+                    style: TextStyle(
+                      fontSize: 14
+                    ),
+                  )
+                ],
+              ),
+              subtitle: Row(
+                children: [
+                   Text(
+                    "Submitted Date ",
+                    style: TextStyle(
+                     fontSize: 12),
+                    ),
+                  Text("03 Des 2023",
+                    style: TextStyle(
+                      fontSize: 12
+                    ),
+                  )
+                ],
+              )
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            width: 350,
+            height: 350,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(0),
+              border: Border.all(width: 0.5, color: Colors.grey),
+            ),
+            child: Padding(
+              padding: EdgeInsets.only(top: 15, left: 20, right: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Request Detail",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15
+                    ),
+                  ),
+                  Divider(
+                    color: Colors.grey,
+                    thickness: 0.5,
+                    indent: 2,
+                    endIndent: 2,
+                  ),
+                  SizedBox(height: 10,),
+                  Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Submitted by",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13
+                            ),
+                          ),
+                          SizedBox(height: 10,),
+                          Text("Kim Sunoo",
+                            style: TextStyle(
+                              fontSize: 13
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(width: 100,),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Position",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13
+                            ),
+                          ),
+                          SizedBox(height: 10,),
+                          Text("IT Data Operator",
+                            style: TextStyle(
+                              fontSize: 13
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+                  Divider(
+                    color: Colors.grey,
+                    thickness: 0.5,
+                    indent: 2,
+                    endIndent: 2,
+                  ),
+                  SizedBox(height: 10,),
+                  Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Leave Type",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13
+                            ),
+                          ),
+                          SizedBox(height: 10,),
+                          Text("Leaving Early",
+                            style: TextStyle(
+                              fontSize: 13
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(width: 100,),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Shift",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13
+                            ),
+                          ),
+                          SizedBox(height: 10,),
+                          Text("1",
+                            style: TextStyle(
+                              fontSize: 13
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+                  Divider(
+                    color: Colors.grey,
+                    thickness: 0.5,
+                    indent: 2,
+                    endIndent: 2,
+                  ),
+                  SizedBox(height: 10,),
+                  Row(
+                    children: [
+                      Text("Reason of Leave : ",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13
+                        ),
+                      ),
+                      Text("Mengurus NPWP",
+                        style: TextStyle(
+                          fontSize: 13
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+                  Text("Leave Date ",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13
+                      ),
+                    ),
+                  SizedBox(height: 10,),
+                  Row(  
+                    children: [
+                      Container(
+                        width: 140,
+                        height: 35,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey)
+                        ),
+                        child: Center(
+                          child: Text(
+                            "02 Jun 2024",
+                            style: TextStyle(
+                              fontSize: 13
+                            ),
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      Text(" - "),
+                      Spacer(),
+                      Container(
+                        width: 140,
+                        height: 35,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey)
+                        ),
+                        child: Center(
+                          child: Text(
+                            "03 Jun 2024",
+                            style: TextStyle(
+                              fontSize: 13
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            )
+          ),
+          Spacer(),
+          Container(
+            margin: EdgeInsets.all(20),
+            child: Row(
+              children: [
+                Container(
+                  width: 165,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.red),
+                    borderRadius: BorderRadius.circular(6)
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Reject",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red
+                      ),
+                    ),
+                  ),
+                ),
+                Spacer(),
+                Container(
+                  width: 165,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(6)
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Approve",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
-
-
-
-// import 'package:flutter/material.dart';
-// import 'package:dio/dio.dart';
-// import 'package:path_provider/path_provider.dart';
-// import 'package:open_file/open_file.dart';
-// import 'package:file_picker/file_picker.dart';
-// import 'dart:io';
-// import 'package:permission_handler/permission_handler.dart';
-
-// Future<void> DetailCutiUser(BuildContext context, int index, Function(int) approveLeave) {
-//   String fileUrl = 'https://example.com/path/to/your/file.pdf'; // Ensure this URL is correct
-//   return showDialog<void>(
-//     context: context,
-//     builder: (BuildContext context) {
-//       return AlertDialog(
-//         backgroundColor: Colors.white,
-//         title: Center(
-//           child: Text('Paid Leave Detail'),
-//         ),
-//         content: SingleChildScrollView(
-//           child: ListBody(
-//             children: [
-//               Row(
-//                 children: [
-//                   Text("Name  : ", style: TextStyle(fontWeight: FontWeight.bold)),
-//                   Text("Razu"),
-//                 ],
-//               ),
-//               Row(
-//                 children: [
-//                   Text("Position  : ", style: TextStyle(fontWeight: FontWeight.bold)),
-//                   Text("IT Data Operator"),
-//                 ],
-//               ),
-//               Row(
-//                 children: [
-//                   Text("Department : ", style: TextStyle(fontWeight: FontWeight.bold)),
-//                   Text(""),
-//                 ],
-//               ),
-//               SizedBox(height: 20,),
-//               Container(
-//                 decoration: BoxDecoration(
-//                   border: Border.all(width: 0.5, color: Colors.black),
-//                   borderRadius: BorderRadius.circular(10)
-//                 ),
-//                 child: TextField(
-//                   decoration: InputDecoration(
-//                     border: OutlineInputBorder(),
-//                     hintText: 'Reason',
-//                   ),
-//                 ),
-//               )
-//             ],
-//           ),
-//         ),
-//         actions: <Widget>[
-//           Row(
-//             children: [
-//               ElevatedButton.icon(
-//                 icon: Icon(Icons.close),
-//                 label: Text("Reject"),
-//                 style: ElevatedButton.styleFrom(
-//                   backgroundColor: Colors.red,
-//                   foregroundColor: Colors.white,
-//                   textStyle: TextStyle(
-//                   fontSize: 15,
-//                   fontWeight: FontWeight.bold)
-//                 ),
-//                 onPressed: (){},
-//               ),
-//               SizedBox(width: 10),
-//               ElevatedButton.icon(
-//                 icon: Icon(Icons.check),
-//                 label: Text("Approve"),
-//                 style: ElevatedButton.styleFrom(
-//                   backgroundColor: Colors.green,
-//                   foregroundColor: Colors.white,
-//                   textStyle: TextStyle(
-//                   fontSize: 15,
-//                   fontWeight: FontWeight.bold)
-//                 ),
-//                 onPressed: () async {
-                 
-//                 },
-//               ),
-//             ],
-//           )
-//         ],
-//       );
-//     },
-//   );
-// }
-
-// Future<void> openFile({required String url, required String fileName}) async {
-//   try {
-//     final file = await downloadFile(url, fileName);
-//     if (file == null) return;
-//     OpenFile.open(file.path);
-//   } catch (e) {
-//     print("Error opening file: $e");
-//   }
-// }
-
-// Future<File?> downloadFile(String url, String fileName) async {
-//   try {
-//     // Check and request storage permissions
-//     if (await Permission.storage.request().isGranted) {
-//       final appStorage = await getApplicationDocumentsDirectory();
-//       final file = File('${appStorage.path}/$fileName');
-
-//       // Log the download start
-//       print('Starting download from $url');
-
-//       final response = await Dio().get(
-//         url,
-//         options: Options(
-//           responseType: ResponseType.bytes,
-//           followRedirects: false,
-//         ),
-//       );
-
-//       if (response.statusCode == 200) {
-//         final raf = file.openSync(mode: FileMode.write);
-//         raf.writeFromSync(response.data);
-//         await raf.close();
-
-//         // Log successful download
-//         print('File downloaded successfully to ${file.path}');
-//         return file;
-//       } else {
-//         print('Failed to download file. Status code: ${response.statusCode}');
-//         return null;
-//       }
-//     } else {
-//       print('Storage permission denied.');
-//       return null;
-//     }
-//   } catch (e) {
-//     print("Error downloading file: $e");
-//     return null;
-//   }
-// }
-
-
-// Future<File> saveFile (PlatformFile file) async{
-//   final appStorage = await getApplicationDocumentsDirectory();
-//   final newFile = File('${appStorage.path}/${file.name}');
-
-//   return File(file.path!).copy(newFile.path);
-// }
