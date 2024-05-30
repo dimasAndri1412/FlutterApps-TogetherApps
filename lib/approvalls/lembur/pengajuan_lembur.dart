@@ -20,29 +20,6 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
   final reasonLemburController = TextEditingController();
   final _dateLemburController = TextEditingController();
 
-  //Untuk Upload File
-  List pickedFiles = [];
-
-  pickFiles() async {
-    var result = await FilePicker.platform.pickFiles(
-      allowMultiple: false,
-      type: FileType.custom,
-      allowedExtensions: ['pdf'],
-    );
-
-    print(result);
-
-    if (result != null) {
-      setState(() {
-        pickedFiles = result.files.map((file) => File(file.path!)).toList();
-      });
-    }
-  }
-
-  openFile(file) {
-    OpenFile.open(file.path);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,8 +48,7 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                 padding: const EdgeInsets.only(top: 160, left: 30, right: 30),
                 child: Container(
                   width: 390,
-                  // height: 300,
-                  height: 450,
+                  height: 370,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
@@ -88,6 +64,28 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                     child: Form(
                         child: Column(
                       children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(color: Colors.black))),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                                labelText: "Name",
+                                hintText: "Please input you name here",
+                                hintStyle: TextStyle(color: Colors.grey),
+                                border: InputBorder.none),
+                            controller: reasonLemburController,
+                            // validator: (value) {
+                            //   if (value == null || value.isEmpty) {
+                            //     return 'Please enter your reason here';
+                            //   }
+                            //   return null;
+                            // },
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
                         Container(
                           decoration: BoxDecoration(
                               border: Border(
@@ -175,44 +173,8 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                           ),
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 30,
                         ),
-                        ElevatedButton(
-                          child: Text(
-                            "Upload PDF",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 124, 183, 230)),
-                          onPressed: pickFiles,
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        //NOTIFICATION HASIL UPLOAD
-                        pickedFiles.isNotEmpty
-                            ? ListView.builder(
-                                itemCount: pickedFiles.length,
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  return GestureDetector(
-                                    onTap: () => openFile(pickedFiles[index]),
-                                    child: Card(
-                                      child: ListTile(
-                                        leading: returnLogo(pickedFiles[index]),
-                                        subtitle: Text(
-                                          'File: ${pickedFiles[index].path}',
-                                          style: TextStyle(color: Colors.amber),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              )
-                            : Container(),
-                        SizedBox(height: 10),
-                        //BUTTON SUBMIT
                         addLemburButton(),
                       ],
                     )),
@@ -224,22 +186,5 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
         ),
       ),
     );
-  }
-
-  //LOGO hasil Upload File
-  returnLogo(file) {
-    var ex = extension(file.path);
-
-    if (ex == '.pdf') {
-      return Icon(
-        Icons.picture_as_pdf_sharp,
-        color: Colors.amber,
-      );
-    } else {
-      return Icon(
-        Icons.question_mark_outlined,
-        color: Colors.grey,
-      );
-    }
   }
 }

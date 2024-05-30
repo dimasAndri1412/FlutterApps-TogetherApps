@@ -45,6 +45,13 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                       columns: [
                         DataColumn(
                           label: Text(
+                            "Name",
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Text(
                             "Reason of Overtime",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.bold),
@@ -67,7 +74,8 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                       ],
                       rows: [
                         DataRow(cells: [
-                          DataCell(Text("Abie sakit")),
+                          DataCell(Text("Rogape")),
+                          DataCell(Text("kena Covid - 24")),
                           DataCell(Text("2024-12-12")),
                           DataCell(Center(
                               child: Text(
@@ -76,7 +84,8 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                           ))),
                         ]),
                         DataRow(cells: [
-                          DataCell(Text("Febri pusing")),
+                          DataCell(Text("Rogape")),
+                          DataCell(Text("Pusing 7 keliling")),
                           DataCell(Text("2024-12-12")),
                           DataCell(Center(
                               child: Text(
@@ -85,7 +94,8 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                           ))),
                         ]),
                         DataRow(cells: [
-                          DataCell(Text("Motor Iqbal meledak")),
+                          DataCell(Text("Rogape")),
+                          DataCell(Text("Motor turun mesin")),
                           DataCell(Text("2024-12-12")),
                           DataCell(Center(
                               child: Text(

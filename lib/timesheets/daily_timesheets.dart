@@ -13,7 +13,7 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text("DAIY TIMESHEETS"),
+        child: Text("DAILY TIMESHEETS"),
       ),
     );
   }

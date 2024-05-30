@@ -101,6 +101,13 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                           columns: [
                             DataColumn(
                               label: Text(
+                                "Name",
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            DataColumn(
+                              label: Text(
                                 "Reason of Leave",
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold),
@@ -123,6 +130,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                           ],
                           rows: [
                             DataRow(cells: [
+                              DataCell(Text("Rogape")),
                               DataCell(Text("Jalan - jalan")),
                               DataCell(Text("2024-12-12")),
                               DataCell(Center(
@@ -132,6 +140,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               ))),
                             ]),
                             DataRow(cells: [
+                              DataCell(Text("Rogape")),
                               DataCell(Text("Pergi ke RS")),
                               DataCell(Text("2024-12-12")),
                               DataCell(Center(
@@ -141,6 +150,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               ))),
                             ]),
                             DataRow(cells: [
+                              DataCell(Text("Rogape")),
                               DataCell(Text("urus SIM dan STNK")),
                               DataCell(Text("2024-12-12")),
                               DataCell(Center(
@@ -151,6 +161,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                             ]),
                             //////////////////////////////////
                             DataRow(cells: [
+                              DataCell(Text("Rogape")),
                               DataCell(Text("urus SIM dan STNK")),
                               DataCell(Text("2024-12-12")),
                               DataCell(Center(
@@ -160,6 +171,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               ))),
                             ]),
                             DataRow(cells: [
+                              DataCell(Text("Rogape")),
                               DataCell(Text("urus SIM dan STNK")),
                               DataCell(Text("2024-12-12")),
                               DataCell(Center(
@@ -169,6 +181,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               ))),
                             ]),
                             DataRow(cells: [
+                              DataCell(Text("Rogape")),
                               DataCell(Text("urus SIM dan STNK")),
                               DataCell(Text("2024-12-12")),
                               DataCell(Center(
@@ -178,6 +191,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               ))),
                             ]),
                             DataRow(cells: [
+                              DataCell(Text("Rogape")),
                               DataCell(Text("urus SIM dan STNK")),
                               DataCell(Text("2024-12-12")),
                               DataCell(Center(
@@ -187,6 +201,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               ))),
                             ]),
                             DataRow(cells: [
+                              DataCell(Text("Rogape")),
                               DataCell(Text("urus SIM dan STNK")),
                               DataCell(Text("2024-12-12")),
                               DataCell(Center(
@@ -196,6 +211,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               ))),
                             ]),
                             DataRow(cells: [
+                              DataCell(Text("Rogape")),
                               DataCell(Text("urus SIM dan STNK")),
                               DataCell(Text("2024-12-12")),
                               DataCell(Center(
@@ -205,6 +221,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               ))),
                             ]),
                             DataRow(cells: [
+                              DataCell(Text("Rogape")),
                               DataCell(Text("urus SIM dan STNK")),
                               DataCell(Text("2024-12-12")),
                               DataCell(Center(
@@ -214,6 +231,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               ))),
                             ]),
                             DataRow(cells: [
+                              DataCell(Text("Rogape")),
                               DataCell(Text("urus SIM dan STNK")),
                               DataCell(Text("2024-12-12")),
                               DataCell(Center(
@@ -223,6 +241,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               ))),
                             ]),
                             DataRow(cells: [
+                              DataCell(Text("Rogape")),
                               DataCell(Text("urus SIM dan STNK")),
                               DataCell(Text("2024-12-12")),
                               DataCell(Center(
@@ -232,6 +251,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               ))),
                             ]),
                             DataRow(cells: [
+                              DataCell(Text("Rogape")),
                               DataCell(Text("urus SIM dan STNK")),
                               DataCell(Text("2024-12-12")),
                               DataCell(Center(
@@ -241,6 +261,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               ))),
                             ]),
                             DataRow(cells: [
+                              DataCell(Text("Rogape")),
                               DataCell(Text("urus SIM dan STNK")),
                               DataCell(Text("2024-12-12")),
                               DataCell(Center(
@@ -250,6 +271,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               ))),
                             ]),
                             DataRow(cells: [
+                              DataCell(Text("Rogape")),
                               DataCell(Text("urus SIM dan STNK")),
                               DataCell(Text("2024-12-12")),
                               DataCell(Center(
@@ -259,6 +281,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               ))),
                             ]),
                             DataRow(cells: [
+                              DataCell(Text("Rogape")),
                               DataCell(Text("urus SIM dan STNK")),
                               DataCell(Text("2024-12-12")),
                               DataCell(Center(
@@ -268,6 +291,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               ))),
                             ]),
                             DataRow(cells: [
+                              DataCell(Text("Rogape")),
                               DataCell(Text("urus SIM dan STNK")),
                               DataCell(Text("2024-12-12")),
                               DataCell(Center(
@@ -277,6 +301,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               ))),
                             ]),
                             DataRow(cells: [
+                              DataCell(Text("Rogape")),
                               DataCell(Text("urus SIM dan STNK")),
                               DataCell(Text("2024-12-12")),
                               DataCell(Center(
