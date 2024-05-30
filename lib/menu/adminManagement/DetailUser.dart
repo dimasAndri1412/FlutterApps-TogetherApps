@@ -49,9 +49,9 @@ class DetailUser extends StatelessWidget {
                                 )
                               ],
                               shape: BoxShape.circle,
-                              image: const DecorationImage(
+                              image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: NetworkImage("https://picsum.photos/id/1/200/300"),
+                                image: NetworkImage(userList.avatarUrl),
                               ),
                             ),
                           ),
