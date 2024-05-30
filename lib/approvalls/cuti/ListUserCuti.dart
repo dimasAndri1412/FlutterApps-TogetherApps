@@ -120,6 +120,9 @@ class _ListUserCutiState extends State<ListUserCuti> {
               ],
             )
           ),
+          FutureBuilder(
+              future: future,
+              builder: builder
           Expanded(
           child: ListView.builder(
             itemCount: requests.length,
@@ -242,6 +245,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
             },
           ),
         ),
+    )
         ],
       )
     );
