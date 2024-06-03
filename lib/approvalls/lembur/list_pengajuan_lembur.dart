@@ -12,6 +12,33 @@ class ListPengajuanLembur extends StatefulWidget {
 }
 
 class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
+  final List<Map<String, String>> userlembur = [
+    {
+      'name': 'Rogape',
+      'reason': 'abie gak masuk karna cuti',
+      'date': '2024-12-01',
+      'status': 'Approved'
+    },
+    {
+      'name': 'Rogape',
+      'reason': 'febri pusing dan sakit',
+      'date': '2024-12-02',
+      'status': 'Approved'
+    },
+    {
+      'name': 'Rogape',
+      'reason': 'aves jalan - jalan ke Paris',
+      'date': '2024-12-03',
+      'status': 'Approved'
+    },
+    {
+      'name': 'Rogape',
+      'reason': 'Kosong',
+      'date': '2024-12-04',
+      'status': 'Approved'
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,44 +93,35 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                         ),
                         DataColumn(
                           label: Text(
-                            "Download Approval",
+                            "Status Approval",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],
-                      rows: [
-                        DataRow(cells: [
-                          DataCell(Text("Rogape")),
-                          DataCell(Text("kena Covid - 24")),
-                          DataCell(Text("2024-12-12")),
-                          DataCell(Center(
-                              child: Text(
-                            "Approved",
+                      rows: userlembur.map((userlembur) {
+                        return DataRow(cells: [
+                          DataCell(Text(userlembur['name']!)),
+                          DataCell(Text(userlembur['reason']!)),
+                          DataCell(Text(userlembur['date']!)),
+                          DataCell(Text(
+                            userlembur['status']!,
                             style: TextStyle(fontWeight: FontWeight.bold),
-                          ))),
-                        ]),
-                        DataRow(cells: [
-                          DataCell(Text("Rogape")),
-                          DataCell(Text("Pusing 7 keliling")),
-                          DataCell(Text("2024-12-12")),
-                          DataCell(Center(
-                              child: Text(
-                            "Approved",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ))),
-                        ]),
-                        DataRow(cells: [
-                          DataCell(Text("Rogape")),
-                          DataCell(Text("Motor turun mesin")),
-                          DataCell(Text("2024-12-12")),
-                          DataCell(Center(
-                              child: Text(
-                            "Approved",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ))),
-                        ]),
-                      ],
+                          )),
+                        ]);
+                      }).toList(),
+                      // rows: [
+                      //   DataRow(cells: [
+                      //     DataCell(Text("Rogape")),
+                      //     DataCell(Text("kena Covid - 24")),
+                      //     DataCell(Text("2024-12-12")),
+                      //     DataCell(Center(
+                      //         child: Text(
+                      //       "Approved",
+                      //       style: TextStyle(fontWeight: FontWeight.bold),
+                      //     ))),
+                      //   ]),
+                      // ],
                     ),
                   ),
                 )

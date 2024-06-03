@@ -12,6 +12,45 @@ class ListPengajuanCuti extends StatefulWidget {
 }
 
 class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
+  final List<Map<String, String>> usercuti = [
+    {
+      'name': 'Rogape',
+      'reason': 'Jalan - jalan ke Bali',
+      'date': '2024-12-01',
+      'status': 'Approved'
+    },
+    {
+      'name': 'Rogape',
+      'reason': 'Pergi ke RSJ',
+      'date': '2024-12-02',
+      'status': 'Approved'
+    },
+    {
+      'name': 'Rogape',
+      'reason': 'Jinakin Bom',
+      'date': '2024-12-03',
+      'status': 'Approved'
+    },
+    {
+      'name': 'Rogape',
+      'reason': 'jajan ke Paris',
+      'date': '2024-12-04',
+      'status': 'Approved'
+    },
+    {
+      'name': 'Rogape',
+      'reason': 'beli sendal di US',
+      'date': '2024-12-05',
+      'status': 'Approved'
+    },
+    {
+      'name': 'Rogape',
+      'reason': 'cari pokemon',
+      'date': '2024-12-06',
+      'status': 'Approved'
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,189 +167,29 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               ),
                             ),
                           ],
-                          rows: [
-                            DataRow(cells: [
-                              DataCell(Text("Rogape")),
-                              DataCell(Text("Jalan - jalan")),
-                              DataCell(Text("2024-12-12")),
-                              DataCell(Center(
-                                  child: Text(
-                                "Approved",
+                          rows: usercuti.map((usercuti) {
+                            return DataRow(cells: [
+                              DataCell(Text(usercuti['name']!)),
+                              DataCell(Text(usercuti['reason']!)),
+                              DataCell(Text(usercuti['date']!)),
+                              DataCell(Text(
+                                usercuti['status']!,
                                 style: TextStyle(fontWeight: FontWeight.bold),
-                              ))),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(Text("Rogape")),
-                              DataCell(Text("Pergi ke RS")),
-                              DataCell(Text("2024-12-12")),
-                              DataCell(Center(
-                                  child: Text(
-                                "Approved",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ))),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(Text("Rogape")),
-                              DataCell(Text("urus SIM dan STNK")),
-                              DataCell(Text("2024-12-12")),
-                              DataCell(Center(
-                                  child: Text(
-                                "Approved",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ))),
-                            ]),
-                            //////////////////////////////////
-                            DataRow(cells: [
-                              DataCell(Text("Rogape")),
-                              DataCell(Text("urus SIM dan STNK")),
-                              DataCell(Text("2024-12-12")),
-                              DataCell(Center(
-                                  child: Text(
-                                "Approved",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ))),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(Text("Rogape")),
-                              DataCell(Text("urus SIM dan STNK")),
-                              DataCell(Text("2024-12-12")),
-                              DataCell(Center(
-                                  child: Text(
-                                "Approved",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ))),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(Text("Rogape")),
-                              DataCell(Text("urus SIM dan STNK")),
-                              DataCell(Text("2024-12-12")),
-                              DataCell(Center(
-                                  child: Text(
-                                "Approved",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ))),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(Text("Rogape")),
-                              DataCell(Text("urus SIM dan STNK")),
-                              DataCell(Text("2024-12-12")),
-                              DataCell(Center(
-                                  child: Text(
-                                "Approved",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ))),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(Text("Rogape")),
-                              DataCell(Text("urus SIM dan STNK")),
-                              DataCell(Text("2024-12-12")),
-                              DataCell(Center(
-                                  child: Text(
-                                "Approved",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ))),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(Text("Rogape")),
-                              DataCell(Text("urus SIM dan STNK")),
-                              DataCell(Text("2024-12-12")),
-                              DataCell(Center(
-                                  child: Text(
-                                "Approved",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ))),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(Text("Rogape")),
-                              DataCell(Text("urus SIM dan STNK")),
-                              DataCell(Text("2024-12-12")),
-                              DataCell(Center(
-                                  child: Text(
-                                "Approved",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ))),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(Text("Rogape")),
-                              DataCell(Text("urus SIM dan STNK")),
-                              DataCell(Text("2024-12-12")),
-                              DataCell(Center(
-                                  child: Text(
-                                "Approved",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ))),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(Text("Rogape")),
-                              DataCell(Text("urus SIM dan STNK")),
-                              DataCell(Text("2024-12-12")),
-                              DataCell(Center(
-                                  child: Text(
-                                "Approved",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ))),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(Text("Rogape")),
-                              DataCell(Text("urus SIM dan STNK")),
-                              DataCell(Text("2024-12-12")),
-                              DataCell(Center(
-                                  child: Text(
-                                "Approved",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ))),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(Text("Rogape")),
-                              DataCell(Text("urus SIM dan STNK")),
-                              DataCell(Text("2024-12-12")),
-                              DataCell(Center(
-                                  child: Text(
-                                "Approved",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ))),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(Text("Rogape")),
-                              DataCell(Text("urus SIM dan STNK")),
-                              DataCell(Text("2024-12-12")),
-                              DataCell(Center(
-                                  child: Text(
-                                "Approved",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ))),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(Text("Rogape")),
-                              DataCell(Text("urus SIM dan STNK")),
-                              DataCell(Text("2024-12-12")),
-                              DataCell(Center(
-                                  child: Text(
-                                "Approved",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ))),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(Text("Rogape")),
-                              DataCell(Text("urus SIM dan STNK")),
-                              DataCell(Text("2024-12-12")),
-                              DataCell(Center(
-                                  child: Text(
-                                "Approved",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ))),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(Text("Rogape")),
-                              DataCell(Text("urus SIM dan STNK")),
-                              DataCell(Text("2024-12-12")),
-                              DataCell(Center(
-                                  child: Text(
-                                "Approved",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ))),
-                            ]),
-                          ],
+                              )),
+                            ]);
+                          }).toList(),
+                          // rows: [
+                          //   DataRow(cells: [
+                          //     DataCell(Text("Rogape")),
+                          //     DataCell(Text("Jalan - jalan")),
+                          //     DataCell(Text("2024-12-12")),
+                          //     DataCell(Center(
+                          //         child: Text(
+                          //       "Approved",
+                          //       style: TextStyle(fontWeight: FontWeight.bold),
+                          //     ))),
+                          //   ]),
+                          // ],
                         ),
                       ),
                     )

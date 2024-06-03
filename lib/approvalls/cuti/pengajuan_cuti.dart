@@ -56,10 +56,10 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
             Padding(
               // padding: const EdgeInsets.only(left: 30, right: 30, top: 160),
               padding: const EdgeInsets.only(
-                  left: 30, right: 30, top: 30, bottom: 50),
+                  left: 30, right: 30, top: 30, bottom: 30),
               child: Container(
                 width: 390,
-                height: 900,
+                // height: 900,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
@@ -71,7 +71,8 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                   ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 15, top: 5),
+                  padding: const EdgeInsets.only(
+                      left: 15, right: 15, top: 5, bottom: 20),
                   child: Form(
                       child: Column(
                     children: [

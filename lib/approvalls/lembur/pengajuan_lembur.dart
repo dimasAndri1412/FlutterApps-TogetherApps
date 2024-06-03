@@ -48,7 +48,7 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                 padding: const EdgeInsets.only(top: 160, left: 30, right: 30),
                 child: Container(
                   width: 390,
-                  height: 370,
+                  // height: 370,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
@@ -60,7 +60,8 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                     ],
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 5, left: 15, right: 15),
+                    padding: const EdgeInsets.only(
+                        top: 5, left: 15, right: 15, bottom: 15),
                     child: Form(
                         child: Column(
                       children: [

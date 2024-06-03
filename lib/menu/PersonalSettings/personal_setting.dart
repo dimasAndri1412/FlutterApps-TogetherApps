@@ -33,6 +33,7 @@ class _PersonalSettingState extends State<PersonalSetting> {
       appBar: AppBar(
         actions: [
           PopupMenuButton<_MenuDropdown>(
+            color: Color.fromARGB(255, 185, 215, 237),
             icon: Icon(Icons.menu),
             itemBuilder: (context) => [
               PopupMenuItem(
