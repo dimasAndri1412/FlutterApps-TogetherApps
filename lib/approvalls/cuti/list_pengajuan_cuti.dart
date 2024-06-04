@@ -35,7 +35,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
       'name': 'Rogape',
       'reason': 'jajan ke Paris',
       'date': '2024-12-04',
-      'status': 'Approved'
+      'status': 'Rejected'
     },
     {
       'name': 'Rogape',
@@ -47,6 +47,12 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
       'name': 'Rogape',
       'reason': 'cari pokemon',
       'date': '2024-12-06',
+      'status': 'Rejected'
+    },
+    {
+      'name': 'Rogape',
+      'reason': 'cuti menikah',
+      'date': '2024-12-07',
       'status': 'Approved'
     },
   ];
@@ -70,145 +76,170 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
         ),
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
-              child: Container(
-                width: 350,
-                height: 100,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Color.fromARGB(255, 147, 195, 234),
-                          blurRadius: 5,
-                          offset: Offset(0, 0))
-                    ]),
-                /////////
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 100, top: 30),
-                  child: Table(
-                    columnWidths: {
-                      0: FixedColumnWidth(120),
-                      1: FixedColumnWidth(20),
-                      // 2: FixedColumnWidth(50),
-                    },
-                    children: [
-                      TableRow(children: [
-                        Text(
-                          "Leave Used ",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          ":",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text("2"),
-                      ]),
-                      TableRow(children: [
-                        Text(
-                          "Remaining Leave ",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          ":",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text("10"),
-                      ]),
-                    ],
+      body: Column(
+        children: [
+          Padding(
+            padding:
+                const EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 0),
+            child: Container(
+              width: 500,
+              // height: 100,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Color.fromARGB(255, 147, 195, 234),
+                        blurRadius: 5,
+                        offset: Offset(0, 0))
+                  ]),
+              /////////
+              child: Column(
+                // mainAxisSize: MainAxisSize.min,
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Text(
+                      "Leave Statistics",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          letterSpacing: 2),
+                    ),
                   ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              margin: EdgeInsets.only(right: 5, top: 10, bottom: 85),
-              child: Center(
-                child: Column(
-                  children: [
-                    SingleChildScrollView(
-                      // scrollDirection: Axis.horizontal,
-                      child: FittedBox(
-                        child: DataTable(
-                          columns: [
-                            DataColumn(
-                              label: Text(
-                                "Name",
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
+                  Divider(
+                    color: Colors.grey,
+                    thickness: 1,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Leave Used"),
+                              SizedBox(
+                                height: 5,
                               ),
+                              Text("Remaining Leave")
+                            ]),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(":"),
+                            SizedBox(
+                              height: 5,
                             ),
-                            DataColumn(
-                              label: Text(
-                                "Reason of Leave",
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            DataColumn(
-                              label: Text(
-                                "Date",
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            DataColumn(
-                              label: Text(
-                                "Status Approval",
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
-                              ),
-                            ),
+                            Text(":"),
                           ],
-                          rows: usercuti.map((usercuti) {
-                            return DataRow(cells: [
-                              DataCell(Text(usercuti['name']!)),
-                              DataCell(Text(usercuti['reason']!)),
-                              DataCell(Text(usercuti['date']!)),
-                              DataCell(Text(
-                                usercuti['status']!,
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              )),
-                            ]);
-                          }).toList(),
-                          // rows: [
-                          //   DataRow(cells: [
-                          //     DataCell(Text("Rogape")),
-                          //     DataCell(Text("Jalan - jalan")),
-                          //     DataCell(Text("2024-12-12")),
-                          //     DataCell(Center(
-                          //         child: Text(
-                          //       "Approved",
-                          //       style: TextStyle(fontWeight: FontWeight.bold),
-                          //     ))),
-                          //   ]),
-                          // ],
                         ),
-                      ),
-                    )
-                  ],
-                ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("2"),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text("10"),
+                          ],
+                        )
+                      ],
+                    ),
+                  )
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: usercuti.length,
+              itemBuilder: (context, index) {
+                //panggil usercuti sebagai cutiisi
+                final isicuti = usercuti[index];
+
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(width: 0.5, color: Colors.grey)),
+                    child: ListTile(
+                      leading: Image.asset(
+                        'assets/images/job.png',
+                        scale: 5,
+                      ),
+                      title: Text(
+                        //dipakai jika tanpa final cutiisi
+                        // usercuti[index]['name']!,
+                        isicuti['reason']!,
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.calendar_month),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                isicuti['date']!,
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 10),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Icon(Icons.supervised_user_circle_outlined),
+                              SizedBox(width: 5),
+                              Text(
+                                isicuti['name']!,
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 10),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      trailing: Text(
+                        usercuti[index]['status']!,
+                        style: TextStyle(
+                            color: isicuti['status'] == 'Approved'
+                                ? Colors.green
+                                : Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 30),
+        padding: const EdgeInsets.only(bottom: 15),
         child: FloatingActionButton(
           onPressed: () {
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => PengajuanCuti()));
           },
           backgroundColor: Color.fromARGB(255, 98, 171, 232),
-          child: Icon(Icons.add),
+          child: Icon(Icons.edit),
+          elevation: 5,
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,

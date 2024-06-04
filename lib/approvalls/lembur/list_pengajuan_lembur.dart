@@ -29,7 +29,7 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
       'name': 'Rogape',
       'reason': 'aves jalan - jalan ke Paris',
       'date': '2024-12-03',
-      'status': 'Approved'
+      'status': 'Rejected'
     },
     {
       'name': 'Rogape',
@@ -58,87 +58,92 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
         ),
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        // scrollDirection: Axis.horizontal,
-        child: Container(
-          margin: EdgeInsets.only(right: 5, top: 10, bottom: 85),
-          child: Center(
-            child: Column(
-              children: [
-                SingleChildScrollView(
-                  // scrollDirection: Axis.horizontal,
-                  child: FittedBox(
-                    child: DataTable(
-                      columns: [
-                        DataColumn(
-                          label: Text(
-                            "Name",
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: userlembur.length,
+              itemBuilder: (context, index) {
+                //panggil usercuti sebagai cutiisi
+                final isilembur = userlembur[index];
+
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(width: 0.5, color: Colors.grey)),
+                    child: ListTile(
+                      leading: Image.asset(
+                        'assets/images/overtime.png',
+                        scale: 5,
+                      ),
+                      title: Text(
+                        //dipakai jika tanpa final cutiisi
+                        // usercuti[index]['name']!,
+                        isilembur['reason']!,
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.calendar_month),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                isilembur['date']!,
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 10),
+                              ),
+                            ],
                           ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            "Reason of Overtime",
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            "Date",
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            "Status Approval",
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
-                      rows: userlembur.map((userlembur) {
-                        return DataRow(cells: [
-                          DataCell(Text(userlembur['name']!)),
-                          DataCell(Text(userlembur['reason']!)),
-                          DataCell(Text(userlembur['date']!)),
-                          DataCell(Text(
-                            userlembur['status']!,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )),
-                        ]);
-                      }).toList(),
-                      // rows: [
-                      //   DataRow(cells: [
-                      //     DataCell(Text("Rogape")),
-                      //     DataCell(Text("kena Covid - 24")),
-                      //     DataCell(Text("2024-12-12")),
-                      //     DataCell(Center(
-                      //         child: Text(
-                      //       "Approved",
-                      //       style: TextStyle(fontWeight: FontWeight.bold),
-                      //     ))),
-                      //   ]),
-                      // ],
+                          Row(
+                            children: [
+                              Icon(Icons.supervised_user_circle_outlined),
+                              SizedBox(width: 5),
+                              Text(
+                                isilembur['name']!,
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 10),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      trailing: Text(
+                        userlembur[index]['status']!,
+                        style: TextStyle(
+                            color: isilembur['status'] == 'Approved'
+                                ? Colors.green
+                                : Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15),
+                      ),
                     ),
                   ),
-                )
-              ],
+                );
+              },
             ),
           ),
-        ),
+        ],
       ),
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 30),
+        padding: const EdgeInsets.only(bottom: 15),
         child: FloatingActionButton(
           onPressed: () {
             Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => PengajuanLembur()));
           },
           backgroundColor: Color.fromARGB(255, 98, 171, 232),
-          child: Icon(Icons.add),
+          child: Icon(Icons.edit),
+          elevation: 5,
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
