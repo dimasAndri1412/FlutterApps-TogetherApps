@@ -1,4 +1,4 @@
-import 'package:absent_project/ForgotPassword/forgotPasswordMenu.dart';
+import 'package:absent_project/OTPVerfication/OTPVerficationPage.dart';
 import 'package:absent_project/controller/LoginController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,9 +13,7 @@ class myForm extends StatefulWidget {
 
 class _myFormState extends State<myForm> {
 
-
   bool passwordObscured = true;
-
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +131,7 @@ class _myFormState extends State<myForm> {
                         TextButton(
                           onPressed: () {
                             setState(() {
-                              Get.offAll(() => forgotPasswordMenu());
+                              Get.offAll(() => OTPVerficationPage());
                             });
                           },
                           child: const Text('Forgot Password ? '),

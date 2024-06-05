@@ -15,7 +15,7 @@ class _addCutiButtonState extends State<addCutiButton> {
         MaterialButton(
           child: Container(
             height: 40,
-            width: 80,
+            width: 200,
             decoration: BoxDecoration(
               color: const Color.fromARGB(255, 124, 185, 236),
               borderRadius: BorderRadius.circular(20),
