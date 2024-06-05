@@ -1,9 +1,9 @@
 import 'package:absent_project/approvalls/cuti/DetailCutiUser.dart';
-import 'package:faker/faker.dart';
+// import 'package:faker/faker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 
 class ListUserCuti extends StatefulWidget {
   const ListUserCuti({super.key});

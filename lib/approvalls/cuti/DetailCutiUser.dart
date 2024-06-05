@@ -1,4 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:absent_project/approvalls/cuti/GeneratePDF.dart';
+// import 'pdf_generator.dart';
+// import 'dart:io';
+import 'package:flutter/services.dart';
+// import 'package:pdf/pdf.dart';
+// import 'package:barcode/barcode.dart';
+// import 'package:pdf/widgets.dart' as pw;
+// import 'package:path_provider/path_provider.dart';
+import 'package:printing/printing.dart';
+
 
 class DetailCutiUser extends StatefulWidget {
   const DetailCutiUser({super.key});
@@ -8,6 +18,7 @@ class DetailCutiUser extends StatefulWidget {
 }
 
 class _DetailCutiUserState extends State<DetailCutiUser> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +76,7 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
             ),
           ),
           Container(
-            margin: EdgeInsets.all(20),
+            margin: EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 10),
             height: 70,
             decoration: BoxDecoration(
               color: Color.fromARGB(255, 152, 188, 210).withOpacity(0.2),
@@ -110,9 +121,9 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
             ),
           ),
           Container(
-            margin: EdgeInsets.all(10),
+            margin: EdgeInsets.only(top: 5, left: 10, right: 10),
             width: 350,
-            height: 350,
+            height: 450,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(0),
@@ -149,7 +160,7 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                               fontSize: 13
                             ),
                           ),
-                          SizedBox(height: 10,),
+                          SizedBox(height: 5,),
                           Text("Kim Sunoo",
                             style: TextStyle(
                               fontSize: 13
@@ -161,14 +172,14 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Position",
+                          Text("Phone Number",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 13
                             ),
                           ),
-                          SizedBox(height: 10,),
-                          Text("IT Data Operator",
+                          SizedBox(height: 5,),
+                          Text("0987612",
                             style: TextStyle(
                               fontSize: 13
                             ),
@@ -177,14 +188,60 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 5,),
                   Divider(
                     color: Colors.grey,
                     thickness: 0.5,
                     indent: 2,
                     endIndent: 2,
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 5,),
+                  Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Position",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13
+                            ),
+                          ),
+                          SizedBox(height: 5,),
+                          Text("IT Data Operator",
+                            style: TextStyle(
+                              fontSize: 13
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(width: 80,),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Department",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13
+                            ),
+                          ),
+                          SizedBox(height: 5,),
+                          Text("Gedung Bri",
+                            style: TextStyle(
+                              fontSize: 13
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    color: Colors.grey,
+                    thickness: 0.5,
+                    indent: 2,
+                    endIndent: 2,
+                  ),
+                  SizedBox(height: 5,),
                   Row(
                     children: [
                       Column(
@@ -196,7 +253,7 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                               fontSize: 13
                             ),
                           ),
-                          SizedBox(height: 10,),
+                          SizedBox(height: 5,),
                           Text("Leaving Early",
                             style: TextStyle(
                               fontSize: 13
@@ -214,7 +271,7 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                               fontSize: 13
                             ),
                           ),
-                          SizedBox(height: 10,),
+                          SizedBox(height: 5,),
                           Text("1",
                             style: TextStyle(
                               fontSize: 13
@@ -224,14 +281,14 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 5,),
                   Divider(
                     color: Colors.grey,
                     thickness: 0.5,
                     indent: 2,
                     endIndent: 2,
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 5,),
                   Row(
                     children: [
                       Text("Reason of Leave : ",
@@ -247,14 +304,14 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                       )
                     ],
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 5,),
                   Text("Leave Date ",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 13
                       ),
                     ),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 5,),
                   Row(  
                     children: [
                       Container(
@@ -291,7 +348,40 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                         ),
                       )
                     ],
-                  )
+                  ),
+                  SizedBox(height: 20,),
+                  Row(
+                    children: [
+                      Text("Name Of PIC : ",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13
+                        ),
+                      ),
+                      Text("Ameng",
+                        style: TextStyle(
+                          fontSize: 13
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 5,),
+                  Row(
+                    children: [
+                      Text("Will return to work on : ",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13
+                        ),
+                      ),
+                      Text("04 Jun 2024",
+                        style: TextStyle(
+                          fontSize: 13
+                        ),
+                      )
+                      
+                    ],
+                  ),
                 ],
               ),
             )
@@ -319,19 +409,30 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                   ),
                 ),
                 Spacer(),
-                Container(
-                  width: 165,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(6)
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Approve",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white
+                InkWell(
+                  onTap: () async {
+                    print("Click event on Container");
+                    // Navigator.of(context)
+                    // .push(MaterialPageRoute(builder: (context) => GeneratePDF()));
+                    // Generate the PDF with a barcode
+                    // final backgroundImage = await loadImage('assets/images/BIT-Logo.png');
+                    final pdf = await GeneratePDF();
+                    await Printing.layoutPdf(onLayout: (format) => pdf);
+                  },
+                  child: Container(
+                    width: 165,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(6)
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Approve",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white
+                        ),
                       ),
                     ),
                   ),
