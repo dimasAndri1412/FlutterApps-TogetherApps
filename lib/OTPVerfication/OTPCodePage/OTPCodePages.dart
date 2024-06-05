@@ -76,6 +76,7 @@ class _OTPCodePagesState extends State<OTPCodePages> {
       ),
     );
   }
+
   Future<Future<bool?>> _showConfirmDialog(BuildContext context) async {
     return showDialog<bool>(
         context: context,

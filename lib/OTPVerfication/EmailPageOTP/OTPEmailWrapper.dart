@@ -32,6 +32,7 @@ class _OTPEmailWrapperState extends State<OTPEmailWrapper> {
             height: 30,
           ),
           OTPEmailButtons()
+
         ],
       ),
     );

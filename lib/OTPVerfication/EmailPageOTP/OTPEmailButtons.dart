@@ -47,6 +47,7 @@ class _OTPEmailButtonsState extends State<OTPEmailButtons> {
                       color: Colors.white,
                       fontSize: 15,
                       fontWeight: FontWeight.bold),
+
                 ),
               )
           ),

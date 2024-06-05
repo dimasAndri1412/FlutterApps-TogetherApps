@@ -112,6 +112,7 @@ class _OTPVerficationPageState extends State<OTPVerficationPage> {
                 child:Text("YES",style:
                 TextStyle(color: Colors.blueAccent,
                     fontWeight: FontWeight.bold),
+
                 ),
               ),
             ],

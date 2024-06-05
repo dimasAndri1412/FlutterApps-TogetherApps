@@ -31,7 +31,9 @@ class _OTPCodeWrapperState extends State<OTPCodeWrapper> {
           SizedBox(
             height: 30,
           ),
+
           OTPCodeButtons()
+
         ],
       ),
     );

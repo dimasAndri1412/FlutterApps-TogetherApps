@@ -39,6 +39,7 @@ class _OTPCodeFieldState extends State<OTPCodeField> {
                         return "OTP Can not Empty!";
                       }
                       return null;
+
                     },
                   )
               )

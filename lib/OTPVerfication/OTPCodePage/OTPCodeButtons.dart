@@ -46,6 +46,7 @@ class _OTPCodeButtonsState extends State<OTPCodeButtons> {
                       color: Colors.white,
                       fontSize: 15,
                       fontWeight: FontWeight.bold),
+
                 ),
               )
           ),

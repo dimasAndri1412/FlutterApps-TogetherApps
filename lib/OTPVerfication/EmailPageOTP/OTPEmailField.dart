@@ -47,6 +47,7 @@ class _OTPEmailPageState extends State<OTPEmailPage> {
                     return "Incorrect Email format";
                   }
                   return null;
+
                 },
               ),
             ),

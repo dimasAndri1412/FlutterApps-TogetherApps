@@ -13,6 +13,7 @@ class OTPVerficationHead extends StatelessWidget {
           Container(
             child: Image.asset("assets/images/otp_verfication.png",
               width: 190,),
+
           )
         ],
       ),

@@ -38,6 +38,7 @@ class OtpControllers {
         sendOTP;
         Get.offAll(() => OTPCodePages());
         ctr_data().clear_func();
+
       } else {
         ctr_data().clear_func();
         return "Email is not match";

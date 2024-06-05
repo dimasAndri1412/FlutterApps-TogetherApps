@@ -25,6 +25,7 @@ class verifyOTPController {
           'otp_code' : otpInputs
         }
       );
+
       dataUsers = jsonDecode(resp.body);
       otpCodes = dataUsers[0]['otp_code'];
 

@@ -26,6 +26,7 @@ class insertOtpController {
             'otp_code' : otpInputs
           }
       );
+
       otpUser = jsonDecode(resp.body);
 
     } catch (excetion) {

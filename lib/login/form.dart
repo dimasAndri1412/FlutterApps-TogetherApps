@@ -13,9 +13,7 @@ class myForm extends StatefulWidget {
 
 class _myFormState extends State<myForm> {
 
-
   bool passwordObscured = true;
-
 
   @override
   Widget build(BuildContext context) {
