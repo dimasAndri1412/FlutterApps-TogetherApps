@@ -12,7 +12,7 @@ class UserRequestPaidLeaveController {
       List<UserRequestPaidLeave> users = [];
 
       for (var u in jsonData) {
-        UserRequestPaidLeave user = UserRequestPaidLeave(u["name"], u["position"]);
+        UserRequestPaidLeave user = UserRequestPaidLeave(u["name"], u["position"], u["reqNo"], u["status"]);
         users.add(user);
       }
       return users;
