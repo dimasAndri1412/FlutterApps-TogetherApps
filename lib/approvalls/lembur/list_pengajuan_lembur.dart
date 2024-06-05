@@ -60,6 +60,9 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
       ),
       body: Column(
         children: [
+          SizedBox(
+            height: 30,
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: userlembur.length,

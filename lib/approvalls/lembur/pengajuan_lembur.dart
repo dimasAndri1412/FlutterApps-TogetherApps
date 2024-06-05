@@ -53,7 +53,7 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 160),
+                padding: const EdgeInsets.only(top: 50, bottom: 50),
                 child: Container(
                   width: 380,
                   // height: 370,

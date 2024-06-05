@@ -325,7 +325,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                 Container(
                                   margin: EdgeInsets.only(left: 0),
                                   child: Text(
-                                    "Start Time",
+                                    "Start Date",
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
@@ -387,7 +387,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                 Container(
                                   margin: EdgeInsets.only(left: 0),
                                   child: Text(
-                                    "End Time",
+                                    "End Date",
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
