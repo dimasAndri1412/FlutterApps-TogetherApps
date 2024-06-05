@@ -4,6 +4,7 @@ import 'package:faker/faker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 
 import '../../controller/UserRequestPaidLeave/UserRequestPaidLeave.dart';
@@ -126,7 +127,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
               future: UserRequestPaidLeaveController().getUsers(),
               builder: (context, snapshot) {
                 if (snapshot.data == null) {
-                  return const Text("loading");
+                  return const Text("Loading");
                 } else {
                   return Expanded(
                       child: ListView.builder(
@@ -135,7 +136,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
                           final getData = snapshot.data![index];
                           final request = requests[index];
                           final statusColor = _getStatusColor(
-                              request["status"] ?? "Unknown");
+                              getData.status ?? "Unknown");
                           return GestureDetector(
                               onTap: () {
                                 Navigator.of(context)
@@ -164,7 +165,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
                                             style: TextStyle(
                                                 color: Colors.grey),
                                           ),
-                                          Text(request["reqNo"]!),
+                                          Text(getData.reqNo),
                                           Spacer(),
                                           Container(
                                             decoration: BoxDecoration(
@@ -176,8 +177,8 @@ class _ListUserCutiState extends State<ListUserCuti> {
                                             width: 80,
                                             child: Center(
                                               child: Text(
-                                                request["status"] ?? "New",
-                                                style: TextStyle(
+                                                getData.status,
+                                                style: const TextStyle(
                                                     color: Colors.white,
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 12),
