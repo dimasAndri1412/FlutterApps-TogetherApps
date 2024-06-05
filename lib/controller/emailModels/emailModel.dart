@@ -1,0 +1,2 @@
+library emailAddresModel;
+String? emailAddres;

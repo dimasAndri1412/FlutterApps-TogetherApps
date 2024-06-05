@@ -1,3 +1,7 @@
+import 'package:absent_project/Registration/Functions/functionOTPKey.dart';
+import 'package:absent_project/controller/FindOTPController.dart';
+import 'emailModels/otpModels.dart' as otpmodel;
+import '../controller/emailModels/emailModel.dart' as emailmodel;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'Keys.dart';
@@ -25,7 +29,8 @@ final String bodyEmails = "HI,${FullNameController.text}\n"
                           "Best Regard\n"
                           "ADMIN";
 
-final String bodyEmailsForgots = "HI,${FullNameController.text}\n"
+final String bodyEmailsForgots =
+    "HI,${FullNameController.text}\n"
                           "\n"
                           "YOUR PASSWORD HAS CHANGES :"
                           "\n"
@@ -42,6 +47,56 @@ final String bodyEmailsForgots = "HI,${FullNameController.text}\n"
                           "Best Regard\n"
                           "ADMIN";
 
+
+//bodyemailOTP
+Future<String> sendOTPtoEmail() async{
+  final findOTPController otpController = findOTPController();
+
+  await otpController.findOtps();
+
+  final String bodiesEmailsOTP =
+      "HI,${FullNameController.text}\n"
+      "\n"
+      "YOUR OTP CODE :"
+      "\n"
+      "================================\n"
+      "OTPCODE : ${otpmodel.otpcodes}\n"
+      "================================\n"
+      "\n"
+      "PLEASE INSERT OTP CODE TO NEXT STEP\n"
+      "\n"
+      "\n"
+      "Thanks you\n"
+      "\n"
+      "Best Regard\n"
+      "ADMIN";
+
+  return bodiesEmailsOTP;
+}
+
+//getting email
+Future<String?> sendEmail()  async {
+  final findOTPController otpController = findOTPController();
+  await otpController.findOtps();
+
+  String? sendingEmail = emailmodel.emailAddres;
+
+  final String? valueEmail =  sendingEmail;
+
+  return valueEmail;
+}
+
+//getting otp
+Future<String?> sendOTPCode()  async {
+  final findOTPController otpController = findOTPController();
+  await otpController.findOtps();
+
+  String? sendOTPCode = otpmodel.otpcodes;
+
+  final String? valueOTP =  sendOTPCode;
+
+  return valueOTP;
+}
 
 
 

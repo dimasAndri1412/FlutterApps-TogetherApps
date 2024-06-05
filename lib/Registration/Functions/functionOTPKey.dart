@@ -6,13 +6,13 @@ class functionOTPKey extends StatelessWidget {
   static String GeneratedOTP() {
 
     String numbers = '123456789';
-    String uppers  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    //String uppers  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     String otpCode = "";
 
     int otpLenght = 6;
 
-    String format = uppers + numbers;
+    String format = numbers;
 
     List<String> list = format.split('').toList();
 

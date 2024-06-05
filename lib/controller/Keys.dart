@@ -16,6 +16,7 @@ final FullNameController = TextEditingController();
 final AddressController = TextEditingController();
 final PhoneNumbersController = TextEditingController();
 final EmailController = TextEditingController();
+final OTPController = TextEditingController();
 final TextEditingController BirthDateController = TextEditingController();
 final RolesController = TextEditingController();
 final NewPasswordContorller = TextEditingController();
@@ -28,3 +29,9 @@ final ProjectController = TextEditingController();
 
 //Key ForgotPassword
 final GlobalKey<FormState>formsForgotKeys = GlobalKey<FormState>();
+
+//OTP Key
+final GlobalKey<FormState>otpFormsKeys = GlobalKey<FormState>();
+
+//emailOTP
+final GlobalKey<FormState>emailFormOtp = GlobalKey<FormState>();
