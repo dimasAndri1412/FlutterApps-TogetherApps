@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:absent_project/approvalls/cuti/pengajuan_cuti.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 
 class ListPengajuanCuti extends StatefulWidget {
   const ListPengajuanCuti({super.key});
@@ -61,12 +58,12 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "List Paid Leave Request",
           style: TextStyle(fontSize: 15),
         ),
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(colors: [
               Color.fromARGB(255, 147, 195, 234),
               Color.fromARGB(255, 98, 171, 232),
@@ -87,14 +84,14 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                         color: Color.fromARGB(255, 147, 195, 234),
                         blurRadius: 5,
                         offset: Offset(0, 0))
                   ]),
               /////////
-              child: Column(
+              child: const Column(
                 // mainAxisSize: MainAxisSize.min,
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -112,7 +109,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                     thickness: 1,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -153,7 +150,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Expanded(
@@ -181,7 +178,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                         //dipakai jika tanpa final cutiisi
                         // usercuti[index]['name']!,
                         isicuti['reason']!,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.black, fontWeight: FontWeight.bold),
                       ),
                       subtitle: Column(
@@ -189,25 +186,25 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.calendar_month),
-                              SizedBox(
+                              const Icon(Icons.calendar_month),
+                              const SizedBox(
                                 width: 5,
                               ),
                               Text(
                                 isicuti['date']!,
                                 style:
-                                    TextStyle(color: Colors.grey, fontSize: 10),
+                                    const TextStyle(color: Colors.grey, fontSize: 10),
                               ),
                             ],
                           ),
                           Row(
                             children: [
-                              Icon(Icons.supervised_user_circle_outlined),
-                              SizedBox(width: 5),
+                              const Icon(Icons.supervised_user_circle_outlined),
+                              const SizedBox(width: 5),
                               Text(
                                 isicuti['name']!,
                                 style:
-                                    TextStyle(color: Colors.grey, fontSize: 10),
+                                    const TextStyle(color: Colors.grey, fontSize: 10),
                               ),
                             ],
                           )
@@ -235,11 +232,11 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
         child: FloatingActionButton(
           onPressed: () {
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => PengajuanCuti()));
+                .push(MaterialPageRoute(builder: (context) => const PengajuanCuti()));
           },
-          backgroundColor: Color.fromARGB(255, 98, 171, 232),
-          child: Icon(Icons.edit),
+          backgroundColor: const Color.fromARGB(255, 98, 171, 232),
           elevation: 5,
+          child: const Icon(Icons.edit),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,

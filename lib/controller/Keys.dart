@@ -10,6 +10,19 @@ final GlobalKey<FormState>formKeys = GlobalKey<FormState>();
 final GlobalKey<FormState>formsKeys = GlobalKey<FormState>();
 final GlobalKey<FormState>DropDownButtonsKeys = GlobalKey<FormState>();
 
+//Paid Leave Controller
+final TextEditingController namePaidLeave = TextEditingController();
+final TextEditingController positionPaidLeave = TextEditingController();
+final TextEditingController departmentPaidLeave = TextEditingController();
+final TextEditingController typePaidLeave = TextEditingController();
+final TextEditingController reasonPaidLeave = TextEditingController();
+final TextEditingController picPaidLeave = TextEditingController();
+final TextEditingController phonePaidLeave = TextEditingController();
+final TextEditingController shiftPaidLeave = TextEditingController();
+final TextEditingController startDatePaidLeave = TextEditingController();
+final TextEditingController endDatePaidLeave = TextEditingController();
+final TextEditingController onDutyPaidLeave = TextEditingController();
+
 //Controller
 final UserNameController = TextEditingController();
 final FullNameController = TextEditingController();

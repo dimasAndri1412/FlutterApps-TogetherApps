@@ -1,13 +1,9 @@
-// import 'dart:io';
-
 import 'package:absent_project/approvalls/cuti/add_cuti_button.dart';
-// import 'package:file_picker/file_picker.dart';
+import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
-// import 'package:open_file/open_file.dart';
-// import 'package:path/path.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
 class PengajuanCuti extends StatefulWidget {
@@ -18,6 +14,20 @@ class PengajuanCuti extends StatefulWidget {
 }
 
 class _PengajuanCutiState extends State<PengajuanCuti> {
+  List<String> typeLeave = ["Maternity leave ",
+  "Sick leave",
+  "Permission leave",
+  "Leave late coming / leaving early",
+  "Leave government call / Umrah"];
+
+  String selectedLeaveType = '';
+
+  List<String> shiftLeave = ["Shift I",
+    "Shift II",
+    "Shift III",];
+
+  String selectedShiftLeave = '';
+
   final nameController = TextEditingController();
   final positionController = TextEditingController();
   final departmentController = TextEditingController();
@@ -107,7 +117,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                 hintText: "Please input your name here",
                                 hintStyle: TextStyle(color: Colors.grey),
                                 border: InputBorder.none),
-                            controller: nameController,
+                            controller: namePaidLeave,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your reason here';
@@ -132,7 +142,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                 hintText: "Please input your position here",
                                 hintStyle: TextStyle(color: Colors.grey),
                                 border: InputBorder.none),
-                            controller: positionController,
+                            controller: positionPaidLeave,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your reason here';
@@ -157,7 +167,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                 hintText: "Please input your department here",
                                 hintStyle: TextStyle(color: Colors.grey),
                                 border: InputBorder.none),
-                            controller: departmentController,
+                            controller: departmentPaidLeave,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your reason here';
@@ -181,20 +191,19 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                 showSelectedItems: true,
                                 // disabledItemFn: (String s) => s.startsWith('I'),
                               ),
-                              items: [
-                                "Maternity leave ",
-                                "Sick leave",
-                                "Permission leave",
-                                "Leave late coming / leaving early",
-                                "Leave government call / Umrah",
-                              ],
+                              items: typeLeave,
+                              onChanged: (value){
+                                setState(() {
+                                  selectedLeaveType = value as String;
+                                  typePaidLeave.text = selectedLeaveType;
+                                });
+                              },
                               dropdownDecoratorProps: DropDownDecoratorProps(
                                 dropdownSearchDecoration: InputDecoration(
                                     labelText: "Type of Leave",
                                     hintText: "Choose type of leave !",
                                     border: InputBorder.none),
                               ),
-                              // onChanged: print,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter your reason here';
@@ -202,8 +211,9 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                 return null;
                               },
                             ),
-                          )),
-                      SizedBox(
+                          )
+                      ),
+                      const SizedBox(
                         height: 20,
                       ),
                       Container(
@@ -218,7 +228,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                 hintText: "Please input your reason here",
                                 hintStyle: TextStyle(color: Colors.grey),
                                 border: InputBorder.none),
-                            controller: reasonCutiController,
+                            controller: reasonPaidLeave,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your reason here';
@@ -243,7 +253,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                 hintText: "Please input your PIC here",
                                 hintStyle: TextStyle(color: Colors.grey),
                                 border: InputBorder.none),
-                            controller: namePICController,
+                            controller: picPaidLeave,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your reason here';
@@ -268,7 +278,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                 hintText: "Please input your number here",
                                 hintStyle: TextStyle(color: Colors.grey),
                                 border: InputBorder.none),
-                            controller: handphoneNumberController,
+                            controller: phonePaidLeave,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your reason here';
@@ -292,11 +302,13 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                 showSelectedItems: true,
                                 // disabledItemFn: (String s) => s.startsWith('I'),
                               ),
-                              items: [
-                                "Shift I",
-                                "Shift II",
-                                "Shift III",
-                              ],
+                              items: shiftLeave,
+                              onChanged: (value){
+                                setState(() {
+                                  selectedShiftLeave = value as String;
+                                  shiftPaidLeave.text = selectedShiftLeave;
+                                });
+                              },
                               dropdownDecoratorProps: DropDownDecoratorProps(
                                 dropdownSearchDecoration: InputDecoration(
                                     labelText: "Your Shift",
@@ -349,7 +361,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                         prefixIcon: Icon(Icons.calendar_today,
                                             color: Colors.grey)),
                                     readOnly: true,
-                                    controller: _dateStartController,
+                                    controller: startDatePaidLeave,
                                     onTap: () async {
                                       await showDatePicker(
                                               context: context,
@@ -411,7 +423,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                         prefixIcon: Icon(Icons.calendar_today,
                                             color: Colors.grey)),
                                     readOnly: true,
-                                    controller: _dateEndController,
+                                    controller: endDatePaidLeave,
                                     onTap: () async {
                                       await showDatePicker(
                                               context: context,
@@ -471,7 +483,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                   prefixIcon: Icon(Icons.calendar_today,
                                       color: Colors.grey)),
                               readOnly: true,
-                              controller: _dateDutyController,
+                              controller: onDutyPaidLeave,
                               onTap: () async {
                                 await showDatePicker(
                                         context: context,

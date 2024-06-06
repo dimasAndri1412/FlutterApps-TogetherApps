@@ -1,13 +1,9 @@
 import 'package:absent_project/approvalls/cuti/DetailCutiUser.dart';
-import 'package:absent_project/controller/UserRequestPaidLeave/UserRequestPaidLeaveController.dart';
-import 'package:faker/faker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:http/http.dart';
-import 'package:intl/intl.dart';
 
-import '../../controller/UserRequestPaidLeave/UserRequestPaidLeave.dart';
+import '../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveController.dart';
 
 class ListUserCuti extends StatefulWidget {
   const ListUserCuti({super.key});
