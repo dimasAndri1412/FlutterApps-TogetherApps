@@ -1,95 +1,397 @@
-import 'package:absent_project/approvalls/cuti/DetailCutiUser.dart';
 import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:open_file/open_file.dart';
 
-Future<void> DetailLemburUser(BuildContext context, int index, Function(int) approveLeave) {
-  return showDialog<void>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        backgroundColor: Colors.white,
-        title: Text('Overtime Detail'),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: [
-              Row(
-                children: [
-                  Text("Name  : ", style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text("Razu"),
-                ],
-              ),
-              Row(
-                children: [
-                  Text("Date  : ", style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text("19-02-2024"),
-                ],
-              ),
-              Row(
-                children: [
-                  Text("Start hour : ", style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text( "16:00"),
-                ],
-              ),
-              Row(
-                children: [
-                  Text("Until (hour) : ", style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text( "00.00"),
-                ],
-              ),
-              Row(
-                children: [
-                  Text("Reason and Jobdesk: ", style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text("lalala")
-                ],
-              ),
-              SizedBox(height: 20,),
-              ElevatedButton.icon(
-                onPressed: (){},
-                icon: Icon(Icons.file_open),
-                label: Text("Download Document"),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 246, 178, 123),
-                  foregroundColor: Colors.white,
-                  textStyle: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold)
-                ),
-              ),
-              ElevatedButton.icon(
-                onPressed: ()async{
-                  final result = await FilePicker.platform.pickFiles();
-                  // if (result == null) return;
-                  // final file = result.files.first;
-                  // openFile(file);
-                },
-                icon: Icon(Icons.file_upload),
-                label: Text("Upload Approval"),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 124, 183, 230),
-                  foregroundColor: Colors.white,
-                  textStyle: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold)
-                ),
-              )
-            ],
-          )
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: Text('Approve', style: TextStyle(color: Colors.black.withOpacity(1.0))),
-            onPressed: () {
-              approveLeave(index);
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
+class DetailLemburUser extends StatefulWidget {
+  const DetailLemburUser({super.key});
+
+  @override
+  State<DetailLemburUser> createState() => _DetailLemburUserState();
 }
 
-void openFile(PlatformFile file){
-  OpenFile.open(file.path!);
+class _DetailLemburUserState extends State<DetailLemburUser> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title:Center(
+          child: Text(
+            "Detail Approval",
+            style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+        ),
+        automaticallyImplyLeading: false,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                  colors: [
+                    Color.fromARGB(255, 147, 195, 234),
+                    Color.fromARGB(255, 98, 171, 232),
+                    Color.fromARGB(255, 123, 185, 235),
+                  ]
+                ),
+          ),
+        ),
+        elevation: 0,
+      ),
+      body: Column(
+        children: [
+          Center(
+            child: Container(
+              margin: EdgeInsets.all(10),
+              height: 40,
+              width: 200,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(20)
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(Icons.notifications_active, color: Colors.orange,),
+                  SizedBox(width: 5,),
+                  Text(
+                    "Status : ",
+                  ),
+                  Text(
+                    "NEW",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 10),
+            height: 70,
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 152, 188, 210).withOpacity(0.2),
+            ),
+            child: ListTile(
+              leading: CircleAvatar(
+                radius: 18, 
+                backgroundColor: Colors.blue, 
+                child: Icon(
+                  Icons.document_scanner_sharp, 
+                  color: Colors.white, 
+                ),
+              ),
+              title:Row(
+                children: [
+                   Text(
+                    "No Request : ",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 14),
+                    ),
+                  Text("Req-1023",
+                    style: TextStyle(
+                      fontSize: 14
+                    ),
+                  )
+                ],
+              ),
+              subtitle: Row(
+                children: [
+                   Text(
+                    "Submitted Date ",
+                    style: TextStyle(
+                     fontSize: 12),
+                    ),
+                  Text("03 Des 2023",
+                    style: TextStyle(
+                      fontSize: 12
+                    ),
+                  )
+                ],
+              )
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 5, left: 10, right: 10),
+            width: 350,
+            height: 380,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(0),
+              border: Border.all(width: 0.5, color: Colors.grey),
+            ),
+            child: Padding(
+              padding: EdgeInsets.only(top: 15, left: 20, right: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Request Detail",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15
+                    ),
+                  ),
+                  Divider(
+                    color: Colors.grey,
+                    thickness: 0.5,
+                    indent: 2,
+                    endIndent: 2,
+                  ),
+                  SizedBox(height: 10,),
+                  Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Submitted by",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13
+                            ),
+                          ),
+                          SizedBox(height: 5,),
+                          Text("Kim Sunoo",
+                            style: TextStyle(
+                              fontSize: 13
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(width: 100,),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Phone Number",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13
+                            ),
+                          ),
+                          SizedBox(height: 5,),
+                          Text("0987612",
+                            style: TextStyle(
+                              fontSize: 13
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5,),
+                  Divider(
+                    color: Colors.grey,
+                    thickness: 0.5,
+                    indent: 2,
+                    endIndent: 2,
+                  ),
+                  SizedBox(height: 5,),
+                  Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Position",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13
+                            ),
+                          ),
+                          SizedBox(height: 5,),
+                          Text("IT Data Operator",
+                            style: TextStyle(
+                              fontSize: 13
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(width: 80,),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Department",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13
+                            ),
+                          ),
+                          SizedBox(height: 5,),
+                          Text("Gedung Bri",
+                            style: TextStyle(
+                              fontSize: 13
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    color: Colors.grey,
+                    thickness: 0.5,
+                    indent: 2,
+                    endIndent: 2,
+                  ),
+                  SizedBox(height: 5,),
+                  Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Overtime Date",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13
+                            ),
+                          ),
+                          SizedBox(height: 5,),
+                          Text("05 Jun 2024",
+                            style: TextStyle(
+                              fontSize: 13
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(width: 90,),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Shift",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13
+                            ),
+                          ),
+                          SizedBox(height: 5,),
+                          Text("1",
+                            style: TextStyle(
+                              fontSize: 13
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5,),
+                  Divider(
+                    color: Colors.grey,
+                    thickness: 0.5,
+                    indent: 2,
+                    endIndent: 2,
+                  ),
+                  SizedBox(height: 5,),
+                  Row(
+                    children: [
+                      Text("Reason of Overtime : ",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13
+                        ),
+                      ),
+                      Text("Gantiin Ameng",
+                        style: TextStyle(
+                          fontSize: 13
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 5,),
+                  Text("Overtime Hours ",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13
+                      ),
+                    ),
+                  SizedBox(height: 5,),
+                  Row(  
+                    children: [
+                      Container(
+                        width: 140,
+                        height: 35,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey)
+                        ),
+                        child: Center(
+                          child: Text(
+                            "15:00",
+                            style: TextStyle(
+                              fontSize: 13
+                            ),
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      Text(" - "),
+                      Spacer(),
+                      Container(
+                        width: 140,
+                        height: 35,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey)
+                        ),
+                        child: Center(
+                          child: Text(
+                            "22:00",
+                            style: TextStyle(
+                              fontSize: 13
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ),
+          Spacer(),
+          Container(
+            margin: EdgeInsets.all(20),
+            child: Row(
+              children: [
+                Container(
+                  width: 165,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.red),
+                    borderRadius: BorderRadius.circular(6)
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Reject",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red
+                      ),
+                    ),
+                  ),
+                ),
+                Spacer(),
+                  Container(
+                     width: 165,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(6)
+                      ),
+                    child: GestureDetector(
+                      onTap: (){
+                        
+                      },
+                      child: Center(
+                        child: Text(
+                          "Approve",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white
+                          ),
+                        ),
+                      ),
+                  )
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }

@@ -40,6 +40,10 @@ dependencies:
   file_picker: ^8.0.3
   permission_handler: ^11.3.1
   table_calendar: ^3.1.1
+  pdf: ^3.10.8
+  barcode: ^2.2.8
+  printing: ^5.12.0
+  
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -66,7 +70,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.0
+  flutter_lints: ^4.0.0
   dio: ^5.4.3+1
 
 # For information on the generic Dart part of this file, see the
@@ -75,8 +79,10 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
+    - assets/fonts/Roboto/Roboto-Regular.ttf
     - assets/docs/
     - assets/images/
+    - assets/images/BIT-Logo.png
     - assets/images/application-form-for-short-term-online-account.png
     - assets/images/RegistImage.png
     - assets/images/Contract.png

@@ -38,6 +38,7 @@ class ctr_data {
     PassController.clear();
     ConfPassController.clear();
     ProjectController.clear();
+    OTPController.clear();
   }
 
   update_pwd() async {
