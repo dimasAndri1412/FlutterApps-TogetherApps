@@ -14,17 +14,21 @@ class PengajuanCuti extends StatefulWidget {
 }
 
 class _PengajuanCutiState extends State<PengajuanCuti> {
-  List<String> typeLeave = ["Maternity leave ",
-  "Sick leave",
-  "Permission leave",
-  "Leave late coming / leaving early",
-  "Leave government call / Umrah"];
+  List<String> typeLeave = [
+    "Maternity leave ",
+    "Sick leave",
+    "Permission leave",
+    "Leave late coming / leaving early",
+    "Leave government call / Umrah"
+  ];
 
   String selectedLeaveType = '';
 
-  List<String> shiftLeave = ["Shift I",
+  List<String> shiftLeave = [
+    "Shift I",
     "Shift II",
-    "Shift III",];
+    "Shift III",
+  ];
 
   String selectedShiftLeave = '';
 
@@ -83,440 +87,455 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                   padding: const EdgeInsets.only(
                       left: 15, right: 15, top: 30, bottom: 30),
                   child: Form(
+                      key: formKeyss_,
                       child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.arrow_drop_down),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "Please Complete This Form",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Icon(Icons.arrow_drop_down),
-                        ],
-                      ),
-                      SizedBox(height: 50),
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 1),
-                            borderRadius: BorderRadius.circular(12)),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: TextFormField(
-                            autofocus: false,
-                            decoration: InputDecoration(
-                                labelText: "Name",
-                                hintText: "Please input your name here",
-                                hintStyle: TextStyle(color: Colors.grey),
-                                border: InputBorder.none),
-                            controller: namePaidLeave,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your reason here';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 1),
-                            borderRadius: BorderRadius.circular(12)),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                                labelText: "Position",
-                                hintText: "Please input your position here",
-                                hintStyle: TextStyle(color: Colors.grey),
-                                border: InputBorder.none),
-                            controller: positionPaidLeave,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your reason here';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 1),
-                            borderRadius: BorderRadius.circular(12)),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                                labelText: "Department",
-                                hintText: "Please input your department here",
-                                hintStyle: TextStyle(color: Colors.grey),
-                                border: InputBorder.none),
-                            controller: departmentPaidLeave,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your reason here';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey, width: 1),
-                              borderRadius: BorderRadius.circular(12)),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: DropdownSearch<String>(
-                              popupProps: PopupProps.dialog(
-                                showSelectedItems: true,
-                                // disabledItemFn: (String s) => s.startsWith('I'),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.arrow_drop_down),
+                              SizedBox(
+                                width: 5,
                               ),
-                              items: typeLeave,
-                              onChanged: (value){
-                                setState(() {
-                                  selectedLeaveType = value as String;
-                                  typePaidLeave.text = selectedLeaveType;
-                                });
-                              },
-                              dropdownDecoratorProps: DropDownDecoratorProps(
-                                dropdownSearchDecoration: InputDecoration(
-                                    labelText: "Type of Leave",
-                                    hintText: "Choose type of leave !",
-                                    border: InputBorder.none),
+                              Text(
+                                "Please Complete This Form",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 20),
                               ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your reason here';
-                                }
-                                return null;
-                              },
-                            ),
-                          )
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 1),
-                            borderRadius: BorderRadius.circular(12)),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                                labelText: "Reason of Leave",
-                                hintText: "Please input your reason here",
-                                hintStyle: TextStyle(color: Colors.grey),
-                                border: InputBorder.none),
-                            controller: reasonPaidLeave,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your reason here';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 1),
-                            borderRadius: BorderRadius.circular(12)),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                                labelText: "Name of PIC",
-                                hintText: "Please input your PIC here",
-                                hintStyle: TextStyle(color: Colors.grey),
-                                border: InputBorder.none),
-                            controller: picPaidLeave,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your reason here';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 1),
-                            borderRadius: BorderRadius.circular(12)),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                                labelText: "Handphone Number",
-                                hintText: "Please input your number here",
-                                hintStyle: TextStyle(color: Colors.grey),
-                                border: InputBorder.none),
-                            controller: phonePaidLeave,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your reason here';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey, width: 1),
-                              borderRadius: BorderRadius.circular(12)),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: DropdownSearch<String>(
-                              popupProps: PopupProps.dialog(
-                                showSelectedItems: true,
-                                // disabledItemFn: (String s) => s.startsWith('I'),
+                              SizedBox(
+                                width: 5,
                               ),
-                              items: shiftLeave,
-                              onChanged: (value){
-                                setState(() {
-                                  selectedShiftLeave = value as String;
-                                  shiftPaidLeave.text = selectedShiftLeave;
-                                });
-                              },
-                              dropdownDecoratorProps: DropDownDecoratorProps(
-                                dropdownSearchDecoration: InputDecoration(
-                                    labelText: "Your Shift",
-                                    hintText: "Choose your shift !",
-                                    border: InputBorder.none),
-                              ),
-                              // onChanged: print,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your reason here';
-                                }
-                                return null;
-                              },
-                            ),
-                          )),
-
-                      SizedBox(height: 20),
-
-                      //Date Start
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(left: 0),
-                                  child: Text(
-                                    "Start Date",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: Colors.grey, width: 1),
-                                      borderRadius: BorderRadius.circular(12)),
-                                  child: TextFormField(
-                                    decoration: InputDecoration(
-                                        labelText: "Date Leave",
-                                        hintText:
-                                            "Please enter your date leave",
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
-                                        border: InputBorder.none,
-                                        prefixIcon: Icon(Icons.calendar_today,
-                                            color: Colors.grey)),
-                                    readOnly: true,
-                                    controller: startDatePaidLeave,
-                                    onTap: () async {
-                                      await showDatePicker(
-                                              context: context,
-                                              initialDate: DateTime.now(),
-                                              firstDate: DateTime(2000),
-                                              lastDate: DateTime(2100))
-                                          .then((selectedDate) {
-                                        if (selectedDate != null) {
-                                          _dateStartController.text =
-                                              DateFormat('yyyy-MM-dd')
-                                                  .format(selectedDate);
-                                        }
-                                      });
-                                    },
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Enter the date !';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
+                              Icon(Icons.arrow_drop_down),
+                            ],
                           ),
-                          SizedBox(
-                            width: 10,
-                          ),
-
-                          //Date Until
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(left: 0),
-                                  child: Text(
-                                    "End Date",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: Colors.grey, width: 1),
-                                      borderRadius: BorderRadius.circular(12)),
-                                  child: TextFormField(
-                                    decoration: InputDecoration(
-                                        labelText: "Date Leave",
-                                        hintText:
-                                            "Please enter your date leave",
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
-                                        border: InputBorder.none,
-                                        prefixIcon: Icon(Icons.calendar_today,
-                                            color: Colors.grey)),
-                                    readOnly: true,
-                                    controller: endDatePaidLeave,
-                                    onTap: () async {
-                                      await showDatePicker(
-                                              context: context,
-                                              initialDate: DateTime.now(),
-                                              firstDate: DateTime(2000),
-                                              lastDate: DateTime(2100))
-                                          .then((selectedDate) {
-                                        if (selectedDate != null) {
-                                          _dateEndController.text =
-                                              DateFormat('yyyy-MM-dd')
-                                                  .format(selectedDate);
-                                        }
-                                      });
-                                    },
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Enter the date !';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-
-                      //Date on Duty / Back to Work
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                          SizedBox(height: 50),
                           Container(
-                            child: Text(
-                              "On Duty",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                            decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: Colors.grey, width: 1),
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: TextFormField(
+                                autofocus: false,
+                                decoration: InputDecoration(
+                                    labelText: "Name",
+                                    hintText: "Please input your name here",
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    border: InputBorder.none),
+                                controller: namePaidLeave,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your name here';
+                                  }
+                                  return null;
+                                },
+                              ),
                             ),
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 20,
                           ),
                           Container(
                             decoration: BoxDecoration(
                                 border:
                                     Border.all(color: Colors.grey, width: 1),
                                 borderRadius: BorderRadius.circular(12)),
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                  labelText: "Date on Duty",
-                                  hintText:
-                                      "Please enter the date of your assignment",
-                                  hintStyle: TextStyle(color: Colors.grey),
-                                  border: InputBorder.none,
-                                  prefixIcon: Icon(Icons.calendar_today,
-                                      color: Colors.grey)),
-                              readOnly: true,
-                              controller: onDutyPaidLeave,
-                              onTap: () async {
-                                await showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(2000),
-                                        lastDate: DateTime(2100))
-                                    .then((selectedDate) {
-                                  if (selectedDate != null) {
-                                    _dateDutyController.text =
-                                        DateFormat('yyyy-MM-dd')
-                                            .format(selectedDate);
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    labelText: "Position",
+                                    hintText: "Please input your position here",
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    border: InputBorder.none),
+                                controller: positionPaidLeave,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your position here';
                                   }
-                                });
-                              },
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Enter the date !';
-                                }
-                                return null;
-                              },
+                                  return null;
+                                },
+                              ),
                             ),
                           ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: Colors.grey, width: 1),
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    labelText: "Department",
+                                    hintText:
+                                        "Please input your department here",
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    border: InputBorder.none),
+                                controller: departmentPaidLeave,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your department here';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: Colors.grey, width: 1),
+                                  borderRadius: BorderRadius.circular(12)),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: DropdownSearch<String>(
+                                  popupProps: PopupProps.dialog(
+                                    showSelectedItems: true,
+                                    // disabledItemFn: (String s) => s.startsWith('I'),
+                                  ),
+                                  items: typeLeave,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedLeaveType = value as String;
+                                      typePaidLeave.text = selectedLeaveType;
+                                    });
+                                  },
+                                  dropdownDecoratorProps:
+                                      DropDownDecoratorProps(
+                                    dropdownSearchDecoration: InputDecoration(
+                                        labelText: "Type of Leave",
+                                        hintText: "Choose type of leave !",
+                                        border: InputBorder.none),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your type of leave here';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              )),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: Colors.grey, width: 1),
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    labelText: "Reason of Leave",
+                                    hintText: "Please input your reason here",
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    border: InputBorder.none),
+                                controller: reasonPaidLeave,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your reason here';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: Colors.grey, width: 1),
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    labelText: "Name of PIC",
+                                    hintText: "Please input your PIC here",
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    border: InputBorder.none),
+                                controller: picPaidLeave,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your PIC name here';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: Colors.grey, width: 1),
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    labelText: "Handphone Number",
+                                    hintText: "Please input your number here",
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    border: InputBorder.none),
+                                controller: phonePaidLeave,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your phone number here';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: Colors.grey, width: 1),
+                                  borderRadius: BorderRadius.circular(12)),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: DropdownSearch<String>(
+                                  popupProps: PopupProps.dialog(
+                                    showSelectedItems: true,
+                                    // disabledItemFn: (String s) => s.startsWith('I'),
+                                  ),
+                                  items: shiftLeave,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedShiftLeave = value as String;
+                                      shiftPaidLeave.text = selectedShiftLeave;
+                                    });
+                                  },
+                                  dropdownDecoratorProps:
+                                      DropDownDecoratorProps(
+                                    dropdownSearchDecoration: InputDecoration(
+                                        labelText: "Your Shift",
+                                        hintText: "Choose your shift !",
+                                        border: InputBorder.none),
+                                  ),
+                                  // onChanged: print,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your shift here';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              )),
+
+                          SizedBox(height: 20),
+
+                          //Date Start
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(left: 0),
+                                      child: Text(
+                                        "Start Date",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.grey, width: 1),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            labelText: "Date Leave",
+                                            hintText:
+                                                "Please enter your date leave",
+                                            hintStyle:
+                                                TextStyle(color: Colors.grey),
+                                            border: InputBorder.none,
+                                            prefixIcon: Icon(
+                                                Icons.calendar_today,
+                                                color: Colors.grey)),
+                                        readOnly: true,
+                                        controller: _dateStartController,
+                                        onTap: () async {
+                                          await showDatePicker(
+                                                  context: context,
+                                                  initialDate: DateTime.now(),
+                                                  firstDate: DateTime(2000),
+                                                  lastDate: DateTime(2100))
+                                              .then((selectedDate) {
+                                            if (selectedDate != null) {
+                                              _dateStartController.text =
+                                                  DateFormat('yyyy-MM-dd')
+                                                      .format(selectedDate);
+                                            }
+                                          });
+                                        },
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Enter the date !';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+
+                              //Date Until
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(left: 0),
+                                      child: Text(
+                                        "End Date",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.grey, width: 1),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            labelText: "Date Leave",
+                                            hintText:
+                                                "Please enter your date leave",
+                                            hintStyle:
+                                                TextStyle(color: Colors.grey),
+                                            border: InputBorder.none,
+                                            prefixIcon: Icon(
+                                                Icons.calendar_today,
+                                                color: Colors.grey)),
+                                        readOnly: true,
+                                        controller: _dateEndController,
+                                        onTap: () async {
+                                          await showDatePicker(
+                                                  context: context,
+                                                  initialDate: DateTime.now(),
+                                                  firstDate: DateTime(2000),
+                                                  lastDate: DateTime(2100))
+                                              .then((selectedDate) {
+                                            if (selectedDate != null) {
+                                              _dateEndController.text =
+                                                  DateFormat('yyyy-MM-dd')
+                                                      .format(selectedDate);
+                                            }
+                                          });
+                                        },
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Enter the date !';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+
+                          //Date on Duty / Back to Work
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Text(
+                                  "On Duty",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.grey, width: 1),
+                                    borderRadius: BorderRadius.circular(12)),
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                      labelText: "Date on Duty",
+                                      hintText:
+                                          "Please enter the date of your assignment",
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      border: InputBorder.none,
+                                      prefixIcon: Icon(Icons.calendar_today,
+                                          color: Colors.grey)),
+                                  readOnly: true,
+                                  controller: _dateDutyController,
+                                  onTap: () async {
+                                    await showDatePicker(
+                                            context: context,
+                                            initialDate: DateTime.now(),
+                                            firstDate: DateTime(2000),
+                                            lastDate: DateTime(2100))
+                                        .then((selectedDate) {
+                                      if (selectedDate != null) {
+                                        _dateDutyController.text =
+                                            DateFormat('yyyy-MM-dd')
+                                                .format(selectedDate);
+                                      }
+                                    });
+                                  },
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Enter the date !';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          SizedBox(
+                            height: 30,
+                          ),
+
+                          //BUTTON SUBMIT
+                          addCutiButton(),
                         ],
-                      ),
-
-                      SizedBox(
-                        height: 30,
-                      ),
-
-                      //BUTTON SUBMIT
-                      addCutiButton(),
-                    ],
-                  )),
+                      )),
                 ),
               ),
             )

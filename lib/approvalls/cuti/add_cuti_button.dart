@@ -1,5 +1,6 @@
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
 import 'package:flutter/material.dart';
+import 'package:absent_project/controller/Keys.dart';
 
 class addCutiButton extends StatefulWidget {
   const addCutiButton({super.key});
@@ -29,20 +30,30 @@ class _addCutiButtonState extends State<addCutiButton> {
             ),
           ),
           onPressed: () {
-            showDialog(
+            if (formKeyss_.currentState?.validate() ?? false) {
+              showDialog(
                 context: context,
-                builder: (context) => AlertDialog(
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            MemberRequestPaidLeaveController().save();
-                            Navigator.of(context).pop();
-                          },
-                          child: Text("Close"),
-                        )
-                      ],
-                      title: Text("Your Request Accepted"),
-                    ));
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Form Approved'),
+                    content: Text('The form has been submit !'),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text('OK'),
+                        onPressed: () {
+                          MemberRequestPaidLeaveController().save();
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Form is not valid')),
+              );
+            }
           },
         ),
       ],
