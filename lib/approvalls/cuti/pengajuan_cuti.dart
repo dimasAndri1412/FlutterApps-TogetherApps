@@ -1,4 +1,11 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+
+
 import 'package:absent_project/approvalls/cuti/add_cuti_button.dart';
+import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeave.dart';
+import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +21,8 @@ class PengajuanCuti extends StatefulWidget {
 }
 
 class _PengajuanCutiState extends State<PengajuanCuti> {
+  final MemberRequestPaidLeaveController request = MemberRequestPaidLeaveController();
+
   List<String> typeLeave = [
     "Maternity leave ",
     "Sick leave",
@@ -32,16 +41,12 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
 
   String selectedShiftLeave = '';
 
-  final nameController = TextEditingController();
-  final positionController = TextEditingController();
-  final departmentController = TextEditingController();
-  // final typeLeaveController = TextEditingController();
-  final reasonCutiController = TextEditingController();
-  final namePICController = TextEditingController();
-  final handphoneNumberController = TextEditingController();
-  final _dateStartController = TextEditingController();
-  final _dateEndController = TextEditingController();
-  final _dateDutyController = TextEditingController();
+  @override
+  void initState(){
+    super.initState();
+    request.getUsers();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -117,10 +122,11 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: TextFormField(
+                                readOnly: true,
                                 autofocus: false,
                                 decoration: InputDecoration(
                                     labelText: "Name",
-                                    hintText: "Please input your name here",
+                                    hintText: "",
                                     hintStyle: TextStyle(color: Colors.grey),
                                     border: InputBorder.none),
                                 controller: namePaidLeave,
@@ -378,7 +384,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                                 Icons.calendar_today,
                                                 color: Colors.grey)),
                                         readOnly: true,
-                                        controller: _dateStartController,
+                                        controller: startDatePaidLeave,
                                         onTap: () async {
                                           await showDatePicker(
                                                   context: context,
@@ -387,7 +393,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                                   lastDate: DateTime(2100))
                                               .then((selectedDate) {
                                             if (selectedDate != null) {
-                                              _dateStartController.text =
+                                              startDatePaidLeave.text =
                                                   DateFormat('yyyy-MM-dd')
                                                       .format(selectedDate);
                                             }
@@ -442,7 +448,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                                 Icons.calendar_today,
                                                 color: Colors.grey)),
                                         readOnly: true,
-                                        controller: _dateEndController,
+                                        controller: endDatePaidLeave,
                                         onTap: () async {
                                           await showDatePicker(
                                                   context: context,
@@ -451,7 +457,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                                   lastDate: DateTime(2100))
                                               .then((selectedDate) {
                                             if (selectedDate != null) {
-                                              _dateEndController.text =
+                                              endDatePaidLeave.text =
                                                   DateFormat('yyyy-MM-dd')
                                                       .format(selectedDate);
                                             }
@@ -502,7 +508,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                       prefixIcon: Icon(Icons.calendar_today,
                                           color: Colors.grey)),
                                   readOnly: true,
-                                  controller: _dateDutyController,
+                                  controller: onDutyPaidLeave,
                                   onTap: () async {
                                     await showDatePicker(
                                             context: context,
@@ -511,7 +517,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                             lastDate: DateTime(2100))
                                         .then((selectedDate) {
                                       if (selectedDate != null) {
-                                        _dateDutyController.text =
+                                        onDutyPaidLeave.text =
                                             DateFormat('yyyy-MM-dd')
                                                 .format(selectedDate);
                                       }
