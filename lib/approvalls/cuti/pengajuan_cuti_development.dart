@@ -150,6 +150,7 @@ class _PengajuanCutiState extends State<PengajuanCuti_Development> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: TextFormField(
+                                autofocus: false,
                                 decoration: InputDecoration(
                                     labelText: "Position",
                                     hintText: "Please input your position here",
@@ -176,6 +177,7 @@ class _PengajuanCutiState extends State<PengajuanCuti_Development> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: TextFormField(
+                                autofocus: false,
                                 decoration: InputDecoration(
                                     labelText: "Department",
                                     hintText:
@@ -240,6 +242,7 @@ class _PengajuanCutiState extends State<PengajuanCuti_Development> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: TextFormField(
+                                autofocus: false,
                                 decoration: InputDecoration(
                                     labelText: "Reason of Leave",
                                     hintText: "Please input your reason here",
@@ -266,6 +269,7 @@ class _PengajuanCutiState extends State<PengajuanCuti_Development> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: TextFormField(
+                                autofocus: false,
                                 decoration: InputDecoration(
                                     labelText: "Name of PIC",
                                     hintText: "Please input your PIC here",
@@ -292,6 +296,7 @@ class _PengajuanCutiState extends State<PengajuanCuti_Development> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: TextFormField(
+                                autofocus: false,
                                 decoration: InputDecoration(
                                     labelText: "Handphone Number",
                                     hintText: "Please input your number here",
@@ -373,6 +378,7 @@ class _PengajuanCutiState extends State<PengajuanCuti_Development> {
                                           borderRadius:
                                               BorderRadius.circular(12)),
                                       child: TextFormField(
+                                        autofocus: false,
                                         decoration: InputDecoration(
                                             labelText: "Date Leave",
                                             hintText:
@@ -437,6 +443,7 @@ class _PengajuanCutiState extends State<PengajuanCuti_Development> {
                                           borderRadius:
                                               BorderRadius.circular(12)),
                                       child: TextFormField(
+                                        autofocus: false,
                                         decoration: InputDecoration(
                                             labelText: "Date Leave",
                                             hintText:
@@ -499,6 +506,7 @@ class _PengajuanCutiState extends State<PengajuanCuti_Development> {
                                         color: Colors.grey, width: 1),
                                     borderRadius: BorderRadius.circular(12)),
                                 child: TextFormField(
+                                  autofocus: false,
                                   decoration: InputDecoration(
                                       labelText: "Date on Duty",
                                       hintText:
