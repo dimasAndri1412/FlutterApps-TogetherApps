@@ -37,6 +37,21 @@ class MemberRequestPaidLeaveController {
     return false;
   }
 
+  clearInfo(){
+    namePaidLeave.clear();
+    positionPaidLeave.clear();
+    departmentPaidLeave.clear();
+    typePaidLeave.clear();
+    reasonPaidLeave.clear();
+    picPaidLeave.clear();
+    phonePaidLeave.clear();
+    shiftPaidLeave.clear();
+    startDatePaidLeave.clear();
+    endDatePaidLeave.clear();
+    onDutyPaidLeave.clear();
+    statusPaidLeave.clear();
+  }
+
   Future getInfo() async {
     var data = await http.post(
         Uri.parse("http://192.168.2.159/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
