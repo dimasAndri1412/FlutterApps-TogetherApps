@@ -3,5 +3,6 @@ class UserRequestPaidLeave {
   final String position;
   final String reqNo;
   final String status;
-  UserRequestPaidLeave(this.username, this.position, this.reqNo, this.status);
+  final String date;
+  UserRequestPaidLeave(this.username, this.position, this.reqNo, this.status, this.date);
 }

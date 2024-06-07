@@ -1,12 +1,15 @@
 import 'dart:convert';
 
+import 'package:absent_project/approvalls/cuti/pengajuan_cuti_development_project.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import '../../../approvalls/cuti/pengajuan_cuti.dart';
 import '../../Keys.dart';
+import 'MemberListPaidLeave.dart';
 import 'MemberRequestPaidLeave.dart';
 
 class MemberRequestPaidLeaveController {
-  String fullName ='';
-
+  final MemberRequestPaidLeave memberInfo = MemberRequestPaidLeave();
   //fungsi untuk melakukan penyimpanan data//
   save() async {
     final response = await http.post(
@@ -32,14 +35,40 @@ class MemberRequestPaidLeaveController {
     return false;
   }
 
-  Future getUsers() async {
-
+  Future getInfo() async {
     var data = await http.post(
         Uri.parse("http://192.168.2.159/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
         body: {
     "username": emailController.text,
     });
     var jsonData = json.decode(data.body);
-    namePaidLeave.text = jsonData[0]['full_name'];
+    memberInfo.full_name = jsonData[0]['full_name'];
+    memberInfo.project = jsonData[0]['grup'];
+
+    namePaidLeave.text = memberInfo.full_name;
+
+    if(memberInfo.project == "MSDO Project"){
+      Get.to(() => const PengajuanCuti());
+    }else{
+      Get.to(() => const PengajuanCuti_Development());
+    }
+  }
+
+  Future<List<MemberListPaidLeave>?> getList() async {
+    var data = await http.post(
+        Uri.parse("http://192.168.2.159/FlutterAPI/approvals/member/paid_leave/getListUser.php"),
+        body: {
+          "name": namePaidLeave.text,
+        });
+    var jsonData = json.decode(data.body);
+
+    List<MemberListPaidLeave> users = [];
+
+    for (var u in jsonData) {
+      MemberListPaidLeave user = MemberListPaidLeave(u["name"], u["date_start_leave"], u["status"],
+          u["reason_leave"]);
+      users.add(user);
+    }
+    return users;
   }
 }

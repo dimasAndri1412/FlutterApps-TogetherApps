@@ -13,14 +13,14 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
-class PengajuanCuti extends StatefulWidget {
-  const PengajuanCuti({super.key});
+class PengajuanCuti_Development extends StatefulWidget {
+  const PengajuanCuti_Development({super.key});
 
   @override
-  State<PengajuanCuti> createState() => _PengajuanCutiState();
+  State<PengajuanCuti_Development> createState() => _PengajuanCutiState();
 }
 
-class _PengajuanCutiState extends State<PengajuanCuti> {
+class _PengajuanCutiState extends State<PengajuanCuti_Development> {
   final MemberRequestPaidLeaveController request = MemberRequestPaidLeaveController();
 
   List<String> typeLeave = [
@@ -315,7 +315,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                   border:
                                       Border.all(color: Colors.grey, width: 1),
                                   borderRadius: BorderRadius.circular(12)),
-                              child: Padding(
+                              /*child: Padding(
                                 padding: const EdgeInsets.only(left: 10),
                                 child: DropdownSearch<String>(
                                   popupProps: PopupProps.dialog(
@@ -344,7 +344,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                     return null;
                                   },
                                 ),
-                              )),
+                              )*/),
 
                           SizedBox(height: 20),
 

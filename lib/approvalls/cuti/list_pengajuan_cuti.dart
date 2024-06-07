@@ -1,4 +1,7 @@
 import 'package:absent_project/approvalls/cuti/pengajuan_cuti.dart';
+import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberListPaidLeave.dart';
+import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
+import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/material.dart';
 
 class ListPengajuanCuti extends StatefulWidget {
@@ -53,6 +56,15 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
       'status': 'Approved'
     },
   ];
+
+  final MemberRequestPaidLeaveController request = MemberRequestPaidLeaveController();
+
+  @override
+  void initState(){
+    super.initState();
+    request.getList();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -153,86 +165,99 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
           const SizedBox(
             height: 20,
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: usercuti.length,
-              itemBuilder: (context, index) {
-                //panggil usercuti sebagai cutiisi
-                final isicuti = usercuti[index];
+         FutureBuilder(future: request.getList(),
+             builder: (context, snapshot){
+           if(snapshot.data == null){
+             return const Text("Loading");
+           }else{
+             return Expanded(
+               child: ListView.builder(
+                 itemCount: snapshot.data?.length,
+                 itemBuilder: (context, index) {
+                   //panggil usercuti sebagai cutiisi
+                   var getUser = snapshot.data![index];
+                   return Padding(
+                     padding:
+                     const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                     child: Container(
+                       width: double.infinity,
+                       decoration: BoxDecoration(
+                           color: Colors.white,
+                           borderRadius: BorderRadius.circular(8),
+                           border: Border.all(width: 0.5, color: Colors.grey)),
+                       child: ListTile(
+                         leading: Image.asset(
+                           'assets/images/job.png',
+                           scale: 5,
+                         ),
+                         title: Text(
+                           //dipakai jika tanpa final cutiisi
+                           // usercuti[index]['name']!,
+                           getUser.reasonLeave,
+                           style: const TextStyle(
+                               color: Colors.black,
+                               fontWeight: FontWeight.bold),
+                         ),
+                         subtitle: Column(
+                           crossAxisAlignment: CrossAxisAlignment.start,
+                           children: [
+                             Row(
+                               children: [
+                                 const Icon(Icons.calendar_month),
+                                 const SizedBox(
+                                   width: 5,
+                                 ),
+                                 Text(
+                                   getUser.startDateLeave,
+                                   style:
+                                   const TextStyle(
+                                       color: Colors.grey, fontSize: 10),
+                                 ),
+                               ],
+                             ),
+                             Row(
+                               children: [
+                                 const Icon(
+                                     Icons.supervised_user_circle_outlined),
+                                 const SizedBox(width: 5),
+                                 Text(
+                                   getUser.name,
+                                   style:
+                                   const TextStyle(
+                                       color: Colors.grey, fontSize: 10),
+                                 ),
+                               ],
+                             )
+                           ],
+                         ),
+                         trailing: Text(
+                           getUser.status,
+                           style: TextStyle(
+                               color: getUser.status == 'new'
+                                   ? Colors.green
+                                   : Colors.red,
+                               fontWeight: FontWeight.bold,
+                               fontSize: 15),
+                         ),
+                       ),
+                     ),
+                   );
+                 },
+               ),
+             );
+           }
+             }
+         )
 
-                return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(width: 0.5, color: Colors.grey)),
-                    child: ListTile(
-                      leading: Image.asset(
-                        'assets/images/job.png',
-                        scale: 5,
-                      ),
-                      title: Text(
-                        //dipakai jika tanpa final cutiisi
-                        // usercuti[index]['name']!,
-                        isicuti['reason']!,
-                        style: const TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              const Icon(Icons.calendar_month),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                isicuti['date']!,
-                                style:
-                                    const TextStyle(color: Colors.grey, fontSize: 10),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              const Icon(Icons.supervised_user_circle_outlined),
-                              const SizedBox(width: 5),
-                              Text(
-                                isicuti['name']!,
-                                style:
-                                    const TextStyle(color: Colors.grey, fontSize: 10),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                      trailing: Text(
-                        usercuti[index]['status']!,
-                        style: TextStyle(
-                            color: isicuti['status'] == 'Approved'
-                                ? Colors.green
-                                : Colors.red,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
         ],
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 15),
         child: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => const PengajuanCuti()));
+            MemberRequestPaidLeaveController().getInfo();
+            /*Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => const PengajuanCuti()));*/
           },
           backgroundColor: const Color.fromARGB(255, 98, 171, 232),
           elevation: 5,
