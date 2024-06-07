@@ -1,8 +1,11 @@
 import 'package:absent_project/approvalls/cuti/pengajuan_cuti.dart';
-import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberListPaidLeave.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../../controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeave.dart';
 
 class ListPengajuanCuti extends StatefulWidget {
   const ListPengajuanCuti({super.key});
@@ -12,6 +15,8 @@ class ListPengajuanCuti extends StatefulWidget {
 }
 
 class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
+  final MemberRequestPaidLeaveController memberInfo = MemberRequestPaidLeaveController();
+
   final List<Map<String, String>> usercuti = [
     {
       'name': 'Rogape',
@@ -56,15 +61,6 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
       'status': 'Approved'
     },
   ];
-
-  final MemberRequestPaidLeaveController request = MemberRequestPaidLeaveController();
-
-  @override
-  void initState(){
-    super.initState();
-    request.getList();
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -165,10 +161,10 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
           const SizedBox(
             height: 20,
           ),
-         FutureBuilder(future: request.getList(),
+         FutureBuilder(future: MemberRequestPaidLeaveController().getList(),
              builder: (context, snapshot){
            if(snapshot.data == null){
-             return const Text("Loading");
+             return const Text("");
            }else{
              return Expanded(
                child: ListView.builder(
@@ -255,7 +251,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
         padding: const EdgeInsets.only(bottom: 15),
         child: FloatingActionButton(
           onPressed: () {
-            MemberRequestPaidLeaveController().getInfo();
+            memberInfo.getInfo();
             /*Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => const PengajuanCuti()));*/
           },
