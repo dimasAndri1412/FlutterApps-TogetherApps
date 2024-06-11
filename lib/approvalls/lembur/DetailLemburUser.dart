@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:printing/printing.dart';
+import 'package:absent_project/approvalls/lembur/GeneratePDF.dart';
 
 class DetailLemburUser extends StatefulWidget {
   const DetailLemburUser({super.key});
@@ -365,28 +368,34 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
                   ),
                 ),
                 Spacer(),
-                  Container(
-                     width: 165,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(6)
-                      ),
-                    child: GestureDetector(
-                      onTap: (){
-                        
-                      },
-                      child: Center(
-                        child: Text(
-                          "Approve",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
+                  InkWell(
+                    onTap: () async {
+                    print("Click event on Container");
+                    // Navigator.of(context)
+                    // .push(MaterialPageRoute(builder: (context) => GeneratePDF()));
+                    // Generate the PDF with a barcode
+                    // final backgroundImage = await loadImage('assets/images/BIT-Logo.png');
+                    final pdf = await GeneratePDF();
+                    await Printing.layoutPdf(onLayout: (format) => pdf);
+                  },
+                    child: Container(
+                       width: 165,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(6)
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Approve",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
+                            ),
                           ),
                         ),
-                      ),
+                                    ),
                   )
-                )
               ],
             ),
           )

@@ -36,8 +36,15 @@ class _ListUserCutiState extends State<ListUserCuti> {
     }
   }
 
+  final List<String> statuses = ['New', 'Approved', 'Rejected'];
+  String? selectedStatus;
+
   @override
   Widget build(BuildContext context) {
+    // List<Map<String, String>> filteredRequests = selectedStatus == null
+    //     ? requests
+    //     : requests.where((request) => request['status'] == selectedStatus).toList();
+
     return Scaffold(
       appBar: AppBar(
         title:Center(
@@ -61,63 +68,32 @@ class _ListUserCutiState extends State<ListUserCuti> {
         elevation: 0,
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
             margin: EdgeInsets.all(10),
-            child: Row(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color:Colors.grey,
-                  ),
-                  height: 30,
-                  width: 100,
-                  child: Center(
-                    child: Text(
-                      "New",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14),
+            child: Wrap(
+              spacing: 8.0,
+              children: statuses.map((status) {
+                final isSelected = selectedStatus == status;
+                return FilterChip(
+                  label: Text(
+                    status,
+                    style: TextStyle(
+                      color: isSelected ? Colors.white : Colors.black,
                     ),
                   ),
-                ),
-                SizedBox(width: 5,),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color:Colors.grey,
-                  ),
-                  height: 30,
-                  width: 100,
-                  child: Center(
-                    child: Text(
-                      "Approved",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 5,),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color:Colors.grey,
-                  ),
-                  height: 30,
-                  width: 100,
-                  child: Center(
-                    child: Text(
-                      "Rejected",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14),
-                    ),
-                  ),
-                )
-              ],
-            )
+                  selected: selectedStatus == status,
+                  onSelected: (bool selected) {
+                    setState(() {
+                      selectedStatus = selected ? status : null;
+                    });
+                  },
+                  selectedColor: Color.fromARGB(255, 225, 161, 101), 
+                  checkmarkColor: Colors.white,
+                );
+              }).toList(),
+            ),
           ),
           FutureBuilder(
               future: UserRequestPaidLeaveController().getUsers(),
