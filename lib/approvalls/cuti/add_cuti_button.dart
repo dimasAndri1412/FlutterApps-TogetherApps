@@ -43,6 +43,7 @@ class _addCutiButtonState extends State<addCutiButton> {
                         onPressed: () {
                           MemberRequestPaidLeaveController().save();
                           Navigator.of(context).pop();
+                          MemberRequestPaidLeaveController().clearInfo();
                         },
                       ),
                     ],

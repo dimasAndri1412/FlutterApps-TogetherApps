@@ -70,6 +70,8 @@ class _ListUserCutiState extends State<ListUserCuti> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          SingleChildScrollView(
+            child:
           Container(
             margin: EdgeInsets.all(10),
             child: Wrap(
@@ -95,6 +97,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
               }).toList(),
             ),
           ),
+          ),
           FutureBuilder(
               future: UserRequestPaidLeaveController().getUsers(),
               builder: (context, snapshot) {
@@ -106,7 +109,6 @@ class _ListUserCutiState extends State<ListUserCuti> {
                         itemCount: snapshot.data?.length,
                         itemBuilder: (context, index) {
                           final getData = snapshot.data![index];
-                          final request = requests[index];
                           final statusColor = _getStatusColor(
                               getData.status ?? "Unknown");
                           return GestureDetector(
@@ -219,7 +221,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
                                                 width: 5,
                                               ),
                                               Text(
-                                                request["date"]!,
+                                                getData.date,
                                                 style: TextStyle(fontSize: 12),
                                               ),
                                             ],
@@ -239,7 +241,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
               ),
         ],
       )
-    );
+      );
   }
 }
     
