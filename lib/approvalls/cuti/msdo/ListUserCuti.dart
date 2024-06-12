@@ -1,9 +1,9 @@
-import 'package:absent_project/approvalls/cuti/DetailCutiUser.dart';
+import 'package:absent_project/approvalls/cuti/msdo/DetailCutiUser.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveController.dart';
+import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveController.dart';
 
 class ListUserCuti extends StatefulWidget {
   const ListUserCuti({super.key});
@@ -49,7 +49,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
       appBar: AppBar(
         title:Center(
           child: Text(
-            "Paid Leave Approval",
+            "Paid Leave Approval for MSDO Project",
             style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),

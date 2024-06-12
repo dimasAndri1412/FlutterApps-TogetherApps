@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:absent_project/approvalls/cuti/ListUserCuti.dart';
-import 'package:absent_project/approvalls/lembur/msdo/ListUserLembur.dart';
+import 'package:absent_project/approvalls/cuti/msdo/ListUserCuti.dart' as msdo ;
+import 'package:absent_project/approvalls/cuti/dev/ListUserCuti.dart' as dev ;
 
 class ProjectType extends StatefulWidget {
   const ProjectType({super.key});
@@ -66,7 +66,7 @@ class _ProjectTypeState extends State<ProjectType> {
                 ),
                 onPressed: () {
                    Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => ListUserCuti()));
+                    .push(MaterialPageRoute(builder: (context) => msdo.ListUserCuti()));
                 },
               ),
               MaterialButton(
@@ -101,7 +101,8 @@ class _ProjectTypeState extends State<ProjectType> {
                   ),
                 ),
                 onPressed: () {
-                  
+                   Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => dev.ListUserCuti()));
                 },
               ),
             ],
