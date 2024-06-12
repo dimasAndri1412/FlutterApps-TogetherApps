@@ -25,6 +25,8 @@ final TextEditingController startDatePaidLeave = TextEditingController();
 final TextEditingController endDatePaidLeave = TextEditingController();
 final TextEditingController onDutyPaidLeave = TextEditingController();
 final TextEditingController statusPaidLeave = TextEditingController();
+final TextEditingController leave_used = TextEditingController();
+final TextEditingController remaining_leave = TextEditingController();
 
 //Controller
 final UserNameController = TextEditingController();

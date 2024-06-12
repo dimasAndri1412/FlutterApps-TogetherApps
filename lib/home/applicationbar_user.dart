@@ -13,7 +13,7 @@ class ApplicationBarUser extends StatefulWidget {
 
 class _ApplicationBarUserState extends State<ApplicationBarUser> {
   int currentIndex = 0;
-  List<Widget> body = const [
+  List<Widget> body =  [
     UserHome(),
     Icon(Icons.lock_clock),
     TimesheetsUser(),

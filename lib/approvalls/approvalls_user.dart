@@ -1,10 +1,12 @@
 import 'package:absent_project/approvalls/cuti/list_pengajuan_cuti.dart';
 import 'package:absent_project/approvalls/lembur/list_pengajuan_lembur.dart';
+import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 class ApprovallsUser extends StatefulWidget {
-  const ApprovallsUser({super.key});
+  ApprovallsUser({super.key});
 
   @override
   State<ApprovallsUser> createState() => _ApprovallsUserState();
@@ -104,11 +106,12 @@ class _ApprovallsUserState extends State<ApprovallsUser> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(
+                  Get.to(()=> const ListPengajuanCuti());
+                  /*Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ListPengajuanCuti()),
-                  );
+                        builder: (context) => ListPengajuanCuti()),
+                  );*/
                 },
               ),
             ],

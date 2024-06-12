@@ -1,14 +1,9 @@
-import 'package:absent_project/approvalls/cuti/pengajuan_cuti.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
-import '../../controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeave.dart';
 
 class ListPengajuanCuti extends StatefulWidget {
-  const ListPengajuanCuti({super.key});
+   const ListPengajuanCuti({super.key,});
 
   @override
   State<ListPengajuanCuti> createState() => _ListPengajuanCutiState();
@@ -17,61 +12,22 @@ class ListPengajuanCuti extends StatefulWidget {
 class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
   final MemberRequestPaidLeaveController memberInfo = MemberRequestPaidLeaveController();
 
-  final List<Map<String, String>> usercuti = [
-    {
-      'name': 'Rogape',
-      'reason': 'Jalan - jalan ke Bali',
-      'date': '2024-12-01',
-      'status': 'Approved'
-    },
-    {
-      'name': 'Rogape',
-      'reason': 'Pergi ke RSJ',
-      'date': '2024-12-02',
-      'status': 'Approved'
-    },
-    {
-      'name': 'Rogape',
-      'reason': 'Jinakin Bom',
-      'date': '2024-12-03',
-      'status': 'Approved'
-    },
-    {
-      'name': 'Rogape',
-      'reason': 'jajan ke Paris',
-      'date': '2024-12-04',
-      'status': 'Rejected'
-    },
-    {
-      'name': 'Rogape',
-      'reason': 'beli sendal di US',
-      'date': '2024-12-05',
-      'status': 'Approved'
-    },
-    {
-      'name': 'Rogape',
-      'reason': 'cari pokemon',
-      'date': '2024-12-06',
-      'status': 'Rejected'
-    },
-    {
-      'name': 'Rogape',
-      'reason': 'cuti menikah',
-      'date': '2024-12-07',
-      'status': 'Approved'
-    },
-  ];
+/*  @override
+  void initState() {
+    super.initState();
+    memberInfo.updateLeaveCount();
+  }*/
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title:  Text(
           "List Paid Leave Request",
           style: TextStyle(fontSize: 15),
         ),
         flexibleSpace: Container(
-          decoration: const BoxDecoration(
+          decoration:  BoxDecoration(
             gradient: LinearGradient(colors: [
               Color.fromARGB(255, 147, 195, 234),
               Color.fromARGB(255, 98, 171, 232),
@@ -92,18 +48,18 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
-                  boxShadow: const [
+                  boxShadow:  [
                     BoxShadow(
                         color: Color.fromARGB(255, 147, 195, 234),
                         blurRadius: 5,
                         offset: Offset(0, 0))
                   ]),
               /////////
-              child: const Column(
+              child: Column(
                 // mainAxisSize: MainAxisSize.min,
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Center(
+                   Center(
                     child: Text(
                       "Leave Statistics",
                       style: TextStyle(
@@ -112,7 +68,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                           letterSpacing: 2),
                     ),
                   ),
-                  Divider(
+                   Divider(
                     color: Colors.grey,
                     thickness: 1,
                   ),
@@ -121,7 +77,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Column(
+                         Column(
                             // mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -131,7 +87,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               ),
                               Text("Remaining Leave")
                             ]),
-                        Column(
+                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(":"),
@@ -141,16 +97,29 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                             Text(":"),
                           ],
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("2"),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text("10"),
-                          ],
-                        )
+                        FutureBuilder(
+                            future: memberInfo.getLeave(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                return Text("Error: ${snapshot.error}");
+                              } else {
+                                return Column(
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .start,
+                                    children: [
+                                      Text("${memberInfo.leaveUsed}"),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text("${memberInfo.remainingLeave}"),
+                                    ],
+                                  );
+                            }
+                            }
+                  )
                       ],
                     ),
                   )
@@ -163,10 +132,15 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
           ),
          FutureBuilder(future: MemberRequestPaidLeaveController().getList(),
              builder: (context, snapshot){
-           if(snapshot.data == null){
+           if(snapshot.connectionState == ConnectionState.waiting){
+             return const CircularProgressIndicator(
+             );
+           }else if (snapshot.hasError) {
              return const Text("");
            }else{
              return Expanded(
+                 child: RefreshIndicator(
+                   onRefresh: () => memberInfo.refresh(),
                child: ListView.builder(
                  itemCount: snapshot.data?.length,
                  itemBuilder: (context, index) {
@@ -239,7 +213,8 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                      ),
                    );
                  },
-               ),
+               )
+                 )
              );
            }
              }

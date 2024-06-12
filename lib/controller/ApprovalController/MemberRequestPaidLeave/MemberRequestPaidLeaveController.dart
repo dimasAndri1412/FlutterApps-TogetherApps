@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:absent_project/approvalls/cuti/pengajuan_cuti_development.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import '../../../approvalls/cuti/list_pengajuan_cuti.dart';
 import '../../../approvalls/cuti/pengajuan_cuti.dart';
 import '../../Keys.dart';
 import 'MemberListPaidLeave.dart';
@@ -11,7 +11,14 @@ import 'MemberRequestPaidLeave.dart';
 
 class MemberRequestPaidLeaveController {
   final MemberRequestPaidLeave memberInfo = MemberRequestPaidLeave();
+  int remainingLeave = 0;
+  int leaveUsed = 0;
 
+  int countStatus = 0;
+  int leaveCount = 0;
+  String name = "";
+  String leave_remains_string = "" ;
+  String leave_used_string = "";
   //fungsi untuk melakukan penyimpanan data//
   save() async {
     final response = await http.post(
@@ -95,5 +102,36 @@ class MemberRequestPaidLeaveController {
       users.add(user);
     }
     return users;
+  }
+
+  Future refresh() async{
+    await Future.delayed(const Duration(seconds: 3));
+    await getLeave();
+  }
+
+  Future getLeave() async {
+    var data = await http.post(
+        Uri.parse(
+            "http://192.168.2.159/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
+        body: {
+          "username": emailController.text,
+        });
+    var jsonData = json.decode(data.body);
+
+    leaveUsed = int.parse(jsonData[0]['leave_used']);
+    remainingLeave = int.parse(jsonData[0]['remaining_leave']);
+    var getData = await http.post(
+        Uri.parse("http://192.168.2.159/FlutterAPI/approvals/member/paid_leave/getCountLeave.php"),
+        body: {
+          "name": namePaidLeave.text,
+        });
+    var getJsondata = json.decode(getData.body);
+
+    countStatus = int.parse(getJsondata[0]['countStatus']);
+    
+    if(countStatus > 0){
+      leaveUsed = (leaveUsed + countStatus);
+      remainingLeave = remainingLeave - countStatus;
+    }
   }
 }
