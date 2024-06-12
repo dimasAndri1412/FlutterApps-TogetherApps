@@ -1,3 +1,4 @@
+import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeave.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
 import 'package:flutter/material.dart';
 import 'package:absent_project/controller/Keys.dart';
@@ -10,6 +11,13 @@ class addCutiButton extends StatefulWidget {
 }
 
 class _addCutiButtonState extends State<addCutiButton> {
+
+/*  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    MemberRequestPaidLeaveController().getLeave();
+  }*/
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -30,26 +38,32 @@ class _addCutiButtonState extends State<addCutiButton> {
             ),
           ),
           onPressed: () {
-            if (formKeyss_.currentState?.validate() ?? false) {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text('Form Approved'),
-                    content: Text('The form has been submit !'),
-                    actions: <Widget>[
-                      TextButton(
-                        child: Text('OK'),
-                        onPressed: () {
-                          MemberRequestPaidLeaveController().save();
-                          Navigator.of(context).pop();
-                          MemberRequestPaidLeaveController().clearInfo();
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
+            if (formKeyss_.currentState!.validate()/*?? false*/ ) {
+              if(remaining_leave.text != "0" ) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Form Approved'),
+                      content: Text('The form has been submit !'),
+                      actions: <Widget>[
+                        TextButton(
+                          child: Text('OK'),
+                          onPressed: () {
+                            MemberRequestPaidLeaveController().save();
+                            Navigator.of(context).pop();
+                            MemberRequestPaidLeaveController().clearInfo();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }else{
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("You dont have any leave left")),
+                );MemberRequestPaidLeaveController().clearInfo();
+              }
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Form is not valid')),

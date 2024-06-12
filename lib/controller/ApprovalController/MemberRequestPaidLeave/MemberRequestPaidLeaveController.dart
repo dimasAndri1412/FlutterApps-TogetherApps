@@ -120,6 +120,10 @@ class MemberRequestPaidLeaveController {
 
     leaveUsed = int.parse(jsonData[0]['leave_used']);
     remainingLeave = int.parse(jsonData[0]['remaining_leave']);
+
+    leave_used.text = leaveUsed.toString();
+    remaining_leave.text = remainingLeave.toString();
+
     var getData = await http.post(
         Uri.parse("http://192.168.2.159/FlutterAPI/approvals/member/paid_leave/getCountLeave.php"),
         body: {
