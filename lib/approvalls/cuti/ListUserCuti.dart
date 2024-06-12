@@ -77,12 +77,12 @@ class _ListUserCutiState extends State<ListUserCuti> {
             child: Wrap(
               spacing: 8.0,
               children: statuses.map((status) {
-                final isSelected = selectedStatus == status;
+                selectedStatus == status;
                 return FilterChip(
                   label: Text(
                     status,
                     style: TextStyle(
-                      color: isSelected ? Colors.white : Colors.black,
+                      color: selectedStatus != null ? Colors.white : Colors.black,
                     ),
                   ),
                   selected: selectedStatus == status,
