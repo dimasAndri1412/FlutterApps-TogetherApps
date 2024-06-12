@@ -2,6 +2,8 @@ import 'package:absent_project/approvalls/cuti/dev/DetailCutiUser.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveController.dart';
 
@@ -99,7 +101,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
           ),
           ),
           FutureBuilder(
-              future: UserRequestPaidLeaveController().getUsers(),
+              future: AdminApprovalPaidLeaveController().getUsers(),
               builder: (context, snapshot) {
                 if (snapshot.data == null) {
                   return const Text("Loading");
@@ -113,9 +115,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
                               getData.status ?? "Unknown");
                           return GestureDetector(
                               onTap: () {
-                                Navigator.of(context)
-                                    .push(MaterialPageRoute(
-                                    builder: (context) => DetailCutiUser()));
+                                Get.to(() => DetailCutiUser(getUserDetail: getData));
                               },
                               child: Container(
                                 margin: EdgeInsets.all(10),

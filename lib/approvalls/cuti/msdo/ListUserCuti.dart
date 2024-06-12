@@ -99,7 +99,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
           ),
           ),
           FutureBuilder(
-              future: UserRequestPaidLeaveController().getUsers(),
+              future: AdminApprovalPaidLeaveController().getUsers(),
               builder: (context, snapshot) {
                 if (snapshot.data == null) {
                   return const Text("Loading");
