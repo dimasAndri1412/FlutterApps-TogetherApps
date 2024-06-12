@@ -1,18 +1,16 @@
-// import 'package:absent_project/approvalls/ProjectType.dart';
-import 'package:absent_project/approvalls/cuti/ProjectType.dart' as cuti;
-import 'package:absent_project/approvalls/lembur/ProjectType.dart' as lembur;
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'cuti/ListUserCuti.dart';
+import 'package:absent_project/approvalls/cuti/ListUserCuti.dart';
+import 'package:absent_project/approvalls/lembur/msdo/ListUserLembur.dart';
 
-class Approvalls extends StatefulWidget {
-  const Approvalls({super.key});
+class ProjectType extends StatefulWidget {
+  const ProjectType({super.key});
+
 
   @override
-  State<Approvalls> createState() => _ApprovallsState();
+  State<ProjectType> createState() => _ProjectTypeState();
 }
 
-class _ApprovallsState extends State<Approvalls> {
+class _ProjectTypeState extends State<ProjectType> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,9 +25,9 @@ class _ApprovallsState extends State<Approvalls> {
             ),
           ),
           elevation: 0,
-          title: Center(
-            child: Text("A P P R O V A L"),
-          ),
+          // title: Center(
+          //   child: Text("A P P R O V A L"),
+          // ),
         ),
         body: Container(
           child: Row(
@@ -56,19 +54,19 @@ class _ApprovallsState extends State<Approvalls> {
                       Container(
                           margin: EdgeInsets.all(20),
                           child: Image.asset(
-                            'assets/images/to-do-list.png',
+                            'assets/images/analysis.png',
                             width: 80,
                           )),
                       Container(
                         margin: EdgeInsets.only(top: 0),
-                        child: Text("Overtime Approval"),
+                        child: Text("MSDO Project"),
                       )
                     ],
                   ),
                 ),
                 onPressed: () {
-                  Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => lembur.ProjectType()));
+                   Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => ListUserCuti()));
                 },
               ),
               MaterialButton(
@@ -92,22 +90,18 @@ class _ApprovallsState extends State<Approvalls> {
                       Container(
                           margin: EdgeInsets.all(20),
                           child: Image.asset(
-                            'assets/images/raise-hand.png',
+                            'assets/images/coding.png',
                             width: 80,
                           )),
                       Container(
                         margin: EdgeInsets.only(top: 0),
-                        child: Text("Paid Leave Approval"),
+                        child: Text("Development Project"),
                       )
                     ],
                   ),
                 ),
                 onPressed: () {
-                  Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => cuti.ProjectType(), // Instantiate the class with prefix
-                  ),
-                );
+                  
                 },
               ),
             ],

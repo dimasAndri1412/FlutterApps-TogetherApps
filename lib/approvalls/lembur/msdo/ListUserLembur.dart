@@ -1,4 +1,4 @@
-import 'package:absent_project/approvalls/lembur/DetailLemburUser.dart';
+import 'package:absent_project/approvalls/lembur/msdo/DetailLemburUser.dart';
 // import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -44,7 +44,7 @@ class _ListUserLemburState extends State<ListUserLembur> {
       appBar: AppBar(
         title:Center(
           child: Text(
-            "Overtime Approval",
+            "Overtime Approval MSDO Project",
             style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),

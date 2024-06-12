@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:absent_project/approvalls/cuti/ListUserCuti.dart';
-import 'package:absent_project/approvalls/lembur/ListUserLembur.dart';
+import 'package:absent_project/approvalls/lembur/msdo/ListUserLembur.dart' as msdo;
+import 'package:absent_project/approvalls/lembur/dev/ListUserLembur.dart' as dev;
 
 class ProjectType extends StatefulWidget {
-  final String type; // Add this parameter to distinguish between leave and overtime
-  const ProjectType({super.key, required this.type});
+  const ProjectType({super.key});
 
 
   @override
@@ -66,14 +65,8 @@ class _ProjectTypeState extends State<ProjectType> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => widget.type == 'paid-leave'
-                        ? const ListUserCuti()
-                        : const ListUserLembur(),
-                    ),
-                  );
+                   Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => msdo.ListUserLembur()));
                 },
               ),
               MaterialButton(
@@ -108,14 +101,8 @@ class _ProjectTypeState extends State<ProjectType> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => widget.type == 'paid-leave'
-                        ? const ListUserCuti()
-                        : const ListUserLembur(),
-                    ),
-                  );
+                  Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => dev.ListUserLembur()));
                 },
               ),
             ],
