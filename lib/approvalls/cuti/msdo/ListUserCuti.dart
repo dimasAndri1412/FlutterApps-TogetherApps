@@ -2,6 +2,8 @@ import 'package:absent_project/approvalls/cuti/msdo/DetailCutiUser.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveController.dart';
 
@@ -13,16 +15,6 @@ class ListUserCuti extends StatefulWidget {
 }
 
 class _ListUserCutiState extends State<ListUserCuti> {
-  final List<Map<String, String>> requests = [
-    {"reqNo": "REQ-1023", "submittedBy": "Rara Zahra Urava", "date": "03 Des 2024 - 12:30", "status": "Approved"},
-    {"reqNo": "REQ-1024", "submittedBy": "Kim Sunoo", "date": "04 Des 2024 - 14:00", "status": "Rejected"},
-    {"reqNo": "REQ-1025", "submittedBy": "Choi Beomgyu", "date": "05 Des 2024 - 09:15", "status": "New"},
-    {"reqNo": "REQ-1025", "submittedBy": "Jeon Jungkook", "date": "06 Des 2024 - 12:15", "status": "New"},
-    {"reqNo": "REQ-1025", "submittedBy": "Kim Yoon Woo", "date": "06 Des 2024 - 13:55", "status": "New"},
-    {"reqNo": "REQ-1025", "submittedBy": "Byeon Woo Seok", "date": "06 Des 2024 - 10:15", "status": "New"},
-    // Add more request items as needed
-  ];
-
   Color _getStatusColor(String status) {
     switch (status) {
       case 'Approved':
@@ -99,10 +91,10 @@ class _ListUserCutiState extends State<ListUserCuti> {
           ),
           ),
           FutureBuilder(
-              future: AdminApprovalPaidLeaveController().getUsers(),
+              future: AdminApprovalPaidLeaveController().getUsersMSDO(),
               builder: (context, snapshot) {
                 if (snapshot.data == null) {
-                  return const Text("Loading");
+                  return const Center(child:Text("There is no request need to approve"));
                 } else {
                   return Expanded(
                       child: ListView.builder(
@@ -113,12 +105,10 @@ class _ListUserCutiState extends State<ListUserCuti> {
                               getData.status ?? "Unknown");
                           return GestureDetector(
                               onTap: () {
-                                Navigator.of(context)
-                                    .push(MaterialPageRoute(
-                                    builder: (context) => DetailCutiUser()));
+                                Get.to(() => DetailCutiUser(getUserDetail: getData,));
                               },
                               child: Container(
-                                margin: EdgeInsets.all(10),
+                                margin: const EdgeInsets.all(10),
                                 width: 350,
                                 height: 150,
                                 decoration: BoxDecoration(
@@ -130,7 +120,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
                                 child: Column(
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.only(
+                                      padding: const EdgeInsets.only(
                                           left: 20, top: 15, right: 20),
                                       child: Row(
                                         children: [
@@ -221,7 +211,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
                                                 width: 5,
                                               ),
                                               Text(
-                                                getData.date,
+                                                getData.submittedDate,
                                                 style: TextStyle(fontSize: 12),
                                               ),
                                             ],

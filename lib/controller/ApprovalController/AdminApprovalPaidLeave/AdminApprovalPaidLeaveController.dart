@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:http/http.dart' as http;
-import 'AdminApprovalPaidLeave.dart';
+import 'AdminApprovalPaidLeave_Development.dart';
+import 'AdminApprovalPaidLeave_MSDO.dart';
 import 'adminGetDetail.dart';
 
 class AdminApprovalPaidLeaveController {
@@ -21,7 +22,7 @@ class AdminApprovalPaidLeaveController {
   String backToWork = "";
 
 
-  Future<List<UserRequestPaidLeave>?> getUsers() async {
+  Future<List<AdminApprovalPaidLeave_Development>?> getUsersDevelopment() async {
       try{
         var url = Uri.parse(
             "http://192.168.2.159/FlutterAPI/approvals/admin/paid_leave/getUserDevelopment_paidLeave.php");
@@ -30,13 +31,13 @@ class AdminApprovalPaidLeaveController {
         });
         if (data.statusCode == 200) {
           var jsonData = json.decode(data.body);
-          List<UserRequestPaidLeave> users = [];
+          List<AdminApprovalPaidLeave_Development> users = [];
           for (var u in jsonData) {
-            UserRequestPaidLeave user = UserRequestPaidLeave(
+            AdminApprovalPaidLeave_Development user = AdminApprovalPaidLeave_Development(
                 u["name"], u["position"], u["reqNo"], u["status"],
                 u["date_start_leave"], u["phone_number"],
                 u["departement"], u["types_leave"], u["reason_leave"],
-                u["date_end_leave"], u["name_of_pic"], u["date_back_to_work"]);
+                u["date_end_leave"], u["name_of_pic"], u["date_back_to_work"], u["submittedDate"],u['shift']);
             users.add(user);
           }
           return users;
@@ -46,6 +47,34 @@ class AdminApprovalPaidLeaveController {
       }
       return null;
     }
+
+
+  Future<List<AdminApprovalPaidLeave_MSDO>?> getUsersMSDO() async {
+    try{
+      var url = Uri.parse(
+          "http://192.168.2.159/FlutterAPI/approvals/admin/paid_leave/getUserMSDO_paidLeave.php");
+      var data = await http.post(url, body: {
+        "name": namePaidLeave.text
+      });
+      if (data.statusCode == 200) {
+        var jsonData = json.decode(data.body);
+        List<AdminApprovalPaidLeave_MSDO> users = [];
+        for (var u in jsonData) {
+          AdminApprovalPaidLeave_MSDO user = AdminApprovalPaidLeave_MSDO(
+              u["name"], u["position"], u["reqNo"], u["status"],
+              u["date_start_leave"], u["phone_number"],
+              u["departement"], u["types_leave"], u["reason_leave"],
+              u["date_end_leave"], u["name_of_pic"], u["date_back_to_work"], u["submittedDate"],u["shift"]);
+          users.add(user);
+        }
+        return users;
+      }
+    }catch (Exception) {
+      "Failed Request!";
+    }
+    return null;
+  }
+
 
   Future getDetail() async{
       var data = await http.post(

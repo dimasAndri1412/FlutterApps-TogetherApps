@@ -3,21 +3,21 @@ import 'package:absent_project/approvalls/cuti/GeneratePDF.dart';
 // import 'pdf_generator.dart';
 // import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart';
 // import 'package:pdf/pdf.dart';
 // import 'package:barcode/barcode.dart';
 // import 'package:pdf/widgets.dart' as pw;
 // import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
 
+import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeave_Development.dart';
+import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeave_MSDO.dart';
 
-class DetailCutiUser extends StatefulWidget {
-  const DetailCutiUser({super.key});
 
-  @override
-  State<DetailCutiUser> createState() => _DetailCutiUserState();
-}
-
-class _DetailCutiUserState extends State<DetailCutiUser> {
+class DetailCutiUser extends StatelessWidget {
+  final AdminApprovalPaidLeave_MSDO getUserDetail;
+  const DetailCutiUser({super.key,
+  required this.getUserDetail});
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                     "Status : ",
                   ),
                   Text(
-                    "NEW",
+                    getUserDetail.status,
                     style: TextStyle(
                       color: Colors.blue,
                       fontWeight: FontWeight.bold
@@ -97,7 +97,7 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                     style: TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 14),
                     ),
-                  Text("Req-1023",
+                  Text(getUserDetail.reqNo,
                     style: TextStyle(
                       fontSize: 14
                     ),
@@ -111,7 +111,7 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                     style: TextStyle(
                      fontSize: 12),
                     ),
-                  Text("03 Des 2023",
+                  Text(getUserDetail.submittedDate,
                     style: TextStyle(
                       fontSize: 12
                     ),
@@ -161,7 +161,7 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                             ),
                           ),
                           SizedBox(height: 5,),
-                          Text("Kim Sunoo",
+                          Text(getUserDetail.username,
                             style: TextStyle(
                               fontSize: 13
                             ),
@@ -179,7 +179,7 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                             ),
                           ),
                           SizedBox(height: 5,),
-                          Text("0987612",
+                          Text(getUserDetail.phoneNumber,
                             style: TextStyle(
                               fontSize: 13
                             ),
@@ -208,7 +208,7 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                             ),
                           ),
                           SizedBox(height: 5,),
-                          Text("IT Data Operator",
+                          Text(getUserDetail.position,
                             style: TextStyle(
                               fontSize: 13
                             ),
@@ -226,7 +226,7 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                             ),
                           ),
                           SizedBox(height: 5,),
-                          Text("Gedung Bri",
+                          Text(getUserDetail.departement,
                             style: TextStyle(
                               fontSize: 13
                             ),
@@ -254,7 +254,7 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                             ),
                           ),
                           SizedBox(height: 5,),
-                          Text("Leaving Early",
+                          Text(getUserDetail.types_leave,
                             style: TextStyle(
                               fontSize: 13
                             ),
@@ -272,7 +272,7 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                             ),
                           ),
                           SizedBox(height: 5,),
-                          Text("1",
+                          Text(getUserDetail.shift,
                             style: TextStyle(
                               fontSize: 13
                             ),
@@ -297,7 +297,7 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                           fontSize: 13
                         ),
                       ),
-                      Text("Mengurus NPWP",
+                      Text(getUserDetail.reason_leave,
                         style: TextStyle(
                           fontSize: 13
                         ),
@@ -322,7 +322,7 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                         ),
                         child: Center(
                           child: Text(
-                            "02 Jun 2024",
+                            getUserDetail.date,
                             style: TextStyle(
                               fontSize: 13
                             ),
@@ -340,7 +340,7 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                         ),
                         child: Center(
                           child: Text(
-                            "03 Jun 2024",
+                            getUserDetail.date_end_leave,
                             style: TextStyle(
                               fontSize: 13
                             ),
@@ -358,7 +358,7 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                           fontSize: 13
                         ),
                       ),
-                      Text("Ameng",
+                      Text(getUserDetail.name_of_pic,
                         style: TextStyle(
                           fontSize: 13
                         ),
@@ -374,7 +374,7 @@ class _DetailCutiUserState extends State<DetailCutiUser> {
                           fontSize: 13
                         ),
                       ),
-                      Text("04 Jun 2024",
+                      Text(getUserDetail.date_back_to_work,
                         style: TextStyle(
                           fontSize: 13
                         ),

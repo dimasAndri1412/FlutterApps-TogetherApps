@@ -101,10 +101,10 @@ class _ListUserCutiState extends State<ListUserCuti> {
           ),
           ),
           FutureBuilder(
-              future: AdminApprovalPaidLeaveController().getUsers(),
+              future: AdminApprovalPaidLeaveController().getUsersDevelopment(),
               builder: (context, snapshot) {
                 if (snapshot.data == null) {
-                  return const Text("Loading");
+                  return const Center(child:Text("There is no request need to approve"));
                 } else {
                   return Expanded(
                       child: ListView.builder(
@@ -221,7 +221,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
                                                 width: 5,
                                               ),
                                               Text(
-                                                getData.date,
+                                                getData.submittedDate,
                                                 style: TextStyle(fontSize: 12),
                                               ),
                                             ],

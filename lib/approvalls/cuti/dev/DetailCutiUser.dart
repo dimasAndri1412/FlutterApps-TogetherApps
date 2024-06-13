@@ -13,12 +13,12 @@ import 'package:http/http.dart';
 // import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
 
-import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeave.dart';
+import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeave_Development.dart';
 import '../../../controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
 
 
 class DetailCutiUser extends StatelessWidget {
-  final UserRequestPaidLeave getUserDetail;
+  final AdminApprovalPaidLeave_Development getUserDetail;
   DetailCutiUser({super.key,
     required this.getUserDetail});
 
@@ -123,7 +123,7 @@ class DetailCutiUser extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 12),
                               ),
-                              Text(getUserDetail.date,
+                              Text(getUserDetail.submittedDate,
                                 style: TextStyle(
                                     fontSize: 12
                                 ),

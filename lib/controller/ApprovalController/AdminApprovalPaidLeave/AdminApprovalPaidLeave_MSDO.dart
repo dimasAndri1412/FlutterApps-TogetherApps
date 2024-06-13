@@ -1,4 +1,4 @@
-class UserRequestPaidLeave {
+class AdminApprovalPaidLeave_MSDO {
   final String username;
   final String position;
   final String reqNo;
@@ -11,7 +11,10 @@ class UserRequestPaidLeave {
   final String date_end_leave;
   final String name_of_pic;
   final String date_back_to_work;
-  UserRequestPaidLeave(this.username, this.position,
+  final String submittedDate;
+  final String shift;
+  AdminApprovalPaidLeave_MSDO(this.username, this.position,
       this.reqNo, this.status, this.date, this.phoneNumber, this.departement, this.types_leave
-      ,this.reason_leave, this.date_end_leave, this.name_of_pic, this.date_back_to_work);
+      ,this.reason_leave, this.date_end_leave, this.name_of_pic, this.date_back_to_work, this.submittedDate,
+      this.shift);
 }
