@@ -13,8 +13,12 @@ class AdminApprovalPaidLeave_MSDO {
   final String date_back_to_work;
   final String submittedDate;
   final String shift;
+  final String leave_used;
+  final String remaining_leave;
+
+
   AdminApprovalPaidLeave_MSDO(this.username, this.position,
       this.reqNo, this.status, this.date, this.phoneNumber, this.departement, this.types_leave
       ,this.reason_leave, this.date_end_leave, this.name_of_pic, this.date_back_to_work, this.submittedDate,
-      this.shift);
+      this.shift, this.leave_used, this.remaining_leave);
 }

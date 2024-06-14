@@ -1,5 +1,6 @@
+import 'package:absent_project/approvalls/cuti/GeneratePDF_MSDO.dart';
 import 'package:flutter/material.dart';
-import 'package:absent_project/approvalls/cuti/GeneratePDF.dart';
+import 'package:absent_project/approvalls/cuti/GeneratePDF_Development.dart';
 // import 'pdf_generator.dart';
 // import 'dart:io';
 import 'package:flutter/services.dart';
@@ -16,7 +17,7 @@ import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminAppro
 
 class DetailCutiUser extends StatelessWidget {
   final AdminApprovalPaidLeave_MSDO getUserDetail;
-  const DetailCutiUser({super.key,
+  DetailCutiUser({super.key,
   required this.getUserDetail});
 
   @override
@@ -416,8 +417,9 @@ class DetailCutiUser extends StatelessWidget {
                     // .push(MaterialPageRoute(builder: (context) => GeneratePDF()));
                     // Generate the PDF with a barcode
                     // final backgroundImage = await loadImage('assets/images/BIT-Logo.png');
-                    final pdf = await GeneratePDF();
-                    await Printing.layoutPdf(onLayout: (format) => pdf);
+                    final pdf = await PDFGenerator_MSDO(getUserDetail:  getUserDetail,).GeneratePDF();
+                    await Printing.layoutPdf(
+                        onLayout: (format) => pdf);
                   },
                   child: Container(
                     width: 165,

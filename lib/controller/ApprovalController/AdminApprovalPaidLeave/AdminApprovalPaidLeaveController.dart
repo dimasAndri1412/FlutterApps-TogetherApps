@@ -21,6 +21,9 @@ class AdminApprovalPaidLeaveController {
   String pic = "";
   String backToWork = "";
 
+  int remainingLeave = 0;
+  int leaveUsed = 0;
+
 
   Future<List<AdminApprovalPaidLeave_Development>?> getUsersDevelopment() async {
       try{
@@ -51,6 +54,19 @@ class AdminApprovalPaidLeaveController {
 
   Future<List<AdminApprovalPaidLeave_MSDO>?> getUsersMSDO() async {
     try{
+/*
+      var dataGetFullName = await http.post(
+          Uri.parse(
+              "http://192.168.2.159/FlutterAPI/approvals/member/paid_leave/getOnlyFullName.php"),
+          body: {
+            "fullname": namePaidLeave.text,
+          });
+      var jsonData = json.decode(dataGetFullName.body);
+      leaveUsed = int.parse(jsonData[0]['leave_used']);
+      remainingLeave = int.parse(jsonData[0]['remaining_leave']);
+*/
+
+
       var url = Uri.parse(
           "http://192.168.2.159/FlutterAPI/approvals/admin/paid_leave/getUserMSDO_paidLeave.php");
       var data = await http.post(url, body: {
@@ -64,7 +80,8 @@ class AdminApprovalPaidLeaveController {
               u["name"], u["position"], u["reqNo"], u["status"],
               u["date_start_leave"], u["phone_number"],
               u["departement"], u["types_leave"], u["reason_leave"],
-              u["date_end_leave"], u["name_of_pic"], u["date_back_to_work"], u["submittedDate"],u["shift"]);
+              u["date_end_leave"], u["name_of_pic"], u["date_back_to_work"], u["submittedDate"],u["shift"],
+          u['leave_used'], u['remaining_leave']);
           users.add(user);
         }
         return users;
