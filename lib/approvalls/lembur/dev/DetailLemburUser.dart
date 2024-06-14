@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:printing/printing.dart';
-import 'package:absent_project/approvalls/lembur/GeneratePDF.dart';
+// import 'package:absent_project/approvalls/lembur/GeneratePDF.dart';
+import 'package:absent_project/approvalls/lembur/ConfirmationDialog.dart';
 
 class DetailLemburUser extends StatefulWidget {
   const DetailLemburUser({super.key});
@@ -375,8 +376,12 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
                     // .push(MaterialPageRoute(builder: (context) => GeneratePDF()));
                     // Generate the PDF with a barcode
                     // final backgroundImage = await loadImage('assets/images/BIT-Logo.png');
-                    final pdf = await GeneratePDF();
-                    await Printing.layoutPdf(onLayout: (format) => pdf);
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ConfirmationDialog();
+                      },
+                    );
                   },
                     child: Container(
                        width: 165,

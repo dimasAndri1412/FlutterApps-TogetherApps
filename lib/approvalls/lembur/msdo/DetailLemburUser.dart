@@ -1,7 +1,9 @@
+import 'package:absent_project/approvalls/lembur/ConfirmationDialog.dart';
+import 'package:absent_project/approvalls/lembur/RejectDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:printing/printing.dart';
-import 'package:absent_project/approvalls/lembur/GeneratePDF.dart';
+// import 'package:printing/printing.dart';
+// import 'package:absent_project/approvalls/lembur/GeneratePDF.dart';
 
 class DetailLemburUser extends StatefulWidget {
   const DetailLemburUser({super.key});
@@ -350,19 +352,31 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
             margin: EdgeInsets.all(20),
             child: Row(
               children: [
-                Container(
-                  width: 165,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.red),
-                    borderRadius: BorderRadius.circular(6)
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Reject",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red
+                InkWell(
+                  onTap: () async {
+                    print("Click event on Container");
+                    
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return RejectDialog();
+                      },
+                    );
+                  },
+                  child: Container(
+                    width: 165,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.red),
+                      borderRadius: BorderRadius.circular(6)
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Reject",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red
+                        ),
                       ),
                     ),
                   ),
@@ -375,8 +389,15 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
                     // .push(MaterialPageRoute(builder: (context) => GeneratePDF()));
                     // Generate the PDF with a barcode
                     // final backgroundImage = await loadImage('assets/images/BIT-Logo.png');
-                    final pdf = await GeneratePDF();
-                    await Printing.layoutPdf(onLayout: (format) => pdf);
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ConfirmationDialog();
+                      },
+                    );
+
+                    // final pdf = await GeneratePDF();
+                    // await Printing.layoutPdf(onLayout: (format) => pdf);
                   },
                     child: Container(
                        width: 165,
