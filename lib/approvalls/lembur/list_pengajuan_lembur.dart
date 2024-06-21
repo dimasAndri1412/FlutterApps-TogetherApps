@@ -39,6 +39,18 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
     },
   ];
 
+  //untuk membuat filter All, Approved, Rejected
+  String filterStatus = 'All';
+
+  List<Map<String, String>> get filteredLembur {
+    if (filterStatus == 'All') {
+      return userlembur;
+    }
+    return userlembur
+        .where((lembur) => lembur['status'] == filterStatus)
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,16 +71,58 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
         elevation: 0,
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          //FILTER
+          Container(
+            // color: Colors.grey,
+            width: 290,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15, top: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  FilterChip(
+                    label: Text("All"),
+                    selected: filterStatus == 'All',
+                    onSelected: (bool selected) {
+                      setState(() {
+                        filterStatus = 'All';
+                      });
+                    },
+                  ),
+                  FilterChip(
+                    label: Text("Approved"),
+                    selected: filterStatus == 'Approved',
+                    onSelected: (bool selected) {
+                      setState(() {
+                        filterStatus = selected ? 'Approved' : 'All';
+                      });
+                    },
+                  ),
+                  FilterChip(
+                    label: Text("Rejected"),
+                    selected: filterStatus == 'Rejected',
+                    onSelected: (bool selected) {
+                      setState(() {
+                        filterStatus = selected ? 'Rejected' : 'All';
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
           SizedBox(
             height: 30,
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: userlembur.length,
+              // itemCount: userlembur.length,
+              itemCount: filteredLembur.length,
               itemBuilder: (context, index) {
-                //panggil usercuti sebagai cutiisi
-                final isilembur = userlembur[index];
+                // final isilembur = userlembur[index];
+                final isilembur = filteredLembur[index];
 
                 return Padding(
                   padding:
@@ -121,7 +175,7 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                         ],
                       ),
                       trailing: Text(
-                        userlembur[index]['status']!,
+                        isilembur['status']!,
                         style: TextStyle(
                             color: isilembur['status'] == 'Approved'
                                 ? Colors.green
