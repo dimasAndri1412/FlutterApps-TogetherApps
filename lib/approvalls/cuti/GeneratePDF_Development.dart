@@ -95,7 +95,7 @@ class PDFGenerator_Development extends StatelessWidget {
                                             )
                                         ),
                                         pw.Text(
-                                            "Rara Zahra Urava",
+                                            getUserDetail.username,
                                             style: pw.TextStyle(
                                                 fontSize: 11
                                             )
@@ -111,7 +111,7 @@ class PDFGenerator_Development extends StatelessWidget {
                                             )
                                         ),
                                         pw.Text(
-                                            "IT Data Operator",
+                                            getUserDetail.position,
                                             style: pw.TextStyle(
                                                 fontSize: 11
                                             )
@@ -127,7 +127,7 @@ class PDFGenerator_Development extends StatelessWidget {
                                             )
                                         ),
                                         pw.Text(
-                                            "DIIO",
+                                            getUserDetail.departement,
                                             style: pw.TextStyle(
                                                 fontSize: 11
                                             )
@@ -148,7 +148,7 @@ class PDFGenerator_Development extends StatelessWidget {
                                     )
                                 ),
                                 pw.Text(
-                                    "Pulang Kampung dulu brow",
+                                    getUserDetail.reason_leave,
                                     style: pw.TextStyle(
                                         fontSize: 11,
                                         decoration: pw.TextDecoration.underline
@@ -170,7 +170,7 @@ class PDFGenerator_Development extends StatelessWidget {
                                   ),
                                 ),
                                 pw.TextSpan(
-                                  text: 'Rara Zahra Urava',
+                                  text: getUserDetail.name_of_pic,
                                   style: pw.TextStyle(
                                       fontSize: 11,
                                       decoration: pw.TextDecoration.underline,
@@ -182,7 +182,7 @@ class PDFGenerator_Development extends StatelessWidget {
                                   style: pw.TextStyle(fontSize: 11),
                                 ),
                                 pw.TextSpan(
-                                  text: '08561132005\n',
+                                  text: "${getUserDetail.phoneNumber}\n",
                                   style: pw.TextStyle(
                                       fontSize: 11,
                                       decoration: pw.TextDecoration.underline,
@@ -194,7 +194,7 @@ class PDFGenerator_Development extends StatelessWidget {
                                   style: pw.TextStyle(fontSize: 11),
                                 ),
                                 pw.TextSpan(
-                                  text: '19 Juni 2024',
+                                  text:getUserDetail.date,
                                   style: pw.TextStyle(
                                     fontSize: 11,
                                     fontWeight: pw.FontWeight.bold,
@@ -206,7 +206,7 @@ class PDFGenerator_Development extends StatelessWidget {
                                   style: pw.TextStyle(fontSize: 11),
                                 ),
                                 pw.TextSpan(
-                                  text: '__20 Juni 2024___ ',
+                                  text: getUserDetail.date_end_leave,
                                   style: pw.TextStyle(
                                     fontSize: 11,
                                     fontWeight: pw.FontWeight.bold,
@@ -234,7 +234,7 @@ class PDFGenerator_Development extends StatelessWidget {
                                   style: pw.TextStyle(fontSize: 11),
                                 ),
                                 pw.TextSpan(
-                                  text: '21 Juni 2024',
+                                  text: getUserDetail.date_back_to_work,
                                   style: pw.TextStyle(
                                     fontSize: 11,
                                     fontWeight: pw.FontWeight.bold,

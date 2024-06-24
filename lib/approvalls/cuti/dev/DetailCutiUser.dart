@@ -2,6 +2,7 @@ import 'package:absent_project/controller/ApprovalController/AdminApprovalPaidLe
 import 'package:absent_project/controller/ApprovalController/AdminApprovalPaidLeave/adminGetDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:absent_project/approvalls/cuti/GeneratePDF_Development.dart';
+import 'package:absent_project/approvalls/cuti/dev/ConfirmationDialog.dart';
 // import 'pdf_generator.dart';
 // import 'dart:io';
 import 'package:flutter/services.dart';
@@ -435,9 +436,16 @@ class DetailCutiUser extends StatelessWidget {
                               // .push(MaterialPageRoute(builder: (context) => GeneratePDF()));
                               // Generate the PDF with a barcode
                               // final backgroundImage = await loadImage('assets/images/BIT-Logo.png');
-                              final pdf = await PDFGenerator_Development(getUserDetail: getUserDetail,).GeneratePDF();
-                              await Printing.layoutPdf(
-                                  onLayout: (format) => pdf);
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return ConfirmationDialog(getUserDetail: getUserDetail,);
+                                },
+                              );
+
+                              // final pdf = await PDFGenerator_Development(getUserDetail: getUserDetail,).GeneratePDF();
+                              // await Printing.layoutPdf(
+                              //     onLayout: (format) => pdf);
                             },
                             child: Container(
                               width: 165,

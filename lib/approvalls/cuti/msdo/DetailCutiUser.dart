@@ -1,5 +1,5 @@
 import 'package:absent_project/approvalls/cuti/GeneratePDF_MSDO.dart';
-import 'package:absent_project/approvalls/cuti/ConfirmationDialog.dart';
+import 'package:absent_project/approvalls/cuti/msdo/ConfirmationDialog.dart';
 import 'package:absent_project/approvalls/cuti/RejectDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:absent_project/approvalls/cuti/GeneratePDF_Development.dart';
@@ -430,16 +430,16 @@ class DetailCutiUser extends StatelessWidget {
                       // .push(MaterialPageRoute(builder: (context) => GeneratePDF()));
                       // Generate the PDF with a barcode
                       // final backgroundImage = await loadImage('assets/images/BIT-Logo.png');
-                      // showDialog(
-                      //   context: context,
-                      //   builder: (BuildContext context) {
-                      //     return ConfirmationDialog();
-                      //   },
-                      // );
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ConfirmationDialog(getUserDetail: getUserDetail,);
+                        },
+                      );
 
-                      final pdf = await PDFGenerator_MSDO(getUserDetail:  getUserDetail,).GeneratePDF();
-                      await Printing.layoutPdf(
-                          onLayout: (format) => pdf);
+                      // final pdf = await PDFGenerator_MSDO(getUserDetail:  getUserDetail,).GeneratePDF();
+                      // await Printing.layoutPdf(
+                      //     onLayout: (format) => pdf);
                     },
                     child: Container(
                       width: 165,

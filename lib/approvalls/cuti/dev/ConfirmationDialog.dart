@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
+// import 'package:quickalert/quickalert.dart';
+import 'package:printing/printing.dart';
 
-class RejectDialog extends StatefulWidget {
-  const RejectDialog({super.key});
+import 'package:absent_project/approvalls/cuti/GeneratePDF_MSDO.dart';
+import 'package:absent_project/approvalls/cuti/GeneratePDF_Development.dart';
+
+import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeave_Development.dart';
+import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeave_MSDO.dart';
+
+class ConfirmationDialog extends StatefulWidget {
+  final AdminApprovalPaidLeave_Development getUserDetail;
+  const ConfirmationDialog({super.key, required this.getUserDetail});
 
   @override
-  State<RejectDialog> createState() => _RejectDialogState();
+  State<ConfirmationDialog> createState() => _ConfirmationDialogState();
 }
 
-class _RejectDialogState extends State<RejectDialog> {
+class _ConfirmationDialogState extends State<ConfirmationDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -21,9 +30,9 @@ class _RejectDialogState extends State<RejectDialog> {
           children: [
             Container(
               width: 400,
-              height: 120,
+              height: 150,
               decoration: BoxDecoration(
-                color: Colors.red,
+                color: Colors.grey,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20.0),
                   topRight: Radius.circular(20.0),
@@ -34,7 +43,7 @@ class _RejectDialogState extends State<RejectDialog> {
                 child: Center(
                   child: 
                   Icon(
-                    Icons.question_mark_rounded,
+                    Icons.warning_rounded,
                     color: Colors.white,
                     size: 80.0,
                   ),
@@ -51,30 +60,39 @@ class _RejectDialogState extends State<RejectDialog> {
             ),
             SizedBox(height: 8.0),
             Text(
-              'Why you reject this request?',
+              'Are you sure to approve this request?',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16.0,
               ),
             ),
-            SizedBox(height: 14.0),
+            SizedBox(height: 24.0),
             Column(
               children: [
-                Container(
-                  height: 100,
-                  width: 270,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(10)
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 5, left: 8),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Enter text here',
+                ElevatedButton(
+                  onPressed: () async {
+                    final pdf = await PDFGenerator_Development(getUserDetail:  widget.getUserDetail,).GeneratePDF();
+                    await Printing.layoutPdf(
+                        onLayout: (format) => pdf);
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.print, color: Colors.white,),
+                      SizedBox(width: 10,),
+                      Text('Approve & Print Document',
+                        style: TextStyle(
+                          color: Colors.white
+                        ),
                       ),
+                    ],
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
                     ),
+                    padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 12.0),
                   ),
                 ),
                 SizedBox(height: 10,),
@@ -84,7 +102,7 @@ class _RejectDialogState extends State<RejectDialog> {
                     onPressed: () {
                       Navigator.pop(context);
                     }, 
-                    child: Text("Reject",
+                    child: Text("Cancel",
                       style: TextStyle(
                         color: Colors.red
                       ),
