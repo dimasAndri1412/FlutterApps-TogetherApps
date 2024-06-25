@@ -11,6 +11,13 @@ class ListUserLembur extends StatefulWidget {
   State<ListUserLembur> createState() => _ListUserLemburState();
 }
 
+// class Item {
+//   final String title;
+//   final DateTime dateTime;
+
+//   Item({required this.title, required this.dateTime});
+// }
+
 class _ListUserLemburState extends State<ListUserLembur> {
   final List<Map<String, String>> requests = [
     {"reqNo": "REQ-1023", "submittedBy": "Rara Zahra Urava", "date": "03 Des 2024 - 12:30", "status": "Approved"},
@@ -33,6 +40,17 @@ class _ListUserLemburState extends State<ListUserLembur> {
       default:
         return Colors.blue; // Default color if status is unknown
     }
+  }
+
+  String filterStatus = '';
+
+  List<Map<String, String>> get filteredLembur {
+    if (filterStatus == '') {
+      return requests;
+    }
+    return requests
+        .where((lembur) => lembur['status'] == filterStatus)
+        .toList();
   }
 
   final List<String> statuses = ['New', 'Approved', 'Rejected'];
@@ -66,35 +84,51 @@ class _ListUserLemburState extends State<ListUserLembur> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            margin: EdgeInsets.all(10),
-            child: Wrap(
-              spacing: 8.0,
-              children: statuses.map((status) {
-                final isSelected = selectedStatus == status;
-                return FilterChip(
-                  label: Text(
-                    status,
-                    style: TextStyle(
-                      color: isSelected ? Colors.white : Colors.black,
-                    ),
+            // color: Colors.grey,
+            width: 290,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15, top: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  FilterChip(
+                    label: Text("New"),
+                    selected: filterStatus == 'New',
+                    onSelected: (bool selected) {
+                      setState(() {
+                        filterStatus = selected ? 'New' : '';
+                      });
+                    },
                   ),
-                  selected: selectedStatus == status,
-                  onSelected: (bool selected) {
-                    setState(() {
-                      selectedStatus = selected ? status : null;
-                    });
-                  },
-                  selectedColor: Color.fromARGB(255, 225, 161, 101), 
-                  checkmarkColor: Colors.white,
-                );
-              }).toList(),
+                  FilterChip(
+                    label: Text("Approved"),
+                    selected: filterStatus == 'Approved',
+                    onSelected: (bool selected) {
+                      setState(() {
+                        filterStatus = selected ? 'Approved' : '';
+                      });
+                    },
+                  ),
+                  FilterChip(
+                    label: Text("Rejected"),
+                    selected: filterStatus == 'Rejected',
+                    onSelected: (bool selected) {
+                      setState(() {
+                        filterStatus = selected ? 'Rejected' : '';
+                      });
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
           child: ListView.builder(
-            itemCount: requests.length,
+            // itemCount: requests.length,
+            itemCount: filteredLembur.length,
             itemBuilder: (context, index) {
-              final request = requests[index];
+              // final request = requests[index];
+              final request = filteredLembur[index];
               final statusColor = _getStatusColor(request["status"] ?? "Unknown");
               return GestureDetector(
               onTap: () {

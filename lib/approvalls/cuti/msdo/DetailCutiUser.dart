@@ -1,6 +1,6 @@
 import 'package:absent_project/approvalls/cuti/GeneratePDF_MSDO.dart';
 import 'package:absent_project/approvalls/cuti/msdo/ConfirmationDialog.dart';
-import 'package:absent_project/approvalls/cuti/RejectDialog.dart';
+import 'package:absent_project/approvalls/cuti/msdo/RejectDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:absent_project/approvalls/cuti/GeneratePDF_Development.dart';
 // import 'pdf_generator.dart';
