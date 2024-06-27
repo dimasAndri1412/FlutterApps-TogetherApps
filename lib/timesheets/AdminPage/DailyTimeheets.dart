@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:absent_project/timesheets/AdminPage/TimeEntry.dart';
 import 'package:flutter/material.dart';
 
 class DailyTimesheets extends StatefulWidget {
@@ -10,6 +11,14 @@ class DailyTimesheets extends StatefulWidget {
 }
 
 class _DailyTimesheetsState extends State<DailyTimesheets> {
+  // bool _isExpanded = false;
+  bool _customTileExpanded = false;
+
+  // void _toggleExpand() {
+  //   setState(() {
+  //     _isExpanded = !_isExpanded;
+  //   });
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +92,7 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
               ),
               SizedBox(height: 10,),
               Container(
-                height: 300,
+                // height: 260,
                 decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -94,7 +103,7 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                     offset: Offset(0, 3), // changes position of shadow
                   ),
                 ],
-              ),
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -221,16 +230,267 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                         ],
                       )
                     ),
-                    Spacer(),
-                    Center(
-                      child: IconButton(
-                        icon: const Icon(Icons.arrow_drop_down, size: 30),
-                        onPressed: () {},
+                    SizedBox(height: 10,),
+                    ExpansionTile(
+                      title: const Text('Time Entries',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold
+                        ),
                       ),
-                    )
+                      // subtitle: const Text('Custom expansion arrow icon'),
+                      children: <Widget>[
+                        GestureDetector(
+                          onTap: (){
+                          Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) => TimeEntry()));
+                        },
+                        child: ListTile(
+                          title: Text('06:58'),
+                          subtitle: Text('Shift 1'),
+                          leading: CircleAvatar(),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.phone_android,
+                                size: 17,
+                                color: Colors.grey,
+                              ),
+                              Icon(
+                                Icons.location_on_outlined,
+                                size: 18,
+                                color: Colors.grey  
+                              ),
+                              Icon(
+                                Icons.arrow_forward_ios_sharp,
+                                size: 18,
+                                color: Colors.grey,  
+                              )
+                            ],
+                          ),
+                        ),
+                        )
+                      ],
+                      onExpansionChanged: (bool expanded) {
+                        setState(() {
+                          _customTileExpanded = expanded;
+                        });
+                      },
+                    ),
                   ],
                 )
-              )
+              ),
+              SizedBox(height: 20,),
+              Container(
+                // height: 260,
+                decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 0,
+                    blurRadius: 2,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text(
+                        'Payroll Hours',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ),
+                     Container(
+                      margin: EdgeInsets.only(left: 20, right: 80, bottom: 5),
+                      child: Row(
+                        children: [
+                          Text('Regular hours',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                              fontWeight: FontWeight.normal
+                            ),
+                          ),
+                           SizedBox(width: 100,),
+                          Text('Overtime hours  ',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                              fontWeight: FontWeight.normal
+                            ),
+                          )
+                        ],
+                      )
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 20, right: 20, top: 2),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text('7:28',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                          SizedBox(width: 150,),
+                          Text('-',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold
+                            ),
+                          )
+                        ],
+                      )
+                    ),
+                    SizedBox(height: 10,),
+                    ExpansionTile(
+                      title: const Text('Breakdown',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      // subtitle: const Text('Custom expansion arrow icon'),
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(left: 10, right: 10),
+                          height: 50,
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Row(
+                              children: [
+                                Text("Tracked hours"),
+                                Spacer(),
+                                Text("7h 56m",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 10, right: 10),
+                          height: 50,
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Row(
+                              children: [
+                                Text("Worked hours"),
+                                Spacer(),
+                                Text("7h 56m",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ),
+                        SizedBox(height: 20,),
+                        Container(
+                          margin: EdgeInsets.only(left: 10, right: 10),
+                          height: 50,
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Row(
+                              children: [
+                                Text("Payroll hours"),
+                                Spacer(),
+                                Text("7h 56m",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 10, right: 10, bottom: 30),
+                          height: 50,
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Row(
+                              children: [
+                                Text("Regular hours"),
+                                Spacer(),
+                                Text("7h 56m",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        )
+                      ],
+                      onExpansionChanged: (bool expanded) {
+                        setState(() {
+                          _customTileExpanded = expanded;
+                        });
+                      },
+                    ),
+                  ],
+                )
+              ),
+              // ListTile(
+              //   title: Center(
+              //     child: IconButton(
+              //       icon: Icon(
+              //         _isExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+              //         size: 30,
+              //       ),
+              //       onPressed: _toggleExpand,
+              //     ),
+              //   ),
+              // ),
+              // Visibility(
+              //   visible: _isExpanded,
+              //   child: Container(
+              //       color: Colors.white, // Set the background color here
+              //       child: Column(
+              //         children: [
+              //           Container(
+              //             padding: EdgeInsets.all(10),
+              //             child: Text(
+              //               'Detail Information',
+              //               style: TextStyle(fontSize: 14),
+              //             ),
+              //           ),
+              //           Container(
+              //             padding: EdgeInsets.all(10),
+              //             child: Text(
+              //               'More details can be shown here when expanded.',
+              //               style: TextStyle(fontSize: 14),
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              // )
             ],
           )
         )
