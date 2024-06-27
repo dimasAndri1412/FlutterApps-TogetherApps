@@ -20,6 +20,7 @@ class PengajuanLembur extends StatefulWidget {
 class _PengajuanLemburState extends State<PengajuanLembur> {
   final nameLemburController = TextEditingController();
   final positionOvertimeController = TextEditingController();
+  final projectOvertimeController = TextEditingController();
   final departmentOvertimeController = TextEditingController();
   final _timeStartController = TextEditingController();
   final _timeEndController = TextEditingController();
@@ -146,6 +147,33 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Please enter your reason here';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: Colors.grey, width: 1),
+                                  borderRadius: BorderRadius.circular(12)),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                      labelText: "Project",
+                                      hintText:
+                                          "Please input your project here",
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      border: InputBorder.none),
+                                  controller: projectOvertimeController,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your project here';
                                     }
                                     return null;
                                   },

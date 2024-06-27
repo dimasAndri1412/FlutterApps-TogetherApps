@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-
-
 import 'package:absent_project/approvalls/cuti/add_cuti_button.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeave.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
@@ -21,7 +19,8 @@ class PengajuanCuti extends StatefulWidget {
 }
 
 class _PengajuanCutiState extends State<PengajuanCuti> {
-  final MemberRequestPaidLeaveController request = MemberRequestPaidLeaveController();
+  final MemberRequestPaidLeaveController request =
+      MemberRequestPaidLeaveController();
 
   List<String> typeLeave = [
     "Maternity leave ",
@@ -42,11 +41,10 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
   String selectedShiftLeave = '';
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     request.getInfo();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -159,6 +157,30 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter your position here';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Container(
+                            decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: Colors.grey, width: 1),
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    labelText: "Project",
+                                    hintText: "Please input your project here",
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    border: InputBorder.none),
+                                // controller: projectLeaveController,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your project here';
                                   }
                                   return null;
                                 },
