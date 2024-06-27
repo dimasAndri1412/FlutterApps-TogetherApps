@@ -33,7 +33,7 @@ class _addLemburButtonState extends State<addLemburButton> {
             ),
           ),
           onPressed: () {
-            if (formKeys_.currentState?.validate() ?? false) {
+            if (formOTKey.currentState?.validate() ?? false) {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -53,7 +53,7 @@ class _addLemburButtonState extends State<addLemburButton> {
               );
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Form is not valid')),
+                const SnackBar(content: Text('Form is not valid')),
               );
             }
           },

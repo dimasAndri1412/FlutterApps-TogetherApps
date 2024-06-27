@@ -5,6 +5,8 @@ import 'package:absent_project/approvalls/lembur/ProjectType.dart' as lembur;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import 'lembur/msdo/ListUserLembur.dart';
+
 class Approvalls extends StatefulWidget {
   const Approvalls({super.key});
 
@@ -68,7 +70,7 @@ class _ApprovallsState extends State<Approvalls> {
                 ),
                 onPressed: () {
                   Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => lembur.ProjectType()));
+                    .push(MaterialPageRoute(builder: (context) => ListUserLembur()));
                 },
               ),
               MaterialButton(

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 //Login Controller
 final formKey = new GlobalKey<FormState>();
+final formOTKey = new GlobalKey<FormState>();
 final TextEditingController passwordController = TextEditingController();
 final TextEditingController emailController = TextEditingController();
 final TextEditingController projectController = TextEditingController();
@@ -28,6 +29,19 @@ final TextEditingController onDutyPaidLeave = TextEditingController();
 final TextEditingController statusPaidLeave = TextEditingController();
 final TextEditingController leave_used = TextEditingController();
 final TextEditingController remaining_leave = TextEditingController();
+
+
+//overtime controller
+final TextEditingController nameOTController = TextEditingController();
+final TextEditingController projectOTController = TextEditingController();
+final TextEditingController positionOTController = TextEditingController();
+final TextEditingController departmentOTController = TextEditingController();
+final TextEditingController shiftOTController = TextEditingController();
+final TextEditingController dateOTController = TextEditingController();
+final TextEditingController timeStartOTController = TextEditingController();
+final TextEditingController timeEndOTController = TextEditingController();
+final TextEditingController activityOTController = TextEditingController();
+
 
 //Controller
 final UserNameController = TextEditingController();

@@ -5,21 +5,22 @@ import 'package:absent_project/approvalls/lembur/add_lembur_button.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestOvertime/MemberRequestOvertimeController.dart';
 import 'package:absent_project/controller/Keys.dart';
 
-class PengajuanLembur extends StatefulWidget {
-  const PengajuanLembur({super.key});
+class PengajuanLemburShifting extends StatefulWidget {
+  const PengajuanLemburShifting({super.key});
 
   @override
-  State<PengajuanLembur> createState() => _PengajuanLemburState();
+  State<PengajuanLemburShifting> createState() => _PengajuanLemburState();
 }
 
-class _PengajuanLemburState extends State<PengajuanLembur> {
+class _PengajuanLemburState extends State<PengajuanLemburShifting> {
   MemberRequestOvertimeController request = MemberRequestOvertimeController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>(); // Unique GlobalKey for Form
 
   TimeOfDay selectedTime = TimeOfDay.now();
 
   @override
-  void initState(){
+  void initState() {
+    // TODO: implement initState
     super.initState();
     request.getInfo();
   }
@@ -38,7 +39,7 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
           ),
         ),
         elevation: 0,
-        title: Text(
+        title: const Text(
           "Overtime Application Form",
           style: TextStyle(
               fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
@@ -57,20 +58,20 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
-                      BoxShadow(
+                      const BoxShadow(
                           color: Color.fromARGB(255, 147, 195, 234),
                           blurRadius: 15,
                           offset: Offset(5, 5))
                     ],
                   ),
                   child: Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         left: 15, right: 15, top: 30, bottom: 30),
                     child: Form(
                       key: formKey, // Assign the GlobalKey to the Form
                       child: Column(
                         children: [
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(Icons.arrow_drop_down),
@@ -85,17 +86,17 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                               Icon(Icons.arrow_drop_down),
                             ],
                           ),
-                          SizedBox(height: 50),
+                          const SizedBox(height: 50),
                           Container(
                             decoration: BoxDecoration(
                                 border:
                                 Border.all(color: Colors.grey, width: 1),
                                 borderRadius: BorderRadius.circular(12)),
                             child: Padding(
-                              padding: EdgeInsets.only(left: 10),
+                              padding: const EdgeInsets.only(left: 10),
                               child: TextFormField(
                                 readOnly: true,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     labelText: "Name",
                                     hintText: "Please input you name here",
                                     hintStyle: TextStyle(color: Colors.grey),
@@ -110,16 +111,16 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Container(
                             decoration: BoxDecoration(
                                 border:
                                 Border.all(color: Colors.grey, width: 1),
                                 borderRadius: BorderRadius.circular(12)),
                             child: Padding(
-                              padding: EdgeInsets.only(left: 10),
+                              padding: const EdgeInsets.only(left: 10),
                               child: TextFormField(
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     labelText: "Position",
                                     hintText:
                                     "Please input your position here",
@@ -135,22 +136,23 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Container(
                             decoration: BoxDecoration(
                                 border:
                                 Border.all(color: Colors.grey, width: 1),
                                 borderRadius: BorderRadius.circular(12)),
                             child: Padding(
-                              padding: EdgeInsets.only(left: 10),
+                              padding: const EdgeInsets.only(left: 10),
                               child: TextFormField(
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     labelText: "Project",
                                     hintText:
                                     "Please input your project here",
                                     hintStyle: TextStyle(color: Colors.grey),
                                     border: InputBorder.none),
                                 controller: projectOTController,
+                                readOnly: true,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter your project here';
@@ -160,16 +162,16 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Container(
                             decoration: BoxDecoration(
                                 border:
                                 Border.all(color: Colors.grey, width: 1),
                                 borderRadius: BorderRadius.circular(12)),
                             child: Padding(
-                              padding: EdgeInsets.only(left: 10),
+                              padding: const EdgeInsets.only(left: 10),
                               child: TextFormField(
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     labelText: "Department",
                                     hintText:
                                     "Please input your department here",
@@ -185,26 +187,63 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 20),
-                          SizedBox(height: 30),
+                          const SizedBox(height: 20),
+                          Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Colors.grey, width: 1),
+                                  borderRadius: BorderRadius.circular(12)),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: DropdownSearch<String>(
+                                  popupProps: PopupProps.dialog(
+                                    showSelectedItems: true,
+                                    // disabledItemFn: (String s) => s.startsWith('I'),
+                                  ),
+                                  items: [
+                                    "Shift I",
+                                    "Shift II",
+                                    "Shift III",
+                                  ],
+                                  dropdownDecoratorProps:
+                                  DropDownDecoratorProps(
+                                    dropdownSearchDecoration: InputDecoration(
+                                        labelText: "Your Shift",
+                                        hintText: "Choose your shift !",
+                                        border: InputBorder.none),
+                                  ),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      shiftOTController.text = value as String;
+                                    });
+                                  },
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your shift here';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              )),
+                          const SizedBox(height: 30),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                child: Text(
+                                child: const Text(
                                   "Start Date",
                                   style:
                                   TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ),
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                               Container(
                                 decoration: BoxDecoration(
                                     border: Border.all(
                                         color: Colors.grey, width: 1),
                                     borderRadius: BorderRadius.circular(12)),
                                 child: TextFormField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                       labelText: "Date Overtime",
                                       hintText:
                                       "Please enter the date overtime",
@@ -238,7 +277,7 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Row(
                             children: [
                               Expanded(
@@ -247,14 +286,14 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                                   CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                      margin: EdgeInsets.only(left: 0),
-                                      child: Text(
+                                      margin: const EdgeInsets.only(left: 0),
+                                      child: const Text(
                                         "Start Time",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),
-                                    SizedBox(height: 10),
+                                    const SizedBox(height: 10),
                                     Container(
                                       decoration: BoxDecoration(
                                           border: Border.all(
@@ -264,7 +303,7 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                                       child: TextFormField(
                                         controller: timeStartOTController,
                                         readOnly: true,
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                             hintStyle:
                                             TextStyle(color: Colors.grey),
                                             border: InputBorder.none,
@@ -300,21 +339,21 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                                   ],
                                 ),
                               ),
-                              SizedBox(width: 10),
+                              const SizedBox(width: 10),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment:
                                   CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                      margin: EdgeInsets.only(left: 0),
-                                      child: Text(
+                                      margin: const EdgeInsets.only(left: 0),
+                                      child: const Text(
                                         "End Time",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),
-                                    SizedBox(height: 10),
+                                    const SizedBox(height: 10),
                                     Container(
                                       decoration: BoxDecoration(
                                           border: Border.all(
@@ -324,7 +363,7 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                                       child: TextFormField(
                                         controller: timeEndOTController,
                                         readOnly: true,
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                             hintStyle:
                                             TextStyle(color: Colors.grey),
                                             border: InputBorder.none,
@@ -362,16 +401,16 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 30),
+                          const SizedBox(height: 30),
                           Container(
                             decoration: BoxDecoration(
                                 border:
                                 Border.all(color: Colors.grey, width: 1),
                                 borderRadius: BorderRadius.circular(12)),
                             child: Padding(
-                              padding: EdgeInsets.only(left: 10),
+                              padding: const EdgeInsets.only(left: 10),
                               child: TextFormField(
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     labelText: "Activity",
                                     hintText:
                                     "Please input your activity here",
@@ -387,9 +426,9 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 20),
-                          SizedBox(height: 30),
-                          addLemburButton(),
+                          const SizedBox(height: 20),
+                          const SizedBox(height: 30),
+                          const addLemburButton(),
                         ],
                       ),
                     ),
@@ -403,9 +442,3 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
     );
   }
 }
-/*
-void main() {
-  runApp(MaterialApp(
-    home: PengajuanLembur(),
-  ));
-}*/
