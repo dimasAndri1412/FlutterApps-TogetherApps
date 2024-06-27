@@ -23,7 +23,7 @@ class MemberRequestPaidLeaveController {
   save() async {
     final response = await http.post(
       Uri.parse(
-          "http://192.168.2.159/FlutterAPI/approvals/member/paid_leave/setUserApproval.php"),
+          "http://10.233.77.55/FlutterAPI/approvals/member/paid_leave/setUserApproval.php"),
       body: {
         "name": namePaidLeave.text,
         "position": positionPaidLeave.text,
@@ -61,17 +61,19 @@ class MemberRequestPaidLeaveController {
 
   Future getInfo() async {
     var data = await http.post(
-        Uri.parse("http://192.168.2.159/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
+        Uri.parse("http://10.233.77.55/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
         body: {
     "username": emailController.text,
     });
     var jsonData = json.decode(data.body);
     memberInfo.full_name = jsonData[0]['full_name'];
     memberInfo.project = jsonData[0]['grup'];
+    memberInfo.shiftingStatus = jsonData[0]['shiftingStatus'];
 
     namePaidLeave.text = memberInfo.full_name;
+    projectController.text = memberInfo.project;
 
-    if(memberInfo.project == "Development Project"){
+    if(memberInfo.shiftingStatus == "no"){
       Get.to(() => const PengajuanCuti_Development());
     }else{
       Get.to(() => const PengajuanCuti());
@@ -81,14 +83,14 @@ class MemberRequestPaidLeaveController {
 
   Future<List<MemberListPaidLeave>?> getList() async {
     var getFullName = await http.post(
-      Uri.parse("http://192.168.2.159/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
+      Uri.parse("http://10.233.77.55/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
       body: {"username": emailController.text}
     );
     var jsonGetFullName = json.decode(getFullName.body);
     namePaidLeave.text = jsonGetFullName[0]['full_name'];
     //
     var data = await http.post(
-        Uri.parse("http://192.168.2.159/FlutterAPI/approvals/member/paid_leave/getListUser.php"),
+        Uri.parse("http://10.233.77.55/FlutterAPI/approvals/member/paid_leave/getListUser.php"),
         body: {
           "name": namePaidLeave.text,
         });
@@ -112,7 +114,7 @@ class MemberRequestPaidLeaveController {
   Future getLeave() async {
     var data = await http.post(
         Uri.parse(
-            "http://192.168.2.159/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
+            "http://10.233.77.55/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
         body: {
           "username": emailController.text,
         });
@@ -125,7 +127,7 @@ class MemberRequestPaidLeaveController {
     remaining_leave.text = remainingLeave.toString();
 
     var getData = await http.post(
-        Uri.parse("http://192.168.2.159/FlutterAPI/approvals/member/paid_leave/getCountLeave.php"),
+        Uri.parse("http://10.233.77.55/FlutterAPI/approvals/member/paid_leave/getCountLeave.php"),
         body: {
           "name": namePaidLeave.text,
         });

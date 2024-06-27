@@ -18,7 +18,7 @@ import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminAppro
 
 
 class DetailCutiUser extends StatelessWidget {
-  final AdminApprovalPaidLeave_MSDO getUserDetail;
+  final AdminApprovalPaidLeave getUserDetail;
   DetailCutiUser({super.key,
   required this.getUserDetail});
 

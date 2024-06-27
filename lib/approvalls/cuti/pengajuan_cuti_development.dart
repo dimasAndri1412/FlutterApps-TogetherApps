@@ -166,6 +166,34 @@ class _PengajuanCutiState extends State<PengajuanCuti_Development> {
                               ),
                             ),
                           ),
+
+                          SizedBox(height: 20),
+                          Container(
+                            decoration: BoxDecoration(
+                                border:
+                                Border.all(color: Colors.grey, width: 1),
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: TextFormField(
+                                readOnly: true,
+                                controller: projectController,
+                                decoration: InputDecoration(
+                                    labelText: "Project",
+                                    hintText: "Please input your project here",
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    border: InputBorder.none),
+                                // controller: projectLeaveController,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your project here';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                          ),
+
                           SizedBox(
                             height: 20,
                           ),

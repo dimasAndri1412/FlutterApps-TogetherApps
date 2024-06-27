@@ -91,7 +91,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
           ),
           ),
           FutureBuilder(
-              future: AdminApprovalPaidLeaveController().getUsersMSDO(),
+              future: AdminApprovalPaidLeaveController().getUsers(),
               builder: (context, snapshot) {
                 if (snapshot.data == null) {
                   return const Center(child:Text("There is no request need to approve"));
@@ -110,7 +110,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
                               child: Container(
                                 margin: const EdgeInsets.all(10),
                                 width: 350,
-                                height: 150,
+                                height: 160,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(0),
@@ -120,7 +120,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
                                 child: Column(
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(
+                                      padding:  EdgeInsets.only(
                                           left: 20, top: 15, right: 20),
                                       child: Row(
                                         children: [
@@ -194,6 +194,32 @@ class _ListUserCutiState extends State<ListUserCuti> {
                                               ),
                                               Text(
                                                 getData.username,
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.blue),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.people_alt_outlined,
+                                                size: 18,
+                                                color: Colors.grey,
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                "Project",
+                                                style: TextStyle(
+                                                    fontSize: 12, height: 2),
+                                              ),
+                                              SizedBox(
+                                                width: 3,
+                                              ),
+                                              Text(
+                                                getData.project,
                                                 style: TextStyle(
                                                     fontSize: 12,
                                                     color: Colors.blue),

@@ -9,7 +9,7 @@ import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminAppro
 import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeave_MSDO.dart';
 
 class ConfirmationDialog extends StatefulWidget {
-  final AdminApprovalPaidLeave_MSDO getUserDetail;
+  final AdminApprovalPaidLeave getUserDetail;
   const ConfirmationDialog({super.key, required this.getUserDetail});
 
   @override

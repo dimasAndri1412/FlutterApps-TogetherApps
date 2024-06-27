@@ -1,6 +1,7 @@
-class AdminApprovalPaidLeave_MSDO {
+class AdminApprovalPaidLeave {
   final String username;
   final String position;
+  final String project;
   final String reqNo;
   final String status;
   final String date;
@@ -17,7 +18,7 @@ class AdminApprovalPaidLeave_MSDO {
   final String remaining_leave;
 
 
-  AdminApprovalPaidLeave_MSDO(this.username, this.position,
+  AdminApprovalPaidLeave(this.username, this.position, this.project,
       this.reqNo, this.status, this.date, this.phoneNumber, this.departement, this.types_leave
       ,this.reason_leave, this.date_end_leave, this.name_of_pic, this.date_back_to_work, this.submittedDate,
       this.shift, this.leave_used, this.remaining_leave);

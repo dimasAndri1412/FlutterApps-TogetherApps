@@ -1,5 +1,6 @@
 // import 'package:absent_project/approvalls/ProjectType.dart';
 import 'package:absent_project/approvalls/cuti/ProjectType.dart' as cuti;
+import 'package:absent_project/approvalls/cuti/msdo/ListUserCuti.dart';
 import 'package:absent_project/approvalls/lembur/ProjectType.dart' as lembur;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -104,7 +105,7 @@ class _ApprovallsState extends State<Approvalls> {
                 onPressed: () {
                   Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => cuti.ProjectType(), // Instantiate the class with prefix
+                    builder: (context) => ListUserCuti(), // Instantiate the class with prefix
                   ),
                 );
                 },

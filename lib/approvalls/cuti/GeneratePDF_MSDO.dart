@@ -8,7 +8,7 @@ import '../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApproval
 import '../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeave_MSDO.dart';
 
 class PDFGenerator_MSDO extends StatelessWidget {
-  final AdminApprovalPaidLeave_MSDO getUserDetail;
+  final AdminApprovalPaidLeave getUserDetail;
   PDFGenerator_MSDO({super.key, required this.getUserDetail});
 
 

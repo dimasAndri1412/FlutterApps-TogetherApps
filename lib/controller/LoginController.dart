@@ -17,7 +17,7 @@ class LoginController {
 
     try {
       if (formKey.currentState!.validate()) {
-        var url = Uri.parse("http://192.168.2.159/FlutterAPI/AdminLogin.php");
+        var url = Uri.parse("http://10.233.77.55/FlutterAPI/AdminLogin.php");
         var response = await http.post(url,
             body: {"username": usernameInput, "password": passwordInput});
         dataUser = jsonDecode(response.body);

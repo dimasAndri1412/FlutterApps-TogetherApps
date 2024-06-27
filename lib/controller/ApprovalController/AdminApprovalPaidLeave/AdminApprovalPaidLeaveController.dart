@@ -52,32 +52,20 @@ class AdminApprovalPaidLeaveController {
     }
 
 
-  Future<List<AdminApprovalPaidLeave_MSDO>?> getUsersMSDO() async {
+  Future<List<AdminApprovalPaidLeave>?> getUsers() async {
     try{
-/*
-      var dataGetFullName = await http.post(
-          Uri.parse(
-              "http://192.168.2.159/FlutterAPI/approvals/member/paid_leave/getOnlyFullName.php"),
-          body: {
-            "fullname": namePaidLeave.text,
-          });
-      var jsonData = json.decode(dataGetFullName.body);
-      leaveUsed = int.parse(jsonData[0]['leave_used']);
-      remainingLeave = int.parse(jsonData[0]['remaining_leave']);
-*/
-
 
       var url = Uri.parse(
-          "http://192.168.2.159/FlutterAPI/approvals/admin/paid_leave/getUserMSDO_paidLeave.php");
+          "http://10.233.77.55/FlutterAPI/approvals/admin/paid_leave/getUsers.php");
       var data = await http.post(url, body: {
         "name": namePaidLeave.text
       });
       if (data.statusCode == 200) {
         var jsonData = json.decode(data.body);
-        List<AdminApprovalPaidLeave_MSDO> users = [];
+        List<AdminApprovalPaidLeave> users = [];
         for (var u in jsonData) {
-          AdminApprovalPaidLeave_MSDO user = AdminApprovalPaidLeave_MSDO(
-              u["name"], u["position"], u["reqNo"], u["status"],
+          AdminApprovalPaidLeave user = AdminApprovalPaidLeave(
+              u["name"], u["position"],u["project"], u["reqNo"], u["status"],
               u["date_start_leave"], u["phone_number"],
               u["departement"], u["types_leave"], u["reason_leave"],
               u["date_end_leave"], u["name_of_pic"], u["date_back_to_work"], u["submittedDate"],u["shift"],

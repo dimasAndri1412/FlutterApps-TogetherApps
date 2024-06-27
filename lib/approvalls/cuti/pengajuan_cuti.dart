@@ -172,6 +172,8 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: TextFormField(
+                                readOnly: true,
+                                controller: projectController,
                                 decoration: InputDecoration(
                                     labelText: "Project",
                                     hintText: "Please input your project here",
