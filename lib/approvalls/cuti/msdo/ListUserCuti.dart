@@ -28,7 +28,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
     }
   }
 
-  final List<String> statuses = ['New', 'Approved', 'Rejected'];
+  final List<String> statuses = ['New', 'Approved', 'Rejected', 'MSDO', 'Dev'];
   String? selectedStatus;
 
   @override
@@ -73,9 +73,9 @@ class _ListUserCutiState extends State<ListUserCuti> {
                 return FilterChip(
                   label: Text(
                     status,
-                    style: TextStyle(
-                      color: selectedStatus != null ? Colors.white : Colors.black,
-                    ),
+                    // style: TextStyle(
+                    //   color: selectedStatus != null ? Colors.white : Colors.black,
+                    // ),
                   ),
                   selected: selectedStatus == status,
                   onSelected: (bool selected) {
@@ -83,8 +83,8 @@ class _ListUserCutiState extends State<ListUserCuti> {
                       selectedStatus = selected ? status : null;
                     });
                   },
-                  selectedColor: Color.fromARGB(255, 225, 161, 101), 
-                  checkmarkColor: Colors.white,
+                  // selectedColor: Color.fromARGB(255, 225, 161, 101), 
+                  // checkmarkColor: Colors.white,
                 );
               }).toList(),
             ),

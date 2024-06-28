@@ -118,14 +118,14 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
             Container(
               margin: EdgeInsets.only(top: 5, left: 10, right: 10),
               width: 350,
-              height: 380,
+              // height: 380,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(0),
                 border: Border.all(width: 0.5, color: Colors.grey),
               ),
               child: Padding(
-                padding: EdgeInsets.only(top: 15, left: 20, right: 20),
+                padding: EdgeInsets.only(top: 15, left: 20, right: 20, bottom: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -144,46 +144,94 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
                       endIndent: 2,
                     ),
                     SizedBox(height: 10,),
-                    Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Submitted by",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13
-                              ),
+                    IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Submitted by",
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  "getUserDetail.username",
+                                  style: TextStyle(fontSize: 13),
+                                ),
+                              ],
                             ),
-                            SizedBox(height: 5,),
-                            Text("Kim Sunoo",
-                              style: TextStyle(
-                                fontSize: 13
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(width: 100,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Phone Number",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13
-                              ),
+                          ),
+                          SizedBox(width: 20),  // Adjust this width as needed
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Phone Number",
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  "getUserDetail.phoneNumber",
+                                  style: TextStyle(fontSize: 13),
+                                ),
+                              ],
                             ),
-                            SizedBox(height: 5,),
-                            Text("0987612",
-                              style: TextStyle(
-                                fontSize: 13
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(height: 5),
+                    Divider(
+                      color: Colors.grey,
+                      thickness: 0.5,
+                      indent: 2,
+                      endIndent: 2,
+                    ),
+                    SizedBox(height: 5),
+                    IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Position",
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  "getUserDetail.positionndjsendk",
+                                  style: TextStyle(fontSize: 13),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 20),  // Adjust this width as needed
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Department",
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  "getUserDetail.departement",
+                                  style: TextStyle(fontSize: 13),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Divider(
                       color: Colors.grey,
                       thickness: 0.5,
@@ -191,90 +239,50 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
                       endIndent: 2,
                     ),
                     SizedBox(height: 5,),
-                    Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Position",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13
-                              ),
+                    IntrinsicHeight(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Overtime Date",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13
+                                  ),
+                                ),
+                                SizedBox(height: 5,),
+                                Text("05 Jun 2024",
+                                  style: TextStyle(
+                                    fontSize: 13
+                                  ),
+                                )
+                              ],
                             ),
-                            SizedBox(height: 5,),
-                            Text("IT Data Operator",
-                              style: TextStyle(
-                                fontSize: 13
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(width: 80,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Department",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13
-                              ),
+                          ),
+                          SizedBox(width: 20,),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Shift",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13
+                                  ),
+                                ),
+                                SizedBox(height: 5,),
+                                Text("1",
+                                  style: TextStyle(
+                                    fontSize: 13
+                                  ),
+                                )
+                              ],
                             ),
-                            SizedBox(height: 5,),
-                            Text("Gedung Bri",
-                              style: TextStyle(
-                                fontSize: 13
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      color: Colors.grey,
-                      thickness: 0.5,
-                      indent: 2,
-                      endIndent: 2,
-                    ),
-                    SizedBox(height: 5,),
-                    Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Overtime Date",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13
-                              ),
-                            ),
-                            SizedBox(height: 5,),
-                            Text("05 Jun 2024",
-                              style: TextStyle(
-                                fontSize: 13
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(width: 90,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Shift",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13
-                              ),
-                            ),
-                            SizedBox(height: 5,),
-                            Text("1",
-                              style: TextStyle(
-                                fontSize: 13
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
+                          )
+                        ],
+                      ),
                     ),
                     SizedBox(height: 5,),
                     Divider(

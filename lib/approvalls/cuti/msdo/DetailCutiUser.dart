@@ -153,46 +153,92 @@ class DetailCutiUser extends StatelessWidget {
                       endIndent: 2,
                     ),
                     SizedBox(height: 10,),
-                    Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Submitted by",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13
-                              ),
+                    IntrinsicHeight(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Submitted by",
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  getUserDetail.username,
+                                  style: TextStyle(fontSize: 13),
+                                ),
+                              ],
                             ),
-                            SizedBox(height: 5,),
-                            Text(getUserDetail.username,
-                              style: TextStyle(
-                                fontSize: 13
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(width: 100,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Phone Number",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13
-                              ),
+                          ),
+                          SizedBox(width: 20),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Phone Number",
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  getUserDetail.phoneNumber,
+                                  style: TextStyle(fontSize: 13),
+                                ),
+                              ],
                             ),
-                            SizedBox(height: 5,),
-                            Text(getUserDetail.phoneNumber,
-                              style: TextStyle(
-                                fontSize: 13
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
+                    ),                
+                    SizedBox(height: 5),
+                    Divider(
+                      color: Colors.grey,
+                      thickness: 0.5,
+                      indent: 2,
+                      endIndent: 2,
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(height: 5),
+                    IntrinsicHeight(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Position",
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  getUserDetail.position,
+                                  style: TextStyle(fontSize: 13),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 20),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Department",
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  getUserDetail.departement,
+                                  style: TextStyle(fontSize: 13),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Divider(
                       color: Colors.grey,
                       thickness: 0.5,
@@ -200,90 +246,50 @@ class DetailCutiUser extends StatelessWidget {
                       endIndent: 2,
                     ),
                     SizedBox(height: 5,),
-                    Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Position",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13
-                              ),
+                    IntrinsicHeight(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Leave Type",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13
+                                  ),
+                                ),
+                                SizedBox(height: 5,),
+                                Text(getUserDetail.types_leave,
+                                  style: TextStyle(
+                                    fontSize: 13
+                                  ),
+                                )
+                              ],
                             ),
-                            SizedBox(height: 5,),
-                            Text(getUserDetail.position,
-                              style: TextStyle(
-                                fontSize: 13
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(width: 80,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Department",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13
-                              ),
+                          ),
+                          SizedBox(width: 20,),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Shift",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13
+                                  ),
+                                ),
+                                SizedBox(height: 5,),
+                                Text(getUserDetail.shift,
+                                  style: TextStyle(
+                                    fontSize: 13
+                                  ),
+                                )
+                              ],
                             ),
-                            SizedBox(height: 5,),
-                            Text(getUserDetail.departement,
-                              style: TextStyle(
-                                fontSize: 13
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      color: Colors.grey,
-                      thickness: 0.5,
-                      indent: 2,
-                      endIndent: 2,
-                    ),
-                    SizedBox(height: 5,),
-                    Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Leave Type",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13
-                              ),
-                            ),
-                            SizedBox(height: 5,),
-                            Text(getUserDetail.types_leave,
-                              style: TextStyle(
-                                fontSize: 13
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(width: 100,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Shift",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13
-                              ),
-                            ),
-                            SizedBox(height: 5,),
-                            Text(getUserDetail.shift,
-                              style: TextStyle(
-                                fontSize: 13
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
+                          )
+                        ],
+                      ),
                     ),
                     SizedBox(height: 5,),
                     Divider(
@@ -301,10 +307,12 @@ class DetailCutiUser extends StatelessWidget {
                             fontSize: 13
                           ),
                         ),
-                        Text(getUserDetail.reason_leave,
-                          style: TextStyle(
-                            fontSize: 13
-                          ),
+                        Expanded(
+                          child: Text(getUserDetail.reason_leave,
+                            style: TextStyle(
+                              fontSize: 13
+                            ),
+                          )
                         )
                       ],
                     ),
