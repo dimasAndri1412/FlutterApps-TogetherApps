@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 //Login Controller
 final formKey = new GlobalKey<FormState>();
 final formOTKey = new GlobalKey<FormState>();
+final formOTKeyShifting = new GlobalKey<FormState>();
 final TextEditingController passwordController = TextEditingController();
 final TextEditingController emailController = TextEditingController();
 final TextEditingController projectController = TextEditingController();
@@ -41,6 +42,7 @@ final TextEditingController dateOTController = TextEditingController();
 final TextEditingController timeStartOTController = TextEditingController();
 final TextEditingController timeEndOTController = TextEditingController();
 final TextEditingController activityOTController = TextEditingController();
+final TextEditingController statusOTController = TextEditingController();
 
 
 //Controller

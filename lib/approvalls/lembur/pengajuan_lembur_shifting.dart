@@ -14,7 +14,12 @@ class PengajuanLemburShifting extends StatefulWidget {
 
 class _PengajuanLemburState extends State<PengajuanLemburShifting> {
   MemberRequestOvertimeController request = MemberRequestOvertimeController();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>(); // Unique GlobalKey for Form
+
+  void _clearShift() async {
+    setState(() {
+      shiftOTController.text = "";
+    });
+}
 
   TimeOfDay selectedTime = TimeOfDay.now();
 
@@ -68,7 +73,7 @@ class _PengajuanLemburState extends State<PengajuanLemburShifting> {
                     padding: const EdgeInsets.only(
                         left: 15, right: 15, top: 30, bottom: 30),
                     child: Form(
-                      key: formKey, // Assign the GlobalKey to the Form
+                      key: formOTKeyShifting, // Assign the GlobalKey to the Form
                       child: Column(
                         children: [
                           const Row(
@@ -214,8 +219,10 @@ class _PengajuanLemburState extends State<PengajuanLemburShifting> {
                                   ),
                                   onChanged: (value) {
                                     setState(() {
-                                      shiftOTController.text = value as String;
+                                      var shift = value as String;
+                                      shiftOTController.text = shift;
                                     });
+                                    _clearShift();
                                   },
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
