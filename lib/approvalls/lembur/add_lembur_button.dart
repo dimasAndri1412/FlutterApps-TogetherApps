@@ -1,3 +1,4 @@
+import 'package:absent_project/controller/ApprovalController/MemberRequestOvertime/MemberRequestOvertimeController.dart';
 import 'package:flutter/material.dart';
 import 'package:absent_project/approvalls/lembur/pengajuan_lembur.dart';
 import 'package:absent_project/controller/Keys.dart';
@@ -33,7 +34,7 @@ class _addLemburButtonState extends State<addLemburButton> {
             ),
           ),
           onPressed: () {
-            if (formOTKey.currentState?.validate() ?? false) {
+            if (formOTKey.currentState!.validate() || formOTKeyShifting.currentState!.validate() ?? false) {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -44,7 +45,10 @@ class _addLemburButtonState extends State<addLemburButton> {
                       TextButton(
                         child: Text('OK'),
                         onPressed: () {
+                          MemberRequestOvertimeController().save();
                           Navigator.of(context).pop();
+                          MemberRequestOvertimeController().clearInfo();
+                          //MemberRequestOvertimeController().clearInfo();
                         },
                       ),
                     ],

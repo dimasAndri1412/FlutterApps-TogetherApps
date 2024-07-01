@@ -130,7 +130,8 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
           const SizedBox(
             height: 20,
           ),
-         FutureBuilder(future: MemberRequestPaidLeaveController().getList(),
+         FutureBuilder(
+             future: MemberRequestPaidLeaveController().getList(),
              builder: (context, snapshot){
            if(snapshot.connectionState == ConnectionState.waiting){
              return const CircularProgressIndicator(
