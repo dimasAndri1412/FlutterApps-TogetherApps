@@ -3,6 +3,7 @@ class AdminApprovalOvertimeModel{
   String position;
   String project;
   String department;
+  String location;
   String shift;
   String start_date;
   String start_time;
@@ -17,6 +18,7 @@ class AdminApprovalOvertimeModel{
     required this.position,
     required this.project,
     required this.department,
+    required this.location,
     required this.shift,
     required this.start_date,
     required this.start_time,
@@ -32,6 +34,7 @@ class AdminApprovalOvertimeModel{
       position: json['position'],
       project: json['project'],
       department: json['department'],
+      location: json['location'],
       shift: json['shift'],
       start_date: json['start_date'],
       start_time: json['start_time'],
