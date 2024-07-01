@@ -121,33 +121,6 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                         });
                       },
                   ))
-                  /*FilterChip(
-                    label: Text("New"),
-                    selected: filterStatus == 'New',
-                    onSelected: (bool selected) {
-                      setState(() {
-                        filterStatus = selected ? 'New' : 'All';
-                      });
-                    },
-                  ),
-                  FilterChip(
-                    label: Text("Approved"),
-                    selected: filterStatus == 'Approved',
-                    onSelected: (bool selected) {
-                      setState(() {
-                        filterStatus = selected ? 'Approved' : 'All';
-                      });
-                    },
-                  ),
-                  FilterChip(
-                    label: Text("Rejected"),
-                    selected: filterStatus == 'Rejected',
-                    onSelected: (bool selected) {
-                      setState(() {
-                        filterStatus = selected ? 'Rejected' : 'All';
-                      });
-                    },
-                  ),*/
                 ],
               ),
             ),
