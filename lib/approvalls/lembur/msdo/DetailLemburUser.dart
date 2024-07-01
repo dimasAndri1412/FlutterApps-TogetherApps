@@ -170,12 +170,12 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Phone Number",
+                                  "Location",
                                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  "getUserDetail.phoneNumber",
+                                  "getUserDetail.location",
                                   style: TextStyle(fontSize: 13),
                                 ),
                               ],
