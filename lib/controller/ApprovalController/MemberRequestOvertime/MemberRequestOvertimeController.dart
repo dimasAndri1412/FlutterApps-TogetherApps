@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:absent_project/controller/ApprovalController/MemberRequestOvertime/MemberRequestOvertimeGetStatusModel.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
@@ -90,7 +91,6 @@ class MemberRequestOvertimeController {
     statusOTController.text = jsonData[0]['status'];
 
 
-
     List<MemberRequestOvertimeGetListModel> users = [];
 
     for (var u in jsonData) {
@@ -102,6 +102,21 @@ class MemberRequestOvertimeController {
           full_name: u["full_name"],
           status: u["status"]);
       users.add(user);*/
+    }
+    return users;
+  }
+
+  Future<List<MemberRequestOvertimeGetStatusModel>?> getStatus() async{
+    var data = await http.post(
+        Uri.parse("http://10.233.77.55/FlutterAPI/approvals/member/overtime/getStatus.php")
+    );
+    List<dynamic> jsonData = json.decode(data.body);
+    List<MemberRequestOvertimeGetStatusModel> users = [];
+
+    for (var u in jsonData) {
+      MemberRequestOvertimeGetStatusModel user =
+      MemberRequestOvertimeGetStatusModel.fromJson(u);
+      users.add(user);
     }
     return users;
   }

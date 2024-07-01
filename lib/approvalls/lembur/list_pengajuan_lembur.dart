@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../../controller/ApprovalController/MemberRequestOvertime/MemberRequestOvertimeController.dart';
+import '../../controller/ApprovalController/MemberRequestOvertime/MemberRequestOvertimeGetStatusModel.dart';
 
 class ListPengajuanLembur extends StatefulWidget {
   const ListPengajuanLembur({super.key});
@@ -18,22 +19,15 @@ class ListPengajuanLembur extends StatefulWidget {
 
 class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
 
-/*  final List<MemberRequestOvertimeGetListModel> userlembur = [
-    MemberRequestOvertimeGetListModel.fromJson(
-        *//*activity: activityOTController.text,
-        start_date: dateOTController.text,
-        full_name: nameOTController.text,
-        statlate us: "Approved"*//*)
-  ];*/
 
-  List<MemberRequestOvertimeGetListModel> userlembur = [];
 
   @override
   void initState() {
     super.initState();
     fetchOvertimeRequests();
+    fetchStatusOT();
 }
-
+  List<MemberRequestOvertimeGetListModel> userlembur = [];
   Future<void> fetchOvertimeRequests() async {
     try {
       List<MemberRequestOvertimeGetListModel>? overtimeRequests =
@@ -48,15 +42,33 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
   }
 
 
+  List<MemberRequestOvertimeGetStatusModel> filterStatus = [];
+  Future<void> fetchStatusOT() async {
+    try {
+      List<MemberRequestOvertimeGetStatusModel>? statusList =
+      await MemberRequestOvertimeController().getStatus();
+
+      setState(() {
+        filterStatus = statusList ?? []; // Include 'All' option
+      });
+    } catch (e) {
+      print('Error fetching overtime requests: $e');
+    }
+  }
   //untuk membuat filter All, Approved, Rejected
-  String filterStatus = 'All';
+  //String filterStatus = 'All';
 
   List<MemberRequestOvertimeGetListModel> get filteredLembur {
-    if (filterStatus == "All") {
-      return userlembur;
+    if (filterStatus.isEmpty || filterStatus.every((status) => !status.selected)) {
+      return userlembur; // Return all data when no filters are selected
     }
+
+    List<String> selectedStatus =
+        filterStatus.where((status) => status.selected)
+            .map((status) => status.status)
+            .toList();
     return userlembur
-        .where((lembur) => lembur.status == filterStatus)
+        .where((lembur) => selectedStatus.contains(lembur.status))
         .toList();
   }
 
@@ -85,7 +97,7 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
           //FILTER
           Container(
             // color: Colors.grey,
-            width: 350,
+            width: 370,
             child: Padding(
               padding: const EdgeInsets.only(left: 15, top: 5),
               child: Row(
@@ -93,14 +105,23 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                 children: [
                   FilterChip(
                     label: Text("All"),
-                    selected: filterStatus == 'All',
+                    selected: filterStatus.isEmpty || filterStatus.every((status) => !status.selected),
                     onSelected: (bool selected) {
                       setState(() {
-                        filterStatus = 'All';
+                        filterStatus.forEach((status) => status.selected = true);
                       });
                     },
                   ),
-                  FilterChip(
+                  ...filterStatus.map((status) => FilterChip(
+                      label: Text(status.status),
+                      selected: status.selected,
+                      onSelected: (bool selected){
+                        setState(() {
+                          status.selected = !status.selected;
+                        });
+                      },
+                  ))
+                  /*FilterChip(
                     label: Text("New"),
                     selected: filterStatus == 'New',
                     onSelected: (bool selected) {
@@ -126,7 +147,7 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                         filterStatus = selected ? 'Rejected' : 'All';
                       });
                     },
-                  ),
+                  ),*/
                 ],
               ),
             ),
