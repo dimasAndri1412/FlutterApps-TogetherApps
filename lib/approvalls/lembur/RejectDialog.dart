@@ -1,13 +1,34 @@
+import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertimeModel.dart';
+import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertmaControlleri.dart';
+import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class RejectDialog extends StatefulWidget {
-  const RejectDialog({super.key});
+  AdminApprovalOvertimeModel getData;
+  RejectDialog({super.key,
+  required this.getData});
 
   @override
   State<RejectDialog> createState() => _RejectDialogState();
 }
 
 class _RejectDialogState extends State<RejectDialog> {
+
+  updateRejected() async {
+    final response = await http.post(
+      Uri.parse("http://10.233.77.55/FlutterAPI/approvals/admin/overtime/update_rejected.php"),
+      body: {
+        "reason_rejected": reason_rejectedController.text,
+        "reqNo": widget.getData.reqNo,
+      },
+    );
+    if (response.statusCode == 200){
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -70,6 +91,7 @@ class _RejectDialogState extends State<RejectDialog> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 5, left: 8),
                     child: TextField(
+                      controller: reason_rejectedController,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Enter the reason here',
@@ -83,6 +105,7 @@ class _RejectDialogState extends State<RejectDialog> {
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
+                      updateRejected();
                     }, 
                     child: Text("Reject",
                       style: TextStyle(

@@ -1,12 +1,18 @@
 import 'package:absent_project/approvalls/lembur/ConfirmationDialog.dart';
 import 'package:absent_project/approvalls/lembur/RejectDialog.dart';
+import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertimeModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:http/http.dart';
 // import 'package:printing/printing.dart';
 // import 'package:absent_project/approvalls/lembur/GeneratePDF.dart';
 
 class DetailLemburUser extends StatefulWidget {
-  const DetailLemburUser({super.key});
+  AdminApprovalOvertimeModel getData;
+  DetailLemburUser({super.key,
+  required this.getData});
 
   @override
   State<DetailLemburUser> createState() => _DetailLemburUserState();
@@ -60,7 +66,7 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
                       "Status : ",
                     ),
                     Text(
-                      "NEW",
+                      widget.getData.status,
                       style: TextStyle(
                         color: Colors.blue,
                         fontWeight: FontWeight.bold
@@ -92,7 +98,7 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 14),
                       ),
-                    Text("Req-1023",
+                    Text(widget.getData.reqNo,
                       style: TextStyle(
                         fontSize: 14
                       ),
@@ -106,7 +112,7 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
                       style: TextStyle(
                       fontSize: 12),
                       ),
-                    Text("03 Des 2023",
+                    Text(widget.getData.submittedDate,
                       style: TextStyle(
                         fontSize: 12
                       ),
@@ -158,7 +164,7 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  "getUserDetail.username",
+                                  widget.getData.full_name,
                                   style: TextStyle(fontSize: 13),
                                 ),
                               ],
@@ -206,7 +212,7 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  "getUserDetail.positionndjsendk",
+                                  widget.getData.position,
                                   style: TextStyle(fontSize: 13),
                                 ),
                               ],
@@ -223,7 +229,7 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  "getUserDetail.departement",
+                                  widget.getData.department,
                                   style: TextStyle(fontSize: 13),
                                 ),
                               ],
@@ -253,7 +259,7 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
                                   ),
                                 ),
                                 SizedBox(height: 5,),
-                                Text("05 Jun 2024",
+                                Text(widget.getData.start_date,
                                   style: TextStyle(
                                     fontSize: 13
                                   ),
@@ -273,7 +279,7 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
                                   ),
                                 ),
                                 SizedBox(height: 5,),
-                                Text("1",
+                                Text(widget.getData.shift,
                                   style: TextStyle(
                                     fontSize: 13
                                   ),
@@ -300,7 +306,7 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
                             fontSize: 13
                           ),
                         ),
-                        Text("Gantiin Ameng",
+                        Text(widget.getData.activity,
                           style: TextStyle(
                             fontSize: 13
                           ),
@@ -325,7 +331,7 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
                           ),
                           child: Center(
                             child: Text(
-                              "15:00",
+                              widget.getData.start_time,
                               style: TextStyle(
                                 fontSize: 13
                               ),
@@ -343,7 +349,7 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
                           ),
                           child: Center(
                             child: Text(
-                              "22:00",
+                              widget.getData.end_time,
                               style: TextStyle(
                                 fontSize: 13
                               ),
@@ -364,11 +370,11 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
                   InkWell(
                     onTap: () async {
                       print("Click event on Container");
-                      
+                      //return Get.to(() => RejectDialog(getData: widget.getData));
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return RejectDialog();
+                         return RejectDialog(getData: widget.getData);
                         },
                       );
                     },
@@ -401,7 +407,7 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return ConfirmationDialog();
+                          return ConfirmationDialog(getData: widget.getData,);
                         },
                       );
 

@@ -43,6 +43,7 @@ final TextEditingController timeStartOTController = TextEditingController();
 final TextEditingController timeEndOTController = TextEditingController();
 final TextEditingController activityOTController = TextEditingController();
 final TextEditingController statusOTController = TextEditingController();
+final TextEditingController reason_rejectedController = TextEditingController();
 
 
 //Controller

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:printing/printing.dart';
 import 'package:absent_project/approvalls/lembur/GeneratePDF.dart';
 
+import '../../controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertimeModel.dart';
+
 // void ConfirmationDialog(BuildContext context) {
 //   QuickAlert.show(
 //     context: context,
@@ -14,7 +16,9 @@ import 'package:absent_project/approvalls/lembur/GeneratePDF.dart';
 // }
 
 class ConfirmationDialog extends StatefulWidget {
-  const ConfirmationDialog({super.key});
+  AdminApprovalOvertimeModel getData;
+  ConfirmationDialog({super.key,
+  required this.getData});
 
   @override
   State<ConfirmationDialog> createState() => _ConfirmationDialogState();

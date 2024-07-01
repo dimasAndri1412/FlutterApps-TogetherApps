@@ -1,7 +1,10 @@
 import 'package:absent_project/approvalls/lembur/msdo/DetailLemburUser.dart';
+import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertimeModel.dart';
+import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertmaControlleri.dart';
 // import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 // import 'package:intl/intl.dart';
 
 class ListUserLembur extends StatefulWidget {
@@ -19,7 +22,7 @@ class ListUserLembur extends StatefulWidget {
 // }
 
 class _ListUserLemburState extends State<ListUserLembur> {
-  final List<Map<String, String>> requests = [
+  /*final List<Map<String, String>> requests = [
     {"reqNo": "REQ-1023", "submittedBy": "Rara Zahra Urava", "date": "03 Des 2024 - 12:30", "status": "Approved"},
     {"reqNo": "REQ-1024", "submittedBy": "Kim Sunoo", "date": "04 Des 2024 - 14:00", "status": "Rejected"},
     {"reqNo": "REQ-1025", "submittedBy": "Choi Beomgyu", "date": "05 Des 2024 - 09:15", "status": "New"},
@@ -27,7 +30,27 @@ class _ListUserLemburState extends State<ListUserLembur> {
     {"reqNo": "REQ-1025", "submittedBy": "Kim Yoon Woo", "date": "06 Des 2024 - 13:55", "status": "New"},
     {"reqNo": "REQ-1025", "submittedBy": "Byeon Woo Seok", "date": "06 Des 2024 - 10:15", "status": "New"},
     // Add more request items as needed
-  ];
+  ];*/
+
+  @override
+  void initState() {
+    super.initState();
+    fetchOvertimeRequests();
+    //fetchStatusOT();
+  }
+  List<AdminApprovalOvertimeModel> getListUser = [];
+  Future<void> fetchOvertimeRequests() async {
+    try {
+      List<AdminApprovalOvertimeModel>? overtimeRequests =
+      await AdminApprovalOvertimaController().getList();
+      setState(() {
+        getListUser = overtimeRequests!;
+      });
+    } catch (e) {
+      // Handle errors or exceptions here
+      print('Error fetching overtime requests: $e');
+    }
+  }
 
   Color _getStatusColor(String status) {
     switch (status) {
@@ -44,12 +67,12 @@ class _ListUserLemburState extends State<ListUserLembur> {
 
   String filterStatus = '';
 
-  List<Map<String, String>> get filteredLembur {
+  List<AdminApprovalOvertimeModel> get filteredLembur {
     if (filterStatus == '') {
-      return requests;
+      return getListUser;
     }
-    return requests
-        .where((lembur) => lembur['status'] == filterStatus)
+    return getListUser
+        .where((lembur) => lembur.status == filterStatus)
         .toList();
   }
 
@@ -128,12 +151,11 @@ class _ListUserLemburState extends State<ListUserLembur> {
             itemCount: filteredLembur.length,
             itemBuilder: (context, index) {
               // final request = requests[index];
-              final request = filteredLembur[index];
-              final statusColor = _getStatusColor(request["status"] ?? "Unknown");
+              final getData = filteredLembur[index];
+              final statusColor = _getStatusColor(getData.status ?? "Unknown");
               return GestureDetector(
               onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => DetailLemburUser()));
+               Get.to(() => DetailLemburUser(getData: getData));
               },
                 child : Container(
                   margin: EdgeInsets.all(10),
@@ -154,7 +176,7 @@ class _ListUserLemburState extends State<ListUserLembur> {
                               "No. Req : ",
                               style: TextStyle(color: Colors.grey),
                             ),
-                            Text(request["reqNo"]!),
+                            Text(getData.reqNo),
                             Spacer(),
                             Container(
                               decoration: BoxDecoration(
@@ -165,7 +187,7 @@ class _ListUserLemburState extends State<ListUserLembur> {
                               width: 80,
                               child: Center(
                                 child: Text(
-                                  request["status"] ?? "New",
+                                  getData.status ?? "New",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -214,7 +236,7 @@ class _ListUserLemburState extends State<ListUserLembur> {
                                   width: 3,
                                 ),
                                 Text(
-                                  request["submittedBy"]!,
+                                  getData.full_name,
                                   style: TextStyle(
                                       fontSize: 12, color: Colors.blue),
                                 ),
@@ -231,7 +253,7 @@ class _ListUserLemburState extends State<ListUserLembur> {
                                   width: 5,
                                 ),
                                 Text(
-                                  request["date"]!,
+                                  getData.submittedDate,
                                   style: TextStyle(fontSize: 12),
                                 ),
                               ],
