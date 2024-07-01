@@ -1,3 +1,5 @@
+// import 'dart:ffi';
+
 import 'package:absent_project/approvalls/cuti/msdo/DetailCutiUser.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,21 +29,26 @@ class _ListUserCutiState extends State<ListUserCuti> {
         return Colors.blue; // Default color if status is unknown
     }
   }
-
-  final List<String> statuses = ['New', 'Approved', 'Rejected', 'MSDO', 'Dev'];
-  String? selectedStatus;
+  final List<String> project = ['Project','MSDO', 'Development'];
+  final List<String> status = ['Status','New', 'Approved', 'Rejected'];
+  // String? selectedStatus;
+  String selectedProject = 'Project';
+  String selectedStatus = 'Status';
+  
 
   @override
   Widget build(BuildContext context) {
     // List<Map<String, String>> filteredRequests = selectedStatus == null
     //     ? requests
     //     : requests.where((request) => request['status'] == selectedStatus).toList();
+  // String dropdownProject = project.first;
+  // String dropdownStatus = status.first;
 
     return Scaffold(
       appBar: AppBar(
         title:Center(
           child: Text(
-            "Paid Leave Approval for MSDO Project",
+            "Paid Leave Approval",
             style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
@@ -62,45 +69,98 @@ class _ListUserCutiState extends State<ListUserCuti> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SingleChildScrollView(
-            child:
           Container(
             margin: EdgeInsets.all(10),
-            child: Wrap(
-              spacing: 8.0,
-              children: statuses.map((status) {
-                selectedStatus == status;
-                return FilterChip(
-                  label: Text(
-                    status,
-                    // style: TextStyle(
-                    //   color: selectedStatus != null ? Colors.white : Colors.black,
-                    // ),
-                  ),
-                  selected: selectedStatus == status,
-                  onSelected: (bool selected) {
-                    setState(() {
-                      selectedStatus = selected ? status : null;
-                    });
-                  },
-                  // selectedColor: Color.fromARGB(255, 225, 161, 101), 
-                  // checkmarkColor: Colors.white,
-                );
-              }).toList(),
+            child: Text("Filter by :",
+              style: TextStyle(
+                fontSize: 16, 
+                fontWeight: FontWeight.bold
+              ),
             ),
           ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Row(
+              children: [
+                DropdownButton<String>(
+                  value: selectedProject,
+                  onChanged: (String? value) {
+                    setState(() {
+                      selectedProject = value!;
+                    });
+                  },
+                  items: project.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+                SizedBox(width: 10,),
+                DropdownButton<String>(
+                  value: selectedStatus,
+                  onChanged: (String? value) {
+                    setState(() {
+                      selectedStatus = value!;
+                    });
+                  },
+                  items: status.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                )
+              ] 
+            ),
           ),
+          // SingleChildScrollView(
+          //   child:
+          // Container(
+          //   margin: EdgeInsets.all(10),
+          //   child: Wrap(
+          //     spacing: 8.0,
+          //     children: statuses.map((status) {
+          //       selectedStatus == status;
+          //       return FilterChip(
+          //         label: Text(
+          //           status,
+          //           // style: TextStyle(
+          //           //   color: selectedStatus != null ? Colors.white : Colors.black,
+          //           // ),
+          //         ),
+          //         selected: selectedStatus == status,
+          //         onSelected: (bool selected) {
+          //           setState(() {
+          //             selectedStatus = selected ? status : null;
+          //           });
+          //         },
+          //         // selectedColor: Color.fromARGB(255, 225, 161, 101), 
+          //         // checkmarkColor: Colors.white,
+          //       );
+          //     }).toList(),
+          //   ),
+          // ),
+          // ),
           FutureBuilder(
               future: AdminApprovalPaidLeaveController().getUsers(),
               builder: (context, snapshot) {
                 if (snapshot.data == null) {
                   return const Center(child:Text("There is no request need to approve"));
                 } else {
+                  var filteredData = snapshot.data!.where((data) {
+                    bool matchesProject = selectedProject == 'Project' || data.project == selectedProject;
+                    bool matchesStatus = selectedStatus == 'Status' || data.status == selectedStatus;
+                    return matchesProject && matchesStatus; 
+                  }).toList();
+
                   return Expanded(
                       child: ListView.builder(
-                        itemCount: snapshot.data?.length,
+                        // itemCount: snapshot.data?.length,
+                        itemCount: filteredData.length,
                         itemBuilder: (context, index) {
-                          final getData = snapshot.data![index];
+                          // final getData = snapshot.data![index];
+                          final getData = filteredData[index];
                           final statusColor = _getStatusColor(
                               getData.status ?? "Unknown");
                           return GestureDetector(
@@ -252,8 +312,8 @@ class _ListUserCutiState extends State<ListUserCuti> {
                         },
                       ),
                     );
-              }
-              }
+                  }
+                }
               ),
         ],
       )
