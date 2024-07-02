@@ -12,6 +12,7 @@ class AdminApprovalOvertimeModel{
   String status;
   String reqNo;
   String submittedDate;
+  bool selected;
 
   AdminApprovalOvertimeModel({
     required this.full_name,
@@ -27,6 +28,7 @@ class AdminApprovalOvertimeModel{
     required this.status,
     required this.reqNo,
     required this.submittedDate,
+    this.selected = false,
   });
   factory AdminApprovalOvertimeModel.fromJson(Map<String, dynamic> json) {
     return AdminApprovalOvertimeModel(

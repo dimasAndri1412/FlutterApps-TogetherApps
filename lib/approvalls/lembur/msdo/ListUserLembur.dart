@@ -1,10 +1,14 @@
 import 'package:absent_project/approvalls/lembur/msdo/DetailLemburUser.dart';
+import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertimeGetStatusModel.dart';
 import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertimeModel.dart';
 import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertmaControlleri.dart';
 // import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import '../../../controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertimeGetProjectModel.dart';
 // import 'package:intl/intl.dart';
 
 class ListUserLembur extends StatefulWidget {
@@ -22,23 +26,21 @@ class ListUserLembur extends StatefulWidget {
 // }
 
 class _ListUserLemburState extends State<ListUserLembur> {
-  final List<Map<String, String>> requests = [
-    {"reqNo": "REQ-1023", "submittedBy": "Rara Zahra Urava", "date": "03 Des 2024 - 12:30", "status": "Approved", "project" : "MSDO"},
-    {"reqNo": "REQ-1024", "submittedBy": "Kim Sunoo", "date": "04 Des 2024 - 14:00", "status": "Rejected","project" : "Development"},
-    {"reqNo": "REQ-1025", "submittedBy": "Choi Beomgyu", "date": "05 Des 2024 - 09:15", "status": "New", "project" : "MSDO"},
-    {"reqNo": "REQ-1025", "submittedBy": "Jeon Jungkook", "date": "06 Des 2024 - 12:15", "status": "New","project" : "Development"},
-    {"reqNo": "REQ-1025", "submittedBy": "Kim Yoon Woo", "date": "06 Des 2024 - 13:55", "status": "New", "project" : "MSDO"},
-    {"reqNo": "REQ-1025", "submittedBy": "Byeon Woo Seok", "date": "06 Des 2024 - 10:15", "status": "New", "project" : "Development"},
-    // Add more request items as needed
-  ];
+  List<AdminApprovalOvertimeModel> getListUser = [];
+  List<AdminApprovalOvertimeGetStatusModel> getStatus = [];
+  List<AdminApprovalOvertimeGetProjectModel> getProject = [];
+
+  String selectedProject = 'Project';
+  String selectedStatus = 'Status';
 
   @override
   void initState() {
     super.initState();
     fetchOvertimeRequests();
-    //fetchStatusOT();
+    fetchStatusOT();
+    fetchProjectOT();
   }
-  List<AdminApprovalOvertimeModel> getListUser = [];
+
   Future<void> fetchOvertimeRequests() async {
     try {
       List<AdminApprovalOvertimeModel>? overtimeRequests =
@@ -48,6 +50,33 @@ class _ListUserLemburState extends State<ListUserLembur> {
       });
     } catch (e) {
       // Handle errors or exceptions here
+      print('Error fetching overtime requests: $e');
+    }
+  }
+
+
+  Future<void> fetchStatusOT() async {
+    try {
+      List<AdminApprovalOvertimeGetStatusModel>? statusList =
+      await AdminApprovalOvertimaController().getStatus();
+
+      setState(() {
+        getStatus = statusList!;
+      });
+    } catch (e) {
+      print('Error fetching overtime requests: $e');
+    }
+  }
+
+  Future<void> fetchProjectOT() async {
+    try {
+      List<AdminApprovalOvertimeGetProjectModel>? projectList =
+      await AdminApprovalOvertimaController().getProject();
+
+      setState(() {
+        getProject = projectList!;
+      });
+    } catch (e) {
       print('Error fetching overtime requests: $e');
     }
   }
@@ -65,24 +94,25 @@ class _ListUserLemburState extends State<ListUserLembur> {
     }
   }
 
-  String filterStatus = '';
 
   List<AdminApprovalOvertimeModel> get filteredLembur {
     return getListUser.where((lembur) {
-      final matchesStatus = selectedStatus == 'Status' || lembur.status == selectedStatus;
-      final matchesProject = selectedProject == 'Project' || lembur.project == selectedProject;
+      final matchesStatus =
+          selectedStatus == 'Status' || lembur.status == selectedStatus;
+      final matchesProject =
+          selectedProject == 'Project' || lembur.project == selectedProject;
       return matchesStatus && matchesProject;
     }).toList();
   }
 
-  final List<String> statuses = ['New', 'Approved', 'Rejected'];
+/*  final List<String> statuses = ['New', 'Approved', 'Rejected'];*/
   // String? selectedStatus;
   @override
 
-  final List<String> project = ['Project', 'MSDO Project', 'Development Project'];
+/*  final List<String> project = ['Project', 'MSDO Project', 'Development Project'];
   final List<String> status = ['Status', 'New', 'Approved', 'Rejected'];
   String selectedProject = 'Project';
-  String selectedStatus = 'Status';
+  String selectedStatus = 'Status';*/
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,50 +140,11 @@ class _ListUserLemburState extends State<ListUserLembur> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          // Container(
-          //   // color: Colors.grey,
-          //   width: 290,
-          //   child: Padding(
-          //     padding: const EdgeInsets.only(left: 15, top: 5),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //       children: [
-          //         FilterChip(
-          //           label: Text("New"),
-          //           selected: filterStatus == 'New',
-          //           onSelected: (bool selected) {
-          //             setState(() {
-          //               filterStatus = selected ? 'New' : '';
-          //             });
-          //           },
-          //         ),
-          //         FilterChip(
-          //           label: Text("Approved"),
-          //           selected: filterStatus == 'Approved',
-          //           onSelected: (bool selected) {
-          //             setState(() {
-          //               filterStatus = selected ? 'Approved' : '';
-          //             });
-          //           },
-          //         ),
-          //         FilterChip(
-          //           label: Text("Rejected"),
-          //           selected: filterStatus == 'Rejected',
-          //           onSelected: (bool selected) {
-          //             setState(() {
-          //               filterStatus = selected ? 'Rejected' : '';
-          //             });
-          //           },
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
           Container(
             margin: EdgeInsets.all(10),
             child: Text("Filter by :",
               style: TextStyle(
-                fontSize: 16, 
+                fontSize: 16,
                 fontWeight: FontWeight.bold
               ),
             ),
@@ -169,12 +160,19 @@ class _ListUserLemburState extends State<ListUserLembur> {
                       selectedProject = value!;
                     });
                   },
-                  items: project.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+                  items: [
+                    DropdownMenuItem<String>(
+                      value: "Project",
+                      child: Text("Project"),
+                    ),
+                    ...getProject.map((project){
+                      return DropdownMenuItem(
+                          child: Text(project.project),
+                          value: project.project,
+                      );
+                    }
+                    )
+                  ]
                 ),
                 SizedBox(width: 20,),
                 DropdownButton<String>(
@@ -184,14 +182,29 @@ class _ListUserLemburState extends State<ListUserLembur> {
                       selectedStatus = value!;
                     });
                   },
-                  items: status.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+                  items: [
+                    DropdownMenuItem<String>(
+                      value: "Status",
+                      child: Text("Status"),
+                    ),
+                    ...getStatus.map((status) {
+                      return DropdownMenuItem<String>(
+                        value: status.status ?? '', // Use status value
+                        child: Text(status.status ?? ''), // Display status in dropdown
+                      );
+                    }).toList(),
+                  ]
+                  /*filterStatus
+                      .map<DropdownMenuItem<String>>(
+                        (AdminApprovalOvertimeGetStatusModel status) =>
+                        DropdownMenuItem<String>(
+                          value: status.status,
+                          child: Text(status.status),
+                        ),
+                  )
+                      .toList(),*/
                 )
-              ] 
+              ]
             ),
           ),
           Expanded(
@@ -256,7 +269,7 @@ class _ListUserLemburState extends State<ListUserLembur> {
                       ListTile(
                         leading: CircleAvatar(
                           backgroundImage: AssetImage(
-                              'assets/images/workaholism.png', 
+                              'assets/images/workaholism.png',
                             )
                         ),
                         title: Text(
@@ -314,7 +327,7 @@ class _ListUserLemburState extends State<ListUserLembur> {
                                   style: TextStyle(
                                       fontSize: 12,
                                       color: Colors.blue),
-                                ),  
+                                ),
                               ],
                             ),
                             Row(

@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:absent_project/controller/Keys.dart';
 
+import 'AdminApprovalOvertimeGetProjectModel.dart';
+import 'AdminApprovalOvertimeGetStatusModel.dart';
 import 'AdminApprovalOvertimeModel.dart';
 import 'package:http/http.dart' as http;
 
@@ -33,5 +35,38 @@ class AdminApprovalOvertimaController{
       return true;
     }
     return false;
+  }
+
+  Future<List<AdminApprovalOvertimeGetStatusModel>?> getStatus() async{
+    var data = await http.post(
+        Uri.parse("http://10.233.77.55/FlutterAPI/approvals/member/overtime/getStatus.php")
+    );
+    List<dynamic> jsonData = json.decode(data.body);
+    List<AdminApprovalOvertimeGetStatusModel> users = [];
+
+    for (var u in jsonData) {
+      AdminApprovalOvertimeGetStatusModel user =
+      AdminApprovalOvertimeGetStatusModel.fromJson(u);
+      users.add(user);
+    }
+    return users;
+  }
+
+  Future<List<AdminApprovalOvertimeGetProjectModel>?> getProject() async{
+    var data = await http.post(
+        Uri.parse("http://10.233.77.55/FlutterAPI/approvals/admin/overtime/getProject.php"),
+      body: {
+          "username": emailController.text,
+      }
+    );
+    List<dynamic> jsonData = json.decode(data.body);
+    List<AdminApprovalOvertimeGetProjectModel> users = [];
+
+    for (var u in jsonData) {
+      AdminApprovalOvertimeGetProjectModel user =
+      AdminApprovalOvertimeGetProjectModel.fromJson(u);
+      users.add(user);
+    }
+    return users;
   }
 }
