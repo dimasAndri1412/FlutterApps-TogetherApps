@@ -20,12 +20,12 @@ class ListUserLembur extends StatefulWidget {
 
 class _ListUserLemburState extends State<ListUserLembur> {
   final List<Map<String, String>> requests = [
-    {"reqNo": "REQ-1023", "submittedBy": "Rara Zahra Urava", "date": "03 Des 2024 - 12:30", "status": "Approved"},
-    {"reqNo": "REQ-1024", "submittedBy": "Kim Sunoo", "date": "04 Des 2024 - 14:00", "status": "Rejected"},
-    {"reqNo": "REQ-1025", "submittedBy": "Choi Beomgyu", "date": "05 Des 2024 - 09:15", "status": "New"},
-    {"reqNo": "REQ-1025", "submittedBy": "Jeon Jungkook", "date": "06 Des 2024 - 12:15", "status": "New"},
-    {"reqNo": "REQ-1025", "submittedBy": "Kim Yoon Woo", "date": "06 Des 2024 - 13:55", "status": "New"},
-    {"reqNo": "REQ-1025", "submittedBy": "Byeon Woo Seok", "date": "06 Des 2024 - 10:15", "status": "New"},
+    {"reqNo": "REQ-1023", "submittedBy": "Rara Zahra Urava", "date": "03 Des 2024 - 12:30", "status": "Approved", "project" : "MSDO"},
+    {"reqNo": "REQ-1024", "submittedBy": "Kim Sunoo", "date": "04 Des 2024 - 14:00", "status": "Rejected","project" : "Development"},
+    {"reqNo": "REQ-1025", "submittedBy": "Choi Beomgyu", "date": "05 Des 2024 - 09:15", "status": "New", "project" : "MSDO"},
+    {"reqNo": "REQ-1025", "submittedBy": "Jeon Jungkook", "date": "06 Des 2024 - 12:15", "status": "New","project" : "Development"},
+    {"reqNo": "REQ-1025", "submittedBy": "Kim Yoon Woo", "date": "06 Des 2024 - 13:55", "status": "New", "project" : "MSDO"},
+    {"reqNo": "REQ-1025", "submittedBy": "Byeon Woo Seok", "date": "06 Des 2024 - 10:15", "status": "New", "project" : "Development"},
     // Add more request items as needed
   ];
 
@@ -45,17 +45,21 @@ class _ListUserLemburState extends State<ListUserLembur> {
   String filterStatus = '';
 
   List<Map<String, String>> get filteredLembur {
-    if (filterStatus == '') {
-      return requests;
-    }
-    return requests
-        .where((lembur) => lembur['status'] == filterStatus)
-        .toList();
+    return requests.where((lembur) {
+      final matchesStatus = selectedStatus == 'Status' || lembur['status'] == selectedStatus;
+      final matchesProject = selectedProject == 'Project' || lembur['project'] == selectedProject;
+      return matchesStatus && matchesProject;
+    }).toList();
   }
 
   final List<String> statuses = ['New', 'Approved', 'Rejected'];
-  String? selectedStatus;
+  // String? selectedStatus;
   @override
+
+  final List<String> project = ['Project','MSDO', 'Development'];
+  final List<String> status = ['Status','New', 'Approved', 'Rejected'];
+  String selectedProject = 'Project';
+  String selectedStatus = 'Status';
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,43 +87,106 @@ class _ListUserLemburState extends State<ListUserLembur> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          // Container(
+          //   // color: Colors.grey,
+          //   width: 290,
+          //   child: Padding(
+          //     padding: const EdgeInsets.only(left: 15, top: 5),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //       children: [
+          //         FilterChip(
+          //           label: Text("New"),
+          //           selected: filterStatus == 'New',
+          //           onSelected: (bool selected) {
+          //             setState(() {
+          //               filterStatus = selected ? 'New' : '';
+          //             });
+          //           },
+          //         ),
+          //         FilterChip(
+          //           label: Text("Approved"),
+          //           selected: filterStatus == 'Approved',
+          //           onSelected: (bool selected) {
+          //             setState(() {
+          //               filterStatus = selected ? 'Approved' : '';
+          //             });
+          //           },
+          //         ),
+          //         FilterChip(
+          //           label: Text("Rejected"),
+          //           selected: filterStatus == 'Rejected',
+          //           onSelected: (bool selected) {
+          //             setState(() {
+          //               filterStatus = selected ? 'Rejected' : '';
+          //             });
+          //           },
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
           Container(
-            // color: Colors.grey,
-            width: 290,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15, top: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  FilterChip(
-                    label: Text("New"),
-                    selected: filterStatus == 'New',
-                    onSelected: (bool selected) {
-                      setState(() {
-                        filterStatus = selected ? 'New' : '';
-                      });
-                    },
-                  ),
-                  FilterChip(
-                    label: Text("Approved"),
-                    selected: filterStatus == 'Approved',
-                    onSelected: (bool selected) {
-                      setState(() {
-                        filterStatus = selected ? 'Approved' : '';
-                      });
-                    },
-                  ),
-                  FilterChip(
-                    label: Text("Rejected"),
-                    selected: filterStatus == 'Rejected',
-                    onSelected: (bool selected) {
-                      setState(() {
-                        filterStatus = selected ? 'Rejected' : '';
-                      });
-                    },
-                  ),
-                ],
+            margin: EdgeInsets.all(10),
+            child: Text("Filter by :",
+              style: TextStyle(
+                fontSize: 16, 
+                fontWeight: FontWeight.bold
               ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(6)
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(5),
+                    child: DropdownButton<String>(
+                      value: selectedProject,
+                      onChanged: (String? value) {
+                        setState(() {
+                          selectedProject = value!;
+                        });
+                      },
+                      items: project.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  )
+                ),
+                SizedBox(width: 20,),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(6)
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(5),
+                    child: DropdownButton<String>(
+                      value: selectedStatus,
+                      onChanged: (String? value) {
+                        setState(() {
+                          selectedStatus = value!;
+                        });
+                      },
+                      items: status.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    )
+                  )
+                ),
+              ] 
             ),
           ),
           Expanded(
@@ -138,7 +205,7 @@ class _ListUserLemburState extends State<ListUserLembur> {
                 child : Container(
                   margin: EdgeInsets.all(10),
                   width: 350,
-                  height: 150,
+                  // height: 150,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(0),
@@ -217,6 +284,32 @@ class _ListUserLemburState extends State<ListUserLembur> {
                                   request["submittedBy"]!,
                                   style: TextStyle(
                                       fontSize: 12, color: Colors.blue),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.people_alt_outlined,
+                                  size: 18,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  request["project"]!,
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.blue),
+                                ),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                 Text(
+                                  "Project",
+                                  style: TextStyle(
+                                      fontSize: 12, height: 2),
                                 ),
                               ],
                             ),
