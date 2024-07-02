@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 class AdminApprovalOvertimaController{
   Future<List<AdminApprovalOvertimeModel>?> getList() async {
     var data = await http.post(
-        Uri.parse("http://10.233.77.55/FlutterAPI/approvals/admin/overtime/getListUser.php"),);
+        Uri.parse("http://10.233.77.55/FlutterAPI/approvals/admin/overtime/getListUser.php"));
     var jsonData = json.decode(data.body);
     nameOTController.text = jsonData[0]['full_name'];
 

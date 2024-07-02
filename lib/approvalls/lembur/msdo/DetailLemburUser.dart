@@ -3,11 +3,9 @@ import 'package:absent_project/approvalls/lembur/RejectDialog.dart';
 import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertimeModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:http/http.dart';
-// import 'package:printing/printing.dart';
-// import 'package:absent_project/approvalls/lembur/GeneratePDF.dart';
+import 'package:http/http.dart' as http;
+
+import '../../../controller/Keys.dart';
 
 class DetailLemburUser extends StatefulWidget {
   AdminApprovalOvertimeModel getData;
@@ -181,7 +179,7 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  "getUserDetail.location",
+                                  widget.getData.location,
                                   style: TextStyle(fontSize: 13),
                                 ),
                               ],
