@@ -29,8 +29,9 @@ class _ListUserCutiState extends State<ListUserCuti> {
         return Colors.blue; // Default color if status is unknown
     }
   }
-  final List<String> project = ['Project','MSDO', 'Development'];
-  final List<String> status = ['Status','New', 'Approved', 'Rejected'];
+  final List<String> project = ['Project', 'MSDO Project', 'Development Project'];
+  final List<String> status = ['Status', 'new', 'approved', 'rejected'];
+
   // String? selectedStatus;
   String selectedProject = 'Project';
   String selectedStatus = 'Status';
