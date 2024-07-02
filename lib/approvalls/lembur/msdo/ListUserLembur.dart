@@ -79,8 +79,8 @@ class _ListUserLemburState extends State<ListUserLembur> {
   // String? selectedStatus;
   @override
 
-  final List<String> project = ['Project','MSDO', 'Development'];
-  final List<String> status = ['Status','New', 'Approved', 'Rejected'];
+  final List<String> project = ['Project', 'MSDO Project', 'Development Project'];
+  final List<String> status = ['Status', 'New', 'Approved', 'Rejected'];
   String selectedProject = 'Project';
   String selectedStatus = 'Status';
 
@@ -162,53 +162,35 @@ class _ListUserLemburState extends State<ListUserLembur> {
             margin: EdgeInsets.all(10),
             child: Row(
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(6)
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(5),
-                    child: DropdownButton<String>(
-                      value: selectedProject,
-                      onChanged: (String? value) {
-                        setState(() {
-                          selectedProject = value!;
-                        });
-                      },
-                      items: project.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  )
+                DropdownButton<String>(
+                  value: selectedProject,
+                  onChanged: (String? value) {
+                    setState(() {
+                      selectedProject = value!;
+                    });
+                  },
+                  items: project.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
                 SizedBox(width: 20,),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(6)
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(5),
-                    child: DropdownButton<String>(
-                      value: selectedStatus,
-                      onChanged: (String? value) {
-                        setState(() {
-                          selectedStatus = value!;
-                        });
-                      },
-                      items: status.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    )
-                  )
-                ),
+                DropdownButton<String>(
+                  value: selectedStatus,
+                  onChanged: (String? value) {
+                    setState(() {
+                      selectedStatus = value!;
+                    });
+                  },
+                  items: status.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                )
               ] 
             ),
           ),
@@ -320,19 +302,19 @@ class _ListUserLemburState extends State<ListUserLembur> {
                                   width: 5,
                                 ),
                                 Text(
-                                  getData.project,
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.blue),
-                                ),
-                                SizedBox(
-                                  width: 3,
-                                ),
-                                 Text(
                                   "Project",
                                   style: TextStyle(
                                       fontSize: 12, height: 2),
                                 ),
+                                 SizedBox(
+                                  width: 3,
+                                ),
+                                Text(
+                                  getData.project,
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.blue),
+                                ),  
                               ],
                             ),
                             Row(
