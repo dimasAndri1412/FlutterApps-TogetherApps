@@ -86,265 +86,265 @@ class _ListUserLemburState extends State<ListUserLembur> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title:Center(
-            child: Text(
-              "Overtime Approval MSDO Project",
-              style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
-            ),
+      appBar: AppBar(
+        title:Center(
+          child: Text(
+            "Overtime Approval MSDO Project",
+            style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
           ),
-          automaticallyImplyLeading: false,
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
+        ),
+        automaticallyImplyLeading: false,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
                   colors: [
                     Color.fromARGB(255, 147, 195, 234),
                     Color.fromARGB(255, 98, 171, 232),
                     Color.fromARGB(255, 123, 185, 235),
                   ]
+                ),
+          ),
+        ),
+        elevation: 0,
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          // Container(
+          //   // color: Colors.grey,
+          //   width: 290,
+          //   child: Padding(
+          //     padding: const EdgeInsets.only(left: 15, top: 5),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //       children: [
+          //         FilterChip(
+          //           label: Text("New"),
+          //           selected: filterStatus == 'New',
+          //           onSelected: (bool selected) {
+          //             setState(() {
+          //               filterStatus = selected ? 'New' : '';
+          //             });
+          //           },
+          //         ),
+          //         FilterChip(
+          //           label: Text("Approved"),
+          //           selected: filterStatus == 'Approved',
+          //           onSelected: (bool selected) {
+          //             setState(() {
+          //               filterStatus = selected ? 'Approved' : '';
+          //             });
+          //           },
+          //         ),
+          //         FilterChip(
+          //           label: Text("Rejected"),
+          //           selected: filterStatus == 'Rejected',
+          //           onSelected: (bool selected) {
+          //             setState(() {
+          //               filterStatus = selected ? 'Rejected' : '';
+          //             });
+          //           },
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text("Filter by :",
+              style: TextStyle(
+                fontSize: 16, 
+                fontWeight: FontWeight.bold
               ),
             ),
           ),
-          elevation: 0,
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            // Container(
-            //   // color: Colors.grey,
-            //   width: 290,
-            //   child: Padding(
-            //     padding: const EdgeInsets.only(left: 15, top: 5),
-            //     child: Row(
-            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //       children: [
-            //         FilterChip(
-            //           label: Text("New"),
-            //           selected: filterStatus == 'New',
-            //           onSelected: (bool selected) {
-            //             setState(() {
-            //               filterStatus = selected ? 'New' : '';
-            //             });
-            //           },
-            //         ),
-            //         FilterChip(
-            //           label: Text("Approved"),
-            //           selected: filterStatus == 'Approved',
-            //           onSelected: (bool selected) {
-            //             setState(() {
-            //               filterStatus = selected ? 'Approved' : '';
-            //             });
-            //           },
-            //         ),
-            //         FilterChip(
-            //           label: Text("Rejected"),
-            //           selected: filterStatus == 'Rejected',
-            //           onSelected: (bool selected) {
-            //             setState(() {
-            //               filterStatus = selected ? 'Rejected' : '';
-            //             });
-            //           },
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            Container(
-              margin: EdgeInsets.all(10),
-              child: Text("Filter by :",
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Row(
+              children: [
+                DropdownButton<String>(
+                  value: selectedProject,
+                  onChanged: (String? value) {
+                    setState(() {
+                      selectedProject = value!;
+                    });
+                  },
+                  items: project.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
-              ),
+                SizedBox(width: 20,),
+                DropdownButton<String>(
+                  value: selectedStatus,
+                  onChanged: (String? value) {
+                    setState(() {
+                      selectedStatus = value!;
+                    });
+                  },
+                  items: status.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                )
+              ] 
             ),
-            Container(
-              margin: EdgeInsets.all(10),
-              child: Row(
-                  children: [
-                    DropdownButton<String>(
-                      value: selectedProject,
-                      onChanged: (String? value) {
-                        setState(() {
-                          selectedProject = value!;
-                        });
-                      },
-                      items: project.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                    SizedBox(width: 20,),
-                    DropdownButton<String>(
-                      value: selectedStatus,
-                      onChanged: (String? value) {
-                        setState(() {
-                          selectedStatus = value!;
-                        });
-                      },
-                      items: status.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    )
-                  ]
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                // itemCount: requests.length,
-                itemCount: filteredLembur.length,
-                itemBuilder: (context, index) {
-                  // final request = requests[index];
-                  final getData = filteredLembur[index];
-                  final statusColor = _getStatusColor(getData.status ?? "Unknown");
-                  return GestureDetector(
-                      onTap: () {
-                        Get.to(() => DetailLemburUser(getData: getData));
-                      },
-                      child : Container(
-                        margin: EdgeInsets.all(10),
-                        width: 350,
-                        // height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(0),
-                          border: Border.all(width: 0.5, color: Colors.grey),
-                        ),
-                        child: Column(
+          ),
+          Expanded(
+          child: ListView.builder(
+            // itemCount: requests.length,
+            itemCount: filteredLembur.length,
+            itemBuilder: (context, index) {
+              // final request = requests[index];
+              final getData = filteredLembur[index];
+              final statusColor = _getStatusColor(getData.status ?? "Unknown");
+              return GestureDetector(
+              onTap: () {
+               Get.to(() => DetailLemburUser(getData: getData));
+              },
+                child : Container(
+                  margin: EdgeInsets.all(10),
+                  width: 350,
+                  // height: 150,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(0),
+                    border: Border.all(width: 0.5, color: Colors.grey),
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 20, top: 15, right: 20),
+                        child: Row(
                           children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 20, top: 15, right: 20),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "No. Req : ",
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                                  Text(getData.reqNo),
-                                  Spacer(),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color:statusColor,
-                                    ),
-                                    height: 20,
-                                    width: 80,
-                                    child: Center(
-                                      child: Text(
-                                        getData.status ?? "New",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
+                            Text(
+                              "No. Req : ",
+                              style: TextStyle(color: Colors.grey),
                             ),
-                            Divider(
-                              color: Colors.grey,
-                              thickness: 0.5,
-                              indent: 20,
-                              endIndent: 20,
+                            Text(getData.reqNo),
+                            Spacer(),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color:statusColor,
+                              ),
+                              height: 20,
+                              width: 80,
+                              child: Center(
+                                child: Text(
+                                  getData.status ?? "New",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Divider(
+                        color: Colors.grey,
+                        thickness: 0.5,
+                        indent: 20,
+                        endIndent: 20,
+                      ),
+                      ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: AssetImage(
+                              'assets/images/workaholism.png', 
+                            )
+                        ),
+                        title: Text(
+                          "Overtime Request",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 14),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.people_alt_outlined,
+                                  size: 18,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  "Submitted by",
+                                  style: TextStyle(fontSize: 12, height: 2),
+                                ),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                Text(
+                                  getData.full_name,
+                                  style: TextStyle(
+                                      fontSize: 12, color: Colors.blue),
+                                ),
+                              ],
                             ),
-                            ListTile(
-                              leading: CircleAvatar(
-                                  backgroundImage: AssetImage(
-                                    'assets/images/workaholism.png',
-                                  )
-                              ),
-                              title: Text(
-                                "Overtime Request",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 14),
-                              ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.people_alt_outlined,
-                                        size: 18,
-                                        color: Colors.grey,
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        "Submitted by",
-                                        style: TextStyle(fontSize: 12, height: 2),
-                                      ),
-                                      SizedBox(
-                                        width: 3,
-                                      ),
-                                      Text(
-                                        getData.full_name,
-                                        style: TextStyle(
-                                            fontSize: 12, color: Colors.blue),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.people_alt_outlined,
-                                        size: 18,
-                                        color: Colors.grey,
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        "Project",
-                                        style: TextStyle(
-                                            fontSize: 12, height: 2),
-                                      ),
-                                      SizedBox(
-                                        width: 3,
-                                      ),
-                                      Text(
-                                        getData.project,
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.blue),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.calendar_month,
-                                        size: 18,
-                                        color: Colors.grey,
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        getData.submittedDate,
-                                        style: TextStyle(fontSize: 12),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.people_alt_outlined,
+                                  size: 18,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  "Project",
+                                  style: TextStyle(
+                                      fontSize: 12, height: 2),
+                                ),
+                                 SizedBox(
+                                  width: 3,
+                                ),
+                                Text(
+                                  getData.project,
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.blue),
+                                ),  
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.calendar_month,
+                                  size: 18,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  getData.submittedDate,
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      )
-                  );
-                },
-              ),
-            ),
-          ],
-        )
+                      ),
+                    ],
+                  ),
+                )
+              );
+            },
+          ),
+        ),
+        ],
+      )
     );
   }
 }
