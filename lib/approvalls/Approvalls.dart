@@ -4,6 +4,8 @@ import 'package:absent_project/approvalls/cuti/msdo/ListUserCuti.dart';
 import 'package:absent_project/approvalls/lembur/ProjectType.dart' as lembur;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import 'lembur/msdo/ListUserLembur.dart';
 
@@ -69,8 +71,7 @@ class _ApprovallsState extends State<Approvalls> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => ListUserLembur()));
+                  Get.to (() => ListUserLembur());
                 },
               ),
               MaterialButton(
