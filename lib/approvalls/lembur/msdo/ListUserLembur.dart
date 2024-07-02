@@ -76,8 +76,6 @@ class _ListUserLemburState extends State<ListUserLembur> {
         .toList();
   }
 
-  final List<String> statuses = ['New', 'Approved', 'Rejected'];
-  String? selectedStatus;
   @override
 
   Widget build(BuildContext context) {

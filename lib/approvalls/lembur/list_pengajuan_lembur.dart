@@ -72,6 +72,8 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
         .toList();
   }
 
+
+  String chooseStatus = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,21 +99,21 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
           //FILTER
           Container(
             // color: Colors.grey,
-            width: 390,
+            width: 325,
             child: Padding(
               padding: const EdgeInsets.only(left: 15, top: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  FilterChip(
-                    label: Text("All"),
+                /*  FilterChip(
+                    label: Text(),
                     selected: filterStatus.isEmpty || filterStatus.every((status) => !status.selected),
                     onSelected: (bool selected) {
                       setState(() {
                         filterStatus.forEach((status) => status.selected = true);
                       });
                     },
-                  ),
+                  ),*/
                   ...filterStatus.map((status) => FilterChip(
                       label: Text(status.status),
                       selected: status.selected,
