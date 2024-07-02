@@ -3,24 +3,36 @@ import 'package:flutter/material.dart';
 import 'package:printing/printing.dart';
 import 'package:absent_project/approvalls/lembur/GeneratePDF.dart';
 
-// void ConfirmationDialog(BuildContext context) {
-//   QuickAlert.show(
-//     context: context,
-//     type: QuickAlertType.info,
-//     title: 'Custom Dialog',
-//     text: 'This is a custom dialog using QuickAlert',
-//     confirmBtnText: 'Close',
-//   );
-// }
+import '../../controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertimeModel.dart';
+import 'package:http/http.dart' as http;
+
+import '../../controller/Keys.dart';
+
 
 class ConfirmationDialog extends StatefulWidget {
-  const ConfirmationDialog({super.key});
+  AdminApprovalOvertimeModel getData;
+  ConfirmationDialog({super.key,
+  required this.getData});
 
   @override
   State<ConfirmationDialog> createState() => _ConfirmationDialogState();
 }
 
 class _ConfirmationDialogState extends State<ConfirmationDialog> {
+
+  updateApproved() async {
+    final response = await http.post(
+      Uri.parse("http://10.233.77.55/FlutterAPI/approvals/admin/overtime/update_approved.php"),
+      body: {
+        "reqNo": widget.getData.reqNo
+      },
+    );
+    if (response.statusCode == 200){
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -75,8 +87,15 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
               children: [
                 ElevatedButton(
                   onPressed: () async {
-                    final pdf = await GeneratePDF();
+                    final pdf = await GeneratePDFOvertime(getData: widget.getData).GeneratePDF();
                     await Printing.layoutPdf(onLayout: (format) => pdf);
+                    setState(() {
+                      if (widget.getData.status == "Approved"){
+                        //page only print
+                      }else{
+                        updateApproved();
+                      }
+                    });
                   },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,

@@ -1,7 +1,10 @@
 import 'package:absent_project/approvalls/lembur/msdo/DetailLemburUser.dart';
+import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertimeModel.dart';
+import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertmaControlleri.dart';
 // import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 // import 'package:intl/intl.dart';
 
 class ListUserLembur extends StatefulWidget {
@@ -29,6 +32,26 @@ class _ListUserLemburState extends State<ListUserLembur> {
     // Add more request items as needed
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    fetchOvertimeRequests();
+    //fetchStatusOT();
+  }
+  List<AdminApprovalOvertimeModel> getListUser = [];
+  Future<void> fetchOvertimeRequests() async {
+    try {
+      List<AdminApprovalOvertimeModel>? overtimeRequests =
+      await AdminApprovalOvertimaController().getList();
+      setState(() {
+        getListUser = overtimeRequests!;
+      });
+    } catch (e) {
+      // Handle errors or exceptions here
+      print('Error fetching overtime requests: $e');
+    }
+  }
+
   Color _getStatusColor(String status) {
     switch (status) {
       case 'Approved':
@@ -44,10 +67,10 @@ class _ListUserLemburState extends State<ListUserLembur> {
 
   String filterStatus = '';
 
-  List<Map<String, String>> get filteredLembur {
-    return requests.where((lembur) {
-      final matchesStatus = selectedStatus == 'Status' || lembur['status'] == selectedStatus;
-      final matchesProject = selectedProject == 'Project' || lembur['project'] == selectedProject;
+  List<AdminApprovalOvertimeModel> get filteredLembur {
+    return getListUser.where((lembur) {
+      final matchesStatus = selectedStatus == 'Status' || lembur.status == selectedStatus;
+      final matchesProject = selectedProject == 'Project' || lembur.project == selectedProject;
       return matchesStatus && matchesProject;
     }).toList();
   }
@@ -195,12 +218,11 @@ class _ListUserLemburState extends State<ListUserLembur> {
             itemCount: filteredLembur.length,
             itemBuilder: (context, index) {
               // final request = requests[index];
-              final request = filteredLembur[index];
-              final statusColor = _getStatusColor(request["status"] ?? "Unknown");
+              final getData = filteredLembur[index];
+              final statusColor = _getStatusColor(getData.status ?? "Unknown");
               return GestureDetector(
               onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => DetailLemburUser()));
+               Get.to(() => DetailLemburUser(getData: getData));
               },
                 child : Container(
                   margin: EdgeInsets.all(10),
@@ -221,7 +243,7 @@ class _ListUserLemburState extends State<ListUserLembur> {
                               "No. Req : ",
                               style: TextStyle(color: Colors.grey),
                             ),
-                            Text(request["reqNo"]!),
+                            Text(getData.reqNo),
                             Spacer(),
                             Container(
                               decoration: BoxDecoration(
@@ -232,7 +254,7 @@ class _ListUserLemburState extends State<ListUserLembur> {
                               width: 80,
                               child: Center(
                                 child: Text(
-                                  request["status"] ?? "New",
+                                  getData.status ?? "New",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -281,7 +303,7 @@ class _ListUserLemburState extends State<ListUserLembur> {
                                   width: 3,
                                 ),
                                 Text(
-                                  request["submittedBy"]!,
+                                  getData.full_name,
                                   style: TextStyle(
                                       fontSize: 12, color: Colors.blue),
                                 ),
@@ -298,7 +320,7 @@ class _ListUserLemburState extends State<ListUserLembur> {
                                   width: 5,
                                 ),
                                 Text(
-                                  request["project"]!,
+                                  getData.project,
                                   style: TextStyle(
                                       fontSize: 12,
                                       color: Colors.blue),
@@ -324,7 +346,7 @@ class _ListUserLemburState extends State<ListUserLembur> {
                                   width: 5,
                                 ),
                                 Text(
-                                  request["date"]!,
+                                  getData.submittedDate,
                                   style: TextStyle(fontSize: 12),
                                 ),
                               ],

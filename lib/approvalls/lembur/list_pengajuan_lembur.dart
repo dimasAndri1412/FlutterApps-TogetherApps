@@ -97,7 +97,7 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
           //FILTER
           Container(
             // color: Colors.grey,
-            width: 370,
+            width: 390,
             child: Padding(
               padding: const EdgeInsets.only(left: 15, top: 5),
               child: Row(
