@@ -406,7 +406,7 @@ class DetailCutiUser extends StatelessWidget {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return RejectDialog();
+                          return RejectDialog(getData: getUserDetail,);
                         },
                       );
                     },
