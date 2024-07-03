@@ -18,104 +18,77 @@ class ListPengajuanLembur extends StatefulWidget {
 }
 
 class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
-  final List<Map<String, String>> userlembur = [
-    {
-      'name': 'Rogape',
-      'reason': 'abie gak masuk karna cuti',
-      'date': '2024-12-01',
-      'status': 'Approved'
-    },
-    {
-      'name': 'Rogape',
-      'reason': 'febri pusing dan sakit',
-      'date': '2024-12-02',
-      'status': 'Approved'
-    },
-    {
-      'name': 'Rogape',
-      'reason': 'aves jalan - jalan ke Paris',
-      'date': '2024-12-03',
-      'status': 'Rejected'
-    },
-    {
-      'name': 'Rogape',
-      'reason': 'Kosong',
-      'date': '2024-12-04',
-      'status': 'Approved'
-    },
-  ];
+  List<MemberRequestOvertimeGetListModel> getListUser = [];
+  List<MemberRequestOvertimeGetStatusModel> getStatus = [];
 
-  /*
+  String defaultStatus = 'All';
+
   @override
   void initState() {
     super.initState();
     fetchOvertimeRequests();
     fetchStatusOT();
   }
-  */
 
-  /*
-  List<MemberRequestOvertimeGetListModel> userlembur = [];
+
   Future<void> fetchOvertimeRequests() async {
     try {
       List<MemberRequestOvertimeGetListModel>? overtimeRequests =
           await MemberRequestOvertimeController().getList();
       setState(() {
-        userlembur = overtimeRequests!;
+        getListUser = overtimeRequests!;
       });
     } catch (e) {
       // Handle errors or exceptions here
       print('Error fetching overtime requests: $e');
     }
   }
-  */
 
-  /*
-  List<MemberRequestOvertimeGetStatusModel> filterStatus = [];
+
   Future<void> fetchStatusOT() async {
     try {
       List<MemberRequestOvertimeGetStatusModel>? statusList =
           await MemberRequestOvertimeController().getStatus();
 
       setState(() {
-        filterStatus = statusList ?? []; // Include 'All' option
+        getStatus = statusList ?? []; // Include 'All' option
       });
     } catch (e) {
       print('Error fetching overtime requests: $e');
     }
   }
-  */
 
-  //untuk membuat filter All, Approved, Rejected
-  String filterStatus = 'All';
-
-  /*
   List<MemberRequestOvertimeGetListModel> get filteredLembur {
-    if (filterStatus.isEmpty ||
-        filterStatus.every((status) => !status.selected)) {
-      return userlembur; // Return all data when no filters are selected
+    return getListUser.where((lembur) {
+      final matchesStatus =
+          defaultStatus == 'All' || lembur.status == defaultStatus;
+      return matchesStatus;
+    }).toList();
+  }
+
+  /*List<MemberRequestOvertimeGetListModel> get filteredLembur {
+    if (getStatus.isEmpty ||
+        getStatus.every((status) => !status.selected)) {
+      return getListUser; // Return all data when no filters are selected
     }
 
-    List<String> selectedStatus = filterStatus
+    List<String> selectedStatus = getStatus
         .where((status) => status.selected)
         .map((status) => status.status)
         .toList();
-    return userlembur
+    return getListUser
         .where((lembur) => selectedStatus.contains(lembur.status))
         .toList();
-  }
-  */
+  }*/
 
-  List<Map<String, String>> get filteredLembur {
+  /*List<Map<String, String>> get filteredLembur {
     if (filterStatus == "All") {
       return userlembur;
     }
     return userlembur
         .where((lembur) => lembur['status'] == filterStatus)
         .toList();
-  }
-
-  String chooseStatus = "";
+  }*/
 
   //Function Filter Alert Dialog
   void _showFilterOptions(BuildContext context) {
@@ -133,51 +106,30 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Divider(),
-                // ListTile(
-                //   leading: Icon(Icons.fiber_new_outlined),
-                //   title: Text('New'),
-                //   onTap: () {
-                //     setState(() {
-                //       filterStatus = 'New';
-                //     });
-                //     Navigator.pop(context);
-                //   },
-                // ),
                 Divider(),
                 ListTile(
-                  leading: Icon(Icons.done_all),
+                  leading: Icon(Icons.select_all),
                   title: Text('All'),
                   onTap: () {
                     setState(() {
-                      filterStatus = 'All';
+                      defaultStatus = 'All';
                     });
                     Navigator.pop(context);
                   },
                 ),
-                Divider(),
-                ListTile(
-                  leading: Icon(Icons.approval),
-                  title: Text('Approved'),
-                  onTap: () {
+                ...getStatus.map((status) => ListTile(
+                  leading: status.status == "New" ? Icon(Icons.new_releases)
+                  : status.status == "Approved" ? Icon(Icons.done)
+                      : status.status == "Rejected" ? Icon(Icons.dnd_forwardslash)
+                  : null,
+                  title: Text(status.status),
+                  onTap: (){
                     setState(() {
-                      filterStatus = 'Approved';
+                      defaultStatus = status.status;
                     });
                     Navigator.pop(context);
                   },
-                ),
-                Divider(),
-                ListTile(
-                  leading: Icon(Icons.dnd_forwardslash),
-                  title: Text('Rejected'),
-                  onTap: () {
-                    setState(() {
-                      filterStatus = 'Rejected';
-                    });
-                    Navigator.pop(context);
-                  },
-                ),
-                Divider(),
+                ))
               ],
             ),
           ),
@@ -187,7 +139,7 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
   }
 
   //function detail lembur
-  void _showDetail(BuildContext context) {
+  void _showDetail(BuildContext context, MemberRequestOvertimeGetListModel getSelected) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -240,8 +192,11 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("isi"),
-                              Text("isi"),
+                              Text(getSelected.status),
+                              if(getSelected.status == "Rejected")
+                                Text(getSelected.reason_rejected)
+                              else
+                                Text(getSelected.activity),
                             ],
                           ),
                         ),
@@ -344,7 +299,7 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Filter: $filterStatus',
+                    'Filter: $defaultStatus',
                     style: TextStyle(color: Colors.black, fontSize: 14),
                   ),
                   Icon(
@@ -366,10 +321,10 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                 final getData = filteredLembur[index];
                 */
 
-                final isilembur = filteredLembur[index];
+                final getData = filteredLembur[index];
 
                 return GestureDetector(
-                  onTap: () => _showDetail(context),
+                  onTap: () => _showDetail(context, getData),
                   child: Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
@@ -388,7 +343,7 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                           /*getData.activity,
                           */
 
-                          isilembur['reason']!,
+                          getData.activity,
                           style: TextStyle(
                               color: Colors.black, fontWeight: FontWeight.bold),
                         ),
@@ -405,7 +360,7 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                                   /* getData.start_date,
                                   */
 
-                                  isilembur['date']!,
+                                  getData.start_date,
                                   style: TextStyle(
                                       color: Colors.grey, fontSize: 10),
                                 ),
@@ -419,7 +374,7 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                                   /* getData.full_name,
                                   */
 
-                                  isilembur['name']!,
+                                  getData.full_name,
                                   style: TextStyle(
                                       color: Colors.grey, fontSize: 10),
                                 ),
@@ -431,7 +386,7 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                           /* getData.status,
                           */
 
-                          isilembur['status']!,
+                          getData.status,
                           /*
                           style: TextStyle(
                               color: getData.status == 'Approved'
@@ -442,9 +397,11 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                           */
 
                           style: TextStyle(
-                              color: isilembur['status'] == 'Approved'
+                              color: getData.status == 'Approved'
                                   ? Colors.green
-                                  : Colors.red,
+                                  :getData.status == "New"
+                                    ?Colors.blue
+                                    : Colors.red,
                               fontWeight: FontWeight.bold,
                               fontSize: 15),
                         ),

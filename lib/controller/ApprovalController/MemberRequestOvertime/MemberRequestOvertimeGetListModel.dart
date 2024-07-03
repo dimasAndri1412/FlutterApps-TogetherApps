@@ -3,12 +3,14 @@ class MemberRequestOvertimeGetListModel {
   String start_date;
   String full_name;
   String status;
+  String reason_rejected;
 
   MemberRequestOvertimeGetListModel({
     required this.activity,
     required this.start_date,
     required this.full_name,
     required this.status,
+    required this.reason_rejected,
   });
 
   factory MemberRequestOvertimeGetListModel.fromJson(Map<String, dynamic> json) {
@@ -17,6 +19,7 @@ class MemberRequestOvertimeGetListModel {
       start_date: json['start_date'],
       full_name: json['full_name'],
       status: json['status'],
+      reason_rejected: json['reason_rejected'],
     );
   }
 
