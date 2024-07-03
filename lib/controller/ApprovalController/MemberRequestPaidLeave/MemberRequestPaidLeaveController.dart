@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:absent_project/approvalls/cuti/pengajuan_cuti_development.dart';
+import 'package:absent_project/approvalls/cuti/user/pengajuan_cuti_development.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import '../../../approvalls/cuti/pengajuan_cuti.dart';
+import '../../../approvalls/cuti/user/pengajuan_cuti.dart';
 import '../../Keys.dart';
 import 'MemberListPaidLeave.dart';
 import 'MemberRequestPaidLeave.dart';
@@ -17,7 +17,7 @@ class MemberRequestPaidLeaveController {
   int countStatus = 0;
   int leaveCount = 0;
   String name = "";
-  String leave_remains_string = "" ;
+  String leave_remains_string = "";
   String leave_used_string = "";
   //fungsi untuk melakukan penyimpanan data//
   save() async {
@@ -44,7 +44,7 @@ class MemberRequestPaidLeaveController {
     return false;
   }
 
-  clearInfo(){
+  clearInfo() {
     namePaidLeave.clear();
     positionPaidLeave.clear();
     departmentPaidLeave.clear();
@@ -61,10 +61,11 @@ class MemberRequestPaidLeaveController {
 
   Future getInfo() async {
     var data = await http.post(
-        Uri.parse("http://10.233.77.55/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
+        Uri.parse(
+            "http://10.233.77.55/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
         body: {
-    "username": emailController.text,
-    });
+          "username": emailController.text,
+        });
     var jsonData = json.decode(data.body);
     memberInfo.full_name = jsonData[0]['full_name'];
     memberInfo.project = jsonData[0]['grup'];
@@ -73,24 +74,24 @@ class MemberRequestPaidLeaveController {
     namePaidLeave.text = memberInfo.full_name;
     projectController.text = memberInfo.project;
 
-    if(memberInfo.shiftingStatus == "no"){
+    if (memberInfo.shiftingStatus == "no") {
       Get.to(() => const PengajuanCuti_Development());
-    }else{
+    } else {
       Get.to(() => const PengajuanCuti());
     }
-
   }
 
   Future<List<MemberListPaidLeave>?> getList() async {
     var getFullName = await http.post(
-      Uri.parse("http://10.233.77.55/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
-      body: {"username": emailController.text}
-    );
+        Uri.parse(
+            "http://10.233.77.55/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
+        body: {"username": emailController.text});
     var jsonGetFullName = json.decode(getFullName.body);
     namePaidLeave.text = jsonGetFullName[0]['full_name'];
     //
     var data = await http.post(
-        Uri.parse("http://10.233.77.55/FlutterAPI/approvals/member/paid_leave/getListUser.php"),
+        Uri.parse(
+            "http://10.233.77.55/FlutterAPI/approvals/member/paid_leave/getListUser.php"),
         body: {
           "name": namePaidLeave.text,
         });
@@ -99,14 +100,14 @@ class MemberRequestPaidLeaveController {
     List<MemberListPaidLeave> users = [];
 
     for (var u in jsonData) {
-      MemberListPaidLeave user = MemberListPaidLeave(u["name"], u["date_start_leave"], u["status"],
-          u["reason_leave"]);
+      MemberListPaidLeave user = MemberListPaidLeave(
+          u["name"], u["date_start_leave"], u["status"], u["reason_leave"]);
       users.add(user);
     }
     return users;
   }
 
-  Future refresh() async{
+  Future refresh() async {
     await Future.delayed(const Duration(seconds: 3));
     await getLeave();
   }
@@ -127,15 +128,16 @@ class MemberRequestPaidLeaveController {
     remaining_leave.text = remainingLeave.toString();
 
     var getData = await http.post(
-        Uri.parse("http://10.233.77.55/FlutterAPI/approvals/member/paid_leave/getCountLeave.php"),
+        Uri.parse(
+            "http://10.233.77.55/FlutterAPI/approvals/member/paid_leave/getCountLeave.php"),
         body: {
           "name": namePaidLeave.text,
         });
     var getJsondata = json.decode(getData.body);
 
     countStatus = int.parse(getJsondata[0]['countStatus']);
-    
-    if(countStatus > 0){
+
+    if (countStatus > 0) {
       leaveUsed = (leaveUsed + countStatus);
       remainingLeave = remainingLeave - countStatus;
     }

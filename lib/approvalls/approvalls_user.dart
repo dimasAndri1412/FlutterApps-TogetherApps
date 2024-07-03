@@ -1,5 +1,5 @@
-import 'package:absent_project/approvalls/cuti/list_pengajuan_cuti.dart';
-import 'package:absent_project/approvalls/lembur/list_pengajuan_lembur.dart';
+import 'package:absent_project/approvalls/cuti/user/list_pengajuan_cuti.dart';
+import 'package:absent_project/approvalls/lembur/user/list_pengajuan_lembur.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -106,7 +106,7 @@ class _ApprovallsUserState extends State<ApprovallsUser> {
                   ),
                 ),
                 onPressed: () {
-                  Get.to(()=> const ListPengajuanCuti());
+                  Get.to(() => const ListPengajuanCuti());
                   /*Navigator.push(
                     context,
                     MaterialPageRoute(

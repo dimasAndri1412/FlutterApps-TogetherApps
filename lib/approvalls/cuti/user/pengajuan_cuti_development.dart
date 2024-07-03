@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import 'package:absent_project/approvalls/cuti/add_cuti_button.dart';
+import 'package:absent_project/approvalls/cuti/user/add_cuti_button.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeave.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
 import 'package:absent_project/controller/Keys.dart';
@@ -11,14 +11,14 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
-class PengajuanCuti extends StatefulWidget {
-  const PengajuanCuti({super.key});
+class PengajuanCuti_Development extends StatefulWidget {
+  const PengajuanCuti_Development({super.key});
 
   @override
-  State<PengajuanCuti> createState() => _PengajuanCutiState();
+  State<PengajuanCuti_Development> createState() => _PengajuanCutiState();
 }
 
-class _PengajuanCutiState extends State<PengajuanCuti> {
+class _PengajuanCutiState extends State<PengajuanCuti_Development> {
   final MemberRequestPaidLeaveController request =
       MemberRequestPaidLeaveController();
 
@@ -148,6 +148,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: TextFormField(
+                                autofocus: false,
                                 decoration: InputDecoration(
                                     labelText: "Position",
                                     hintText: "Please input your position here",
@@ -163,6 +164,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                               ),
                             ),
                           ),
+
                           SizedBox(height: 20),
                           Container(
                             decoration: BoxDecoration(
@@ -189,6 +191,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                               ),
                             ),
                           ),
+
                           SizedBox(
                             height: 20,
                           ),
@@ -200,6 +203,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: TextFormField(
+                                autofocus: false,
                                 decoration: InputDecoration(
                                     labelText: "Department",
                                     hintText:
@@ -264,6 +268,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: TextFormField(
+                                autofocus: false,
                                 decoration: InputDecoration(
                                     labelText: "Reason of Leave",
                                     hintText: "Please input your reason here",
@@ -290,6 +295,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: TextFormField(
+                                autofocus: false,
                                 decoration: InputDecoration(
                                     labelText: "Name of PIC",
                                     hintText: "Please input your PIC here",
@@ -316,6 +322,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: TextFormField(
+                                autofocus: false,
                                 decoration: InputDecoration(
                                     labelText: "Handphone Number",
                                     hintText: "Please input your number here",
@@ -335,11 +342,11 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                             height: 20,
                           ),
                           Container(
-                              decoration: BoxDecoration(
-                                  border:
-                                      Border.all(color: Colors.grey, width: 1),
-                                  borderRadius: BorderRadius.circular(12)),
-                              child: Padding(
+                            decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: Colors.grey, width: 1),
+                                borderRadius: BorderRadius.circular(12)),
+                            /*child: Padding(
                                 padding: const EdgeInsets.only(left: 10),
                                 child: DropdownSearch<String>(
                                   popupProps: PopupProps.dialog(
@@ -368,7 +375,8 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                     return null;
                                   },
                                 ),
-                              )),
+                              )*/
+                          ),
 
                           SizedBox(height: 20),
 
@@ -397,6 +405,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                           borderRadius:
                                               BorderRadius.circular(12)),
                                       child: TextFormField(
+                                        autofocus: false,
                                         decoration: InputDecoration(
                                             labelText: "Date Leave",
                                             hintText:
@@ -461,6 +470,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                           borderRadius:
                                               BorderRadius.circular(12)),
                                       child: TextFormField(
+                                        autofocus: false,
                                         decoration: InputDecoration(
                                             labelText: "Date Leave",
                                             hintText:
@@ -523,6 +533,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                         color: Colors.grey, width: 1),
                                     borderRadius: BorderRadius.circular(12)),
                                 child: TextFormField(
+                                  autofocus: false,
                                   decoration: InputDecoration(
                                       labelText: "Date on Duty",
                                       hintText:

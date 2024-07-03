@@ -5,17 +5,16 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../approvalls/lembur/pengajuan_lembur.dart';
-import '../../../approvalls/lembur/pengajuan_lembur_shifting.dart';
+import '../../../approvalls/lembur/user/pengajuan_lembur.dart';
+import '../../../approvalls/lembur/user/pengajuan_lembur_shifting.dart';
 import '../../Keys.dart';
 import 'MemberRequestOvertimeGetListModel.dart';
 import 'MemberRequestOvertimeModel.dart';
 
 class MemberRequestOvertimeController {
-
   final MemberRequestOvertimeModel getData = MemberRequestOvertimeModel();
 
-   Future getInfo() async {
+  Future getInfo() async {
     var data = await http.post(
         Uri.parse(
             "http://10.233.77.55/FlutterAPI/approvals/member/overtime/getFullName.php"),
@@ -59,7 +58,7 @@ class MemberRequestOvertimeController {
     return false;
   }
 
-  clearInfo(){
+  clearInfo() {
     nameOTController.clear();
     positionOTController.clear();
     projectOTController.clear();
@@ -73,14 +72,15 @@ class MemberRequestOvertimeController {
 
   Future<List<MemberRequestOvertimeGetListModel>?> getList() async {
     var getFullName = await http.post(
-        Uri.parse("http://10.233.77.55/FlutterAPI/approvals/member/overtime/getFullName.php"),
-        body: {"username": emailController.text}
-    );
+        Uri.parse(
+            "http://10.233.77.55/FlutterAPI/approvals/member/overtime/getFullName.php"),
+        body: {"username": emailController.text});
     var jsonGetFullName = json.decode(getFullName.body);
     nameOTController.text = jsonGetFullName[0]['full_name'];
     //
     var data = await http.post(
-        Uri.parse("http://10.233.77.55/FlutterAPI/approvals/member/overtime/getListUser.php"),
+        Uri.parse(
+            "http://10.233.77.55/FlutterAPI/approvals/member/overtime/getListUser.php"),
         body: {
           "name": nameOTController.text,
         });
@@ -90,11 +90,11 @@ class MemberRequestOvertimeController {
     nameOTController.text = jsonData[0]['full_name'];
     statusOTController.text = jsonData[0]['status'];
 
-
     List<MemberRequestOvertimeGetListModel> users = [];
 
     for (var u in jsonData) {
-      MemberRequestOvertimeGetListModel user = MemberRequestOvertimeGetListModel.fromJson(u);
+      MemberRequestOvertimeGetListModel user =
+          MemberRequestOvertimeGetListModel.fromJson(u);
       users.add(user);
       /*MemberRequestOvertimeGetListModel user = MemberRequestOvertimeGetListModel(
           activity: u["activity"],
@@ -106,19 +106,17 @@ class MemberRequestOvertimeController {
     return users;
   }
 
-  Future<List<MemberRequestOvertimeGetStatusModel>?> getStatus() async{
-    var data = await http.post(
-        Uri.parse("http://10.233.77.55/FlutterAPI/approvals/member/overtime/getStatus.php")
-    );
+  Future<List<MemberRequestOvertimeGetStatusModel>?> getStatus() async {
+    var data = await http.post(Uri.parse(
+        "http://10.233.77.55/FlutterAPI/approvals/member/overtime/getStatus.php"));
     List<dynamic> jsonData = json.decode(data.body);
     List<MemberRequestOvertimeGetStatusModel> users = [];
 
     for (var u in jsonData) {
       MemberRequestOvertimeGetStatusModel user =
-      MemberRequestOvertimeGetStatusModel.fromJson(u);
+          MemberRequestOvertimeGetStatusModel.fromJson(u);
       users.add(user);
     }
     return users;
   }
-
 }
