@@ -1,4 +1,6 @@
+import 'package:absent_project/approvalls/lembur/msdo/ApprovedDetail.dart';
 import 'package:absent_project/approvalls/lembur/msdo/DetailLemburUser.dart';
+import 'package:absent_project/approvalls/lembur/msdo/RejectedDetail.dart';
 import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertimeGetStatusModel.dart';
 import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertimeModel.dart';
 import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertmaControlleri.dart';
@@ -217,7 +219,16 @@ class _ListUserLemburState extends State<ListUserLembur> {
               final statusColor = _getStatusColor(getData.status ?? "Unknown");
               return GestureDetector(
               onTap: () {
-               Get.to(() => DetailLemburUser(getData: getData));
+              //  Get.to(() => DetailLemburUser(getData: getData));
+                if (getData.status == "New") {
+                Get.to(() => DetailLemburUser(getData: getData));
+                } 
+                else if (getData.status == "Approved") {
+                  Get.to(() => ApprovedDetail(getData: getData));
+                } 
+                else if (getData.status == "Rejected") {
+                  Get.to(() => RejectedDetail(getData: getData));
+                }
               },
                 child : Container(
                   margin: EdgeInsets.all(10),
