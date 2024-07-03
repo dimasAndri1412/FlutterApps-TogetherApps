@@ -3,12 +3,10 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:barcode/barcode.dart';
 import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
-
-import '../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeave_Development.dart';
-import '../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeave_MSDO.dart';
+import '../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveModel.dart';
 
 class PDFGenerator_MSDO extends StatelessWidget {
-  final AdminApprovalPaidLeave getUserDetail;
+  final AdminApprovalPaidLeaveModel getUserDetail;
   PDFGenerator_MSDO({super.key, required this.getUserDetail});
 
 

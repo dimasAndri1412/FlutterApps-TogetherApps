@@ -7,7 +7,9 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPadiLeaveGetStatusModel.dart';
 import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveController.dart';
+import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveGetProjectModel.dart';
 
 class ListUserCuti extends StatefulWidget {
   const ListUserCuti({super.key});
@@ -17,6 +19,20 @@ class ListUserCuti extends StatefulWidget {
 }
 
 class _ListUserCutiState extends State<ListUserCuti> {
+
+  List<AdminApprovalPadiLeaveGetStatusModel> getStatus = [];
+  List<AdminApprovalPaidLeaveGetProjectModel> getProject = [];
+
+  String selectedProject = 'Project';
+  String selectedStatus = 'Status';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchStatusOT();
+    fetchProjectOT();
+  }
+
   Color _getStatusColor(String status) {
     switch (status) {
       case 'Approved':
@@ -29,13 +45,38 @@ class _ListUserCutiState extends State<ListUserCuti> {
         return Colors.blue; // Default color if status is unknown
     }
   }
+
+
+  Future<void> fetchStatusOT() async {
+    try {
+      List<AdminApprovalPadiLeaveGetStatusModel>? statusList =
+      await AdminApprovalPaidLeaveController().getStatus();
+
+      setState(() {
+        getStatus = statusList!;
+      });
+    } catch (e) {
+      print('Error fetching overtime requests: $e');
+    }
+  }
+
+  Future<void> fetchProjectOT() async {
+    try {
+      List<AdminApprovalPaidLeaveGetProjectModel>? projectList =
+      await AdminApprovalPaidLeaveController().getProject();
+
+      setState(() {
+        getProject = projectList!;
+      });
+    } catch (e) {
+      print('Error fetching overtime requests: $e');
+    }
+  }
+
+
   final List<String> project = ['Project', 'MSDO Project', 'Development Project'];
   final List<String> status = ['Status', 'new', 'approved', 'rejected'];
 
-  // String? selectedStatus;
-  String selectedProject = 'Project';
-  String selectedStatus = 'Status';
-  
 
   @override
   Widget build(BuildContext context) {
@@ -90,12 +131,18 @@ class _ListUserCutiState extends State<ListUserCuti> {
                       selectedProject = value!;
                     });
                   },
-                  items: project.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+                  items: [
+                    DropdownMenuItem<String>(
+                        value: "Project",
+                        child: Text("Project"),
+                    ),
+                    ...getProject.map((project){
+                      return DropdownMenuItem<String>(
+                          value: project.project,
+                          child: Text(project.project)
+                      );
+                    }).toList()
+                  ]
                 ),
                 SizedBox(width: 10,),
                 DropdownButton<String>(
@@ -105,44 +152,22 @@ class _ListUserCutiState extends State<ListUserCuti> {
                       selectedStatus = value!;
                     });
                   },
-                  items: status.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+                  items: [
+                    DropdownMenuItem(
+                        value: "Status",
+                        child: Text("Status")
+                    ),
+                    ...getStatus.map((status) {
+                      return DropdownMenuItem(
+                          value: status.status,
+                          child: Text(status.status)
+                      );
+                    }).toList()
+                  ]
                 )
               ] 
             ),
           ),
-          // SingleChildScrollView(
-          //   child:
-          // Container(
-          //   margin: EdgeInsets.all(10),
-          //   child: Wrap(
-          //     spacing: 8.0,
-          //     children: statuses.map((status) {
-          //       selectedStatus == status;
-          //       return FilterChip(
-          //         label: Text(
-          //           status,
-          //           // style: TextStyle(
-          //           //   color: selectedStatus != null ? Colors.white : Colors.black,
-          //           // ),
-          //         ),
-          //         selected: selectedStatus == status,
-          //         onSelected: (bool selected) {
-          //           setState(() {
-          //             selectedStatus = selected ? status : null;
-          //           });
-          //         },
-          //         // selectedColor: Color.fromARGB(255, 225, 161, 101), 
-          //         // checkmarkColor: Colors.white,
-          //       );
-          //     }).toList(),
-          //   ),
-          // ),
-          // ),
           FutureBuilder(
               future: AdminApprovalPaidLeaveController().getUsers(),
               builder: (context, snapshot) {

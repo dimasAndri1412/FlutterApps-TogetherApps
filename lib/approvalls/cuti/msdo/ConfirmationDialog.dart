@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:printing/printing.dart';
 
 import 'package:absent_project/approvalls/cuti/GeneratePDF_MSDO.dart';
-import 'package:absent_project/approvalls/cuti/GeneratePDF_Development.dart';
 
-import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeave_Development.dart';
-import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeave_MSDO.dart';
+import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveModel.dart';
 
 class ConfirmationDialog extends StatefulWidget {
-  final AdminApprovalPaidLeave getUserDetail;
+  final AdminApprovalPaidLeaveModel getUserDetail;
   const ConfirmationDialog({super.key, required this.getUserDetail});
 
   @override
