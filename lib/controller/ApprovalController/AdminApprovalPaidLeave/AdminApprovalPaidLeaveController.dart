@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'dart:math';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:http/http.dart' as http;
-import 'AdminApprovalPaidLeave_Development.dart';
-import 'AdminApprovalPaidLeave_MSDO.dart';
-import 'adminGetDetail.dart';
+import 'AdminApprovalPadiLeaveGetStatusModel.dart';
+import 'AdminApprovalPaidLeaveGetProjectModel.dart';
+import 'AdminApprovalPaidLeaveModel.dart';
+
 
 class AdminApprovalPaidLeaveController {
   String status = "";
@@ -25,7 +25,7 @@ class AdminApprovalPaidLeaveController {
   int leaveUsed = 0;
 
 
-  Future<List<AdminApprovalPaidLeave_Development>?> getUsersDevelopment() async {
+ /* Future<List<AdminApprovalPaidLeave_Development>?> getUsersDevelopment() async {
       try{
         var url = Uri.parse(
             "http://192.168.2.159/FlutterAPI/approvals/admin/paid_leave/getUserDevelopment_paidLeave.php");
@@ -49,10 +49,10 @@ class AdminApprovalPaidLeaveController {
         "Failed Request!";
       }
       return null;
-    }
+    }*/
 
 
-  Future<List<AdminApprovalPaidLeave>?> getUsers() async {
+  Future<List<AdminApprovalPaidLeaveModel>?> getUsers() async {
     try{
 
       var url = Uri.parse(
@@ -62,9 +62,9 @@ class AdminApprovalPaidLeaveController {
       });
       if (data.statusCode == 200) {
         var jsonData = json.decode(data.body);
-        List<AdminApprovalPaidLeave> users = [];
+        List<AdminApprovalPaidLeaveModel> users = [];
         for (var u in jsonData) {
-          AdminApprovalPaidLeave user = AdminApprovalPaidLeave(
+          AdminApprovalPaidLeaveModel user = AdminApprovalPaidLeaveModel(
               u["name"], u["position"],u["project"], u["reqNo"], u["status"],
               u["date_start_leave"], u["phone_number"],
               u["departement"], u["types_leave"], u["reason_leave"],
@@ -102,4 +102,38 @@ class AdminApprovalPaidLeaveController {
       pic = jsonData[0]['name_of_pic'];
       backToWork = jsonData[0]['date_back_to_work'];
     }
+
+
+  Future<List<AdminApprovalPadiLeaveGetStatusModel>?> getStatus() async{
+    var data = await http.post(
+        Uri.parse("http://10.233.77.55/FlutterAPI/approvals/member/overtime/getStatus.php")
+    );
+    List<dynamic> jsonData = json.decode(data.body);
+    List<AdminApprovalPadiLeaveGetStatusModel> users = [];
+
+    for (var u in jsonData) {
+      AdminApprovalPadiLeaveGetStatusModel user =
+      AdminApprovalPadiLeaveGetStatusModel.fromJson(u);
+      users.add(user);
+    }
+    return users;
+  }
+
+  Future<List<AdminApprovalPaidLeaveGetProjectModel>?> getProject() async{
+    var data = await http.post(
+        Uri.parse("http://10.233.77.55/FlutterAPI/approvals/admin/overtime/getProject.php"),
+        body: {
+          "username": emailController.text,
+        }
+    );
+    List<dynamic> jsonData = json.decode(data.body);
+    List<AdminApprovalPaidLeaveGetProjectModel> users = [];
+
+    for (var u in jsonData) {
+      AdminApprovalPaidLeaveGetProjectModel user =
+      AdminApprovalPaidLeaveGetProjectModel.fromJson(u);
+      users.add(user);
+    }
+    return users;
+  }
 }

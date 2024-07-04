@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-// import 'package:quickalert/quickalert.dart';
 import 'package:printing/printing.dart';
-
 import 'package:absent_project/approvalls/cuti/GeneratePDF_MSDO.dart';
-import 'package:absent_project/approvalls/cuti/GeneratePDF_Development.dart';
-
-import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeave_Development.dart';
-import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeave_MSDO.dart';
+import 'package:http/http.dart' as http;
+import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveModel.dart';
 
 class ConfirmationDialog extends StatefulWidget {
-  final AdminApprovalPaidLeave getUserDetail;
+  final AdminApprovalPaidLeaveModel getUserDetail;
   const ConfirmationDialog({super.key, required this.getUserDetail});
 
   @override
@@ -17,6 +13,20 @@ class ConfirmationDialog extends StatefulWidget {
 }
 
 class _ConfirmationDialogState extends State<ConfirmationDialog> {
+
+  updateApproved() async {
+    final response = await http.post(
+      Uri.parse("http://10.233.77.55/FlutterAPI/approvals/admin/paid_leave/update_approved.php"),
+      body: {
+        "reqNo": widget.getUserDetail.reqNo
+      },
+    );
+    if (response.statusCode == 200){
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -74,6 +84,9 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
                     final pdf = await PDFGenerator_MSDO(getUserDetail:  widget.getUserDetail,).GeneratePDF();
                     await Printing.layoutPdf(
                         onLayout: (format) => pdf);
+                    setState(() {
+                      updateApproved();
+                    });
                   },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
