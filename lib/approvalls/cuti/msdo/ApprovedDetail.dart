@@ -3,18 +3,17 @@ import 'package:absent_project/approvalls/cuti/GeneratePDF_MSDO.dart';
 import 'package:absent_project/approvalls/cuti/msdo/ConfirmationDialog.dart';
 import 'package:absent_project/approvalls/cuti/msdo/RejectDialog.dart';
 import 'package:flutter/material.dart';
-import 'package:absent_project/approvalls/cuti/GeneratePDF_Development.dart';
+// import 'package:absent_project/approvalls/cuti/GeneratePDF_Development.dart';
 
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 
 import 'package:printing/printing.dart';
 
-import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeave_Development.dart';
-import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeave_MSDO.dart';
+import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveModel.dart';
 
 class ApprovedDetail extends StatelessWidget {
-   final AdminApprovalPaidLeave getUserDetail;
+  final AdminApprovalPaidLeaveModel getUserDetail;
   const ApprovedDetail({super.key,
   required this.getUserDetail});
 

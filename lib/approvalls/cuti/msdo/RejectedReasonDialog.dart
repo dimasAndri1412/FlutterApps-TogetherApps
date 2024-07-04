@@ -11,38 +11,41 @@ class RejectedReasonDialog extends StatelessWidget {
       ),
       child: Container(
         // width: 100,
-       decoration: BoxDecoration(
-         color: Colors.red[100],
-         borderRadius: BorderRadius.circular(20)
-       ),
-        height: 200,
+      //  decoration: BoxDecoration(
+      //    color: Colors.red[100],
+      //    borderRadius: BorderRadius.circular(20)
+      //  ),
+        // height: 200,
         child: Padding(
           padding: EdgeInsets.all(20),
-          child: Row(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.not_interested, color: Colors.red, size: 80,),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 25, left: 10),
-                    child: Text("Reason :",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold
-                      ),
-                    ),
+              Center(
+                child: CircleAvatar(
+                  radius: 35, 
+                  backgroundColor: Colors.grey[300],
+                  child: Icon(
+                    Icons.cancel, 
+                    color: Colors.red,
+                    size: 50,
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: 5, left: 10),
-                    child: Text("gaboleh ya",
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.normal
-                      ),
-                    ),
-                  )
-                ],
+                )
+              ),
+              SizedBox(height: 10,),
+              Center(
+                child: Text("lalala",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16
+                  ),
+                ),
+              ),
+              SizedBox(height: 10,),
+              Center(
+                child: Text(
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                )
               )
             ],
           ),
