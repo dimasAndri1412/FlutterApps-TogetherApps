@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveModel.dart';
+
 class RejectedReasonDialog extends StatelessWidget {
-  const RejectedReasonDialog({super.key});
+  final AdminApprovalPaidLeaveModel getData;
+  RejectedReasonDialog({super.key,
+  required this.getData});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +38,7 @@ class RejectedReasonDialog extends StatelessWidget {
               ),
               SizedBox(height: 10,),
               Center(
-                child: Text("lalala",
+                child: Text("Rejected Reason",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16
@@ -44,8 +48,8 @@ class RejectedReasonDialog extends StatelessWidget {
               SizedBox(height: 10,),
               Center(
                 child: Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                )
+                  getData.reason_rejected
+                  )
               )
             ],
           ),

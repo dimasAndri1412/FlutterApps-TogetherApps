@@ -60,20 +60,15 @@ class AdminApprovalPaidLeaveController {
       var data = await http.post(url, body: {
         "name": namePaidLeave.text
       });
-      if (data.statusCode == 200) {
-        var jsonData = json.decode(data.body);
+
+      var jsonData = json.decode(data.body);
         List<AdminApprovalPaidLeaveModel> users = [];
-        for (var u in jsonData) {
-          AdminApprovalPaidLeaveModel user = AdminApprovalPaidLeaveModel(
-              u["name"], u["position"],u["project"], u["reqNo"], u["status"],
-              u["date_start_leave"], u["phone_number"],
-              u["departement"], u["types_leave"], u["reason_leave"],
-              u["date_end_leave"], u["name_of_pic"], u["date_back_to_work"], u["submittedDate"],u["shift"],
-          u['leave_used'], u['remaining_leave']);
-          users.add(user);
-        }
-        return users;
+      for (var u in jsonData) {
+        AdminApprovalPaidLeaveModel user = AdminApprovalPaidLeaveModel.fromJson(u);
+        users.add(user);
       }
+      return users;
+
     }catch (Exception) {
       "Failed Request!";
     }

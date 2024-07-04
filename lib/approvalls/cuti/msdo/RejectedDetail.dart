@@ -333,7 +333,7 @@ class RejectedDetail extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              getUserDetail.date,
+                              getUserDetail.date_start_leave,
                               style: TextStyle(
                                 fontSize: 13
                               ),
@@ -403,7 +403,7 @@ class RejectedDetail extends StatelessWidget {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return RejectedReasonDialog();
+                    return RejectedReasonDialog(getData: getUserDetail,);
                   },
                 );
               },

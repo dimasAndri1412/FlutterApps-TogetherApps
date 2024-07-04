@@ -193,7 +193,7 @@ class PDFGenerator_MSDO extends StatelessWidget {
                                   style: pw.TextStyle(fontSize: 11),
                                 ),
                                 pw.TextSpan(
-                                  text: getUserDetail.date,
+                                  text: getUserDetail.date_start_leave,
                                   style: pw.TextStyle(
                                     fontSize: 11,
                                     fontWeight: pw.FontWeight.bold,

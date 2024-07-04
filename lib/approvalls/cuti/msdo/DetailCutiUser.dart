@@ -332,7 +332,7 @@ class DetailCutiUser extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              getUserDetail.date,
+                              getUserDetail.date_start_leave,
                               style: TextStyle(
                                 fontSize: 13
                               ),
