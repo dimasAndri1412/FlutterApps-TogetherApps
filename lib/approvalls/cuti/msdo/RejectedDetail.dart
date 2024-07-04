@@ -1,21 +1,24 @@
-import 'package:absent_project/approvalls/lembur/msdo/RejectedReasonDialog.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertimeModel.dart';
+import 'package:absent_project/approvalls/cuti/msdo/RejectedReasonDialog.dart';
 import 'package:flutter/material.dart';
+import 'package:absent_project/approvalls/cuti/GeneratePDF_MSDO.dart';
+import 'package:absent_project/approvalls/cuti/msdo/ConfirmationDialog.dart';
+import 'package:absent_project/approvalls/cuti/msdo/RejectDialog.dart';
+import 'package:flutter/material.dart';
+import 'package:absent_project/approvalls/cuti/GeneratePDF_Development.dart';
+
 import 'package:flutter/services.dart';
-import 'package:absent_project/approvalls/lembur/GeneratePDF.dart';
+import 'package:http/http.dart';
+
 import 'package:printing/printing.dart';
 
-class RejectedDetail extends StatefulWidget {
-  final AdminApprovalOvertimeModel getData;
+import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeave_Development.dart';
+import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeave_MSDO.dart';
+
+class RejectedDetail extends StatelessWidget {
+   final AdminApprovalPaidLeave getUserDetail;
   const RejectedDetail({super.key,
-  required this.getData});
+  required this.getUserDetail});
 
-  @override
-  State<RejectedDetail> createState() => _RejectedDetailState();
-}
-
-class _RejectedDetailState extends State<RejectedDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,8 +43,8 @@ class _RejectedDetailState extends State<RejectedDetail> {
         ),
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Column(
+      body:SingleChildScrollView(
+        child:  Column(
           children: [
             Center(
               child: Container(
@@ -66,7 +69,7 @@ class _RejectedDetailState extends State<RejectedDetail> {
                       ),
                     ),
                     Text(
-                      widget.getData.status,
+                      getUserDetail.status,
                       style: TextStyle(
                         color: Colors.red,
                         fontWeight: FontWeight.bold
@@ -98,7 +101,7 @@ class _RejectedDetailState extends State<RejectedDetail> {
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 14),
                       ),
-                    Text(widget.getData.reqNo,
+                    Text(getUserDetail.reqNo,
                       style: TextStyle(
                         fontSize: 14
                       ),
@@ -112,7 +115,7 @@ class _RejectedDetailState extends State<RejectedDetail> {
                       style: TextStyle(
                       fontSize: 12),
                       ),
-                    Text(widget.getData.submittedDate,
+                    Text(getUserDetail.submittedDate,
                       style: TextStyle(
                         fontSize: 12
                       ),
@@ -124,14 +127,14 @@ class _RejectedDetailState extends State<RejectedDetail> {
             Container(
               margin: EdgeInsets.only(top: 5, left: 10, right: 10),
               width: 350,
-              // height: 380,
+              height: 450,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(0),
                 border: Border.all(width: 0.5, color: Colors.grey),
               ),
               child: Padding(
-                padding: EdgeInsets.only(top: 15, left: 20, right: 20, bottom: 20),
+                padding: EdgeInsets.only(top: 15, left: 20, right: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -152,7 +155,6 @@ class _RejectedDetailState extends State<RejectedDetail> {
                     SizedBox(height: 10,),
                     IntrinsicHeight(
                       child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
                             child: Column(
@@ -164,24 +166,24 @@ class _RejectedDetailState extends State<RejectedDetail> {
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  widget.getData.full_name,
+                                  getUserDetail.username,
                                   style: TextStyle(fontSize: 13),
                                 ),
                               ],
                             ),
                           ),
-                          SizedBox(width: 20),  // Adjust this width as needed
+                          SizedBox(width: 20),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Location",
+                                  "Phone Number",
                                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  widget.getData.location,
+                                  getUserDetail.phoneNumber,
                                   style: TextStyle(fontSize: 13),
                                 ),
                               ],
@@ -189,7 +191,7 @@ class _RejectedDetailState extends State<RejectedDetail> {
                           ),
                         ],
                       ),
-                    ),
+                    ),                
                     SizedBox(height: 5),
                     Divider(
                       color: Colors.grey,
@@ -200,7 +202,6 @@ class _RejectedDetailState extends State<RejectedDetail> {
                     SizedBox(height: 5),
                     IntrinsicHeight(
                       child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
                             child: Column(
@@ -212,13 +213,13 @@ class _RejectedDetailState extends State<RejectedDetail> {
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  widget.getData.position,
+                                  getUserDetail.position,
                                   style: TextStyle(fontSize: 13),
                                 ),
                               ],
                             ),
                           ),
-                          SizedBox(width: 20),  // Adjust this width as needed
+                          SizedBox(width: 20),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -229,7 +230,7 @@ class _RejectedDetailState extends State<RejectedDetail> {
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  widget.getData.department,
+                                  getUserDetail.departement,
                                   style: TextStyle(fontSize: 13),
                                 ),
                               ],
@@ -252,14 +253,14 @@ class _RejectedDetailState extends State<RejectedDetail> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Overtime Date",
+                                Text("Leave Type",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 13
                                   ),
                                 ),
                                 SizedBox(height: 5,),
-                                Text(widget.getData.start_date,
+                                Text(getUserDetail.types_leave,
                                   style: TextStyle(
                                     fontSize: 13
                                   ),
@@ -279,7 +280,7 @@ class _RejectedDetailState extends State<RejectedDetail> {
                                   ),
                                 ),
                                 SizedBox(height: 5,),
-                                Text(widget.getData.shift,
+                                Text(getUserDetail.shift,
                                   style: TextStyle(
                                     fontSize: 13
                                   ),
@@ -300,21 +301,23 @@ class _RejectedDetailState extends State<RejectedDetail> {
                     SizedBox(height: 5,),
                     Row(
                       children: [
-                        Text("Reason of Overtime : ",
+                        Text("Reason of Leave : ",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 13
                           ),
                         ),
-                        Text(widget.getData.activity,
-                          style: TextStyle(
-                            fontSize: 13
-                          ),
+                        Expanded(
+                          child: Text(getUserDetail.reason_leave,
+                            style: TextStyle(
+                              fontSize: 13
+                            ),
+                          )
                         )
                       ],
                     ),
                     SizedBox(height: 5,),
-                    Text("Overtime Hours ",
+                    Text("Leave Date ",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 13
@@ -331,7 +334,7 @@ class _RejectedDetailState extends State<RejectedDetail> {
                           ),
                           child: Center(
                             child: Text(
-                              widget.getData.start_time,
+                              getUserDetail.date,
                               style: TextStyle(
                                 fontSize: 13
                               ),
@@ -349,7 +352,7 @@ class _RejectedDetailState extends State<RejectedDetail> {
                           ),
                           child: Center(
                             child: Text(
-                              widget.getData.end_time,
+                              getUserDetail.date_end_leave,
                               style: TextStyle(
                                 fontSize: 13
                               ),
@@ -358,11 +361,44 @@ class _RejectedDetailState extends State<RejectedDetail> {
                         )
                       ],
                     ),
+                    SizedBox(height: 20,),
+                    Row(
+                      children: [
+                        Text("Name Of PIC : ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13
+                          ),
+                        ),
+                        Text(getUserDetail.name_of_pic,
+                          style: TextStyle(
+                            fontSize: 13
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 5,),
+                    Row(
+                      children: [
+                        Text("Will return to work on : ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13
+                          ),
+                        ),
+                        Text(getUserDetail.date_back_to_work,
+                          style: TextStyle(
+                            fontSize: 13
+                          ),
+                        )
+                        
+                      ],
+                    ),
                   ],
                 ),
               )
             ),
-            SizedBox(height: 120,),
+            SizedBox(height: 40,),
             ElevatedButton(
               onPressed: () async {
                 showDialog(

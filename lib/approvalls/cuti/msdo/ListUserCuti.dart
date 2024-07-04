@@ -1,6 +1,8 @@
 // import 'dart:ffi';
 
+import 'package:absent_project/approvalls/cuti/msdo/ApprovedDetail.dart';
 import 'package:absent_project/approvalls/cuti/msdo/DetailCutiUser.dart';
+import 'package:absent_project/approvalls/cuti/msdo/RejectedDetail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -19,11 +21,11 @@ class ListUserCuti extends StatefulWidget {
 class _ListUserCutiState extends State<ListUserCuti> {
   Color _getStatusColor(String status) {
     switch (status) {
-      case 'Approved':
+      case 'approved':
         return Colors.green;
-      case 'Rejected':
+      case 'rejected':
         return Colors.red;
-      case 'New':
+      case 'new':
         return Colors.blue;
       default:
         return Colors.blue; // Default color if status is unknown
@@ -166,7 +168,16 @@ class _ListUserCutiState extends State<ListUserCuti> {
                               getData.status ?? "Unknown");
                           return GestureDetector(
                               onTap: () {
-                                Get.to(() => DetailCutiUser(getUserDetail: getData,));
+                                // Get.to(() => DetailCutiUser(getUserDetail: getData,));
+                                if (getData.status == "new") {
+                                Get.to(() => DetailCutiUser(getUserDetail: getData));
+                                } 
+                                else if (getData.status == "approved") {
+                                  Get.to(() => ApprovedDetail(getUserDetail: getData));
+                                } 
+                                else if (getData.status == "rejected") {
+                                  Get.to(() => RejectedDetail(getUserDetail: getData));
+                                }
                               },
                               child: Container(
                                 margin: const EdgeInsets.all(10),
