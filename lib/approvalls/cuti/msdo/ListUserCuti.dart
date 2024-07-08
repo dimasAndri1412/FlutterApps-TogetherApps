@@ -37,11 +37,11 @@ class _ListUserCutiState extends State<ListUserCuti> {
 
   Color _getStatusColor(String status) {
     switch (status) {
-      case 'Approved':
+      case 'approved':
         return Colors.green;
-      case 'Rejected':
+      case 'rejected':
         return Colors.red;
-      case 'New':
+      case 'new':
         return Colors.blue;
       default:
         return Colors.blue; // Default color if status is unknown
@@ -194,13 +194,13 @@ class _ListUserCutiState extends State<ListUserCuti> {
                           return GestureDetector(
                               onTap: () {
                                 // Get.to(() => DetailCutiUser(getUserDetail: getData,));
-                                if (getData.status == "New") {
+                                if (getData.status == "new") {
                                 Get.to(() => DetailCutiUser(getUserDetail: getData));
                                 } 
-                                else if (getData.status == "Approved") {
+                                else if (getData.status == "approved") {
                                   Get.to(() => ApprovedDetail(getUserDetail: getData));
                                 } 
-                                else if (getData.status == "Rejected") {
+                                else if (getData.status == "rejected") {
                                   Get.to(() => RejectedDetail(getUserDetail: getData));
                                 }
                               },

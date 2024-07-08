@@ -13,16 +13,42 @@ import 'package:printing/printing.dart';
 
 import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveModel.dart';
 
-class RejectedDetail extends StatelessWidget {
+class RejectedDetail extends StatefulWidget {
   final AdminApprovalPaidLeaveModel getUserDetail;
-  const RejectedDetail({super.key,
-  required this.getUserDetail});
+  const RejectedDetail({super.key, required this.getUserDetail});
+
+  @override
+  _RejectedDetailState createState() => _RejectedDetailState();
+}
+
+class _RejectedDetailState extends State<RejectedDetail> {
+  bool _isDialogShown = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _showDialog();
+    });
+  }
+
+  void _showDialog() {
+    if (!_isDialogShown) {
+      _isDialogShown = true;
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return RejectedReasonDialog(getData: widget.getUserDetail);
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:Center(
+        title: Center(
           child: Text(
             "Detail Approval",
             style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
@@ -32,18 +58,18 @@ class RejectedDetail extends StatelessWidget {
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-                  colors: [
-                    Color.fromARGB(255, 147, 195, 234),
-                    Color.fromARGB(255, 98, 171, 232),
-                    Color.fromARGB(255, 123, 185, 235),
-                  ]
-                ),
+              colors: [
+                Color.fromARGB(255, 147, 195, 234),
+                Color.fromARGB(255, 98, 171, 232),
+                Color.fromARGB(255, 123, 185, 235),
+              ]
+            ),
           ),
         ),
         elevation: 0,
       ),
-      body:SingleChildScrollView(
-        child:  Column(
+      body: SingleChildScrollView(
+        child: Column(
           children: [
             Center(
               child: Container(
@@ -53,27 +79,22 @@ class RejectedDetail extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(20)
+                  borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(Icons.cancel, color: Colors.red,),
-                    SizedBox(width: 5,),
+                    Icon(Icons.cancel, color: Colors.red),
+                    SizedBox(width: 5),
                     Text(
                       "Status : ",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold
-                      ),
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      getUserDetail.status,
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold
-                      ),
-                    )
+                      widget.getUserDetail.status,
+                      style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                    ),
                   ],
                 ),
               ),
@@ -86,41 +107,37 @@ class RejectedDetail extends StatelessWidget {
               ),
               child: ListTile(
                 leading: CircleAvatar(
-                  radius: 18, 
-                  backgroundColor: Colors.blue, 
+                  radius: 18,
+                  backgroundColor: Colors.blue,
                   child: Icon(
-                    Icons.document_scanner_sharp, 
-                    color: Colors.white, 
+                    Icons.document_scanner_sharp,
+                    color: Colors.white,
                   ),
                 ),
-                title:Row(
+                title: Row(
                   children: [
                     Text(
                       "No Request : ",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 14),
-                      ),
-                    Text(getUserDetail.reqNo,
-                      style: TextStyle(
-                        fontSize: 14
-                      ),
-                    )
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    ),
+                    Text(
+                      widget.getUserDetail.reqNo,
+                      style: TextStyle(fontSize: 14),
+                    ),
                   ],
                 ),
                 subtitle: Row(
                   children: [
                     Text(
                       "Submitted Date ",
-                      style: TextStyle(
-                      fontSize: 12),
-                      ),
-                    Text(getUserDetail.submittedDate,
-                      style: TextStyle(
-                        fontSize: 12
-                      ),
-                    )
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    Text(
+                      widget.getUserDetail.submittedDate,
+                      style: TextStyle(fontSize: 12),
+                    ),
                   ],
-                )
+                ),
               ),
             ),
             Container(
@@ -139,11 +156,7 @@ class RejectedDetail extends StatelessWidget {
                   children: [
                     Text(
                       "Request Detail",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15
-                      ),
+                      style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 15),
                     ),
                     Divider(
                       color: Colors.grey,
@@ -151,7 +164,7 @@ class RejectedDetail extends StatelessWidget {
                       indent: 2,
                       endIndent: 2,
                     ),
-                    SizedBox(height: 10,),
+                    SizedBox(height: 10),
                     IntrinsicHeight(
                       child: Row(
                         children: [
@@ -165,7 +178,7 @@ class RejectedDetail extends StatelessWidget {
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  getUserDetail.username,
+                                  widget.getUserDetail.username,
                                   style: TextStyle(fontSize: 13),
                                 ),
                               ],
@@ -182,7 +195,7 @@ class RejectedDetail extends StatelessWidget {
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  getUserDetail.phoneNumber,
+                                  widget.getUserDetail.phoneNumber,
                                   style: TextStyle(fontSize: 13),
                                 ),
                               ],
@@ -190,7 +203,7 @@ class RejectedDetail extends StatelessWidget {
                           ),
                         ],
                       ),
-                    ),                
+                    ),
                     SizedBox(height: 5),
                     Divider(
                       color: Colors.grey,
@@ -212,7 +225,7 @@ class RejectedDetail extends StatelessWidget {
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  getUserDetail.position,
+                                  widget.getUserDetail.position,
                                   style: TextStyle(fontSize: 13),
                                 ),
                               ],
@@ -229,7 +242,7 @@ class RejectedDetail extends StatelessWidget {
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  getUserDetail.departement,
+                                  widget.getUserDetail.departement,
                                   style: TextStyle(fontSize: 13),
                                 ),
                               ],
@@ -244,7 +257,7 @@ class RejectedDetail extends StatelessWidget {
                       indent: 2,
                       endIndent: 2,
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(height: 5),
                     IntrinsicHeight(
                       child: Row(
                         children: [
@@ -252,91 +265,78 @@ class RejectedDetail extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Leave Type",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 13
-                                  ),
+                                Text(
+                                  "Leave Type",
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                                 ),
-                                SizedBox(height: 5,),
-                                Text(getUserDetail.types_leave,
-                                  style: TextStyle(
-                                    fontSize: 13
-                                  ),
-                                )
+                                SizedBox(height: 5),
+                                Text(
+                                  widget.getUserDetail.types_leave,
+                                  style: TextStyle(fontSize: 13),
+                                ),
                               ],
                             ),
                           ),
-                          SizedBox(width: 20,),
+                          SizedBox(width: 20),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Shift",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 13
-                                  ),
+                                Text(
+                                  "Shift",
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                                 ),
-                                SizedBox(height: 5,),
-                                Text(getUserDetail.shift,
-                                  style: TextStyle(
-                                    fontSize: 13
-                                  ),
-                                )
+                                SizedBox(height: 5),
+                                Text(
+                                  widget.getUserDetail.shift,
+                                  style: TextStyle(fontSize: 13),
+                                ),
                               ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(height: 5),
                     Divider(
                       color: Colors.grey,
                       thickness: 0.5,
                       indent: 2,
                       endIndent: 2,
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(height: 5),
                     Row(
                       children: [
-                        Text("Reason of Leave : ",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13
-                          ),
+                        Text(
+                          "Reason of Leave : ",
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                         ),
                         Expanded(
-                          child: Text(getUserDetail.reason_leave,
-                            style: TextStyle(
-                              fontSize: 13
-                            ),
-                          )
-                        )
+                          child: Text(
+                            widget.getUserDetail.reason_leave,
+                            style: TextStyle(fontSize: 13),
+                          ),
+                        ),
                       ],
                     ),
-                    SizedBox(height: 5,),
-                    Text("Leave Date ",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13
-                        ),
-                      ),
-                    SizedBox(height: 5,),
-                    Row(  
+                    SizedBox(height: 5),
+                    Text(
+                      "Leave Date ",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                    ),
+                    SizedBox(height: 5),
+                    Row(
                       children: [
                         Container(
                           width: 140,
                           height: 35,
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey)
+                            border: Border.all(color: Colors.grey),
                           ),
                           child: Center(
                             child: Text(
-                              getUserDetail.date_start_leave,
-                              style: TextStyle(
-                                fontSize: 13
-                              ),
+                              widget.getUserDetail.date_start_leave,
+                              style: TextStyle(fontSize: 13),
                             ),
                           ),
                         ),
@@ -347,71 +347,60 @@ class RejectedDetail extends StatelessWidget {
                           width: 140,
                           height: 35,
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey)
+                            border: Border.all(color: Colors.grey),
                           ),
                           child: Center(
                             child: Text(
-                              getUserDetail.date_end_leave,
-                              style: TextStyle(
-                                fontSize: 13
-                              ),
+                              widget.getUserDetail.date_end_leave,
+                              style: TextStyle(fontSize: 13),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(height: 20),
                     Row(
                       children: [
-                        Text("Name Of PIC : ",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13
-                          ),
+                        Text(
+                          "Name Of PIC : ",
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                         ),
-                        Text(getUserDetail.name_of_pic,
-                          style: TextStyle(
-                            fontSize: 13
-                          ),
-                        )
+                        Text(
+                          widget.getUserDetail.name_of_pic,
+                          style: TextStyle(fontSize: 13),
+                        ),
                       ],
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(height: 5),
                     Row(
                       children: [
-                        Text("Will return to work on : ",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13
-                          ),
+                        Text(
+                          "Will return to work on : ",
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                         ),
-                        Text(getUserDetail.date_back_to_work,
-                          style: TextStyle(
-                            fontSize: 13
-                          ),
-                        )
-                        
+                        Text(
+                          widget.getUserDetail.date_back_to_work,
+                          style: TextStyle(fontSize: 13),
+                        ),
                       ],
                     ),
                   ],
                 ),
-              )
+              ),
             ),
-            SizedBox(height: 40,),
+            SizedBox(height: 40),
             ElevatedButton(
               onPressed: () async {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return RejectedReasonDialog(getData: getUserDetail,);
+                    return RejectedReasonDialog(getData: widget.getUserDetail);
                   },
                 );
               },
-              child: Text('Your request has been Rejected',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold
-                ),
+              child: Text(
+                'Your request has been Rejected',
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,
@@ -423,7 +412,7 @@ class RejectedDetail extends StatelessWidget {
             ),
           ],
         ),
-      )
+      ),
     );
   }
 }
