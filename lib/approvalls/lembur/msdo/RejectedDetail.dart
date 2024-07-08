@@ -16,6 +16,27 @@ class RejectedDetail extends StatefulWidget {
 }
 
 class _RejectedDetailState extends State<RejectedDetail> {
+  bool _isDialogShown = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _showDialog();
+    });
+  }
+
+  void _showDialog() {
+    if (!_isDialogShown) {
+      _isDialogShown = true;
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return RejectedReasonDialog();
+        },
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
