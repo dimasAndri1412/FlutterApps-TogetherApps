@@ -2,6 +2,7 @@ import 'package:absent_project/MapsViews/MapsConfirmLocationPages/GmapsConfirmBu
 import 'package:absent_project/MapsViews/MapsConfirmLocationPages/GmapsConfirmField.dart';
 import 'package:flutter/material.dart';
 
+
 class gmapsConfirmWrappers extends StatefulWidget {
   const gmapsConfirmWrappers({super.key});
 

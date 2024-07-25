@@ -7,7 +7,7 @@ import '../home/ApplicationBar.dart';
 import '../home/applicationbar_user.dart';
 
 class LoginController {
-  String? alert, username, password, role, login_flag, IDUsers;
+  String? alert, username, password, role, login_flag, IDUsers, position;
 
   var dataUser;
 
@@ -17,7 +17,7 @@ class LoginController {
 
     try {
       if (formKey.currentState!.validate()) {
-        var url = Uri.parse("http://192.168.2.159/FlutterAPI/AdminLogin.php");
+        var url = Uri.parse("http://10.233.77.55/FlutterAPI/AdminLogin.php");
         var response = await http.post(url,
             body: {"username": usernameInput, "password": passwordInput});
         dataUser = jsonDecode(response.body);
@@ -30,6 +30,7 @@ class LoginController {
           role = dataUser[0]['ROLE'];
           login_flag = dataUser[0]['login_flag'];
           IDUsers = dataUser[0]['ID'];
+          position = dataUser[0]['ID'];
         };
         if (login_flag == "0" && role == "MEMBER" && IDUsers == IDUsers ) {
           Get.offAll(() => const ChangesPasswordMenu());
@@ -39,7 +40,9 @@ class LoginController {
           /*Get.to(() => const UserHome());*/
         } else if (role == "ADMIN") {
           Get.offAll(() => const ApplicationBar());
-        } else {
+        } else if (role == "ADMIN" && position == "Manager") {
+          Get.offAll(() => const ApplicationBar());
+        }else {
           print("Go to member home page, cuk dengan id = ${IDUsers}");
           /*Get.to(() => const UserHome());*/
         }

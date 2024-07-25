@@ -1,5 +1,6 @@
 library MapsLocationModels;
 
+
 String? locationNamesModel;
 String? streetLocationModel;
 String? radiusLocationModel;

@@ -105,6 +105,7 @@ class _googleMapsViewsState extends State<googleMapsViews> {
     );
   }
 
+
   Future<void> fetchUpdateLocation() async{
     bool serviceEnabled;
     PermissionStatus permissionGranted;

@@ -1,8 +1,13 @@
-import 'package:absent_project/approvalls/ProjectType.dart';
-import 'package:absent_project/approvalls/lembur/ListUserLembur.dart';
+// import 'package:absent_project/approvalls/ProjectType.dart';
+import 'package:absent_project/approvalls/cuti/ProjectType.dart' as cuti;
+import 'package:absent_project/approvalls/cuti/msdo/ListUserCuti.dart';
+import 'package:absent_project/approvalls/lembur/ProjectType.dart' as lembur;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'cuti/ListUserCuti.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import 'lembur/msdo/ListUserLembur.dart';
 
 class Approvalls extends StatefulWidget {
   const Approvalls({super.key});
@@ -66,11 +71,7 @@ class _ApprovallsState extends State<Approvalls> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ProjectType(type: 'overtime')),
-                  );
+                  Get.to (() => ListUserLembur());
                 },
               ),
               MaterialButton(
@@ -105,11 +106,11 @@ class _ApprovallsState extends State<Approvalls> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ProjectType(type: 'paid-leave')),
-                  );
+                  Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => ListUserCuti(), // Instantiate the class with prefix
+                  ),
+                );
                 },
               ),
             ],
