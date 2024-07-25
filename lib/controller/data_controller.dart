@@ -41,6 +41,20 @@ class ctr_data {
     OTPController.clear();
   }
 
+  clear_maps_func() {
+    SearchLocationController.clear();
+    nameLocationController.clear();
+    stateLocationController.clear();
+    subStateLocationController.clear();
+    localityLocationController.clear();
+    SubLocalityLocationController.clear();
+    postalCodeController.clear();
+    StreetLocationController.clear();
+    localityLocationController.clear();
+    latitudeLocationController.clear();
+    radiusController.clear();
+  }
+
   update_pwd() async {
     final response = await http.post(
       Uri.parse("http://192.168.2.159/FlutterAPI/update_password.php"),

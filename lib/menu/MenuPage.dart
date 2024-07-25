@@ -1,6 +1,8 @@
+import 'package:absent_project/MapsViews/MapsViewPage/GoogleMapsPages.dart';
 import 'package:absent_project/menu/adminManagement/ListUser.dart';
 // import 'package:first_project/login/setting/admin.dart' as admin;
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -30,7 +32,17 @@ class _MenuPageState extends State<MenuPage> {
                      context,
                       MaterialPageRoute(builder: (context) => const ListUser()),
                     );
-                }, 
+                },
+            ),
+            Divider(
+              color: Colors.grey,
+            ),
+            ListTile(
+              title: Text("Locations"),
+              leading:Icon(Icons.location_pin),
+              onTap: (){
+                Get.offAll(() => googleMapsPages());
+              },
             ),
             Divider(
               color: Colors.grey,
@@ -50,7 +62,24 @@ class _MenuPageState extends State<MenuPage> {
                   context,
                   MaterialPageRoute(builder: (context) => const ListUser()),
                 );
-            }, 
+            },
+        ),
+        Divider(
+          color: Colors.grey,
+        ),
+      ],
+    );
+  }
+
+  itemMenuLocation(String titleLocation, String subtitle, IconData iconDataLocation) {
+    return Column(
+      children: [
+        ListTile(
+          title: Text(titleLocation),
+          leading: Icon(iconDataLocation),
+          onTap: () {
+            Get.offAll(() => googleMapsPages());
+          },
         ),
         Divider(
           color: Colors.grey,
@@ -59,5 +88,3 @@ class _MenuPageState extends State<MenuPage> {
     );
   }
 }
-
-

@@ -1,3 +1,10 @@
+import 'package:absent_project/MapsViews/MapsLocationPages/GmapsLocationView.dart';
+import 'package:absent_project/MapsViews/MapsLocationPages/GmapsLocationWrapper.dart';
+import 'package:absent_project/MapsViews/MapsViewPage/GoogleMapsPages.dart';
+import 'package:absent_project/MapsViews/MapsViewPage/GoogleMapsViews.dart';
+import 'package:absent_project/MapsViews/MapsViewPage/GoogleMapsWrapper.dart';
+import 'package:absent_project/MapsViews/MatterialMaps/FindMapLocationControllers.dart';
+import 'package:absent_project/MapsViews/MatterialMaps/FindProjectControllers.dart';
 import 'package:absent_project/OTPVerfication/OTPVerficationPage.dart';
 import 'package:absent_project/controller/LoginController.dart';
 import 'package:flutter/material.dart';
@@ -165,8 +172,24 @@ class _myFormState extends State<myForm> {
                             ),
                           ),
                         ),
-                                   ],
-                    )
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              //Get.offAll(() => googleMapsPages());
+                              findGmapsLocation().findLocations();
+                              Get.offAll(() => gmapsLocationWrapper());
+                            },
+                            child: Text(
+                              "TestMaps",
+                              style: TextStyle(
+                                color: Colors.deepPurple,
+                              ),
+                            )
+                        )
+                      ],
+                    ),
                   ],
                 ),
               ),

@@ -1,3 +1,4 @@
+import 'package:absent_project/MapsViews/MapsLocationPages/GmapsLocationPage.dart';
 import 'package:absent_project/timesheets/Timesheets.dart';
 import 'package:flutter/material.dart';
 import 'package:absent_project/home/Home.dart';
@@ -17,11 +18,12 @@ class _ApplicationBarState extends State<ApplicationBar> {
   List<Widget> body = const [
 
     Home(),
-    Icon(Icons.lock_clock),
+    gmapsLocationPages(),
     Timesheets(),
     Approvalls(),
     MenuPage()
   ];
+
 
 
   @override
