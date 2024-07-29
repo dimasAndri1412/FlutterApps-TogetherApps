@@ -3,15 +3,28 @@ import 'package:absent_project/login/LoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/data_controller.dart';
+import 'package:absent_project/ChangesPasswordPage/ChangesPasswordCamera.dart';
+import 'dart:io';
 
 class ChangesPasswordButtons extends StatefulWidget {
-  const ChangesPasswordButtons({super.key});
+  // const ChangesPasswordButtons({super.key});
+
+  // final File? image;
+  // final bool faceDetected;
+
+  // const ChangesPasswordButtons({
+  //   super.key,
+  //   required this.image,
+  //   required this.faceDetected,
+  // });
 
   @override
   State<ChangesPasswordButtons> createState() => _ChangesPasswordButtonsState();
 }
 
 class _ChangesPasswordButtonsState extends State<ChangesPasswordButtons> {
+  final Changespasswordcamera _cameraState = Changespasswordcamera(); 
+  
   @override
   Widget build(BuildContext context) {
     return Column(

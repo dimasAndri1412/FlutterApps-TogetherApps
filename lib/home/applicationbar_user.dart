@@ -1,4 +1,5 @@
 import 'package:absent_project/approvalls/approvalls_user.dart';
+import 'package:absent_project/attendance/attendance.dart';
 import 'package:absent_project/home/Userhome.dart';
 import 'package:absent_project/menu/menu_page_user.dart';
 import 'package:absent_project/timesheets/timesheetsUser/timesheets_user.dart';
@@ -15,7 +16,7 @@ class _ApplicationBarUserState extends State<ApplicationBarUser> {
   int currentIndex = 0;
   List<Widget> body = [
     UserHome(),
-    Icon(Icons.lock_clock),
+    AttendanceScreen(),
     TimesheetsUser(),
     ApprovallsUser(),
     MenuPageUser()

@@ -5,11 +5,17 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../home/ApplicationBar.dart';
 import '../home/applicationbar_user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController {
   String? alert, username, password, role, login_flag, IDUsers, position;
 
   var dataUser;
+
+  Future<void> saveUserId(String userId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('user_id', userId);
+  }
 
   Future doLogin() async {
     String usernameInput = emailController.text;
@@ -17,7 +23,7 @@ class LoginController {
 
     try {
       if (formKey.currentState!.validate()) {
-        var url = Uri.parse("http://10.233.77.55/FlutterAPI/AdminLogin.php");
+        var url = Uri.parse("http://10.233.124.109/FlutterAPI/AdminLogin.php");
         var response = await http.post(url,
             body: {"username": usernameInput, "password": passwordInput});
         dataUser = jsonDecode(response.body);
@@ -32,6 +38,9 @@ class LoginController {
           IDUsers = dataUser[0]['ID'];
           position = dataUser[0]['ID'];
         };
+
+         await saveUserId(IDUsers!);
+
         if (login_flag == "0" && role == "MEMBER" && IDUsers == IDUsers ) {
           Get.offAll(() => const ChangesPasswordMenu());
         } else if (login_flag == "1" && role == "MEMBER" && IDUsers == IDUsers) {

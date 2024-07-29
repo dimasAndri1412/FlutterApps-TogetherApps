@@ -1,5 +1,10 @@
 import 'Keys.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class ctr_data {
   //fungsi untuk melakukan penyimpanan data//
@@ -39,21 +44,69 @@ class ctr_data {
     ConfPassController.clear();
     ProjectController.clear();
     OTPController.clear();
+    UserIdController.clear();
+    FaceImageController.clear();
+  }
+
+  // update_pwd() async {
+  //   final response = await http.post(
+  //     Uri.parse("http://10.233.85.124/FlutterAPI/update_password.php"),
+  //     body: {
+  //       "OLD_PASSWORD": passwordController.text,
+  //       "PASSWORD": NewPasswordContorller.text,
+  //     },
+  //   );
+  //   if (response.statusCode == 200){
+  //     return true;
+  //   }
+  //   return false;
+  // }
+  Future<String?> getUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('user_id');
   }
 
   update_pwd() async {
-    final response = await http.post(
-      Uri.parse("http://192.168.2.159/FlutterAPI/update_password.php"),
-      body: {
-        "OLD_PASSWORD": passwordController.text,
-        "PASSWORD": NewPasswordContorller.text,
-      },
-    );
-    if (response.statusCode == 200){
-      return true;
+  // if (image == null || !faceDetected) return false;
+  try {
+    String? userId = await getUserId();
+    if (userId == null) {
+      print('User ID tidak ditemukan');
+      return false;
     }
+
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse("http://192.168.18.113/FlutterAPI/update_password.php"),
+    );
+    
+    request.fields['OLD_PASSWORD'] = passwordController.text;
+    request.fields['PASSWORD'] = NewPasswordContorller.text;
+    request.fields['user_id'] = userId;
+    
+    if (FaceImageController != null) {
+      var imageFile = await http.MultipartFile.fromPath("image", FaceImageController.text);
+      request.files.add(imageFile);
+    }
+
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+
+    if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
+      if (responseData['Message'] == 'Success') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  } catch (e) {
+    print('Exception during update_pwd request: $e');
     return false;
   }
+}
   
   forgot_pwd() async {
     final response = await http.post(
