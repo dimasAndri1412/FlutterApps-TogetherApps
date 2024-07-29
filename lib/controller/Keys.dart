@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 //Login Controller
 final formKey = new GlobalKey<FormState>();
@@ -64,6 +68,52 @@ final ConfPassController = TextEditingController();
 final ProjectController = TextEditingController();
 final UserIdController = TextEditingController();
 final FaceImageController = TextEditingController(); 
+
+//GoogleMapController
+final nameLocationController = TextEditingController();
+final locationNamesController = TextEditingController();
+final historyClockInController = TextEditingController();
+final localityLocationController = TextEditingController();
+final SubLocalityLocationController = TextEditingController();
+final StreetLocationController = TextEditingController();
+final SearchLocationController = TextEditingController();
+final stateLocationController = TextEditingController();
+final subStateLocationController = TextEditingController();
+final latitudeLocationController = TextEditingController();
+final longtitudeLocationController = TextEditingController();
+final postalCodeController = TextEditingController();
+final radiusController = TextEditingController();
+late GoogleMapController mapControllers;
+late StreamSubscription<LocationData>? locationSubscriptions;
+final Set<Marker> initMarkers = {};
+final Set<Marker> initMarkerLocation = {};
+final Location locationController = new Location();
+LatLng? currentPosition = null;
+CameraPosition? cameraPosition = null;
+Set<Circle> circless = {};
+
+//LocationField
+final locationFieldController = TextEditingController();
+final userNameLocationFieldController = TextEditingController();
+final projectLocationFieldController = TextEditingController();
+final shiftLOcationFieldController = TextEditingController();
+final fullNamesLocationController = TextEditingController();
+final noteLocationController = TextEditingController();
+final avatarUrlController = TextEditingController();
+String avatarURLs = '';
+
+//ElapsedTime
+final elapsedTimesController = TextEditingController();
+
+
+//ElapsedTimeKey
+final GlobalKey<FormState> gmapsElapsedTimeKey = GlobalKey<FormState>();
+
+//gmapsConfirmKey
+final GlobalKey<FormState>gmapsConfirmKey = GlobalKey<FormState>();
+
+//gmaps
+final GlobalKey<FormState>GoogleMapsForm = GlobalKey<FormState>();
 
 //Key ForgotPassword
 final GlobalKey<FormState> formsForgotKeys = GlobalKey<FormState>();

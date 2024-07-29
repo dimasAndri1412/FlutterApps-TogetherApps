@@ -66,6 +66,20 @@ class ctr_data {
     return prefs.getString('user_id');
   }
 
+  clear_maps_func() {
+    SearchLocationController.clear();
+    nameLocationController.clear();
+    stateLocationController.clear();
+    subStateLocationController.clear();
+    localityLocationController.clear();
+    SubLocalityLocationController.clear();
+    postalCodeController.clear();
+    StreetLocationController.clear();
+    localityLocationController.clear();
+    latitudeLocationController.clear();
+    radiusController.clear();
+  }
+
   update_pwd() async {
   // if (image == null || !faceDetected) return false;
   try {

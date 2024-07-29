@@ -1,4 +1,4 @@
-import 'package:absent_project/home/NotificationDialog.dart';
+import 'package:absent_project/MapsViews/MapsLocationPages/GmapsLocationPage.dart';
 import 'package:absent_project/timesheets/AdminPage/Timesheets.dart';
 import 'package:flutter/material.dart';
 import 'package:absent_project/home/Home.dart';
@@ -18,11 +18,12 @@ class _ApplicationBarState extends State<ApplicationBar> {
   List<Widget> body = const [
 
     Home(),
-    Icon(Icons.lock_clock),
+    gmapsLocationPages(),
     Timesheets(),
     Approvalls(),
     MenuPage()
   ];
+
 
 
   @override
@@ -56,34 +57,22 @@ class _ApplicationBarState extends State<ApplicationBar> {
         actions: [
           Stack(
             children: [
-              // PopupMenuButton<String>(
-              //   icon: Icon(Icons.notifications, color: Colors.white,),
-              //   onSelected: (String result) {
-              //     setState(() {
-              //       notifications.remove(result);
-              //       notificationCount--;
-              //     });
-              //   },
-              //   itemBuilder: (BuildContext context) {
-              //     return notifications.map((String choice) {
-              //       return PopupMenuItem<String>(
-              //         value: choice,
-              //         child: Text(choice),
-              //       );
-              //     }).toList();
-              //   },
-              // ),
-               IconButton(
-                onPressed: (){
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return NotificationDialog();
-                    },
-                  );
+              PopupMenuButton<String>(
+                icon: Icon(Icons.notifications, color: Colors.white,),
+                onSelected: (String result) {
+                  setState(() {
+                    notifications.remove(result);
+                    notificationCount--;
+                  });
                 },
-                icon : Icon(Icons.notifications), 
-                color: Colors.white
+                itemBuilder: (BuildContext context) {
+                  return notifications.map((String choice) {
+                    return PopupMenuItem<String>(
+                      value: choice,
+                      child: Text(choice),
+                    );
+                  }).toList();
+                },
               ),
               if (notificationCount > 0)
                 Positioned(
@@ -96,17 +85,17 @@ class _ApplicationBarState extends State<ApplicationBar> {
                       borderRadius: BorderRadius.circular(6),
                     ),
                     constraints: BoxConstraints(
-                      minWidth: 10,
-                      minHeight: 10,
+                      minWidth: 12,
+                      minHeight: 12,
                     ),
-                    // child: Text(
-                    //   '$notificationCount',
-                    //   style: TextStyle(
-                    //     color: Colors.white,
-                    //     fontSize: 8,
-                    //   ),
-                    //   textAlign: TextAlign.center,
-                    // ),
+                    child: Text(
+                      '$notificationCount',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 8,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
             ],

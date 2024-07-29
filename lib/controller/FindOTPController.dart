@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/controller/OTPController.dart';
-import 'emailModels/otpModels.dart' as otpmodel;
-import '../controller/emailModels/emailModel.dart' as emailmodel;
+import 'Models/otpModels.dart' as otpmodel;
+import 'Models/emailModel.dart' as emailmodel ;
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 

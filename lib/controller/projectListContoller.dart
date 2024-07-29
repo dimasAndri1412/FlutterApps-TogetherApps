@@ -1,7 +1,7 @@
 import 'package:absent_project/Registration/Functions/functionOTPKey.dart';
 import 'package:absent_project/controller/FindOTPController.dart';
-import 'emailModels/otpModels.dart' as otpmodel;
-import '../controller/emailModels/emailModel.dart' as emailmodel;
+import 'Models/otpModels.dart' as otpmodel;
+import 'Models/emailModel.dart' as emailmodel ;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'Keys.dart';
