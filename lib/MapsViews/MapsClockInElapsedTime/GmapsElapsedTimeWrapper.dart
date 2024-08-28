@@ -1,7 +1,9 @@
 import 'package:absent_project/MapsViews/MapsClockInElapsedTime/GampsElapsedTimeMapsView.dart';
 import 'package:absent_project/MapsViews/MapsClockInElapsedTime/GmapsElapsedTimeField.dart';
 import 'package:absent_project/MapsViews/MapsClockOutElapsedTime/GmapsClockOutPages.dart';
+import 'package:absent_project/attendance/CameraDetection.dart';
 import 'package:absent_project/home/ApplicationBar.dart';
+import 'package:absent_project/attendance/Camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -53,7 +55,8 @@ class _gmapsElapsedTimesWrapperState extends State<gmapsElapsedTimesWrapper> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton.extended(
           onPressed: (){
-            Get.offAll(() => gmapsClockOutPages());
+            Get.offAll(() => CameraDetection());
+            // Get.offAll(() => gmapsClockOutPages());
           },
           label: Text(
             "Stop",

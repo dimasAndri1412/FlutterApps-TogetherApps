@@ -46,6 +46,7 @@ class ctr_data {
     OTPController.clear();
     UserIdController.clear();
     FaceImageController.clear();
+    EmbeddingController.clear();
   }
 
   // update_pwd() async {
@@ -97,6 +98,7 @@ class ctr_data {
     request.fields['OLD_PASSWORD'] = passwordController.text;
     request.fields['PASSWORD'] = NewPasswordContorller.text;
     request.fields['user_id'] = userId;
+    request.fields['embedding'] = EmbeddingController.text;
     
     if (FaceImageController != null) {
       var imageFile = await http.MultipartFile.fromPath("image", FaceImageController.text);

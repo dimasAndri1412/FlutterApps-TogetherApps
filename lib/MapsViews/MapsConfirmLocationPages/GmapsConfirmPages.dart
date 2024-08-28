@@ -1,3 +1,4 @@
+import 'package:absent_project/MapsViews/MapsConfirmLocationPages/GmapsConfirmHeader2.dart';
 import 'package:absent_project/MapsViews/MapsConfirmLocationPages/GmapsConfirmHeaders.dart';
 import 'package:absent_project/MapsViews/MapsConfirmLocationPages/GmapsConfirmWrapper.dart';
 import 'package:absent_project/MapsViews/MapsLocationPages/GmapsLocationPage.dart';
@@ -7,7 +8,10 @@ import 'package:get/get.dart';
 
 
 class gmapsConfirmPages extends StatefulWidget {
-  const gmapsConfirmPages({super.key});
+  // const gmapsConfirmPages({super.key});
+  final String imagePath;
+
+  const gmapsConfirmPages({super.key, required this.imagePath});
 
   @override
   State<gmapsConfirmPages> createState() => _gmapsConfirmPagesState();
@@ -16,6 +20,7 @@ class gmapsConfirmPages extends StatefulWidget {
 class _gmapsConfirmPagesState extends State<gmapsConfirmPages> {
   @override
   Widget build(BuildContext context) {
+    
     return WillPopScope(
       onWillPop: () async {
         bool shouldNavigateBack = (await _showConfirmDialog(context)) as bool;
@@ -34,7 +39,7 @@ class _gmapsConfirmPagesState extends State<gmapsConfirmPages> {
           title: Text(
             "CONFIRM CLOCK IN",
             style: TextStyle(
-              fontSize: 24,
+              fontSize: 16,
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
@@ -42,21 +47,35 @@ class _gmapsConfirmPagesState extends State<gmapsConfirmPages> {
         ),
         body: Container(
           width: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              colors: [
-                Color.fromARGB(255, 145, 201, 247),
-                Color.fromARGB(255, 98, 171, 232),
-                Color.fromARGB(255, 123, 185, 235),
-                Color.fromARGB(255, 255, 255, 255),
-              ],
+            decoration: BoxDecoration(
+              color: Colors.white
             ),
-          ),
+          // decoration: BoxDecoration(
+          //   gradient: LinearGradient(
+          //     begin: Alignment.topCenter,
+          //     colors: [
+          //       Color.fromARGB(255, 145, 201, 247),
+          //       Color.fromARGB(255, 98, 171, 232),
+          //       Color.fromARGB(255, 123, 185, 235),
+          //       Color.fromARGB(255, 255, 255, 255),
+          //     ],
+          //   ),
+          // ),
           child: Column(
-            children: <Widget>[
-              SizedBox(height: 10),
-              gmapsConfirmHeaders(),
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 10, top: 20, bottom: 10),
+                    child: gmapsConfirmHeaders(imagePath: widget.imagePath),
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    child: gmapsConfirmField2(),
+                  ),
+                ],
+              ),
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
@@ -72,7 +91,7 @@ class _gmapsConfirmPagesState extends State<gmapsConfirmPages> {
                 ),
               ),
             ],
-          ),
+          )
         ),
       ),
     );

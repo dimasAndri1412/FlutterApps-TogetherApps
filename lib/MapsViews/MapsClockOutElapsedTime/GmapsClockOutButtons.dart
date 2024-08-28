@@ -1,8 +1,12 @@
 import 'package:absent_project/MapsViews/MapsClockInElapsedTime/GmapsElapsedTimePages.dart';
 import 'package:absent_project/MapsViews/MapsLocationPages/GmapsLocationPage.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/GmapsStopWatchController.dart';
+import 'package:absent_project/controller/AbsentController/ClockInController.dart';
+import 'package:absent_project/controller/AbsentController/ClockInState.dart';
+import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 class gmapsClockOutButtons extends StatefulWidget {
   const gmapsClockOutButtons({super.key});
@@ -23,7 +27,27 @@ class _gmapsClockOutButtonsState extends State<gmapsClockOutButtons> {
         GestureDetector(
           onTap: (){
             stopWatchControllers.resetStopwatch();
-            Get.offAll(() => gmapsLocationPages());
+             if(gmapsConfirmKey.currentState!.validate()){
+              ClockInController().clock_out().then((value) {
+                print("Clock Out Result: $value");
+                if (value) {
+                  Provider.of<ClockInState>(context, listen: false).clockOut();
+                  final snackBar =
+                    SnackBar(
+                      content: const Text("Success Clock Out")
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Get.offAll(() => const gmapsLocationPages());
+                } else {
+                  final snackBar = SnackBar(
+                    content: const Text("Failure Clock Out!")
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+              });
+             }
+            // Get.offAll(() => gmapsLocationPages());
+            
           },
           child: Container(
             height: 50,

@@ -15,6 +15,12 @@ class LoginController {
   Future<void> saveUserId(String userId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('user_id', userId);
+    print('User ID saved: $userId');
+  }
+
+   Future<String?> getUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('user_id');
   }
 
   Future doLogin() async {
@@ -23,7 +29,7 @@ class LoginController {
 
     try {
       if (formKey.currentState!.validate()) {
-        var url = Uri.parse("http://10.233.124.109/FlutterAPI/AdminLogin.php");
+        var url = Uri.parse("http://10.233.89.73/FlutterAPI/AdminLogin.php");
         var response = await http.post(url,
             body: {"username": usernameInput, "password": passwordInput});
         dataUser = jsonDecode(response.body);
@@ -62,6 +68,8 @@ class LoginController {
           print("Go to member home page, cuk");
           */ /*Get.to(() => const UserHome());*/ /*
         }*/
+      } else{
+         print("gagal login");
       }
     } catch (Exception) {
       return "Failed Request!";

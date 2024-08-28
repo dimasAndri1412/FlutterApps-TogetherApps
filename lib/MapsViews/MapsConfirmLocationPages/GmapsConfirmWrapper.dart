@@ -14,7 +14,7 @@ class _gmapsConfirmWrappersState extends State<gmapsConfirmWrappers> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.all(60),
+        padding: EdgeInsets.only(top: 0, left: 20, right: 20),
         child: Column(
           children: <Widget>[
             SizedBox(
@@ -30,7 +30,7 @@ class _gmapsConfirmWrappersState extends State<gmapsConfirmWrappers> {
               ),
             ),
             SizedBox(
-              height: 30,
+              height: 90,
             ),
             gmapsConfirmButtons()
           ],

@@ -1,12 +1,14 @@
 import 'package:absent_project/MapsViews/MapsClockInElapsedTime/GmapsElapsedTimePages.dart';
 import 'package:absent_project/MapsViews/MapsClockOutElapsedTime/GmapsClockOutHeaders.dart';
 import 'package:absent_project/MapsViews/MapsClockOutElapsedTime/GmapsClockUpWrapper.dart';
+import 'package:absent_project/MapsViews/MapsClockOutElapsedTime/GmapsClockOutHeaders2.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 
 class gmapsClockOutPages extends StatefulWidget {
-  const gmapsClockOutPages({super.key});
+  final String imagePath;
+  const gmapsClockOutPages({super.key, required this.imagePath});
 
   @override
   State<gmapsClockOutPages> createState() => _gmapsClockOutPagesState();
@@ -42,20 +44,24 @@ class _gmapsClockOutPagesState extends State<gmapsClockOutPages> {
         body: Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              colors: [
-                Color.fromARGB(255, 145, 201, 247),
-                Color.fromARGB(255, 98, 171, 232),
-                Color.fromARGB(255, 123, 185, 235),
-                Color.fromARGB(255, 255, 255, 255),
-              ],
-            ),
+            color: Colors.white
           ),
           child: Column(
             children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 10, top: 20, bottom: 10),
+                    child:  gmapsClockOutHeader(imagePath: widget.imagePath),
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    child: gmapsClockOutHeaders2(),
+                  ),
+                ],
+              ),
               SizedBox(height: 10),
-              gmapsClockOutHeader(),
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(

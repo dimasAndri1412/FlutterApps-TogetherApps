@@ -17,9 +17,6 @@ class _gmapsClockOutWrapperState extends State<gmapsClockOutWrapper> {
         padding: EdgeInsets.all(10),
         child: Column(
           children: <Widget>[
-            SizedBox(
-              height: 30,
-            ),
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -30,7 +27,7 @@ class _gmapsClockOutWrapperState extends State<gmapsClockOutWrapper> {
               ),
             ),
             SizedBox(
-              height: 30,
+              height: 90,
             ),
             gmapsClockOutButtons()
           ],

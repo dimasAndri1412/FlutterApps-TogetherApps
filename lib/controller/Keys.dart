@@ -68,6 +68,7 @@ final ConfPassController = TextEditingController();
 final ProjectController = TextEditingController();
 final UserIdController = TextEditingController();
 final FaceImageController = TextEditingController(); 
+final EmbeddingController= TextEditingController(); 
 
 //GoogleMapController
 final nameLocationController = TextEditingController();
@@ -101,6 +102,17 @@ final fullNamesLocationController = TextEditingController();
 final noteLocationController = TextEditingController();
 final avatarUrlController = TextEditingController();
 String avatarURLs = '';
+
+// clock-in
+final locationClockIn = TextEditingController(); 
+final shiftController = TextEditingController(); 
+final notesClockIn = TextEditingController(); 
+final clockInImageController = TextEditingController(); 
+
+//clock-out
+final clockOutImageController = TextEditingController();
+final notesClockOut = TextEditingController();
+final locationClockOut = TextEditingController();
 
 //ElapsedTime
 final elapsedTimesController = TextEditingController();

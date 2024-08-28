@@ -3,10 +3,14 @@ import 'package:absent_project/MapsViews/MapsLocationPages/GmapsLocationButton.d
 import 'package:absent_project/MapsViews/MapsLocationPages/GmapsLocationField.dart';
 import 'package:absent_project/MapsViews/MapsLocationPages/GmapsLocationPage.dart';
 import 'package:absent_project/MapsViews/MapsLocationPages/GmapsLocationView.dart';
+import 'package:absent_project/attendance/Camera.dart';
+import 'package:absent_project/attendance/CameraDetection.dart' ;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
+
+
 
 
 class gmapsLocationWrapper extends StatefulWidget {
@@ -56,8 +60,9 @@ class _gmapsLocationWrapperState extends State<gmapsLocationWrapper> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Get.offAll(
-              () => gmapsConfirmPages()
+           Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CameraDetection()),
           );
         },
         label: Text(
