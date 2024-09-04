@@ -220,8 +220,16 @@ class _PersonalSettingState extends State<PersonalSetting> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Confirmation'),
-          content: Text('Are you sure you want to log out?'),
+          icon: Icon(
+            Icons.warning_amber,
+            color: Colors.deepOrange,
+          ),
+          title: Text(
+            'Confirmation!',
+            style: TextStyle(
+                color: Colors.blue, fontSize: 25, fontWeight: FontWeight.bold),
+          ),
+          content: Text('ARE YOU SURE WANT TO LOG OUT ?'),
           actions: [
             TextButton(
               child: Text('Cancel'),
