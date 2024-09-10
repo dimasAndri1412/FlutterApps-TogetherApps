@@ -1,3 +1,6 @@
+import 'package:absent_project/controller/Keys.dart';
+import 'package:absent_project/controller/TimeSheetsController/TimesheetsUser/TimesheetsController.dart';
+import 'package:absent_project/controller/TimeSheetsController/TimesheetsUser/TimesheetsModel.dart';
 import 'package:absent_project/timesheets/timesheetsUser/daily_timesheets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -166,107 +169,147 @@ class _TimesheetsUserState extends State<TimesheetsUser> {
     );
   }
 
+  
+
   Widget _buildTrackedTime(String formattedDate) {
-    final trackedTime = trackedTimes[_selectedDay] ??
-        {
-          'firstIn': 'N/A',
-          'lastOut': 'N/A',
-          'breaks': 'N/A',
-          'workedHours': 'N/A',
-          // 'date': '${_selectedDay.day} - ${_selectedDay.month} - ${_selectedDay.year}'
-        };
+    return FutureBuilder<TimesheetsModel>(
+      future: TimesheetsController().getLatestAttendance(_selectedDay),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.hasData && snapshot.data != null){
+          TimesheetsModel trackedTime = snapshot.data!;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Text("${_selectedDay.day} - ${_selectedDay.month} - ${_selectedDay.year}",style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-
-        // Padding(
-        //   padding: const EdgeInsets.only(left: 15),
-        //   child: Text(formatedDate,style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
-        // ),
-
-        // Text(trackedTime['date']!),
-        SizedBox(
-          height: 8,
-        ),
-        Container(
-          // height: 90,
-          decoration: BoxDecoration(color: Colors.white, boxShadow: [
-            BoxShadow(
-                color: Color.fromARGB(255, 147, 195, 234),
-                blurRadius: 5,
-                offset: Offset(0, 4)),
-          ]),
-          child: Column(
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: Center(
-                  child: Text(
-                    "Tracked Time",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                ),
-              ),
+              // Text("${_selectedDay.day} - ${_selectedDay.month} - ${_selectedDay.year}",style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 15),
+              //   child: Text(formatedDate,style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
+              // ),
+
+              // Text(trackedTime['date']!),
               SizedBox(
-                height: 16,
+                height: 8,
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 10, bottom: 10, left: 15, right: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Container(
+                // height: 90,
+                decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                  BoxShadow(
+                      color: Color.fromARGB(255, 147, 195, 234),
+                      blurRadius: 5,
+                      offset: Offset(0, 4)),
+                ]),
+                child: Column(
                   children: [
-                    //KOLOM KE - 1
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'First In',
-                          style: TextStyle(color: Colors.grey),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: Center(
+                        child: Text(
+                          "Tracked Time",
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                         ),
-                        Text(trackedTime['firstIn']!),
-                        // style: TextStyle(fontWeight: FontWeight.bold)),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Text(
-                          "Breaks",
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        Text(trackedTime['breaks']!),
-                        // style: TextStyle(fontWeight: FontWeight.bold)),
-                      ],
+                      ),
                     ),
-                    //KOLOM KE - 2
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Last Out",
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        Text(trackedTime['lastOut']!),
-                        // style: TextStyle(fontWeight: FontWeight.bold)),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Text(
-                          "Worked Hours",
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        Text(trackedTime['workedHours']!),
-                        // style: TextStyle(fontWeight: FontWeight.bold)),
-                      ],
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 10, bottom: 10, left: 15, right: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          //KOLOM KE - 1
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'First In',
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                               Text(trackedTime.timeFormat(trackedTime.clockIn) ?? '-'), 
+                              // style: TextStyle(fontWeight: FontWeight.bold)),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              Text(
+                                "Breaks",
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                              Text('-'),
+                              // style: TextStyle(fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          //KOLOM KE - 2
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Last Out",
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                               Text(trackedTime.timeFormat(trackedTime.clockOut) ?? '-'),
+                              // style: TextStyle(fontWeight: FontWeight.bold)),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              Text(
+                                "Worked Hours",
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                              Text(trackedTime.elapsedTime ?? '-'),
+                              // style: TextStyle(fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
             ],
-          ),
-        ),
-      ],
+          );
+        } else {
+          return Container(
+            // height: 90,
+            decoration: BoxDecoration(color: Colors.white, boxShadow: [
+              BoxShadow(
+                  color: Color.fromARGB(255, 147, 195, 234),
+                  blurRadius: 5,
+                  offset: Offset(0, 4)),
+            ]),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Center(
+                    child: Text(
+                      "Tracked Time",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 10, bottom: 10, left: 15, right: 15),
+                  child: Text("No Data Available")
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+              ],
+            ),
+          );
+        }
+      },
     );
   }
 }

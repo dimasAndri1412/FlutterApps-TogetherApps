@@ -39,8 +39,10 @@ class Timesheets extends StatefulWidget {
 }
 
 class _TimesheetsState extends State<Timesheets> {
-  CalendarFormat _calendarFormat =CalendarFormat.week;
+  CalendarFormat _calendarFormat = CalendarFormat.week;
   DateTime today = DateTime.now();
+  DateTime _selectedDay = DateTime.now();
+
   void _onDaySelected(DateTime day,DateTime focusedDay){
     setState(() {
       today= day;
@@ -49,7 +51,9 @@ class _TimesheetsState extends State<Timesheets> {
 
   void _onFormatChanged(format){
     if (_calendarFormat != format) {
-      setState(() => _calendarFormat = format);
+      setState(() {
+        _calendarFormat = format;
+      });
     }
   }
 
@@ -63,11 +67,22 @@ class _TimesheetsState extends State<Timesheets> {
 
   @override
   Widget build(BuildContext context) {
+    final DateFormat formatter = DateFormat('EE, d MMM yyyy');
+    final String formattedDate = formatter.format(_selectedDay);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
             calendar(),
+            Container(
+              child: Text(
+                formattedDate,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+            ),
             Padding(
               padding: EdgeInsets.all(10),
               child: Container(
@@ -123,7 +138,12 @@ class _TimesheetsState extends State<Timesheets> {
               focusedDay: today, 
               firstDay: DateTime.utc(2019, 10, 16), 
               lastDay: DateTime.utc(2030, 3, 14),
-              onDaySelected: _onDaySelected,
+              onDaySelected: (selectedDay, focusedDay){
+                setState(() {
+                  _selectedDay = selectedDay;
+                  today = focusedDay;
+                });
+              },
               calendarFormat: _calendarFormat,
               onFormatChanged: _onFormatChanged,
             ),
