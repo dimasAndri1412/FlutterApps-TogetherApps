@@ -11,7 +11,7 @@ class ctr_data {
   //fungsi untuk melakukan penyimpanan data//
   savefunc() async {
     final response = await http.post(
-      Uri.parse("http://10.233.98.125/FlutterAPI/create.php"),
+      Uri.parse("http://192.168.100.55/FlutterAPI/create.php"),
       body: {
         "full_name": FullNameController.text,
         "USERNAME": UserNameController.text,
@@ -95,7 +95,7 @@ class ctr_data {
 
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse("http://10.233.98.125/FlutterAPI/update_password.php"),
+        Uri.parse("http://192.168.100.55/FlutterAPI/update_password.php"),
       );
 
       request.fields['OLD_PASSWORD'] = passwordController.text;
@@ -129,30 +129,29 @@ class ctr_data {
     }
   }
 
-  // Future update_pwd_user() async {
-  //   SharedPreferences prefs =
-  //       await SharedPreferences.getInstance(); //utk ambil id
-  //   String userId =
-  //       prefs.getString('user_id') ?? ''; //ambil user id yg tersimpan
+  Future update_pwd_user() async {
+    SharedPreferences prefs =
+        await SharedPreferences.getInstance(); //utk ambil id
+    String userId =
+        prefs.getString('user_id') ?? ''; //ambil user id yg tersimpan
 
-  //   final deviceService = Getdevice();
-  //   String deviceId = await deviceService.getDeviceId();
+    final deviceService = Getdevice();
+    String deviceId = await deviceService.getDeviceId();
 
-  //   final response = await http.post(
-  //       // Uri.parse("http://10.233.80.55/FlutterAPI/update_password_user.php"),
-  //       Uri.parse("http://10.233.77.92/FlutterAPI/update_password_user.php"),
-  //       body: {
-  //         // "id": widget.list[widget.index]["id"],
-  //         "OLD_PASSWORD": passwordController.text,
-  //         "PASSWORD": NewPasswordContorller.text,
-  //         "device": deviceId,
-  //         "user_id": userId,
-  //       });
-  //   if (response.statusCode == 200) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
+    final response = await http.post(
+        Uri.parse("http://192.168.100.55/FlutterAPI/update_password_user.php"),
+        body: {
+          // "id": widget.list[widget.index]["id"],
+          "OLD_PASSWORD": passwordController.text,
+          "PASSWORD": NewPasswordContorller.text,
+          "device": deviceId,
+          "user_id": userId,
+        });
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
 
   forgot_pwd() async {
     final response = await http.post(

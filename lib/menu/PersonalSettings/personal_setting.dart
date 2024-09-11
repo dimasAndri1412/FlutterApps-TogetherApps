@@ -1,3 +1,4 @@
+import 'package:absent_project/ChangePasswordforUser/change_password_user.dart';
 import 'package:absent_project/ChangesPasswordPage/ChangesPasswordMenu.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/login/LoginPage.dart';
@@ -49,7 +50,7 @@ class _PersonalSettingState extends State<PersonalSetting> {
               switch (value) {
                 case _MenuDropdown.editpwd:
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ChangesPasswordMenu()));
+                      builder: (context) => ChangePasswordUser()));
                   break;
                 case _MenuDropdown.logout:
                   // Navigator.of(context).push(
