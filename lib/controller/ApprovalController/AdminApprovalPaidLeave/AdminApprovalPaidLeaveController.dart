@@ -56,7 +56,7 @@ class AdminApprovalPaidLeaveController {
     try{
 
       var url = Uri.parse(
-          "http://10.233.77.55/FlutterAPI/approvals/admin/paid_leave/getUsers.php");
+          "http://10.233.65.119/FlutterAPI/approvals/admin/paid_leave/getUsers.php");
       var data = await http.post(url, body: {
         "name": namePaidLeave.text
       });

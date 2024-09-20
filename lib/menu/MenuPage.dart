@@ -1,6 +1,7 @@
 import 'package:absent_project/MapsViews/MapsViewPage/GoogleMapsPages.dart';
 import 'package:absent_project/controller/LoginController.dart';
 import 'package:absent_project/login/LoginPage.dart';
+import 'package:absent_project/menu/KPI%20Question/positionList.dart';
 import 'package:absent_project/menu/adminManagement/ListUser.dart';
 // import 'package:first_project/login/setting/admin.dart' as admin;
 import 'package:flutter/material.dart';
@@ -50,6 +51,19 @@ class _MenuPageState extends State<MenuPage> {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const ListUser()),
+            );
+          },
+        ),
+        Divider(
+          color: Colors.grey,
+        ),
+        ListTile(
+          title: Text("KPI Questions"),
+          leading: Icon(Icons.question_mark_outlined),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const kpiQuestion()),
             );
           },
         ),

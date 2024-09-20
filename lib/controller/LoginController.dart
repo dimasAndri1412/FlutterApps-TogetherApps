@@ -45,10 +45,12 @@ class LoginController {
         String deviceId = await deviceService.getDeviceId();
         bool isDeviceLockEnabled = box.read('isDeviceLockEnabled') ?? false;
 
-        var url = Uri.parse("http://10.233.98.125/FlutterAPI/AdminLogin.php");
+        var url = Uri.parse("http://10.233.65.119/FlutterAPI/AdminLogin.php");
         var response = await http.post(url,
             body: {"username": usernameInput, "password": passwordInput});
         dataUser = jsonDecode(response.body);
+        print("Status code: ${response.statusCode}");
+        print("Response body: ${response.body}");
 
         if (dataUser.length < 1) {
           alert = "Can't login";
@@ -60,8 +62,7 @@ class LoginController {
           IDUsers = dataUser[0]['ID'];
           position = dataUser[0]['ID'];
           device = dataUser[0]['device'];
-        }
-        ;
+        };
 
         await saveUserId(IDUsers!);
 

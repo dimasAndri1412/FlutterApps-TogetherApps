@@ -1,4 +1,5 @@
 import 'package:absent_project/controller/Keys.dart';
+import 'package:absent_project/controller/KPIQuestionsController/position/PositionController.dart';
 import 'package:absent_project/login/LoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,14 +18,14 @@ class ChangesPasswordButtons extends StatefulWidget {
   //   required this.image,
   //   required this.faceDetected,
   // });
-
+  ChangesPasswordButtons({super.key});
   @override
   State<ChangesPasswordButtons> createState() => _ChangesPasswordButtonsState();
 }
 
 class _ChangesPasswordButtonsState extends State<ChangesPasswordButtons> {
   final Changespasswordcamera _cameraState = Changespasswordcamera(); 
-  
+  final PositionController positionController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -32,7 +33,8 @@ class _ChangesPasswordButtonsState extends State<ChangesPasswordButtons> {
         GestureDetector(
           onTap: () {
             if (formsKeys.currentState!.validate()) {
-              ctr_data().update_pwd().then((value) {
+              int? selectedPosition = positionController.selectedPosition.value;
+              ctr_data().change_pwd(selectedPosition).then((value) {
                 if (value) {
                   final snackBar =
                       SnackBar(content: const Text("Password Success Changes"));

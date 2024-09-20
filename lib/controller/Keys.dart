@@ -117,6 +117,11 @@ final locationClockOut = TextEditingController();
 //ElapsedTime
 final elapsedTimesController = TextEditingController();
 
+//questions
+final positionId = TextEditingController();
+final questionText = TextEditingController();
+final positionName = TextEditingController();
+// TextEditingController textController = TextEditingController(); //update question text
 
 //ElapsedTimeKey
 final GlobalKey<FormState> gmapsElapsedTimeKey = GlobalKey<FormState>();
