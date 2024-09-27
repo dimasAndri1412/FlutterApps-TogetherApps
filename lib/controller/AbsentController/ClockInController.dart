@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:absent_project/controller/KPIQuestionsController/question/QuestionModel.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/controller/LoginController.dart';
 import 'package:http/http.dart' as http;
@@ -12,7 +13,7 @@ class ClockInController {
   Future<String> fetchUserName() async {
     String? userId = await _loginController.getUserId();
     if (userId != null) {
-      var response = await http.get(Uri.parse('http://10.233.68.96/FlutterAPI/GetUserById.php/$userId'));
+      var response = await http.get(Uri.parse('http://192.168.100.194/FlutterAPI/GetUserById.php/$userId'));
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         return data['full_name'];
@@ -29,7 +30,7 @@ class ClockInController {
     if (userId != null) {
       var response = await http.get(
         Uri.parse(
-          'http://10.233.68.96/FlutterAPI/GetUserById.php/$userId'
+          'http://192.168.100.194/FlutterAPI/GetUserById.php/$userId'
         )
       );
       if (response.statusCode == 200) {
@@ -66,7 +67,7 @@ class ClockInController {
 
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse("http://10.233.68.96/FlutterAPI/attendance/user/clock_in.php"),
+      Uri.parse("http://192.168.100.194/FlutterAPI/attendance/user/clock_in.php"),
     );
     
     request.fields['user_id'] = userId;
@@ -120,68 +121,34 @@ class ClockInController {
   }
 }
 
+  show_question() async {
+    try {
+      String? userId = await _loginController.getUserId();
+      if (userId == null) {
+        print('User ID tidak ditemukan');
+        return false;
+      }
 
-  // clock_in() async {
-  //   try {
-  //     String? userId = await _loginController.getUserId();
-  //     if (userId == null) {
-  //       print('User ID tidak ditemukan');
-  //       return false;
-  //     }
-
-  //     var request = http.MultipartRequest(
-  //       'POST',
-  //       Uri.parse("http://10.233.115.160/FlutterAPI/attendance/user/clock_in.php"),
-  //     );
-      
-  //     request.fields['user_id'] = userId;
-  //     request.fields['location'] = locationClockIn.text;
-  //     request.fields['shift'] = shiftController.text;
-  //     request.fields['notes'] = notesClockIn.text;
-  //     // request.fields['pict_clock_in'] = clockInImageController.text;
-      
-  //     // if (clockInImageController != null) {
-  //     //   var imageFile = await http.MultipartFile.fromPath("pict_clock_in", clockInImageController.text);
-  //     //   request.files.add(imageFile);
-  //     // }
-  //     if (clockInImageController.text.isNotEmpty) {
-  //     // Periksa apakah file benar-benar ada
-  //     final filePath = clockInImageController.text;
-  //     final file = File(filePath);
-
-  //     if (await file.exists()) {
-  //       var imageFile = await http.MultipartFile.fromPath("pict_clock_in", filePath);
-  //       request.files.add(imageFile);
-  //     } else {
-  //       print('File tidak ditemukan di path: $filePath');
-  //     }
-  //   }
-
-  //     var streamedResponse = await request.send();
-  //     var response = await http.Response.fromStream(streamedResponse);
-  //     print('Response Status Code: ${response.statusCode}');
-  //     print('Response Body: ${response.body}');
-
-  //     if (response.statusCode == 200) {
-  //     // Pisahkan JSON dari pesan lainnya
-  //     String responseBody = response.body;
-  //     int jsonStartIndex = responseBody.indexOf('{');
-  //     if (jsonStartIndex != -1) {
-  //       var responseData = jsonDecode(responseBody.substring(jsonStartIndex));
-  //       if (responseData['Message'] == 'Clock-in Sukses') {
-  //         return true;
-  //       }
-  //     }
-  //     return false;
-  //   } else {
-  //     return false;
-  //   }
-  //   } catch (e) {
-  //     print('Exception during clock in request: $e');
-  //     return false;
-  //   }
-  // }
-
+      final response = await http.post(
+        Uri.parse("http://192.168.100.194/FlutterAPI/KPI/getQuestionsForClockOut.php"),
+        body: {
+          'user_id' : userId
+        }
+      );
+      print('response body: ${response.body}');
+      if (response.statusCode == 200) {
+        print('success');
+        List<dynamic> jsonData = jsonDecode(response.body);
+        List<QuestionModel> questions = jsonData.map((item) => QuestionModel.fromJson(item)).toList();
+        return questions;
+      } else {
+        print("fail");
+      }
+    } catch (e) {
+      print('Error : $e');
+    }
+  }
+ 
   clock_out() async {
     try {
       String? userId = await _loginController.getUserId();
@@ -190,9 +157,11 @@ class ClockInController {
         return false;
       }
 
+      List<QuestionModel> questions = await show_question();
+
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse("http://10.233.68.96/FlutterAPI/attendance/user/clock_out.php"),
+        Uri.parse("http://192.168.100.194/FlutterAPI/attendance/user/clock_out.php"),
       );
       
       request.fields['user_id'] = userId;
@@ -211,13 +180,19 @@ class ClockInController {
         }
       }
 
+      for (var question in questions) {
+        final questionId = question.idQuestion.toString(); 
+        final answer = answerController[questionId]?.text ?? ''; 
+        request.fields[questionId] = answer;
+        print('Submitting answer for question $questionId: $answer');
+      }
+
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
 
       print("Image path: ${clockOutImageController.text}");
       print('Response Status Code: ${response.statusCode}');
       print('Response Body: ${response.body}');
-      
       
 
       if (response.statusCode == 200) {

@@ -1,5 +1,6 @@
 import 'package:absent_project/MapsViews/MapsClockOutElapsedTime/GmapsClockOutButtons.dart';
 import 'package:absent_project/MapsViews/MapsClockOutElapsedTime/GmapsClockOutField.dart';
+import 'package:absent_project/MapsViews/MapsClockOutElapsedTime/GmapsClockOutQuestions.dart';
 import 'package:flutter/material.dart';
 
 class gmapsClockOutWrapper extends StatefulWidget {
@@ -15,23 +16,26 @@ class _gmapsClockOutWrapperState extends State<gmapsClockOutWrapper> {
   Widget build(BuildContext context) {
     return Padding(
         padding: EdgeInsets.all(10),
-        child: Column(
-          children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(30)
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30)
+                ),
+                child: SingleChildScrollView(
+                  child: gmapsClockOutField(),
+                ),
               ),
-              child: SingleChildScrollView(
-                child: gmapsClockOutField(),
+              gmapsClockOutQuestions(),
+              SizedBox(
+                height: 30,
               ),
-            ),
-            SizedBox(
-              height: 90,
-            ),
-            gmapsClockOutButtons()
-          ],
-        ),
+              gmapsClockOutButtons()
+            ],
+          ),
+        )
     );
   }
 }

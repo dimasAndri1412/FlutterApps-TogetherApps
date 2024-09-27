@@ -37,7 +37,7 @@ class _gmapsClockOutButtonsState extends State<gmapsClockOutButtons> {
                       content: const Text("Success Clock Out")
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    Get.off(() => const gmapsLocationPages());
+                    Get.offAll(() => const gmapsLocationPages());
                 } else {
                   final snackBar = SnackBar(
                     content: const Text("Failure Clock Out!")

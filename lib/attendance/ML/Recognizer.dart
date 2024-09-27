@@ -66,7 +66,7 @@ class Recognizer {
     }
 
     final response = await http.post(
-      Uri.parse('http://10.233.68.96/FlutterAPI/attendance/admin/GetEmbeddingById.php'),
+      Uri.parse('http://192.168.100.194/FlutterAPI/attendance/admin/GetEmbeddingById.php'),
       body: {'user_id': userId},
     );
 

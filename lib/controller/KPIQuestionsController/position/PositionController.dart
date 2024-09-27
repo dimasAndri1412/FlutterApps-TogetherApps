@@ -12,7 +12,7 @@ class PositionController extends GetxController {
   Future<void> fetchPositions() async {
     try {
       isLoading(true);
-      final response = await http.get(Uri.parse('http://10.233.65.119/FlutterAPI/KPI/getPositions.php'));
+      final response = await http.get(Uri.parse('http://192.168.100.194/FlutterAPI/KPI/getPositions.php'));
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
@@ -33,7 +33,7 @@ class PositionController extends GetxController {
   addPosition() async{
     try {
       final response = await http.post(
-        Uri.parse("http://10.233.65.119/FlutterAPI/KPI/addPositions.php"),
+        Uri.parse("http://192.168.100.194/FlutterAPI/KPI/addPositions.php"),
         body: {
           'position_name' : positionName.text
         }

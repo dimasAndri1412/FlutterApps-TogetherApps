@@ -45,7 +45,7 @@ class LoginController {
         String deviceId = await deviceService.getDeviceId();
         bool isDeviceLockEnabled = box.read('isDeviceLockEnabled') ?? false;
 
-        var url = Uri.parse("http://10.233.65.119/FlutterAPI/AdminLogin.php");
+        var url = Uri.parse("http://192.168.100.194/FlutterAPI/AdminLogin.php");
         var response = await http.post(url,
             body: {"username": usernameInput, "password": passwordInput});
         dataUser = jsonDecode(response.body);

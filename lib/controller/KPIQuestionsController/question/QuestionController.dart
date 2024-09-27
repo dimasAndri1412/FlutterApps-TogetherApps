@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
   Future<List<QuestionModel>> getQuestions(int positionId) async {
     try {
       final response = await http.post(
-      Uri.parse("http://10.233.65.119/FlutterAPI/KPI/getQuestions.php"),
+      Uri.parse("http://192.168.100.194/FlutterAPI/KPI/getQuestions.php"),
         body: {
           'id_position': positionId.toString()
         }
@@ -31,7 +31,7 @@ import 'package:http/http.dart' as http;
   addQuestion(int positionId) async{
     try {
       final response = await http.post(
-        Uri.parse("http://10.233.65.119/FlutterAPI/KPI/addQuestions.php"),
+        Uri.parse("http://192.168.100.194/FlutterAPI/KPI/addQuestions.php"),
         body: {
           'id_position': positionId.toString(),
           'question_text': questionText.text
@@ -51,7 +51,7 @@ import 'package:http/http.dart' as http;
   editQuestion(int questionId, String questionText) async {
     try {
       final response = await http.post(
-        Uri.parse("http://10.233.65.119/FlutterAPI/KPI/editQuestions.php"),
+        Uri.parse("http://192.168.100.194/FlutterAPI/KPI/editQuestions.php"),
         body: {
           'id_question' : questionId.toString(),
           'question_text': questionText
@@ -71,7 +71,7 @@ import 'package:http/http.dart' as http;
   deleteQuestion(int questionId) async{
     try {
       final response = await http.post(
-        Uri.parse("http://10.233.65.119/FlutterAPI/KPI/deleteQuestions.php"),
+        Uri.parse("http://192.168.100.194/FlutterAPI/KPI/deleteQuestions.php"),
         body: {
           'id_question' : questionId.toString()
         }

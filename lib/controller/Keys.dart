@@ -121,7 +121,7 @@ final elapsedTimesController = TextEditingController();
 final positionId = TextEditingController();
 final questionText = TextEditingController();
 final positionName = TextEditingController();
-// TextEditingController textController = TextEditingController(); //update question text
+final Map<String, TextEditingController> answerController = {}; 
 
 //ElapsedTimeKey
 final GlobalKey<FormState> gmapsElapsedTimeKey = GlobalKey<FormState>();
