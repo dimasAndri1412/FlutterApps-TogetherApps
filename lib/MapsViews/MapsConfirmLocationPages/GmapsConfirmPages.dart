@@ -2,6 +2,7 @@ import 'package:absent_project/MapsViews/MapsConfirmLocationPages/GmapsConfirmHe
 import 'package:absent_project/MapsViews/MapsConfirmLocationPages/GmapsConfirmHeaders.dart';
 import 'package:absent_project/MapsViews/MapsConfirmLocationPages/GmapsConfirmWrapper.dart';
 import 'package:absent_project/MapsViews/MapsLocationPages/GmapsLocationPage.dart';
+import 'package:absent_project/controller/data_controller.dart';
 import 'package:absent_project/home/ApplicationBar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,12 +21,9 @@ class gmapsConfirmPages extends StatefulWidget {
 class _gmapsConfirmPagesState extends State<gmapsConfirmPages> {
   @override
   Widget build(BuildContext context) {
-    
+
     return WillPopScope(
-      onWillPop: () async {
-        bool shouldNavigateBack = (await _showConfirmDialog(context)) as bool;
-        return shouldNavigateBack;
-      },
+      onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -39,59 +37,59 @@ class _gmapsConfirmPagesState extends State<gmapsConfirmPages> {
           title: Text(
             "CONFIRM CLOCK IN",
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 25,
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
           ),
         ),
         body: Container(
-          width: double.infinity,
+            width: double.infinity,
             decoration: BoxDecoration(
-              color: Colors.white
+                color: Colors.white
             ),
-          // decoration: BoxDecoration(
-          //   gradient: LinearGradient(
-          //     begin: Alignment.topCenter,
-          //     colors: [
-          //       Color.fromARGB(255, 145, 201, 247),
-          //       Color.fromARGB(255, 98, 171, 232),
-          //       Color.fromARGB(255, 123, 185, 235),
-          //       Color.fromARGB(255, 255, 255, 255),
-          //     ],
-          //   ),
-          // ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(left: 20, right: 10, top: 20, bottom: 10),
-                    child: gmapsConfirmHeaders(imagePath: widget.imagePath),
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(10),
-                    child: gmapsConfirmField2(),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(60),
-                      topRight: Radius.circular(60),
+            // decoration: BoxDecoration(
+            //   gradient: LinearGradient(
+            //     begin: Alignment.topCenter,
+            //     colors: [
+            //       Color.fromARGB(255, 145, 201, 247),
+            //       Color.fromARGB(255, 98, 171, 232),
+            //       Color.fromARGB(255, 123, 185, 235),
+            //       Color.fromARGB(255, 255, 255, 255),
+            //     ],
+            //   ),
+            // ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(left: 20, right: 10, top: 20, bottom: 10),
+                      child: gmapsConfirmHeaders(imagePath: widget.imagePath),
+                    ),
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      child: gmapsConfirmField2(),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(60),
+                        topRight: Radius.circular(60),
+                      ),
+                    ),
+                    child: SingleChildScrollView(
+                      child: gmapsConfirmWrappers(),
                     ),
                   ),
-                  child: SingleChildScrollView(
-                    child: gmapsConfirmWrappers(),
-                  ),
                 ),
-              ),
-            ],
-          )
+              ],
+            )
         ),
       ),
     );

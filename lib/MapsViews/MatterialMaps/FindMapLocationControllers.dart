@@ -26,7 +26,7 @@ class findGmapsLocation {
 
       try{
 
-        var getLocation = Uri.parse("http://10.233.126.165/FlutterAPI/FindLocation.php");
+        var getLocation = Uri.parse("http://192.168.100.249/FlutterAPI/FindLocation.php");
         var resp = await http.post(
             getLocation,
             body: {
@@ -51,7 +51,7 @@ class findGmapsLocation {
       String locationNamesInput = "menara briliant";
 
       try {
-        var getLocation = Uri.parse("http://10.233.126.165/FlutterAPI/FindLocation.php");
+        var getLocation = Uri.parse("http://192.168.100.249/FlutterAPI/FindLocation.php");
         var resp = await http.post(
             getLocation,
             body: {

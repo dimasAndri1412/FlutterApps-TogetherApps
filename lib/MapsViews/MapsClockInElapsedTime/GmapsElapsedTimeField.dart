@@ -37,27 +37,27 @@ class _gmapsElapsedTimesFieldState extends State<gmapsElapsedTimesField> {
                 Container(
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.black26,
-                        width: 2
+                      border: Border(
+                          bottom: BorderSide(
+                              color: Colors.black26,
+                              width: 2
+                          )
                       )
-                    )
                   ),
                   child: TextFormField(
-                    controller: elapsedTimesController,
+                    controller: elapsedTimesController.value,
                     readOnly: true,
                     decoration: InputDecoration(
-                      labelText: "Elapsed Times",
-                      hintText: gmapsStopWatchController().elapsedTimesModel.value,
-                      hintStyle: TextStyle(
-                        color: Colors.black26
-                      ),
-                      border: InputBorder.none,
-                      prefixIcon: Icon(
-                        Icons.timer,
-                        color: Colors.black26,
-                      )
+                        labelText: "Elapsed Times",
+                        hintText: "00:00:00",
+                        hintStyle: TextStyle(
+                            color: Colors.black26
+                        ),
+                        border: InputBorder.none,
+                        prefixIcon: Icon(
+                          Icons.timer,
+                          color: Colors.black26,
+                        )
                     ),
                   ),
                 ),

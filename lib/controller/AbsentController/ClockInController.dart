@@ -13,7 +13,7 @@ class ClockInController {
   Future<String> fetchUserName() async {
     String? userId = await _loginController.getUserId();
     if (userId != null) {
-      var response = await http.get(Uri.parse('http://192.168.100.194/FlutterAPI/GetUserById.php/$userId'));
+      var response = await http.get(Uri.parse('http://192.168.100.249/FlutterAPI/GetUserById.php/$userId'));
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         return data['full_name'];
@@ -29,9 +29,9 @@ class ClockInController {
     String? userId = await _loginController.getUserId();
     if (userId != null) {
       var response = await http.get(
-        Uri.parse(
-          'http://192.168.100.194/FlutterAPI/GetUserById.php/$userId'
-        )
+          Uri.parse(
+              'http://192.168.100.249/FlutterAPI/GetUserById.php/$userId'
+          )
       );
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
@@ -58,68 +58,69 @@ class ClockInController {
 
   bool _isLoading = false;
   clock_in() async {
-  try {
-    String? userId = await _loginController.getUserId();
-    if (userId == null) {
-      print('User ID tidak ditemukan');
+    try {
+      String? userId = await _loginController.getUserId();
+      if (userId == null) {
+        print('User ID tidak ditemukan');
+        return false;
+      }
+
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse("http://192.168.100.249/FlutterAPI/attendance/user/clock_in.php"),
+      );
+
+      request.fields['user_id'] = userId;
+      request.fields['user_name'] = userNameLocationFieldController.text;
+      request.fields['location'] = locationFieldController.text;
+      request.fields['shift'] = shiftController.text;
+      request.fields['notes'] = notesClockIn.text;
+
+      if (clockInImageController.text.isNotEmpty) {
+        final filePath = clockInImageController.text;
+        final file = File(filePath);
+
+        if (await file.exists()) {
+          var imageFile = await http.MultipartFile.fromPath("pict_clock_in", filePath);
+          request.files.add(imageFile);
+        } else {
+          print('File tidak ditemukan di path: $filePath');
+        }
+      }
+
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+      print('Image: ${clockInImageController.text}');
+      print('Response Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        String responseBody = response.body;
+
+        // Coba temukan posisi awal JSON dengan mencari '{'
+        int jsonStartIndex = responseBody.indexOf('{');
+        if (jsonStartIndex != -1) {
+          // Ambil bagian respons yang mengandung JSON
+          String jsonResponse = responseBody.substring(jsonStartIndex);
+          try {
+            var responseData = jsonDecode(jsonResponse);
+            if (responseData['Message'] == 'Clock-in Sukses') {
+              return true;
+            }
+          } catch (jsonError) {
+            print('Error parsing JSON: $jsonError');
+          }
+        } else {
+          print('Unexpected response format: $responseBody');
+        }
+      }
+      return false;
+
+    } catch (e) {
+      print('Exception during clock in request: $e');
       return false;
     }
-
-    var request = http.MultipartRequest(
-      'POST',
-      Uri.parse("http://192.168.100.194/FlutterAPI/attendance/user/clock_in.php"),
-    );
-    
-    request.fields['user_id'] = userId;
-    request.fields['location'] = locationClockIn.text;
-    request.fields['shift'] = shiftController.text;
-    request.fields['notes'] = notesClockIn.text;
-    
-    if (clockInImageController.text.isNotEmpty) {
-      final filePath = clockInImageController.text;
-      final file = File(filePath);
-
-      if (await file.exists()) {
-        var imageFile = await http.MultipartFile.fromPath("pict_clock_in", filePath);
-        request.files.add(imageFile);
-      } else {
-        print('File tidak ditemukan di path: $filePath');
-      }
-    }
-
-    var streamedResponse = await request.send();
-    var response = await http.Response.fromStream(streamedResponse);
-    print('Image: ${clockInImageController.text}');
-    print('Response Status Code: ${response.statusCode}');
-    print('Response Body: ${response.body}');
-
-    if (response.statusCode == 200) {
-    String responseBody = response.body;
-
-    // Coba temukan posisi awal JSON dengan mencari '{'
-    int jsonStartIndex = responseBody.indexOf('{');
-    if (jsonStartIndex != -1) {
-      // Ambil bagian respons yang mengandung JSON
-      String jsonResponse = responseBody.substring(jsonStartIndex);
-      try {
-        var responseData = jsonDecode(jsonResponse);
-        if (responseData['Message'] == 'Clock-in Sukses') {
-          return true;
-        }
-      } catch (jsonError) {
-        print('Error parsing JSON: $jsonError');
-      }
-    } else {
-      print('Unexpected response format: $responseBody');
-    }
   }
-  return false;
-
-  } catch (e) {
-    print('Exception during clock in request: $e');
-    return false;
-  }
-}
 
   show_question() async {
     try {
@@ -130,7 +131,7 @@ class ClockInController {
       }
 
       final response = await http.post(
-        Uri.parse("http://192.168.100.194/FlutterAPI/KPI/getQuestionsForClockOut.php"),
+        Uri.parse("http://192.168.100.249/FlutterAPI/KPI/getQuestionsForClockOut.php"),
         body: {
           'user_id' : userId
         }
@@ -148,7 +149,7 @@ class ClockInController {
       print('Error : $e');
     }
   }
- 
+
   clock_out() async {
     try {
       String? userId = await _loginController.getUserId();
@@ -157,17 +158,18 @@ class ClockInController {
         return false;
       }
 
-      List<QuestionModel> questions = await show_question();
-
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse("http://192.168.100.194/FlutterAPI/attendance/user/clock_out.php"),
+        Uri.parse("http://192.168.100.249/FlutterAPI/attendance/user/clock_out.php"),
       );
-      
-      request.fields['user_id'] = userId;
-      request.fields['location'] = locationClockOut.text;
-      request.fields['shift'] = shiftController.text;
+
+      request.fields['user_name'] = userNameLocationFieldController.text;
+      request.fields['clock_in'] = clockInController.text;
+      request.fields['location'] = locationFieldController.text;
+      request.fields['shift'] = shiftClockOutController.text;
+      request.fields['elapsed_time'] = elapsedTimesController.value.text;
       request.fields['notes'] = notesClockOut.text;
+      request.fields['user_id'] = userId;
       if (clockOutImageController.text.isNotEmpty) {
         final filePath = clockOutImageController.text;
         final file = File(filePath);
@@ -180,20 +182,14 @@ class ClockInController {
         }
       }
 
-      for (var question in questions) {
-        final questionId = question.idQuestion.toString(); 
-        final answer = answerController[questionId]?.text ?? ''; 
-        request.fields[questionId] = answer;
-        print('Submitting answer for question $questionId: $answer');
-      }
-
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
 
       print("Image path: ${clockOutImageController.text}");
       print('Response Status Code: ${response.statusCode}');
       print('Response Body: ${response.body}');
-      
+
+
 
       if (response.statusCode == 200) {
         String responseBody = response.body;
@@ -203,7 +199,7 @@ class ClockInController {
           String jsonResponse = responseBody.substring(jsonStartIndex);
           try {
             var responseData = jsonDecode(jsonResponse);
-            
+
             // Tambahkan pengecekan ini agar selalu mengembalikan true jika sukses
             if (responseData['status'] == 'success') {
               print('Clock Out berhasil');

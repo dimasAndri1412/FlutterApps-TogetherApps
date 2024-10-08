@@ -15,7 +15,7 @@ import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:image/image.dart' as img;
 import 'package:path/path.dart' as path;
 import 'package:provider/provider.dart';
-
+import 'package:get/get.dart';
 import 'ML/Recognition.dart';
 import 'ML/Recognizer.dart';
 
@@ -433,19 +433,9 @@ class _CameraDetectionState extends State<CameraDetection> {
               if (croppedImage.existsSync()) {
                 final clockInState = Provider.of<ClockInState>(context, listen: false);
                 if (clockInState.hasClockedIn) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => gmapsClockOutPages(imagePath: croppedImage.path),
-                    ),
-                  );
+                  Get.to(gmapsClockOutPages(imagePath: croppedImage.path));
                 } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => gmapsConfirmPages(imagePath: croppedImage.path),
-                    ),
-                  );
+                  Get.offAll(gmapsConfirmPages(imagePath: croppedImage.path));
                 }
               } else {
                 print("Cropped image not found");
