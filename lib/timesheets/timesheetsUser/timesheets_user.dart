@@ -2,6 +2,7 @@ import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/controller/TimeSheetsController/TimesheetsUser/TimesheetsController.dart';
 import 'package:absent_project/controller/TimeSheetsController/TimesheetsUser/TimesheetsModel.dart';
 import 'package:absent_project/timesheets/timesheetsUser/daily_timesheets.dart';
+import 'package:absent_project/timesheets/timesheetsUser/monthlyTimesheets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -20,6 +21,7 @@ class _TimesheetsUserState extends State<TimesheetsUser> {
   DateTime today = DateTime.now();
   DateTime _selectedDay = DateTime.now();
   DateTime _focusedDay = DateTime.now();
+
 
   Map<DateTime, Map<String, String>> trackedTimes = {
     DateTime.utc(2024, 6, 12): {
@@ -115,9 +117,29 @@ class _TimesheetsUserState extends State<TimesheetsUser> {
                     builder: (context) => DailyTimesheets(
                           // trackedTime: trackedTimes[_selectedDay] ?? {}
                           trackedTime: trackedTimes[_selectedDay],
-                          // selectedDay: _selectedDay,
+                          selectedDay: _selectedDay,
                           formattedDate: formattedDate,
                         )));
+              },
+            ),
+
+            TextButton(
+              child: Center(
+                child: Container(
+                  child: Text(
+                    "View Monthly Timesheet",
+                    style: TextStyle(color: Colors.blue, fontSize: 16),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                int selectedMonth = _selectedDay.month;
+                int selectedYear = _selectedDay.year;
+                print('Selected Month: $selectedMonth');
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => monthlyTimesheets(selectedMonth: selectedMonth, selectedYear: selectedYear,)
+                  )
+                );
               },
             ),
           ],
@@ -147,6 +169,7 @@ class _TimesheetsUserState extends State<TimesheetsUser> {
                 selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
                 onDaySelected: (selectedDay, focusedDay) {
                   setState(() {
+                    print("selected $_selectedDay");
                     _selectedDay = selectedDay;
                     _focusedDay = focusedDay;
                   });
