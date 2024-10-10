@@ -98,14 +98,13 @@ class _CameraDetectionState extends State<CameraDetection> {
     //   isBusy = false;
     // });
 
-    if (faces.isEmpty) {
+    if (faces.isEmpty && !noFaceDetected) {
       setState(() {
         noFaceDetected = true;
       });
-    } else {
+    } else if (faces.isNotEmpty && noFaceDetected) {
       setState(() {
         noFaceDetected = false;
-        // performFaceRecognition(faces);
       });
     }
   }
@@ -126,12 +125,16 @@ class _CameraDetectionState extends State<CameraDetection> {
       img.Image croppedFace = img.copyCrop(image!, x:faceRect.left.toInt(),y:faceRect.top.toInt(),width:faceRect.width.toInt(),height:faceRect.height.toInt());
 
       //TODO pass cropped face to face recognition model
-      Recognition recognition = await recognizer.recognize(croppedFace!, faceRect);
-      if(recognition.distance>1.26){
-        recognition.name = "Unknown";
+      Recognition recognition;
+      try {
+        recognition = await recognizer.recognize(croppedFace!, faceRect);
+        if(recognition.distance>1.26){
+          recognition.name = "Unknown";
+        }
+      } catch (e) {
+        recognition = Recognition("Face not registered", faceRect, [], 0);
       }
       recognitions.add(recognition);
-
       //TODO show face registration dialogue
       if(register){
         showFaceRegistrationDialogue(croppedFace!,recognition);
@@ -426,6 +429,7 @@ class _CameraDetectionState extends State<CameraDetection> {
     }
 
     bool isUnknown = recognitions.any((rec) => rec.name == "Unknown");
+    bool isNotRegist = recognitions.any((rec) => rec.name == "Face not registered");
     stackChildren.add(Positioned(
       bottom: 40,
       left: 0,
@@ -435,10 +439,12 @@ class _CameraDetectionState extends State<CameraDetection> {
           icon: Icon(Icons.camera),
           color: Colors.white,
           iconSize: 50,
-          onPressed: isUnknown
+          onPressed: isNotRegist
+            ? null
+            : isUnknown
             ? null // if Unknown maka gabisa pencet
-            // : noFaceDetected
-            // ? null 
+            : noFaceDetected
+            ? null 
             : () async {
             try {
               await controller.stopImageStream(); 

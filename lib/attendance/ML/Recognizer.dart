@@ -66,7 +66,7 @@ class Recognizer {
     }
 
     final response = await http.post(
-      Uri.parse('http://192.168.100.194/FlutterAPI/attendance/admin/GetEmbeddingById.php'),
+      Uri.parse('http://192.168.100.84/FlutterAPI/attendance/admin/GetEmbeddingById.php'),
       body: {'user_id': userId},
     );
 
@@ -96,7 +96,7 @@ class Recognizer {
     if (embeddingList == null) {
       await fetchEmbedding();
       if (embeddingList == null) {
-        throw Exception('Embedding list failed to load');
+        throw Exception('Face not registered');
       }
     }
 
