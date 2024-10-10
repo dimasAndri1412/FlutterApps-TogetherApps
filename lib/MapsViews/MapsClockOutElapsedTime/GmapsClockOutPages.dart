@@ -1,7 +1,8 @@
-import 'package:absent_project/MapsViews/MapsClockInElapsedTime/GmapsElapsedTimePages.dart';
 import 'package:absent_project/MapsViews/MapsClockOutElapsedTime/GmapsClockOutHeaders.dart';
 import 'package:absent_project/MapsViews/MapsClockOutElapsedTime/GmapsClockUpWrapper.dart';
 import 'package:absent_project/MapsViews/MapsClockOutElapsedTime/GmapsClockOutHeaders2.dart';
+import 'package:absent_project/MapsViews/MatterialMaps/GmapsStopWatchController.dart';
+import 'package:absent_project/home/ApplicationBarClockIn.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -15,13 +16,13 @@ class gmapsClockOutPages extends StatefulWidget {
 }
 
 class _gmapsClockOutPagesState extends State<gmapsClockOutPages> {
+
+  final stopWatchControllers = Get.put(gmapsStopWatchController());
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {
-        bool shouldNavigateBack = (await _showConfirmDialog(context)) as bool;
-        return shouldNavigateBack;
-      },
+      onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -44,7 +45,7 @@ class _gmapsClockOutPagesState extends State<gmapsClockOutPages> {
         body: Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.white
+              color: Colors.white
           ),
           child: Column(
             children: <Widget>[
@@ -111,7 +112,8 @@ class _gmapsClockOutPagesState extends State<gmapsClockOutPages> {
                 ),
               ),
               TextButton(onPressed: (){
-                Get.offAll(() => gmapsElapsedTimesPages());
+                stopWatchControllers.startStopwatch();
+                Get.to(applicationBarClockIn());
                 //ctr_data().clear_func();
               },
                 child:Text("YES",style:

@@ -4,24 +4,14 @@ import 'package:get/get.dart';
 
 
 class gmapsStopWatchController extends GetxController {
-
   late Stopwatch stopwatch;
-  late Timer timer;
+  Timer? timer;
   var elapsedTimesModel = '00:00:00'.obs;
 
   @override
   void onInit() {
     super.onInit();
     stopwatch = Stopwatch();
-    timer = Timer(Duration.zero, () {});
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-    if (timer.isActive) {
-      timer.cancel();
-    }
   }
 
   void startStopwatch() {
@@ -31,23 +21,25 @@ class gmapsStopWatchController extends GetxController {
 
   void stopStopwatch() {
     stopwatch.stop();
-    if(timer.isActive) {
-      print("stopwatch is stoped");
-      timer.cancel();
-    }
-    elapsedTimesModel.value = formatDuration(stopwatch.elapsed);
+    timer?.cancel();
+  }
+
+  void continueStopwatch() {
+    stopwatch.start();
+    timer = Timer.periodic(Duration(seconds: 1), updateElapsedTime);
   }
 
   void resetStopwatch() {
     stopwatch.reset();
+    timer?.cancel();
     elapsedTimesModel.value = formatDuration(Duration.zero);
-    elapsedTimesController.text = elapsedTimesModel.value;
+    elapsedTimesController.value.text = elapsedTimesModel.value;
   }
 
   void updateElapsedTime(Timer? timer) {
     final duration = stopwatch.elapsed;
     elapsedTimesModel.value = formatDuration(duration);
-    elapsedTimesController.text = elapsedTimesModel.value;
+    elapsedTimesController.value.text = elapsedTimesModel.value;
   }
 
   String formatDuration(Duration duration) {
@@ -56,5 +48,11 @@ class gmapsStopWatchController extends GetxController {
     final minutes = twoDigits(duration.inMinutes.remainder(60));
     final seconds = twoDigits(duration.inSeconds.remainder(60));
     return '$hours:$minutes:$seconds';
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 }

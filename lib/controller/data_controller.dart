@@ -86,6 +86,17 @@ class ctr_data {
     radiusController.clear();
   }
 
+  clear_maps_clock_in_out_func() {
+    locationFieldController.clear();
+    userNameLocationFieldController.clear();
+    projectLocationFieldController.clear();
+    shiftLocationFieldController.clear();
+    fullNamesLocationController.clear();
+    noteLocationController.clear();
+    avatarPicUrlController.clear();
+    elapsedTimesController.value.clear();
+  }
+
   change_pwd(int? selectedPosition) async {
     // if (image == null || !faceDetected) return false;
     final deviceService = Getdevice();

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:absent_project/MapsViews/MatterialMaps/FindMapLocationControllers.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/GmapsController.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/material.dart';
@@ -18,11 +17,6 @@ class _GmapsViewsState extends State<GmapsViews> {
 
   GoogleMapController? mapControllers;
 
-  static const LatLng _googleView = LatLng(
-      -6.200000,
-      106.816666
-  );
-
   void mapsCreateds(GoogleMapController controllers) async {
     final findCoordinates = await coordinateLocation();
     mapControllers = controllers;
@@ -30,13 +24,13 @@ class _GmapsViewsState extends State<GmapsViews> {
     if (mounted) {
       setState(() {
         initMarkerLocation.add(
-          Marker(
-              markerId: MarkerId("locations"),
-              position: findCoordinates,
-              infoWindow: InfoWindow(
-                title: "location Project"
-              )
-          )
+            Marker(
+                markerId: MarkerId("locations"),
+                position: findCoordinates,
+                infoWindow: InfoWindow(
+                    title: "location Project"
+                )
+            )
         );
       });
     }
@@ -50,18 +44,18 @@ class _GmapsViewsState extends State<GmapsViews> {
     if (findRadiusPosition != null) {
 
       if (mounted) {
-          setState(() {
-            circless = {
-              Circle(
-                circleId: CircleId('radiusPosition'),
-                center: locationPosition,
-                radius: findRadiusPosition,
-                strokeColor: Colors.blueAccent,
-                strokeWidth: 1,
-                fillColor: Color.fromARGB(255, 147, 195, 234).withOpacity(0.6),
-              )
-            };
-          });
+        setState(() {
+          circless = {
+            Circle(
+              circleId: CircleId('radiusPosition'),
+              center: locationPosition,
+              radius: findRadiusPosition,
+              strokeColor: Colors.blueAccent,
+              strokeWidth: 1,
+              fillColor: Color.fromARGB(255, 147, 195, 234).withOpacity(0.6),
+            )
+          };
+        });
       }
     }
   }
@@ -83,7 +77,7 @@ class _GmapsViewsState extends State<GmapsViews> {
           color: Colors.lightBlue,
           backgroundColor: Color.fromARGB(254, 147, 195, 234),
         ),
-      ) 
+      )
           : GoogleMap(
         zoomControlsEnabled: false,
         myLocationButtonEnabled: false,

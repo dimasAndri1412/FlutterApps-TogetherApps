@@ -1,16 +1,15 @@
-import 'package:absent_project/MapsViews/MapsConfirmLocationPages/GmapsConfirmPages.dart';
-import 'package:absent_project/MapsViews/MapsLocationPages/GmapsLocationButton.dart';
 import 'package:absent_project/MapsViews/MapsLocationPages/GmapsLocationField.dart';
-import 'package:absent_project/MapsViews/MapsLocationPages/GmapsLocationPage.dart';
 import 'package:absent_project/MapsViews/MapsLocationPages/GmapsLocationView.dart';
-import 'package:absent_project/attendance/Camera.dart';
+import 'package:absent_project/MapsViews/MatterialMaps/GmapsController.dart';
 import 'package:absent_project/attendance/CameraDetection.dart' ;
+import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-
-
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class gmapsLocationWrapper extends StatefulWidget {
@@ -19,6 +18,53 @@ class gmapsLocationWrapper extends StatefulWidget {
   @override
   State<gmapsLocationWrapper> createState() => _gmapsLocationWrapperState();
 }
+
+Future<bool?> inRadiusValues() async {
+  final latitudes = await findLatitudeOnly();
+  final longtitudes = await findLongtitudeOnly();
+  final radiusInMeters = await findRadiusLocation();
+
+
+  final double latitudeLocations  = latitudes!;
+  final double longtitudeLocations = longtitudes!;
+  final double radiusOnMeters = radiusInMeters!;
+
+  Position currentPositioneds = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high
+  );
+
+  double distanceInMeters = Geolocator.distanceBetween(
+      latitudeLocations,
+      longtitudeLocations,
+      currentPositioneds.latitude,
+      currentPositioneds.longitude
+  );
+
+  return distanceInMeters <= radiusOnMeters;
+
+}
+
+String  getTodayDates() {
+  return DateFormat('yyyy-MM-dd').format(DateTime.now());
+}
+
+Future<void> saveClockInDate() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String today = getTodayDates();
+  await prefs.setString('lastClockInDate', today);
+}
+
+Future<bool> hasClockedInToday() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? lastClockInDate = prefs.getString('lastClockInDate');
+  String today = getTodayDates();
+
+  if (lastClockInDate == today) {
+    return true;
+  }
+  return false;
+}
+
 
 class _gmapsLocationWrapperState extends State<gmapsLocationWrapper> {
   @override
@@ -59,11 +105,21 @@ class _gmapsLocationWrapperState extends State<gmapsLocationWrapper> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-           Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => CameraDetection()),
-          );
+        onPressed: () async{
+
+          //bool? hasClockedIn = await hasClockedInToday();
+          //if (hasClockedIn) {
+           // Get.snackbar('Error', 'You has been log in today');
+            //return;
+         // }
+
+          //bool? inRadius = await inRadiusValues();
+          //if(inRadius!) {
+            //await saveClockInDate();
+            Get.offAll(CameraDetection());
+          //} else {
+            //locationNamesController.text = 'Invalid Radius Location';
+          //}
         },
         label: Text(
           "Start",

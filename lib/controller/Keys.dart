@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
@@ -84,6 +85,8 @@ final latitudeLocationController = TextEditingController();
 final longtitudeLocationController = TextEditingController();
 final postalCodeController = TextEditingController();
 final radiusController = TextEditingController();
+final shiftLocationFieldController = TextEditingController();
+final avatarPicUrlController = TextEditingController();
 late GoogleMapController mapControllers;
 late StreamSubscription<LocationData>? locationSubscriptions;
 final Set<Marker> initMarkers = {};
@@ -101,13 +104,18 @@ final shiftLOcationFieldController = TextEditingController();
 final fullNamesLocationController = TextEditingController();
 final noteLocationController = TextEditingController();
 final avatarUrlController = TextEditingController();
+final historyController = TextEditingController();
 String avatarURLs = '';
 
 // clock-in
 final locationClockIn = TextEditingController(); 
 final shiftController = TextEditingController(); 
 final notesClockIn = TextEditingController(); 
-final clockInImageController = TextEditingController(); 
+final clockInImageController = TextEditingController();
+final notesClockInController = TextEditingController();
+final shiftClockOutController = TextEditingController();
+final clockInController = TextEditingController();
+final notesClcokOutController = TextEditingController();
 
 //clock-out
 final clockOutImageController = TextEditingController();
@@ -115,7 +123,7 @@ final notesClockOut = TextEditingController();
 final locationClockOut = TextEditingController();
 
 //ElapsedTime
-final elapsedTimesController = TextEditingController();
+final elapsedTimesController = TextEditingController().obs;
 
 //questions
 final positionId = TextEditingController();
@@ -131,6 +139,9 @@ final GlobalKey<FormState>gmapsConfirmKey = GlobalKey<FormState>();
 
 //gmaps
 final GlobalKey<FormState>GoogleMapsForm = GlobalKey<FormState>();
+
+//gmapsConfirmKey
+final GlobalKey<FormState>gmapsClockConfirmKey = GlobalKey<FormState>();
 
 //Key ForgotPassword
 final GlobalKey<FormState> formsForgotKeys = GlobalKey<FormState>();

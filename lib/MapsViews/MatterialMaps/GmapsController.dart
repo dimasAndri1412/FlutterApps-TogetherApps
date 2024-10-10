@@ -1,9 +1,14 @@
 //GettingProject
+import 'package:absent_project/MapsViews/MatterialMaps/FindLastLogOutControllers.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/FindMapLocationControllers.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/FindProjectControllers.dart';
+import 'package:absent_project/MapsViews/MatterialMaps/findShifClockInController.dart';
 import 'package:absent_project/MapsViews/modelMaps/usernameModel.dart' as projectsModels;
 import 'package:absent_project/MapsViews/modelMaps/mapsModels.dart' as gmapsModels;
+import 'package:absent_project/MapsViews/modelMaps/clockOutModels.dart' as clockOutModels;
+import 'package:absent_project/MapsViews/modelMaps/lastLogOutsModels.dart' as lastClockOutModel;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 
 
 //Get Project
@@ -85,4 +90,46 @@ Future<LatLng> coordinateLocation() async {
   print('longtitdeu location: $longtitude');
 
   return mapsView;
+}
+
+//getLangtitudeOnly
+Future<double?> findLatitudeOnly() async {
+  final findGmapsLocation findLatitudeOnly = findGmapsLocation();
+  await findLatitudeOnly.findLocations();
+
+  double? latitudes = double.parse(gmapsModels.latitudeLocationModel as String);
+  return latitudes;
+}
+
+//getLongtitudeOnly
+Future<double?> findLongtitudeOnly() async {
+  final findGmapsLocation findLongtitudeOnlys = findGmapsLocation();
+  await findLongtitudeOnlys.findLocations();
+
+  double? longitudes = double.parse(gmapsModels.longTitudeLocationModel as String);
+  return longitudes;
+}
+
+Future<String?> findLastLogIns() async {
+  final findLastLogOutControllerss = findLastLogOutControllers();
+  await findLastLogOutControllerss.findLogOuts();
+
+  String? lastLogOutsValue = 'last log : ${lastClockOutModel.lastClockOuts}';
+  return lastLogOutsValue;
+}
+
+Future<String?> findShiftClockIn() async {
+  final findShiftValue = findClockOutControllers();
+  await findShiftValue.findClockInValues();
+
+  String? valueShift = clockOutModels.shiftCLockOutModels;
+  return valueShift;
+}
+
+Future<String?> findClockInTimes() async {
+  final findClockInValue = findClockOutControllers();
+  await findClockInValue.findClockInValues();
+
+  String? valueClockIN = clockOutModels.ClockInTimeCLockOutModels;
+  return valueClockIN;
 }

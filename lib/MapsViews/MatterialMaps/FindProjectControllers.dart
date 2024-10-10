@@ -16,7 +16,7 @@ class findsProjectController {
 
     try {
 
-      var getUserNames = Uri.parse("http://10.233.126.165/FlutterAPI/findUserNames.php");
+      var getUserNames = Uri.parse("http://192.168.100.249/FlutterAPI/findUserNames.php");
       var resps = await http.post(
         getUserNames,
         body: {
