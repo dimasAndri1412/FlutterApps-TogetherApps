@@ -94,6 +94,6 @@ class _deleteQuestionDialogState extends State<deleteQuestionDialog> {
           ],
         ),
       ),
-    );;
+    );
   }
 }

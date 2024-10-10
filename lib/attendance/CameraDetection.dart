@@ -40,6 +40,10 @@ class _CameraDetectionState extends State<CameraDetection> {
   //TODO declare face recognizer
   late Recognizer recognizer;
 
+  // bolean buat face detected 
+  bool noFaceDetected = false;
+
+
   @override
   void initState() {
     super.initState();
@@ -93,6 +97,17 @@ class _CameraDetectionState extends State<CameraDetection> {
     //   _scanResults = faces;
     //   isBusy = false;
     // });
+
+    if (faces.isEmpty) {
+      setState(() {
+        noFaceDetected = true;
+      });
+    } else {
+      setState(() {
+        noFaceDetected = false;
+        // performFaceRecognition(faces);
+      });
+    }
   }
 
   img.Image? image;
@@ -219,8 +234,6 @@ class _CameraDetectionState extends State<CameraDetection> {
           b = 0;
         else if (b > 262143) b = 262143;
 
-        // I don't know how these r, g, b values are defined, I'm just copying what you had bellow and
-        // getting their 8-bit values.
         outImg.setPixelRgb(i, j, ((r << 6) & 0xff0000) >> 16,
             ((g >> 2) & 0xff00) >> 8, (b >> 10) & 0xff);
       }
@@ -411,6 +424,7 @@ class _CameraDetectionState extends State<CameraDetection> {
             child: buildResult()),
       );
     }
+
     bool isUnknown = recognitions.any((rec) => rec.name == "Unknown");
     stackChildren.add(Positioned(
       bottom: 40,
@@ -423,6 +437,8 @@ class _CameraDetectionState extends State<CameraDetection> {
           iconSize: 50,
           onPressed: isUnknown
             ? null // if Unknown maka gabisa pencet
+            // : noFaceDetected
+            // ? null 
             : () async {
             try {
               await controller.stopImageStream(); 

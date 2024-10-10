@@ -1,3 +1,4 @@
+import 'package:absent_project/controller/TimeSheetsController/TimesheetsUser/TimesheetsController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -5,20 +6,21 @@ class DailyTimesheets extends StatefulWidget {
   const DailyTimesheets(
       {Key? key,
       required this.trackedTime,
-      // required this.selectedDay,
+      required this.selectedDay,
       required this.formattedDate})
       : super(key: key);
 
   // final DateTime selectedDay;
   final Map<String, String>? trackedTime;
   final String formattedDate;
-  // final String _selectedDay;
+  final DateTime selectedDay;
 
   @override
   State<DailyTimesheets> createState() => _DailyTimesheetsState();
 }
 
 class _DailyTimesheetsState extends State<DailyTimesheets> {
+  TimesheetsController _controller = TimesheetsController();
   // DateTime _selectedDay = DateTime.now();
 
   Widget _buildTrackedTime(Map<String, String>? trackedTime) {
@@ -52,6 +54,7 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                 offset: Offset(0, 4)),
           ]),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 5),
@@ -108,6 +111,59 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                   ],
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: Center(
+                  child: Text(
+                    "Daily Report",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                ),
+              ),
+              FutureBuilder(
+                future: _controller.getAnswers(widget.selectedDay), 
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator(); 
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}'); 
+                  } else if (!snapshot.hasData) {
+                    return Text("No data available"); 
+                  } else {
+                    List<dynamic> answers = snapshot.data as List<dynamic>;
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: answers.length,
+                      itemBuilder: (context, index) {
+                        var answer = answers[index];
+                        return Container(
+                          margin: EdgeInsets.only(left: 25, right: 25, top: 5, bottom: 5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                answer['question_text'] ?? "Question",
+                                style: TextStyle(
+                                  fontWeight: 
+                                  FontWeight.bold, 
+                                  fontSize: 12
+                                ),
+                              ),
+                              SizedBox(height: 5),
+                              Text(
+                                answer['answer_text'] ?? "Answer",
+                                style: TextStyle(
+                                  fontSize: 15
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  }
+                },
+              )
             ],
           ),
         ),

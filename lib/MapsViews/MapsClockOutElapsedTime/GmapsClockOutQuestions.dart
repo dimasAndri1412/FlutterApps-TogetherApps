@@ -66,8 +66,20 @@ class _gmapsClockOutQuestionsState extends State<gmapsClockOutQuestions> {
               ),
             ),
           ),
+          SizedBox(height: 10,),
           _isLoading
             ? Center(child: CircularProgressIndicator())
+            : _questions.isEmpty
+            ? Center(
+                child: Text(
+                  "No question for this position",
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.red,
+                  ),
+                ),
+              )
             : ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),

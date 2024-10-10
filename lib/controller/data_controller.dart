@@ -99,7 +99,7 @@ class ctr_data {
 
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse("http://192.168.100.17/FlutterAPI/update_password.php"),
+        Uri.parse("http://10.210.73.4/FlutterAPI/update_password.php"),
       );
 
       request.fields['OLD_PASSWORD'] = passwordController.text;
@@ -188,6 +188,10 @@ class ctr_data {
     }
   }
 
+  forgot_pw () async {
+    
+  }
+
   Future update_pwd_user() async {
     SharedPreferences prefs =
         await SharedPreferences.getInstance(); //utk ambil id
@@ -214,7 +218,7 @@ class ctr_data {
 
   forgot_pwd() async {
     final response = await http.post(
-      Uri.parse("http://192.168.100.17/FlutterAPI/forgot_password.php"),
+      Uri.parse("http://10.210.73.4/FlutterAPI/forgot_password.php"),
       body: {
         "email_address": EmailController.text,
         "PASSWORD": NewPasswordContorller.text
