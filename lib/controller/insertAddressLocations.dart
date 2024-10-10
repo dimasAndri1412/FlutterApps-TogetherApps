@@ -24,7 +24,7 @@ class insertAddressLocationController {
     
     try {
       
-      var locationUrl = Uri.parse("http://192.168.100.204/FlutterAPI/insert_Location.php");
+      var locationUrl = Uri.parse("http://192.168.2.159:8080/FlutterAPI/insert_Location.php");
       var resp = await http.post(
         locationUrl,
         body: {

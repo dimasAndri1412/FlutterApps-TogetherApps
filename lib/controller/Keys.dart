@@ -116,6 +116,7 @@ final notesClockInController = TextEditingController();
 final shiftClockOutController = TextEditingController();
 final clockInController = TextEditingController();
 final notesClcokOutController = TextEditingController();
+final clockInDateToDayController = TextEditingController();
 
 //clock-out
 final clockOutImageController = TextEditingController();

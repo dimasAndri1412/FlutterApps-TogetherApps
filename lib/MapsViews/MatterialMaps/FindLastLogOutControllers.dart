@@ -14,7 +14,7 @@ class findLastLogOutControllers {
 
     try{
 
-      var getlastLogOut = Uri.parse("http://192.168.100.249/FlutterAPI/findLastLogin.php");
+      var getlastLogOut = Uri.parse("http://192.168.2.159:8080/FlutterAPI/findLastLogin.php");
       var getresp = await http.post(
           getlastLogOut,
           body: {

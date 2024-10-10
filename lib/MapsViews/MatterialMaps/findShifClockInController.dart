@@ -14,7 +14,7 @@ class findClockOutControllers {
 
     try {
 
-      var getClockIn = Uri.parse("http://192.168.100.249/FlutterAPI/findValueClockIn.php");
+      var getClockIn = Uri.parse("http://192.168.2.159:8080/FlutterAPI/findValueClockIn.php");
       var getresp = await http.post(
           getClockIn,
           body: {

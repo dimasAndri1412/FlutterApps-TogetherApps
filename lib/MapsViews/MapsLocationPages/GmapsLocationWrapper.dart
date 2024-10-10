@@ -10,7 +10,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:absent_project/MapsViews/MatterialMaps/validationDatesForClockIn.dart';
 
 class gmapsLocationWrapper extends StatefulWidget {
   const gmapsLocationWrapper({super.key});
@@ -39,12 +39,10 @@ Future<bool?> inRadiusValues() async {
       currentPositioneds.latitude,
       currentPositioneds.longitude
   );
-
   return distanceInMeters <= radiusOnMeters;
-
 }
 
-String  getTodayDates() {
+/*String  getTodayDates() {
   return DateFormat('yyyy-MM-dd').format(DateTime.now());
 }
 
@@ -63,7 +61,7 @@ Future<bool> hasClockedInToday() async {
     return true;
   }
   return false;
-}
+}*/
 
 
 class _gmapsLocationWrapperState extends State<gmapsLocationWrapper> {
@@ -107,16 +105,38 @@ class _gmapsLocationWrapperState extends State<gmapsLocationWrapper> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async{
 
+          String? lastClockInValues = await findLastClockIn();
+          bool? inRadius = await inRadiusValues();
+
+          if (lastClockInValues == null ){
+
+            if (inRadius!) {
+              Get.offAll(CameraDetection());
+            } else {
+              locationNamesController.text = 'Invalid Radius Location';
+            }
+
+          } else{
+            final snackBar = SnackBar(
+                content: const Text("You Can Not Clockin Again In The Same Time!")
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
+
           //bool? hasClockedIn = await hasClockedInToday();
           //if (hasClockedIn) {
-           // Get.snackbar('Error', 'You has been log in today');
-            //return;
-         // }
+             //Get.snackbar('Error', 'You has been log in today');
+             //return;
+        // }
+
+          //else {
+            //Get.offAll(CameraDetection());
+          //}
 
           //bool? inRadius = await inRadiusValues();
           //if(inRadius!) {
             //await saveClockInDate();
-            Get.offAll(CameraDetection());
+            //Get.offAll(CameraDetection());
           //} else {
             //locationNamesController.text = 'Invalid Radius Location';
           //}

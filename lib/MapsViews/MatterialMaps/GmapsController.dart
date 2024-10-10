@@ -3,10 +3,12 @@ import 'package:absent_project/MapsViews/MatterialMaps/FindLastLogOutControllers
 import 'package:absent_project/MapsViews/MatterialMaps/FindMapLocationControllers.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/FindProjectControllers.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/findShifClockInController.dart';
+import 'package:absent_project/MapsViews/MatterialMaps/validationDatesForClockIn.dart';
 import 'package:absent_project/MapsViews/modelMaps/usernameModel.dart' as projectsModels;
 import 'package:absent_project/MapsViews/modelMaps/mapsModels.dart' as gmapsModels;
 import 'package:absent_project/MapsViews/modelMaps/clockOutModels.dart' as clockOutModels;
 import 'package:absent_project/MapsViews/modelMaps/lastLogOutsModels.dart' as lastClockOutModel;
+import 'package:absent_project/MapsViews/modelMaps/validateModels.dart' as validationModels;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
@@ -132,4 +134,12 @@ Future<String?> findClockInTimes() async {
 
   String? valueClockIN = clockOutModels.ClockInTimeCLockOutModels;
   return valueClockIN;
+}
+
+Future<String?> findLastClockIn() async {
+  final findClockInValues = verifyDateClockIn();
+  await findClockInValues.verifyClockIn();
+
+  String? valueClockIns = validationModels.validateClockInModels;
+  return valueClockIns;
 }

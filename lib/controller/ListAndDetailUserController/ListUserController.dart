@@ -9,7 +9,7 @@ import 'UserList.dart';
 class ListUserContoller {
   Future<List<UserList>?> getUsers() async {
     var data = await http.get(
-        Uri.parse("http://10.233.107.27/FlutterAPI/readuserlist.php"));
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/readuserlist.php"));
     var jsonData = json.decode(data.body);
 
     List<UserList> users = [];

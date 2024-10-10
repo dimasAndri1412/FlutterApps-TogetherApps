@@ -18,7 +18,7 @@ class insertClockInControllers {
 
     try{
 
-      var clockINUrl = Uri.parse("http://192.168.100.249/FlutterAPI/insertClockInAbsent.php");
+      var clockINUrl = Uri.parse("http://192.168.2.159:8080/FlutterAPI/insertClockInAbsent.php");
       var resp = await http.post(
           clockINUrl,
           body: {

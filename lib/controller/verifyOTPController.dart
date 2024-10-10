@@ -17,7 +17,7 @@ class verifyOTPController {
     
     try {
      
-      var verifyAPI = Uri.parse("http://192.168.2.159/FlutterAPI/verifyOTP.php");
+      var verifyAPI = Uri.parse("http://192.168.2.159:8080/FlutterAPI/verifyOTP.php");
       var resp = await http.post(
 
         verifyAPI,

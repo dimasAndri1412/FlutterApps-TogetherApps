@@ -15,7 +15,7 @@ class ctr_data {
   //fungsi untuk melakukan penyimpanan data//
   savefunc() async {
     final response = await http.post(
-      Uri.parse("http://192.168.100.17/FlutterAPI/create.php"),
+      Uri.parse("http://192.168.2.159:8080/FlutterAPI/create.php"),
       body: {
         "full_name": FullNameController.text,
         "USERNAME": UserNameController.text,
@@ -110,7 +110,7 @@ class ctr_data {
 
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse("http://192.168.100.17/FlutterAPI/update_password.php"),
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/update_password.php"),
       );
 
       request.fields['OLD_PASSWORD'] = passwordController.text;
@@ -165,7 +165,7 @@ class ctr_data {
 
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse("http://192.168.100.55/FlutterAPI/update_password.php"),
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/update_password.php"),
       );
 
       request.fields['OLD_PASSWORD'] = passwordController.text;
@@ -209,7 +209,7 @@ class ctr_data {
     String deviceId = await deviceService.getDeviceId();
 
     final response = await http.post(
-        Uri.parse("http://192.168.100.55/FlutterAPI/update_password_user.php"),
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/update_password_user.php"),
         body: {
           // "id": widget.list[widget.index]["id"],
           "OLD_PASSWORD": passwordController.text,
@@ -225,7 +225,7 @@ class ctr_data {
 
   forgot_pwd() async {
     final response = await http.post(
-      Uri.parse("http://192.168.100.17/FlutterAPI/forgot_password.php"),
+      Uri.parse("http://192.168.2.159:8080/FlutterAPI/forgot_password.php"),
       body: {
         "email_address": EmailController.text,
         "PASSWORD": NewPasswordContorller.text

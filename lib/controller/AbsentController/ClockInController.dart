@@ -13,7 +13,7 @@ class ClockInController {
   Future<String> fetchUserName() async {
     String? userId = await _loginController.getUserId();
     if (userId != null) {
-      var response = await http.get(Uri.parse('http://192.168.100.249/FlutterAPI/GetUserById.php/$userId'));
+      var response = await http.get(Uri.parse('http://192.168.2.159:8080/FlutterAPI/GetUserById.php/$userId'));
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         return data['full_name'];
@@ -30,7 +30,7 @@ class ClockInController {
     if (userId != null) {
       var response = await http.get(
           Uri.parse(
-              'http://192.168.100.249/FlutterAPI/GetUserById.php/$userId'
+              'http://192.168.2.159:8080/FlutterAPI/GetUserById.php/$userId'
           )
       );
       if (response.statusCode == 200) {
@@ -67,7 +67,7 @@ class ClockInController {
 
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse("http://192.168.100.249/FlutterAPI/attendance/user/clock_in.php"),
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/attendance/user/clock_in.php"),
       );
 
       request.fields['user_id'] = userId;
@@ -131,7 +131,7 @@ class ClockInController {
       }
 
       final response = await http.post(
-        Uri.parse("http://192.168.100.249/FlutterAPI/KPI/getQuestionsForClockOut.php"),
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/KPI/getQuestionsForClockOut.php"),
         body: {
           'user_id' : userId
         }
@@ -160,7 +160,7 @@ class ClockInController {
 
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse("http://192.168.100.249/FlutterAPI/attendance/user/clock_out.php"),
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/attendance/user/clock_out.php"),
       );
 
       request.fields['user_name'] = userNameLocationFieldController.text;

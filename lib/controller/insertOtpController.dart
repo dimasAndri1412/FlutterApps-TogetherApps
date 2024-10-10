@@ -18,7 +18,7 @@ class insertOtpController {
 
     try{
 
-      var otpUrl = Uri.parse("http://192.168.2.159/FlutterAPI/insertOTP.php");
+      var otpUrl = Uri.parse("http://192.168.2.159:8080/FlutterAPI/insertOTP.php");
       var resp = await http.post(
           otpUrl,
           body: {
