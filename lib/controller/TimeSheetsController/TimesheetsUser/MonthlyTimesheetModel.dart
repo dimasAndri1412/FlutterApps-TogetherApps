@@ -4,8 +4,8 @@ class MonthlyTimesheetModel{
   final String? shift;
   final DateTime? clockOut;
   final String? elapsedTime;
-  final String? questionText;
-  final String? answerText;
+  final List<String>? questionText;
+  final List<String>? answerText;
   final String? clockOutId;
 
   MonthlyTimesheetModel({
@@ -27,8 +27,8 @@ class MonthlyTimesheetModel{
       clockOut: json['clock_out'] != null ? DateTime.parse(json['clock_in']) : null,
       clockOutId: json['clock_out_id'] as String?,
       elapsedTime: json['elapsed_time'] as String?,
-      questionText: json['question_text'] as String?,
-      answerText: json['answer_text'] as String?
+      questionText: json['questions'] != null ? List<String>.from(json['questions']) : null,
+      answerText: json['answers'] != null ? List<String>.from(json['answers']) : null,
     );
   }
 }
