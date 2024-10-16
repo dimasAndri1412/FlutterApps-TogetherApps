@@ -13,7 +13,7 @@ class verifyOTPController {
   
   Future verifyOTP() async{
     
-    String otpInputs = OTPController.text;
+    String otpInputs = revampOTPControllers.text;
     
     try {
      

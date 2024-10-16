@@ -18,7 +18,7 @@ class findOTPController {
     
     try{
      
-      var findAPI = Uri.parse("http://192.168.2.159:8080/FlutterAPI/FindOTP.php");
+      var findAPI = Uri.parse("http://192.168.2.159:8080/FlutterAPI/findOTP.php");
       var resp = await http.post(
         findAPI,
         body: {

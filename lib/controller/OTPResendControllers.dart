@@ -1,19 +1,18 @@
 import 'dart:convert';
-import 'package:absent_project/OTPVerfication/RevampOTPScreen/RevampOtpPage.dart';
 import 'package:absent_project/controller/data_controller.dart';
+import 'package:absent_project/controller/deleteOldOTPController.dart';
 import 'package:absent_project/controller/insertOTPController.dart';
 import 'package:absent_project/controller/sendingEmailOTP.dart';
-import 'package:get/get.dart';
 import '../controller/Keys.dart';
 import 'package:http/http.dart' as http;
 
-class OtpControllers {
+class otpResendControllers {
 
   String? emailAddres;
   var EmailUser;
 
 
-  Future SendOtpCode() async {
+  Future ResendOtpCode() async {
 
     String EmailInputs = EmailController.text;
 
@@ -29,15 +28,14 @@ class OtpControllers {
       EmailUser = jsonDecode(response.body);
       emailAddres = EmailUser[0]['email_address'];
 
+      final deleteOTP = await deleteOTPControllers().DeleteOTPCode();
       final insertOTP = await insertOtpController().insertOTPCode();
       final sendOTP = await sendingEmailOTP().sendingEmailOTPFuc();
 
       if (EmailController.text == emailAddres) {
+        deleteOTP;
         insertOTP;
         sendOTP;
-        Get.offAll(() => revampOTPPages());
-        ctr_data().clear_func();
-
 
       } else {
         ctr_data().clear_func();

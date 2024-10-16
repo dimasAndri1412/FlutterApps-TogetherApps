@@ -1,10 +1,8 @@
-import 'package:absent_project/ForgotPassword/forgotPasswordMenu.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/controller/data_controller.dart';
 import 'package:absent_project/controller/projectListContoller.dart';
 import 'package:absent_project/controller/verifyOTPController.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class OTPCodeButtons extends StatefulWidget {
   const OTPCodeButtons({super.key});
@@ -28,7 +26,7 @@ class _OTPCodeButtonsState extends State<OTPCodeButtons> {
             } else {
               final snackBar = SnackBar(content: Text("OTP Code Not Match"));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              ctr_data().clear_func();
+              ctr_data().clear_func_otp();
             }
           },
           child: Container(
@@ -41,7 +39,7 @@ class _OTPCodeButtonsState extends State<OTPCodeButtons> {
               ),
               child: Center(
                 child: Text(
-                  'SEND OTP TO EMAIL',
+                  'CONFIRM',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 15,

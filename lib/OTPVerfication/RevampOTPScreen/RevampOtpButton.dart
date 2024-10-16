@@ -1,17 +1,18 @@
 import 'package:absent_project/controller/Keys.dart';
-import 'package:absent_project/controller/OTPController.dart';
 import 'package:absent_project/controller/data_controller.dart';
 import 'package:absent_project/controller/projectListContoller.dart';
+import 'package:absent_project/controller/verifyOTPController.dart';
 import 'package:flutter/material.dart';
 
-class OTPEmailButtons extends StatefulWidget {
-  const OTPEmailButtons({super.key});
+
+class revampOTPButtons extends StatefulWidget {
+  const revampOTPButtons({super.key});
 
   @override
-  State<OTPEmailButtons> createState() => _OTPEmailButtonsState();
+  State<revampOTPButtons> createState() => _revampOTPButtonsState();
 }
 
-class _OTPEmailButtonsState extends State<OTPEmailButtons> {
+class _revampOTPButtonsState extends State<revampOTPButtons> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -19,13 +20,18 @@ class _OTPEmailButtonsState extends State<OTPEmailButtons> {
         GestureDetector(
           onTap: () async {
 
-            final emailValue = await validationUserEmails();
+            final otpCodeValue = await sendOTPCode();
 
-            if(emailFormOtp.currentState!.validate() && EmailController.text == emailValue) {
-              OtpControllers().SendOtpCode();
+            if(revampOTPScreenKey.currentState!.validate()) {
+
+              if (revampOTPControllers.text == otpCodeValue) {
+                verifyOTPController().verifyOTP();
+              } else {
+                final snackBar = SnackBar(content: Text("OTP Code Not Match"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              }
+
             } else {
-              final snackBar = SnackBar(content: Text("Could not Sent OTP!"));
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
               ctr_data().clear_func();
             }
           },
@@ -39,7 +45,7 @@ class _OTPEmailButtonsState extends State<OTPEmailButtons> {
               ),
               child: Center(
                 child: Text(
-                  'SEND OTP TO EMAIL',
+                  'CONFIRM',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 15,

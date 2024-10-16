@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'Keys.dart';
 import 'projectListContoller.dart';
 import 'package:mailer/mailer.dart';
-import '../controller/FindOTPController.dart';
 import 'package:mailer/smtp_server/gmail.dart';
 
 class sendingEmailOTP extends StatelessWidget {
