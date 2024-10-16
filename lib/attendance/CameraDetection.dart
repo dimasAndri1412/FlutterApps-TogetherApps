@@ -128,19 +128,13 @@ class _CameraDetectionState extends State<CameraDetection> {
       Recognition recognition;
       try {
         recognition = await recognizer.recognize(croppedFace!, faceRect);
-        if(recognition.distance>1.26){
+        if(recognition.distance>1.22){
           recognition.name = "Unknown";
         }
       } catch (e) {
         recognition = Recognition("Face not registered", faceRect, [], 0);
       }
       recognitions.add(recognition);
-      //TODO show face registration dialogue
-      if(register){
-        showFaceRegistrationDialogue(croppedFace!,recognition);
-        register = false;
-      }
-
     }
 
     setState(() {
@@ -151,43 +145,7 @@ class _CameraDetectionState extends State<CameraDetection> {
   }
 
   //TODO Face Registration Dialogue
-  TextEditingController textEditingController = TextEditingController();
-  showFaceRegistrationDialogue(img.Image croppedFace, Recognition recognition){
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text("Face Registration",textAlign: TextAlign.center),alignment: Alignment.center,
-        content: SizedBox(
-          height: 340,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 20,),
-              Image.memory(Uint8List.fromList(img.encodeBmp(croppedFace!)),width: 200,height: 200,),
-              SizedBox(
-                width: 200,
-                child: TextField(
-                    controller: textEditingController,
-                    decoration: const InputDecoration( fillColor: Colors.white, filled: true,hintText: "Enter Name")
-                ),
-              ),
-              const SizedBox(height: 10,),
-              ElevatedButton(
-                  onPressed: () {
-                    // recognizer.registerFaceInDB(textEditingController.text, recognition.embeddings);
-                    // textEditingController.text = "";
-                    // Navigator.pop(context);
-                    // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    //   content: Text("Face Registered"),
-                    // ));
-                  },style: ElevatedButton.styleFrom(shadowColor:Colors.blue,minimumSize: const Size(200,40)),
-                  child: const Text("Register"))
-            ],
-          ),
-        ),contentPadding: EdgeInsets.zero,
-      ),
-    );
-  }
+  
   static var IOS_BYTES_OFFSET = 28;
 
   static img.Image _convertBGRA8888ToImage(CameraImage cameraImage) {

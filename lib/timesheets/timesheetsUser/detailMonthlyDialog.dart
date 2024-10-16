@@ -45,11 +45,12 @@ class _detailMonthlyDialogState extends State<detailMonthlyDialog> {
               return Center(child: Text("Error ${snapshot.error}"));
             } else if(snapshot.hasData){
               MonthlyTimesheetModel timesheet = snapshot.data!;
-              String? formattedClockIn = timesheet.clockIn != null ? DateFormat('dd-MM-yyyy HH:mm:ss').format(timesheet.clockIn!) : null;
-              String? formattedClockOut = timesheet.clockOut != null ? DateFormat('dd-MM-yyyy HH:mm:ss').format(timesheet.clockIn!) : null;
+              String? formattedClockIn = timesheet.clockIn != null ? DateFormat('HH:mm:ss').format(timesheet.clockIn!) : null;
+              String? formattedClockOut = timesheet.clockOut != null ? DateFormat('HH:mm:ss').format(timesheet.clockIn!) : null;
+              List<String> questions = timesheet.questionText ?? [];
+              List<String> answers = timesheet.answerText ?? [];
 
-              return IntrinsicHeight(
-                child:  Column(
+              return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
@@ -79,7 +80,7 @@ class _detailMonthlyDialogState extends State<detailMonthlyDialog> {
                               width: 5,
                             ),
                             Text(
-                              "Detail Activity ${widget.clockOutId}",
+                              "Detail Activity",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
@@ -95,6 +96,7 @@ class _detailMonthlyDialogState extends State<detailMonthlyDialog> {
                     Container(
                       margin: EdgeInsets.only(left: 20, right: 20, top: 20),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
@@ -123,7 +125,7 @@ class _detailMonthlyDialogState extends State<detailMonthlyDialog> {
                                   fontSize: 12
                                 ),
                               ),
-                              SizedBox(width: 23,),
+                              SizedBox(width: 90,),
                               Text(
                                 formattedClockOut ?? "?",
                                 style: TextStyle(
@@ -152,6 +154,34 @@ class _detailMonthlyDialogState extends State<detailMonthlyDialog> {
                               )
                             ],
                           ),
+                          SizedBox(height: 10,),
+                          SizedBox(
+                              height: 220.0, 
+                              child: ListView.builder(
+                                itemCount: questions.length,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "${questions[index]}",
+                                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
+                                        ),
+                                        SizedBox(height: 4),
+                                        Text(
+                                          "Answer: ${answers[index]}",
+                                          style: TextStyle(fontSize: 12),
+                                        ),
+                                        Divider(), 
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+
                         ],
                       )
                     ),
@@ -166,16 +196,16 @@ class _detailMonthlyDialogState extends State<detailMonthlyDialog> {
                             onPressed: () {
                               Navigator.pop(context);
                             }, 
-                            child: Text("Delete Question",
+                            child: Text("Close",
                               style: TextStyle(
-                                color: Colors.red
+                                color: Colors.blue
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(color: Colors.red, width: 2.0)
+                                side: BorderSide(color: Colors.blue, width: 2.0)
 
                               ),
                               padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 12.0),
@@ -186,8 +216,7 @@ class _detailMonthlyDialogState extends State<detailMonthlyDialog> {
                     ),
                     SizedBox(height: 20,)
                   ],
-                )
-              );
+                );
             } else {
               return Center(child: Text("No data available"));
             }
