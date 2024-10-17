@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 class AdminApprovalOvertimaController{
   Future<List<AdminApprovalOvertimeModel>?> getList() async {
     var data = await http.post(
-        Uri.parse("http://192.168.100.199/FlutterAPI/approvals/admin/overtime/getListUser.php"));
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/approvals/admin/overtime/getListUser.php"));
     var jsonData = json.decode(data.body);
     nameOTController.text = jsonData[0]['full_name'];
 
@@ -25,7 +25,7 @@ class AdminApprovalOvertimaController{
 
   updateRejected() async {
     final response = await http.post(
-      Uri.parse("http://10.233.77.55/FlutterAPI/approvals/admin/overtime/update_rejected.php"),
+      Uri.parse("http://192.168.2.159:8080/FlutterAPI/approvals/admin/overtime/update_rejected.php"),
       body: {
         "reason_rejected": reason_rejectedController.text,
         "full_name": nameOTController.text,
@@ -39,7 +39,7 @@ class AdminApprovalOvertimaController{
 
   Future<List<AdminApprovalOvertimeGetStatusModel>?> getStatus() async{
     var data = await http.post(
-        Uri.parse("http://10.233.77.55/FlutterAPI/approvals/member/overtime/getStatus.php")
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/approvals/member/overtime/getStatus.php")
     );
     List<dynamic> jsonData = json.decode(data.body);
     List<AdminApprovalOvertimeGetStatusModel> users = [];
@@ -54,7 +54,7 @@ class AdminApprovalOvertimaController{
 
   Future<List<AdminApprovalOvertimeGetProjectModel>?> getProject() async{
     var data = await http.post(
-        Uri.parse("http://10.233.77.55/FlutterAPI/approvals/admin/overtime/getProject.php"),
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/approvals/admin/overtime/getProject.php"),
       body: {
           "username": emailController.text,
       }

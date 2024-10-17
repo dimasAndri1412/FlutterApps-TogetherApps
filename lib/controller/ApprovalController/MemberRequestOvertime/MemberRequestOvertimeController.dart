@@ -17,7 +17,7 @@ class MemberRequestOvertimeController {
   Future getInfo() async {
     var data = await http.post(
         Uri.parse(
-            "http://10.233.77.55/FlutterAPI/approvals/member/overtime/getFullName.php"),
+            "http://192.168.2.159:8080/FlutterAPI/approvals/member/overtime/getFullName.php"),
         body: {
           "username": emailController.text,
         });
@@ -39,7 +39,7 @@ class MemberRequestOvertimeController {
   save() async {
     final response = await http.post(
       Uri.parse(
-          "http://10.233.77.55/FlutterAPI/approvals/member/overtime/saveMemberRequestOT.php"),
+          "http://192.168.2.159:8080/FlutterAPI/approvals/member/overtime/saveMemberRequestOT.php"),
       body: {
         "fullname": nameOTController.text,
         "position": positionOTController.text,
@@ -73,14 +73,14 @@ class MemberRequestOvertimeController {
   Future<List<MemberRequestOvertimeGetListModel>?> getList() async {
     var getFullName = await http.post(
         Uri.parse(
-            "http://10.233.77.55/FlutterAPI/approvals/member/overtime/getFullName.php"),
+            "http://192.168.2.159:8080/FlutterAPI/approvals/member/overtime/getFullName.php"),
         body: {"username": emailController.text});
     var jsonGetFullName = json.decode(getFullName.body);
     nameOTController.text = jsonGetFullName[0]['full_name'];
     //
     var data = await http.post(
         Uri.parse(
-            "http://10.233.77.55/FlutterAPI/approvals/member/overtime/getListUser.php"),
+            "http://192.168.2.159:8080/FlutterAPI/approvals/member/overtime/getListUser.php"),
         body: {
           "name": nameOTController.text,
         });
@@ -108,7 +108,7 @@ class MemberRequestOvertimeController {
 
   Future<List<MemberRequestOvertimeGetStatusModel>?> getStatus() async {
     var data = await http.post(Uri.parse(
-        "http://10.233.77.55/FlutterAPI/approvals/member/overtime/getStatus.php"));
+        "http://192.168.2.159:8080/FlutterAPI/approvals/member/overtime/getStatus.php"));
     List<dynamic> jsonData = json.decode(data.body);
     List<MemberRequestOvertimeGetStatusModel> users = [];
 

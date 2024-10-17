@@ -1,3 +1,5 @@
+import 'package:absent_project/controller/TimeSheetsController/TimesheetAdmin/ListTimesheetsController.dart';
+import 'package:absent_project/controller/TimeSheetsController/TimesheetAdmin/ListTimesheetsModel.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
@@ -43,10 +45,26 @@ class _TimesheetsState extends State<Timesheets> {
   DateTime today = DateTime.now();
   DateTime _selectedDay = DateTime.now();
 
-  void _onDaySelected(DateTime day,DateTime focusedDay){
+  late Future<List<ListTimesheetsModel>> _listTimesheets;
+  ListTimesheetsController listTimesheetsController = ListTimesheetsController();
+
+  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     setState(() {
-      today= day;
+      _selectedDay = selectedDay;
+      today = focusedDay;
+      _listTimesheets = listTimesheetsController.getList(_selectedDay);
     });
+  }
+
+  void _initializeListTimesheets(){
+    _listTimesheets = listTimesheetsController.getList(_selectedDay);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _initializeListTimesheets();
   }
 
   void _onFormatChanged(format){
@@ -57,19 +75,11 @@ class _TimesheetsState extends State<Timesheets> {
     }
   }
 
-  List<WorkShift> workShifts = [
-    WorkShift(name: "Razu", clockIn: "08:12", clockOut: "17:10", imageUrl: "https://cdn.idntimes.com/content-images/community/2017/05/4-632faff4ffaa3e16ec532c27fc8fbdb6_600x400.jpg"),
-    WorkShift(name: "Beomgyu", clockIn: "09:30", clockOut: "19:21", imageUrl: "https://shopee.co.id/inspirasi-shopee/wp-content/uploads/2021/11/8A230920-1288-4933-97EF-ACBE94EBFD63kpoping-1.webp"),
-    WorkShift(name: "Sunoo", clockIn: "07:30", clockOut: "18:16", imageUrl: "https://i.pinimg.com/originals/2a/24/cb/2a24cb2bc385494be1d7958c72a762d6.jpg"),
-    WorkShift(name: "Jungkook", clockIn: "09:16", clockOut: "19:04", imageUrl: "https://w0.peakpx.com/wallpaper/280/151/HD-wallpaper-bts-jungkook-kookie.jpg"),
-    WorkShift(name: "Chanyoung", clockIn: "08:16", clockOut: "17:04", imageUrl: "https://i.mydramalist.com/q4qg5_5f.jpg"),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    final DateFormat formatter = DateFormat('EE, d MMM yyyy');
+    
+final DateFormat formatter = DateFormat('EE, d MMM yyyy');
     final String formattedDate = formatter.format(_selectedDay);
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -87,31 +97,50 @@ class _TimesheetsState extends State<Timesheets> {
               padding: EdgeInsets.all(10),
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.5,
-                child: ListView.builder(
-                  itemCount: workShifts.length,
-                  itemBuilder: (context, index) {
-                    final workShift = workShifts[index];
-                    return GestureDetector(
-                      onTap: (){
-                         Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) => DailyTimesheets()));
-                      },
-                      child: ListTile (
-                        /*imageUrl: "https://picsum.photos/id/$index/200/300",*/
-                        title:Text(workShift.name),
-                        subtitle: Text(workShift.getStatus()),
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(workShift.imageUrl),
-                        ),
-                        trailing:Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Text(workShift.getTotalHours()),
-                            SizedBox(width: 10,),
-                            Icon(Icons.chevron_right, color: Colors.grey,),
-                          ],
-                        )
-                      )
+                child: FutureBuilder(
+                  future: _listTimesheets, 
+                  builder: (context, snapshot){
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator(),);
+                    } else if (snapshot.hasError){
+                      return Center(child: Text("Error: ${snapshot.error}"),);
+                    } else if (!snapshot.hasData || snapshot.data == null || snapshot.data!.isEmpty){
+                      return Center(child: Text("No Data Available"),);
+                    }
+
+                    final timesheet = snapshot.data!;
+                    return ListView.builder(
+                      itemCount: timesheet.length,
+                      itemBuilder: (context, index) {
+                        final list = timesheet[index];
+                        String? clock_in = list.clockIn != null ? DateFormat('HH:mm').format(list.clockIn!) : null;
+                        String? clock_out = list.clockOut != null ? DateFormat('HH:mm').format(list.clockOut!) : null;
+                        return GestureDetector(
+                          onTap: (){
+                            Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (context) => DailyTimesheets(
+                                selectedDay: _selectedDay,
+                                clockInId: list.clockInID,
+                                )));
+                          },
+                          child: ListTile (
+                            /*imageUrl: "https://picsum.photos/id/$index/200/300",*/
+                            title:Text(list.fullName ?? "n/a"),
+                            subtitle: Text("${clock_in} - ${clock_out}" ?? "n/a"),
+                            leading: CircleAvatar(
+                              backgroundImage: NetworkImage(list.imagePath),
+                            ),
+                            trailing:Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Text(list.elapsedTime ?? "total"),
+                                SizedBox(width: 10,),
+                                Icon(Icons.chevron_right, color: Colors.grey,),
+                              ],
+                            )
+                          )
+                        );
+                      }
                     );
                   }
                 )
@@ -134,16 +163,11 @@ class _TimesheetsState extends State<Timesheets> {
               locale: "en_US",
               rowHeight: 43,
               availableGestures: AvailableGestures.all,
-              selectedDayPredicate: (day) => isSameDay(day, today),
+              selectedDayPredicate: (day) => isSameDay(day, _selectedDay),
               focusedDay: today, 
               firstDay: DateTime.utc(2019, 10, 16), 
               lastDay: DateTime.utc(2030, 3, 14),
-              onDaySelected: (selectedDay, focusedDay){
-                setState(() {
-                  _selectedDay = selectedDay;
-                  today = focusedDay;
-                });
-              },
+              onDaySelected: _onDaySelected,
               calendarFormat: _calendarFormat,
               onFormatChanged: _onFormatChanged,
             ),

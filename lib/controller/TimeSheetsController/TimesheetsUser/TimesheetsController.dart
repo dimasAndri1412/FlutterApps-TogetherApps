@@ -20,7 +20,7 @@ class TimesheetsController{
     String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDay);
     try {
       final response = await http.post(
-        Uri.parse("http://192.168.100.84/FlutterAPI/timesheet/user/get_tracked_time_byDate.php"),
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/timesheet/user/get_tracked_time_byDate.php"),
         body: {
           'user_id': userId,
           'date': formattedDate
@@ -49,7 +49,7 @@ class TimesheetsController{
     String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDay);
     try {
       final response = await http.post(
-        Uri.parse("http://192.168.100.84/FlutterAPI/timesheet/user/get_answers.php"),
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/timesheet/user/get_answers.php"),
         body: {
           'user_id': userId,
           'date': formattedDate
@@ -74,7 +74,7 @@ class TimesheetsController{
     String? userId = await _loginController.getUserId();
     try {
       final response = await http.post(
-        Uri.parse("http://192.168.100.84/FlutterAPI/timesheet/user/monthly_timesheets.php"),
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/timesheet/user/monthly_timesheets.php"),
         body: {
           'user_id': userId,
           'month': selectedMonth.toString(),
@@ -101,7 +101,7 @@ class TimesheetsController{
     String? userId = await _loginController.getUserId();
     try {
       final response = await http.post(
-        Uri.parse("http://192.168.100.84/FlutterAPI/timesheet/user/detail_monthly_timesheets.php"),
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/timesheet/user/detail_monthly_timesheets.php"),
         body: {
           'user_id': userId,
           'month': selectedMonth.toString(),

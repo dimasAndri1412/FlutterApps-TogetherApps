@@ -78,7 +78,7 @@ class AdminApprovalPaidLeaveController {
 
   Future getDetail() async{
       var data = await http.post(
-          Uri.parse("http://192.168.2.159/FlutterAPI/approvals/admin/paid_leave/getUserDevelopment_paidLeave.php"),
+          Uri.parse("http://192.168.2.159:808092.168.2.159/FlutterAPI/approvals/admin/paid_leave/getUserDevelopment_paidLeave.php"),
           body: {
             "name": namePaidLeave.text
           });
@@ -101,7 +101,7 @@ class AdminApprovalPaidLeaveController {
 
   Future<List<AdminApprovalPadiLeaveGetStatusModel>?> getStatus() async{
     var data = await http.post(
-        Uri.parse("http://10.233.77.55/FlutterAPI/approvals/member/overtime/getStatus.php")
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/approvals/member/overtime/getStatus.php")
     );
     List<dynamic> jsonData = json.decode(data.body);
     List<AdminApprovalPadiLeaveGetStatusModel> users = [];
@@ -116,7 +116,7 @@ class AdminApprovalPaidLeaveController {
 
   Future<List<AdminApprovalPaidLeaveGetProjectModel>?> getProject() async{
     var data = await http.post(
-        Uri.parse("http://10.233.77.55/FlutterAPI/approvals/admin/overtime/getProject.php"),
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/approvals/admin/overtime/getProject.php"),
         body: {
           "username": emailController.text,
         }

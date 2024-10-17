@@ -112,7 +112,7 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 5),
+                padding: const EdgeInsets.only(top: 5, bottom: 15),
                 child: Center(
                   child: Text(
                     "Daily Report",
@@ -137,7 +137,7 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                       itemBuilder: (context, index) {
                         var answer = answers[index];
                         return Container(
-                          margin: EdgeInsets.only(left: 25, right: 25, top: 5, bottom: 5),
+                          margin: EdgeInsets.only(left: 25, right: 25, top: 5, bottom: 10),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
