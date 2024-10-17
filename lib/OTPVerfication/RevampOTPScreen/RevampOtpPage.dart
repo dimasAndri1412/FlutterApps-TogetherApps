@@ -1,22 +1,21 @@
-
-import 'package:absent_project/OTPVerfication/EmailPageOTP/OTPEmailWrapper.dart';
-import 'package:absent_project/OTPVerfication/OTPVerficationHead.dart';
-import 'package:absent_project/login/LoginPage.dart';
+import 'package:absent_project/OTPVerfication/OTPVerficationPage.dart';
+import 'package:absent_project/OTPVerfication/RevampOTPScreen/RevampOtpFields.dart';
+import 'package:absent_project/controller/data_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:pinput/pinput.dart';
 import 'package:get/get.dart';
-import '../controller/data_controller.dart';
 
-
-class OTPVerficationPage extends StatefulWidget {
-  const OTPVerficationPage({super.key});
+class revampOTPPages extends StatefulWidget {
+  const revampOTPPages({super.key});
 
   @override
-  State<OTPVerficationPage> createState() => _OTPVerficationPageState();
+  State<revampOTPPages> createState() => _revampOTPPagesState();
 }
 
-class _OTPVerficationPageState extends State<OTPVerficationPage> {
+class _revampOTPPagesState extends State<revampOTPPages> {
   @override
   Widget build(BuildContext context) {
+
     return WillPopScope(
       onWillPop: () async {
         bool shouldNavigateBack = (await _showConfirmDialog(context)) as bool;
@@ -33,7 +32,7 @@ class _OTPVerficationPageState extends State<OTPVerficationPage> {
           backgroundColor: Color.fromARGB(255, 98, 171, 232),
           iconTheme: IconThemeData(color: Colors.white),
           title: Text(
-            "VERIFICATION",
+            "VERIFICATION OTP",
             style: TextStyle(
               fontSize: 24,
               color: Colors.white,
@@ -41,38 +40,10 @@ class _OTPVerficationPageState extends State<OTPVerficationPage> {
             ),
           ),
         ),
-        body: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              colors: [
-                Color.fromARGB(255, 145, 201, 247),
-                Color.fromARGB(255, 98, 171, 232),
-                Color.fromARGB(255, 123, 185, 235),
-                Color.fromARGB(255, 255, 255, 255),
-              ],
-            ),
-          ),
-          child: Column(
-            children: <Widget>[
-              SizedBox(height: 10),
-              OTPVerficationHead(),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(60),
-                      topRight: Radius.circular(60),
-                    ),
-                  ),
-                  child: SingleChildScrollView(
-                    child: OTPEmailWrapper(),
-                  ),
-                ),
-              ),
-            ],
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
+          child: Container(
+            child: revampOTPField()
           ),
         ),
       ),
@@ -100,19 +71,18 @@ class _OTPVerficationPageState extends State<OTPVerficationPage> {
                 onPressed: () {
                   Navigator.of(context).pop(false);
                 },
-                child: Text("NO",style:
+                child: Text("NO", style:
                 TextStyle(color: Colors.blueAccent,
                     fontWeight: FontWeight.bold),
                 ),
               ),
-              TextButton(onPressed: (){
-                Get.offAll(() => LoginPage());
+              TextButton(onPressed: () {
+                Get.offAll(() => OTPVerficationPage());
                 ctr_data().clear_func_otp();
               },
-                child:Text("YES",style:
+                child: Text("YES", style:
                 TextStyle(color: Colors.blueAccent,
                     fontWeight: FontWeight.bold),
-
                 ),
               ),
             ],

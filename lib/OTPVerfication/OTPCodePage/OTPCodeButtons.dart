@@ -1,10 +1,8 @@
-import 'package:absent_project/ForgotPassword/forgotPasswordMenu.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/controller/data_controller.dart';
 import 'package:absent_project/controller/projectListContoller.dart';
 import 'package:absent_project/controller/verifyOTPController.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class OTPCodeButtons extends StatefulWidget {
   const OTPCodeButtons({super.key});
@@ -14,12 +12,19 @@ class OTPCodeButtons extends StatefulWidget {
 }
 
 class _OTPCodeButtonsState extends State<OTPCodeButtons> {
+
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         GestureDetector(
           onTap: () async {
+
+            setState(() {
+              isLoading = true;
+            });
 
             final otpCodeValue = await sendOTPCode();
 
@@ -28,8 +33,12 @@ class _OTPCodeButtonsState extends State<OTPCodeButtons> {
             } else {
               final snackBar = SnackBar(content: Text("OTP Code Not Match"));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              ctr_data().clear_func();
+              ctr_data().clear_func_otp();
             }
+
+            setState(() {
+              isLoading = false;
+            });
           },
           child: Container(
               height: 50,
@@ -40,8 +49,11 @@ class _OTPCodeButtonsState extends State<OTPCodeButtons> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Center(
-                child: Text(
-                  'SEND OTP TO EMAIL',
+                child: isLoading ?
+                    CircularProgressIndicator(
+                      color: Colors.white,
+                    ) : Text(
+                  'CONFIRM',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 15,

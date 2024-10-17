@@ -130,7 +130,15 @@ final elapsedTimesController = TextEditingController().obs;
 final positionId = TextEditingController();
 final questionText = TextEditingController();
 final positionName = TextEditingController();
-final Map<String, TextEditingController> answerController = {}; 
+final Map<String, TextEditingController> answerController = {};
+
+//revampOTPController
+final revampOTPControllers = TextEditingController();
+final emailValuesControllers = TextEditingController();
+
+//revampOTPKey
+final GlobalKey<FormState> revampOTPScreenKey = GlobalKey<FormState>();
+
 
 //ElapsedTimeKey
 final GlobalKey<FormState> gmapsElapsedTimeKey = GlobalKey<FormState>();

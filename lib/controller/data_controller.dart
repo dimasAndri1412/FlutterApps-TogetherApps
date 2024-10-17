@@ -43,6 +43,26 @@ class ctr_data {
     AddressController.clear();
     RolesController.clear();
     PhoneNumbersController.clear();
+    //EmailController.clear();
+    NewConfPasswordController.clear();
+    NewPasswordContorller.clear();
+    PassController.clear();
+    ConfPassController.clear();
+    ProjectController.clear();
+    OTPController.clear();
+    UserIdController.clear();
+    FaceImageController.clear();
+    EmbeddingController.clear();
+    revampOTPControllers.clear();
+  }
+
+  clear_func_otp() {
+    FullNameController.clear();
+    UserNameController.clear();
+    BirthDateController.clear();
+    AddressController.clear();
+    RolesController.clear();
+    PhoneNumbersController.clear();
     EmailController.clear();
     NewConfPasswordController.clear();
     NewPasswordContorller.clear();
@@ -53,6 +73,7 @@ class ctr_data {
     UserIdController.clear();
     FaceImageController.clear();
     EmbeddingController.clear();
+    revampOTPControllers.clear();
   }
 
   // update_pwd() async {

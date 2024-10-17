@@ -1,9 +1,8 @@
-import 'package:absent_project/Registration/Functions/functionOTPKey.dart';
+import 'package:absent_project/controller/FindEmailForValidation.dart';
 import 'package:absent_project/controller/FindOTPController.dart';
 import 'Models/otpModels.dart' as otpmodel;
 import 'Models/emailModel.dart' as emailmodel ;
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:absent_project/controller/Models/validationModels.dart' as validationValues;
 import 'Keys.dart';
 
 final String TokenAcces2 = "owvl tynj qlqb inyv";
@@ -99,6 +98,17 @@ Future<String?> sendOTPCode()  async {
   return valueOTP;
 }
 
+Future<String?> validationUserEmails() async{
+  final findEmailControllers findUserEmailController = findEmailControllers();
+  await findUserEmailController.validationEmails();
+
+  String? userEmailValues = validationValues.validationEmails;
+
+  final String? emailSValues = userEmailValues;
+
+  return emailSValues;
+
+}
 
 
 

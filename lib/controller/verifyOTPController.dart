@@ -13,7 +13,7 @@ class verifyOTPController {
   
   Future verifyOTP() async{
     
-    String otpInputs = OTPController.text;
+    String otpInputs = revampOTPControllers.text;
     
     try {
      
@@ -31,9 +31,9 @@ class verifyOTPController {
 
       if (otpInputs == otpCodes) {
         Get.offAll(() => const forgotPasswordMenu());
-        ctr_data().clear_func();
+        ctr_data().clear_func_otp();
       } else {
-        ctr_data().clear_func();
+        ctr_data().clear_func_otp();
         return "OTP Code Not match";
       }
 
