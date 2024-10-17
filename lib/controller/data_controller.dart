@@ -52,6 +52,7 @@ class ctr_data {
     UserIdController.clear();
     FaceImageController.clear();
     EmbeddingController.clear();
+    revampOTPControllers.clear();
   }
 
   clear_func_otp() {
@@ -71,6 +72,7 @@ class ctr_data {
     UserIdController.clear();
     FaceImageController.clear();
     EmbeddingController.clear();
+    revampOTPControllers.clear();
   }
 
   // update_pwd() async {

@@ -107,7 +107,7 @@ class _OTPVerficationPageState extends State<OTPVerficationPage> {
               ),
               TextButton(onPressed: (){
                 Get.offAll(() => LoginPage());
-                ctr_data().clear_func();
+                ctr_data().clear_func_otp();
               },
                 child:Text("YES",style:
                 TextStyle(color: Colors.blueAccent,

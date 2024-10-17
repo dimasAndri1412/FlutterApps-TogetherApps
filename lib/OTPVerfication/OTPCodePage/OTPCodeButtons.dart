@@ -12,12 +12,19 @@ class OTPCodeButtons extends StatefulWidget {
 }
 
 class _OTPCodeButtonsState extends State<OTPCodeButtons> {
+
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         GestureDetector(
           onTap: () async {
+
+            setState(() {
+              isLoading = true;
+            });
 
             final otpCodeValue = await sendOTPCode();
 
@@ -28,6 +35,10 @@ class _OTPCodeButtonsState extends State<OTPCodeButtons> {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
               ctr_data().clear_func_otp();
             }
+
+            setState(() {
+              isLoading = false;
+            });
           },
           child: Container(
               height: 50,
@@ -38,7 +49,10 @@ class _OTPCodeButtonsState extends State<OTPCodeButtons> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Center(
-                child: Text(
+                child: isLoading ?
+                    CircularProgressIndicator(
+                      color: Colors.white,
+                    ) : Text(
                   'CONFIRM',
                   style: TextStyle(
                       color: Colors.white,

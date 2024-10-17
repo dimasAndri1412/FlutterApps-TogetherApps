@@ -20,7 +20,7 @@ class _revampOTPFieldState extends State<revampOTPField> {
     String emails = EmailController.text;
     var nameUsers = emails.split("@");
     var emailChars = emails.replaceRange(2, nameUsers[0].length, "*" * (nameUsers[0].length - 2));
-    String emaisValues = emailChars;
+    String emailsValues = emailChars;
 
     final basicPinPutThemes = PinTheme(
       width: 56,
@@ -58,7 +58,7 @@ class _revampOTPFieldState extends State<revampOTPField> {
                       vertical: 40
                   ),
                   child: Text(
-                    'Please Enter the conde sent to your email $emaisValues',
+                    'Please Enter the conde sent to your email $emailsValues',
                     style: TextStyle(
                       color: Colors.black54,
                       fontSize: 15,

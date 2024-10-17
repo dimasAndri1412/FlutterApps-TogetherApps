@@ -12,6 +12,7 @@ class OTPEmailButtons extends StatefulWidget {
 }
 
 class _OTPEmailButtonsState extends State<OTPEmailButtons> {
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,6 +29,7 @@ class _OTPEmailButtonsState extends State<OTPEmailButtons> {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
               ctr_data().clear_func();
             }
+
           },
           child: Container(
               height: 50,
