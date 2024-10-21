@@ -14,6 +14,7 @@ class forgotPasswordButtons extends StatefulWidget {
 }
 
 class _forgotPasswordButtonsState extends State<forgotPasswordButtons> {
+
   @override
   Widget build(BuildContext context) {
     return Column(

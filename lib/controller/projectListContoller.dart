@@ -28,6 +28,7 @@ final String bodyEmails = "HI,${FullNameController.text}\n"
                           "Best Regard\n"
                           "ADMIN";
 
+
 final String bodyEmailsForgots =
     "HI,${FullNameController.text}\n"
                           "\n"

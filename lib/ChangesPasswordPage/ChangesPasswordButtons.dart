@@ -38,7 +38,7 @@ class _ChangesPasswordButtonsState extends State<ChangesPasswordButtons> {
                   final snackBar =
                       SnackBar(content: const Text("Password Success Changes"));
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  ctr_data().clear_func();
+                  ctr_data().clear_func_otp();
                   Get.offAll(() => const LoginPage());
                 } else {
                   final snackBar = SnackBar(
