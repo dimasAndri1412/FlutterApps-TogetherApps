@@ -7,6 +7,7 @@ class MonthlyTimesheetModel{
   final List<String>? questionText;
   final List<String>? answerText;
   final String? clockOutId;
+  final String? grup;
 
   MonthlyTimesheetModel({
     this.clockIn,
@@ -16,7 +17,8 @@ class MonthlyTimesheetModel{
     this.clockOutId,
     this.elapsedTime,
     this.questionText,
-    this.answerText
+    this.answerText,
+    this.grup
   });
 
   factory MonthlyTimesheetModel.fromJson(Map<String, dynamic> json){
@@ -29,6 +31,7 @@ class MonthlyTimesheetModel{
       elapsedTime: json['elapsed_time'] as String?,
       questionText: json['questions'] != null ? List<String>.from(json['questions']) : null,
       answerText: json['answers'] != null ? List<String>.from(json['answers']) : null,
+      grup: json['grup'] as String?,
     );
   }
 }

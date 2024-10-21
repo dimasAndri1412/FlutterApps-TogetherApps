@@ -23,7 +23,7 @@ class MemberRequestPaidLeaveController {
   save() async {
     final response = await http.post(
       Uri.parse(
-          "http://10.233.77.55/FlutterAPI/approvals/member/paid_leave/setUserApproval.php"),
+          "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/setUserApproval.php"),
       body: {
         "name": namePaidLeave.text,
         "position": positionPaidLeave.text,
@@ -62,7 +62,7 @@ class MemberRequestPaidLeaveController {
   Future getInfo() async {
     var data = await http.post(
         Uri.parse(
-            "http://10.233.77.55/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
+            "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
         body: {
           "username": emailController.text,
         });
@@ -84,7 +84,7 @@ class MemberRequestPaidLeaveController {
   Future<List<MemberListPaidLeave>?> getList() async {
     var getFullName = await http.post(
         Uri.parse(
-            "http://10.233.77.55/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
+            "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
         body: {"username": emailController.text});
     var jsonGetFullName = json.decode(getFullName.body);
     namePaidLeave.text = jsonGetFullName[0]['full_name'];
@@ -115,7 +115,7 @@ class MemberRequestPaidLeaveController {
   Future getLeave() async {
     var data = await http.post(
         Uri.parse(
-            "http://10.233.77.55/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
+            "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
         body: {
           "username": emailController.text,
         });
@@ -129,7 +129,7 @@ class MemberRequestPaidLeaveController {
 
     var getData = await http.post(
         Uri.parse(
-            "http://10.233.77.55/FlutterAPI/approvals/member/paid_leave/getCountLeave.php"),
+            "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/getCountLeave.php"),
         body: {
           "name": namePaidLeave.text,
         });

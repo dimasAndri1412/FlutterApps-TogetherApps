@@ -21,6 +21,7 @@ class ctr_data {
         "PASSWORD": PassController.text,
       },
     );
+    print("response : ${response.body}");
     if (response.statusCode == 200) {
       return true;
     }
@@ -124,7 +125,7 @@ class ctr_data {
 
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse("http://192.168.2.159:8080/FlutterAPI/update_password.php"),
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/update_password_forFirst.php"),
       );
 
       request.fields['OLD_PASSWORD'] = passwordController.text;
