@@ -33,7 +33,7 @@ class _OTPCodeButtonsState extends State<OTPCodeButtons> {
             } else {
               final snackBar = SnackBar(content: Text("OTP Code Not Match"));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              ctr_data().clear_func_otp();
+              ctr_data().clear_func();
             }
 
             setState(() {

@@ -21,20 +21,18 @@ class _forgotPasswordButtonsState extends State<forgotPasswordButtons> {
         GestureDetector(
           onTap: () {
             if (formsForgotKeys.currentState!.validate()) {
-              ctr_data().update_pwd().then((value) {
-                if (value) {
-                  final snackBar =
-                  SnackBar(content: const Text("Password Success Changes"));
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  sendingEmailForgotPassword().sendingEmailForgotPasswordFunc();
-                  ctr_data().forgot_pwd();
-                  ctr_data().clear_func();
-                } else {
-                  final snackBar = SnackBar(
-                      content: const Text("Password Failure Changes!"));
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                }
-              });
+              final snackBar =
+              SnackBar(content: const Text("Password Success Changes"));
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              sendingEmailForgotPassword().sendingEmailForgotPasswordFunc();
+              ctr_data().forgot_pwd();
+              ctr_data().clear_func();
+              Get.offAll(() => LoginPage());
+            } else {
+              final snackBar =
+              SnackBar(content: const Text("Password Changes Failed"));
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              ctr_data().clear_func();
             }
           },
           child: Container(

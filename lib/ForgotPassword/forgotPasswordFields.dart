@@ -1,4 +1,5 @@
 import 'package:absent_project/controller/Keys.dart';
+import 'package:absent_project/controller/data_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 
@@ -84,10 +85,13 @@ class _forgotPasswordFieldState extends State<forgotPasswordField> {
                       bool inValidPass = RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d@$!%*?&]{10,}$').hasMatch(value!);
                       
                       if (value == null || value.isEmpty) {
+                        NewPasswordContorller.clear();
                         return "Password Can not Empty!";
                       } else if (value.length < 10) {
+                        NewPasswordContorller.clear();
                         return "Passowrd must be 10 character or more";
                       } else if (!inValidPass) {
+                        NewPasswordContorller.clear();
                         return "Password must include an uppercase letter, a lowercase letter, a number";
                       }
                     },
@@ -121,8 +125,10 @@ class _forgotPasswordFieldState extends State<forgotPasswordField> {
                         )),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
+                        ConfPassController.clear();
                         return "Password Can not Empty!";
                       } else if (value != NewPasswordContorller.text) {
+                        ConfPassController.clear();
                         return "Password it's not match!";
                       }
                     },

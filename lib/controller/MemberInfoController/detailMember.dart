@@ -5,7 +5,7 @@ import 'MemberDetailInfo.dart';
 
 class detailMember {
   Future<List<MemberDetailInfo>?> getUsers() async {
-    var url = Uri.parse("http://192.168.2.159/FlutterAPI/ReadMemberInfo.php");
+    var url = Uri.parse("http://192.168.2.159:8080/FlutterAPI/ReadMemberInfo.php");
     var data = await http.post(url,
       body: {"username": emailController.text});
     var jsonData = json.decode(data.body);
