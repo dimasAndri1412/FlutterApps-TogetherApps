@@ -1,8 +1,10 @@
 import 'package:absent_project/controller/FindEmailForValidation.dart';
 import 'package:absent_project/controller/FindOTPController.dart';
+import 'package:absent_project/controller/findImagePath.dart';
 import 'Models/otpModels.dart' as otpmodel;
 import 'Models/emailModel.dart' as emailmodel ;
 import 'package:absent_project/controller/Models/validationModels.dart' as validationValues;
+import 'package:absent_project/controller/Models/imagePathModels.dart' as imagesModels;
 import 'Keys.dart';
 
 final String TokenAcces2 = "owvl tynj qlqb inyv";
@@ -110,7 +112,17 @@ Future<String?> validationUserEmails() async{
 
 }
 
+Future<String?> getImagePath() async {
+  final findImageController findImagesPaths = findImageController();
+  await findImagesPaths.findImages();
 
+  String? imagesValues = imagesModels.impagesPath;
 
+  final String? imagesPathss = imagesValues;
+
+  print(imagesValues);
+
+  return imagesPathss;
+}
  
 

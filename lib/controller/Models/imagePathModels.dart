@@ -1,0 +1,3 @@
+library imageLibrary;
+
+String? impagesPath;

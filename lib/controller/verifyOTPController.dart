@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:absent_project/ForgotPassword/forgotPasswordMenu.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/controller/data_controller.dart';
+import 'package:absent_project/controller/deleteOldOTPController.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,8 +30,11 @@ class verifyOTPController {
       dataUsers = jsonDecode(resp.body);
       otpCodes = dataUsers[0]['otp_code'];
 
+      final deleteOTP = await deleteOTPControllers().DeleteOTPCode();
+
       if (otpInputs == otpCodes) {
         Get.offAll(() => const forgotPasswordMenu());
+        deleteOTP;
         ctr_data().clear_func_otp();
       } else {
         ctr_data().clear_func_otp();

@@ -48,7 +48,7 @@ class findGmapsLocation {
 
 
     } else if (projectNames == "MSDO Project") {
-      String locationNamesInput = "menara briliant";
+      String locationNamesInput = "menara brilian";
 
       try {
         var getLocation = Uri.parse("http://192.168.2.159:8080/FlutterAPI/FindLocation.php");
@@ -64,6 +64,7 @@ class findGmapsLocation {
         gmapsModels.latitudeLocationModel = locationUsers[0]['latitude'];
         gmapsModels.longTitudeLocationModel = locationUsers[0]['longtitude'];
         gmapsModels.radiusLocationModel = locationUsers[0]['radius'];
+        gmapsModels.streetLocationModel = locationUsers[0]['street'];
 
         String? rdlocation = gmapsModels.radiusLocationModel;
 
