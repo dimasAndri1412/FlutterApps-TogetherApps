@@ -122,22 +122,46 @@ class _UserHomeState extends State<UserHome> {
                                 size: 30,
                               ),
                               SizedBox(width: 20),
-                              Text(
-                                "00:00:00",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 30),
+                              Expanded(
+                                  child: TextFormField(
+                                    controller: elapsedTimesController.value,
+                                    readOnly: true,
+                                    decoration: InputDecoration(
+                                        hintText: "00:00:00",
+                                        hintStyle: TextStyle(
+                                            color: Colors.black26,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 30
+                                        ),
+                                        border: InputBorder.none,
+                                    ),
+                                    style: TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                    ),
+                                  )
                               )
                             ]),
                             Divider(),
                             Padding(
                               padding: const EdgeInsets.only(top: 8),
-                              child: Text(
-                                "Today's schedule",
-                                style:
-                                    TextStyle(fontSize: 14, color: Colors.grey),
-                              ),
+                              child: TextFormField(
+                                controller: shiftLocationFieldController,
+                                readOnly: true,
+                                decoration: InputDecoration(
+                                  labelText: "To day's Schedule",
+                                  labelStyle: TextStyle(
+                                    color: Colors.black38,
+                                    fontSize: 20
+                                  ),
+                                  hintText: "Your's Shift",
+                                  hintStyle: TextStyle(
+                                    fontSize: 13
+                                  ),
+                                  border: InputBorder.none,
+                                ),
+                              )
                             ),
-                            Text("Shift III", style: TextStyle(fontSize: 13))
                           ],
                         ),
                       ),

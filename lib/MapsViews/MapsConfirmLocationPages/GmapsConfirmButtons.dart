@@ -1,5 +1,6 @@
 import 'package:absent_project/MapsViews/MapsClockInElapsedTime/GmapsElapsedTimePages.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/GmapsStopWatchController.dart';
+import 'package:absent_project/MapsViews/MatterialMaps/VerifyUsersLoginMaps.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/insertClockInControllers.dart';
 import 'package:absent_project/controller/AbsentController/ClockInController.dart';
 import 'package:absent_project/controller/AbsentController/ClockInState.dart';
@@ -41,7 +42,7 @@ class _gmapsConfirmButtonsState extends State<gmapsConfirmButtons> {
                   stopWatchControll.startStopwatch();
                   //insertClockInControllers().insertClockInValues();
                   ctr_data().clear_maps_clock_in_out_func();
-                  Get.to(applicationBarClockIn());
+                  verifyRolesClockIn().verifyRolesUsersClockIn();
                 } else {
                   final snackBar = SnackBar(
                       content: const Text("Failure Clock In!")

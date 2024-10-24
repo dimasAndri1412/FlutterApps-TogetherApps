@@ -105,20 +105,20 @@ class _gmapsLocationWrapperState extends State<gmapsLocationWrapper> {
           String? lastClockInValues = await findLastClockIn();
           bool? inRadius = await inRadiusValues();
 
-          if (lastClockInValues == null ){
+          //if (lastClockInValues == null ){
 
-            if (inRadius!) {
+            //if (inRadius!) {
               Get.offAll(CameraDetection());
-            } else {
-              locationNamesController.text = 'Invalid Radius Location';
-            }
+            //} else {
+             // locationNamesController.text = 'Invalid Radius Location';
+            //}
 
-          } else{
-            final snackBar = SnackBar(
-                content: const Text("You Can Not Clockin Again In The Same Time!")
-            );
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          }
+          //} else{
+            //final snackBar = SnackBar(
+               // content: const Text("You Can Not Clockin Again In The Same Time!")
+            //);
+            //ScaffoldMessenger.of(context).showSnackBar(snackBar);
+         // }
 
           //bool? hasClockedIn = await hasClockedInToday();
           //if (hasClockedIn) {
