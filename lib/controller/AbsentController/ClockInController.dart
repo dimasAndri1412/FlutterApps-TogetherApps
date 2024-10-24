@@ -158,6 +158,8 @@ class ClockInController {
         return false;
       }
 
+      List<QuestionModel> questions = await show_question();
+
       var request = http.MultipartRequest(
         'POST',
         Uri.parse("http://192.168.2.159:8080/FlutterAPI/attendance/user/clock_out.php"),
@@ -182,14 +184,19 @@ class ClockInController {
         }
       }
 
+      for (var question in questions) {
+        final questionId = question.idQuestion.toString(); 
+        final answer = answerController[questionId]?.text ?? ''; 
+        request.fields[questionId] = answer;
+        print('Submitting answer for question $questionId: $answer');
+      }
+
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
 
       print("Image path: ${clockOutImageController.text}");
       print('Response Status Code: ${response.statusCode}');
       print('Response Body: ${response.body}');
-
-
 
       if (response.statusCode == 200) {
         String responseBody = response.body;

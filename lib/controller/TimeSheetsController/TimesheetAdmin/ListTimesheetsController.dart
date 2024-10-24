@@ -13,7 +13,7 @@ class ListTimesheetsController {
 
     try {
       final response = await http.post(
-        Uri.parse("http://192.168.2.159:8080/FlutterAPI/timesheet/admin/timesheets.php"),
+        Uri.parse("http://192.168.100.84/FlutterAPI/timesheet/admin/timesheets.php"),
         body: {
           'date': formattedDate,
         },
@@ -39,7 +39,7 @@ class ListTimesheetsController {
 
     try {
       final response = await http.post(
-        Uri.parse("http://192.168.2.159:8080/FlutterAPI/timesheet/admin/dailyTimesheets.php"),
+        Uri.parse("http://192.168.100.84/FlutterAPI/timesheet/admin/dailyTimesheets.php"),
         body: {
           'date': formattedDate,
           'clock_in_id' : clockInId
@@ -66,7 +66,7 @@ class ListTimesheetsController {
       DateTime firstDayOfMonth = DateTime(selectedYear, selectedMonth);
 
       final response = await http.post(
-        Uri.parse("http://192.168.2.159:8080/FlutterAPI/timesheet/user/monthly_timesheets.php"),
+        Uri.parse("http://192.168.100.84/FlutterAPI/timesheet/user/monthly_timesheets.php"),
         body: {
           'user_id': userId,
           'month': selectedMonth.toString(),
@@ -82,6 +82,58 @@ class ListTimesheetsController {
         final List<MonthlyTimesheetModel> monthlyTimesheetModel= jsonData
         .map((item) => MonthlyTimesheetModel.fromJson(item))
         .toList();
+        return monthlyTimesheetModel  ;
+      }  else {
+        throw Exception("Failed to fetch data");
+      }
+    } catch (e) {
+      throw Exception("Error: $e");
+    }
+  }
+
+  Future<String> fetchFullName(String userId) async {
+    try {
+      var response = await http.get(Uri.parse('http://192.168.100.84/FlutterAPI/GetUserById.php/$userId'));
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        return data['full_name'];
+      } else {
+        throw Exception('Failed to load user');
+      }
+    } catch (e) {
+      throw Exception('Error fetching user: $e');
+    }
+  }
+
+  Future<String> getFullName(String userId) async {
+    try {
+      String fullName = await fetchFullName(userId);
+      return fullName;
+    } catch (e) {
+      print('Error fetching full name: $e');
+      return 'Unknown'; 
+    }
+  }
+
+  Future<MonthlyTimesheetModel> getMonthlyReport (String userId, int selectedMonth, int selectedYear) async {
+    try {
+      DateTime firstDayOfMonth = DateTime(selectedYear, selectedMonth);
+
+      final response = await http.post(
+        Uri.parse("http://192.168.100.84/FlutterAPI/timesheet/user/monthly_timesheets.php"),
+        body: {
+          'user_id': userId,
+          'month': selectedMonth.toString(),
+          'year':  selectedYear.toString()
+        },
+      );
+
+      print("API Response Status: ${response.statusCode}");
+      print("API Response Body: ${response.body}"); 
+
+      if (response.statusCode == 200) {
+        final List<dynamic> jsonData = json.decode(response.body);
+        final MonthlyTimesheetModel monthlyTimesheetModel= MonthlyTimesheetModel.fromJson(jsonData[0]);
         return monthlyTimesheetModel  ;
       }  else {
         throw Exception("Failed to fetch data");

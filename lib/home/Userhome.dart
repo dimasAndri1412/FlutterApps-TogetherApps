@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../controller/Keys.dart';
@@ -20,16 +21,27 @@ class UserHome extends StatefulWidget {
 class _UserHomeState extends State<UserHome> {
   late List<_ChartData> data;
   late TooltipBehavior _tooltip;
+
   void initState() {
-    data = [
-      _ChartData('CHN', 12),
-      _ChartData('GER', 15),
-      _ChartData('RUS', 30),
-      _ChartData('BRZ', 6.4),
-      _ChartData('IND', 14)
-    ];
-    _tooltip = TooltipBehavior(enable: true);
     super.initState();
+    data = getWeeklyData();
+    _tooltip = TooltipBehavior(enable: true);
+  }
+
+  List<_ChartData> getWeeklyData(){
+    List<_ChartData> weeklyData = [];
+    DateTime now = DateTime.now();
+    DateTime startOfWeek = now.subtract(Duration(days: now.weekday - 1));
+
+    for (var i = 0; i < 7; i++) {
+      DateTime currentDay = startOfWeek.add(Duration(days: i));
+      String dayName = DateFormat.E().format(currentDay);
+      String dayWithDate = DateFormat('EEE, dd MMM').format(currentDay); 
+      double value = (10 + i * 5).toDouble();
+
+      weeklyData.add(_ChartData(dayWithDate, value));
+    }
+    return weeklyData;
   }
 
   @override
@@ -167,7 +179,7 @@ class _UserHomeState extends State<UserHome> {
                                 dataSource: data,
                                 xValueMapper: (_ChartData data, _) => data.x,
                                 yValueMapper: (_ChartData data, _) => data.y,
-                                name: 'Gold',
+                                name: 'Nilai',
                                 color: Color.fromRGBO(8, 142, 255, 1))
                           ]),
                     ),

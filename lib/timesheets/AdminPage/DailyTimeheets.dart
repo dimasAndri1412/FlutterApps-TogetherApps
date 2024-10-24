@@ -3,6 +3,7 @@
 import 'package:absent_project/approvalls/Approvalls.dart';
 import 'package:absent_project/controller/TimeSheetsController/TimesheetAdmin/ListTimesheetsController.dart';
 import 'package:absent_project/controller/TimeSheetsController/TimesheetAdmin/ListTimesheetsModel.dart';
+import 'package:absent_project/timesheets/AdminPage/MonthlyReport.dart';
 import 'package:absent_project/timesheets/AdminPage/MonthlyTimesheets.dart';
 import 'package:absent_project/timesheets/AdminPage/TimeEntry.dart';
 import 'package:flutter/material.dart';
@@ -511,6 +512,27 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                         int selectedYear = widget.selectedDay.year;
                         String userId = daily.userId;
                         final pdf = await MonthlyTimesheets().generatePdf(
+                          userId,
+                          selectedMonth,
+                          selectedYear
+                        );
+                        await Printing.layoutPdf(onLayout: (format) => pdf);
+                      },
+                    ),
+                     TextButton(
+                      child: Center(
+                        child: Container(
+                          child: Text(
+                            "View Monthly Report",
+                            style: TextStyle(color: Colors.orange, fontSize: 16),
+                          ),
+                        ),
+                      ),
+                      onPressed: () async {
+                        int selectedMonth = widget.selectedDay.month;
+                        int selectedYear = widget.selectedDay.year;
+                        String userId = daily.userId;
+                        final pdf = await MonthlyReport().GeneratePDF(
                           userId,
                           selectedMonth,
                           selectedYear
