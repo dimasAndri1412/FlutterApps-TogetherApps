@@ -1,15 +1,8 @@
-import 'dart:ffi';
-
-import 'package:absent_project/controller/KPIQuestionsController/position/PositionModel.dart';
-
 import 'Keys.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:absent_project/login/getDevice.dart';
-import 'dart:io';
 
 class ctr_data {
   //fungsi untuk melakukan penyimpanan data//

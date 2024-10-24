@@ -69,7 +69,8 @@ final ConfPassController = TextEditingController();
 final ProjectController = TextEditingController();
 final UserIdController = TextEditingController();
 final FaceImageController = TextEditingController(); 
-final EmbeddingController= TextEditingController(); 
+final EmbeddingController= TextEditingController();
+final IdMemberControllers = TextEditingController();
 
 //GoogleMapController
 final nameLocationController = TextEditingController();
@@ -95,6 +96,9 @@ final Location locationController = new Location();
 LatLng? currentPosition = null;
 CameraPosition? cameraPosition = null;
 Set<Circle> circless = {};
+
+//imagePath
+Set<NetworkImage> getImagesPaths = {};
 
 //LocationField
 final locationFieldController = TextEditingController();

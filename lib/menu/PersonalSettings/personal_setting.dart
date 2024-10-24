@@ -1,6 +1,6 @@
 import 'package:absent_project/ChangePasswordforUser/change_password_user.dart';
-import 'package:absent_project/ChangesPasswordPage/ChangesPasswordMenu.dart';
 import 'package:absent_project/controller/Keys.dart';
+import 'package:absent_project/controller/projectListContoller.dart';
 import 'package:absent_project/login/LoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,6 +27,22 @@ class _PersonalSettingState extends State<PersonalSetting> {
 
   //untuk obscure password
   bool _isObscure = true;
+
+  String imagePathValues = '';
+
+  void getImages() async {
+    final getImagesValues = await getImagePath();
+
+    setState(() {
+      imagePathValues = getImagesValues! ?? '';
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getImages();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,10 +113,13 @@ class _PersonalSettingState extends State<PersonalSetting> {
                                                   Colors.black.withOpacity(0.1))
                                         ],
                                         shape: BoxShape.circle,
-                                        image: const DecorationImage(
+                                        image: DecorationImage(
                                             fit: BoxFit.cover,
-                                            image: AssetImage(
-                                                "assets/images/LogoBIT.png"))),
+                                            image: imagePathValues.isNotEmpty
+                                            ? NetworkImage(imagePathValues)
+                                            : AssetImage("assets/images/BIT-Logo.png")  as ImageProvider
+                                        )
+                                    ),
                                   ),
                                   Positioned(
                                       bottom: 0,

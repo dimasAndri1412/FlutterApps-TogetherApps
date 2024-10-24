@@ -1,5 +1,5 @@
-import 'package:absent_project/ChangesPasswordPage/ChangesPasswordMenu.dart';
 import 'package:absent_project/controller/data_controller.dart';
+import 'package:absent_project/login/LoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -28,7 +28,8 @@ class _addUserButtonState extends State<addUserButton> {
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   sendingEmail().sendingEmailFunc();
-                  ctr_data().clear_func();
+                  ctr_data().clear_func_otp();
+                  Get.offAll(() => LoginPage());
                 } else {
                   final snackBar = SnackBar(
                     content: const Text('Data Gagal Disimpan'),

@@ -79,6 +79,7 @@ class LoginController {
           } else if (!isDeviceLockEnabled || device == deviceId) {
             Get.offAll(() => const ApplicationBarUser());
             print('Switch: $isDeviceLockEnabled');
+            IdMemberControllers.text = IDUsers!;
           } else {
             SnackBar(
                 content: Text(
