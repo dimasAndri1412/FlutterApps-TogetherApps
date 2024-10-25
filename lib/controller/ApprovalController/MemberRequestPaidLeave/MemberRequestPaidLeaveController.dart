@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:absent_project/approvalls/cuti/user/pengajuan_cuti_development.dart';
+import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberStatusPaidLeave.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -8,11 +9,13 @@ import '../../../approvalls/cuti/user/pengajuan_cuti.dart';
 import '../../Keys.dart';
 import 'MemberListPaidLeave.dart';
 import 'MemberRequestPaidLeave.dart';
+import 'UserListPaidLeave.dart';
 
 class MemberRequestPaidLeaveController {
   final MemberRequestPaidLeave memberInfo = MemberRequestPaidLeave();
   int remainingLeave = 0;
   int leaveUsed = 0;
+  int initial = 0;
 
   int countStatus = 0;
   int leaveCount = 0;
@@ -27,6 +30,7 @@ class MemberRequestPaidLeaveController {
       body: {
         "name": namePaidLeave.text,
         "position": positionPaidLeave.text,
+        "project": projectPaidLeave.text,
         "department": departmentPaidLeave.text,
         "types_leave": typePaidLeave.text,
         "reason_leave": reasonPaidLeave.text,
@@ -47,6 +51,7 @@ class MemberRequestPaidLeaveController {
   clearInfo() {
     namePaidLeave.clear();
     positionPaidLeave.clear();
+    projectPaidLeave.clear();
     departmentPaidLeave.clear();
     typePaidLeave.clear();
     reasonPaidLeave.clear();
@@ -72,7 +77,7 @@ class MemberRequestPaidLeaveController {
     memberInfo.shiftingStatus = jsonData[0]['shiftingStatus'];
 
     namePaidLeave.text = memberInfo.full_name;
-    projectController.text = memberInfo.project;
+    projectPaidLeave.text = memberInfo.project;
 
     if (memberInfo.shiftingStatus == "no") {
       Get.to(() => const PengajuanCuti_Development());
@@ -91,55 +96,103 @@ class MemberRequestPaidLeaveController {
     //
     var data = await http.post(
         Uri.parse(
-            "http://10.233.77.55/FlutterAPI/approvals/member/paid_leave/getListUser.php"),
+            "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/getListUser.php"),
         body: {
           "name": namePaidLeave.text,
         });
     var jsonData = json.decode(data.body);
+    reasonPaidLeave.text = jsonData[0]['reason_leave'];
+    startDatePaidLeave.text = jsonData[0]['date_start_leave'];
+    namePaidLeave.text = jsonData[0]['name'];
+    statusPaidLeave.text = jsonData[0]['status'];
 
     List<MemberListPaidLeave> users = [];
 
     for (var u in jsonData) {
-      MemberListPaidLeave user = MemberListPaidLeave(
-          u["name"], u["date_start_leave"], u["status"], u["reason_leave"]);
+      MemberListPaidLeave user = MemberListPaidLeave.fromJson(u);
       users.add(user);
+      // MemberListPaidLeave user = MemberListPaidLeave(
+      //     u["name"], u["date_start_leave"], u["status"], u["reason_leave"]);
+      // users.add(user);
     }
     return users;
   }
 
   Future refresh() async {
     await Future.delayed(const Duration(seconds: 3));
-    await getLeave();
+    // await getLeave();
   }
 
-  Future getLeave() async {
-    var data = await http.post(
+  Future/*<List<UserListPaidleave>?>*/ getLeaveNew() async {
+    var getName = await http.post(
         Uri.parse(
-            "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
-        body: {
-          "username": emailController.text,
-        });
-    var jsonData = json.decode(data.body);
+            "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/getLeaveNew.php"),
+        body: {"username": emailController.text});
+    var jsonGetName = json.decode(getName.body);
 
-    leaveUsed = int.parse(jsonData[0]['leave_used']);
-    remainingLeave = int.parse(jsonData[0]['remaining_leave']);
+    leaveUsed = int.parse(jsonGetName[0]['leave_used']);
+    remainingLeave = int.parse(jsonGetName[0]['remaining_leave']);
+  }
 
-    leave_used.text = leaveUsed.toString();
-    remaining_leave.text = remainingLeave.toString();
+  // Future getLeave() async {
+  //   var data = await http.post(
+  //       Uri.parse(
+  //           "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
+  //       body: {
+  //         "username": emailController.text,
+  //         // "full_name": namePaidLeave.text,
+  //       });
+  //   var jsonData = json.decode(data.body);
+  //   print("Data.body: ${data.body}");
 
-    var getData = await http.post(
-        Uri.parse(
-            "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/getCountLeave.php"),
-        body: {
-          "name": namePaidLeave.text,
-        });
-    var getJsondata = json.decode(getData.body);
+  //   leaveUsed = int.parse(jsonData[0]['leave_used']);
+  //   remainingLeave = int.parse(jsonData[0]['remaining_leave']);
 
-    countStatus = int.parse(getJsondata[0]['countStatus']);
+  //   leave_used.text = leaveUsed.toString();
+  //   remaining_leave.text = remainingLeave.toString();
 
-    if (countStatus > 0) {
-      leaveUsed = (leaveUsed + countStatus);
-      remainingLeave = remainingLeave - countStatus;
+  //   print("Leave Used dari API: $leaveUsed");
+  //   print("Remaining Leave dari API: $remainingLeave");
+
+  //   var getData = await http.post(
+  //       Uri.parse(
+  //           "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/getCountLeave.php"),
+  //       body: {
+  //         "name": namePaidLeave.text,
+  //       });
+  //   var getJsondata = json.decode(getData.body);
+  //   print("getData.body: ${getData.body}");
+
+  //   countStatus = int.parse(getJsondata[0]['countStatus']);
+  //   initial = remainingLeave;
+
+  //   if (countStatus > 0) {
+  //     leaveUsed = (countStatus);
+  //     // initial -= leaveUsed;
+  //     initial = -leaveUsed;
+  //   } else {
+  //     // leaveUsed = 0;
+  //     print("NO DATA COUNT");
+  //   }
+
+  //   print("countStatus getting : $countStatus");
+  //   print("Leave used getting: $leaveUsed");
+  //   print("initial getting: $initial");
+  //   print("Remaining Leave getting: $remainingLeave");
+
+  //   // await updatePaidLeave(emailController.text, leaveUsed, initial);
+  // }
+
+  Future<List<MemberStatuspaidleave>?> getStatus() async {
+    var data = await http.post(Uri.parse(
+        "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/getStatus.php"));
+    List<dynamic> jsonData = json.decode(data.body);
+    List<MemberStatuspaidleave> users = [];
+
+    for (var u in jsonData) {
+      MemberStatuspaidleave user = MemberStatuspaidleave.fromJson(u);
+      users.add(user);
     }
+    return users;
   }
 }

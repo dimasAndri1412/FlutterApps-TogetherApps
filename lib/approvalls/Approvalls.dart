@@ -32,7 +32,7 @@ class _ApprovallsState extends State<Approvalls> {
           ),
           elevation: 0,
           title: Center(
-            child: Text("A P P R O V A L"),
+            child: Text("APPROVAL"),
           ),
         ),
         body: Container(
@@ -71,7 +71,7 @@ class _ApprovallsState extends State<Approvalls> {
                   ),
                 ),
                 onPressed: () {
-                  Get.to (() => ListUserLembur());
+                  Get.to(() => ListUserLembur());
                 },
               ),
               MaterialButton(
@@ -107,10 +107,11 @@ class _ApprovallsState extends State<Approvalls> {
                 ),
                 onPressed: () {
                   Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => ListUserCuti(), // Instantiate the class with prefix
-                  ),
-                );
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          ListUserCuti(), // Instantiate the class with prefix
+                    ),
+                  );
                 },
               ),
             ],

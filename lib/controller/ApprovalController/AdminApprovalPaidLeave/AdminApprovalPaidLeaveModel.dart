@@ -18,7 +18,6 @@ class AdminApprovalPaidLeaveModel {
   final String leave_used;
   final String remaining_leave;
 
-
   AdminApprovalPaidLeaveModel({
     required this.username,
     required this.position,
@@ -62,4 +61,6 @@ class AdminApprovalPaidLeaveModel {
       remaining_leave: json['remaining_leave'],
     );
   }
+
+  get name => null;
 }
