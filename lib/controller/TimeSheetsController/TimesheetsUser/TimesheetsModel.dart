@@ -10,7 +10,7 @@ class TimesheetsModel {
   factory TimesheetsModel.fromJson(Map<String, dynamic> json){
     return TimesheetsModel(
       clockIn: json['clock_in'] != null ? DateTime.parse(json['clock_in']) : null,
-      clockOut: json['clock_out'] != null ? DateTime.parse(json['clock_in']) : null,
+      clockOut: json['clock_out'] != null ? DateTime.parse(json['clock_out']) : null,
       elapsedTime: json['elapsed_time'] as String?
     );
   }

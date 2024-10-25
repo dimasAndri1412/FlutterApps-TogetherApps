@@ -28,7 +28,7 @@ class MonthlyTimesheetModel{
       clockIn: json['clock_in'] != null ? DateTime.parse(json['clock_in']) : null,
       location: json['location'] as String?,
       shift: json['shift'] as String?,
-      clockOut: json['clock_out'] != null ? DateTime.parse(json['clock_in']) : null,
+      clockOut: json['clock_out'] != null ? DateTime.parse(json['clock_out']) : null,
       clockOutId: json['clock_out_id'] as String?,
       elapsedTime: json['elapsed_time'] as String?,
       questionText: json['questions'] != null ? List<String>.from(json['questions']) : null,

@@ -100,29 +100,6 @@ class _TimesheetsUserState extends State<TimesheetsUser> {
             //TRACKED TIME
             _buildTrackedTime(formattedDate),
 
-            SizedBox(height: 25),
-
-            //LINK DAILY
-            TextButton(
-              child: Center(
-                child: Container(
-                  child: Text(
-                    "View Daily Timesheet",
-                    style: TextStyle(color: Colors.orange, fontSize: 16),
-                  ),
-                ),
-              ),
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => DailyTimesheets(
-                          // trackedTime: trackedTimes[_selectedDay] ?? {}
-                          trackedTime: trackedTimes[_selectedDay],
-                          selectedDay: _selectedDay,
-                          formattedDate: formattedDate,
-                        )));
-              },
-            ),
-
             TextButton(
               child: Center(
                 child: Container(
@@ -294,6 +271,31 @@ class _TimesheetsUserState extends State<TimesheetsUser> {
                     ),
                   ],
                 ),
+              ),
+              SizedBox(height: 25),
+
+              //LINK DAILY
+              TextButton(
+                child: Center(
+                  child: Container(
+                    child: Text(
+                      "View Daily Report",
+                      style: TextStyle(color: Colors.orange, fontSize: 16),
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => DailyTimesheets(
+                            // trackedTime: trackedTimes[_selectedDay] ?? {}
+                            trackedTime: trackedTimes[_selectedDay],
+                            selectedDay: _selectedDay,
+                            formattedDate: formattedDate,
+                            firstIn: trackedTime.clockIn,
+                            lastOut: trackedTime.clockOut,
+                            workedHours: trackedTime.elapsedTime,
+                          )));
+                },
               ),
             ],
           );

@@ -17,7 +17,7 @@ class MonthlyReportModel{
   factory MonthlyReportModel.fromJson(Map<String, dynamic> json){
     return MonthlyReportModel(
       location: json['location'] as String?,
-      answerText: json['answers'] != null ? List<String>.from(json['answers']) : null,
+      answerText: List<String>.from(json['answers']),
       fullName: json['full_name'] as String?,
       positionName: json['position_name'] as String?,
     );
