@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'UserList.dart';
 
 
-class ListUserContoller {
+class ListUserController {
   Future<List<UserList>?> getUsers() async {
     var data = await http.get(
         Uri.parse("http://192.168.2.159:8080/FlutterAPI/readuserlist.php"));
@@ -21,4 +21,16 @@ class ListUserContoller {
     }
     return users;
   }
+
+  Future<Map<String, dynamic>> deleteUser(String email) async {
+    var response = await http.post(
+      Uri.parse("http://192.168.2.159:8080/FlutterAPI/delete_user.php"),
+      body: {"email": email},
+    );
+    print(response.body); // Log respons untuk debugging
+    var jsonData = json.decode(response.body);
+    return jsonData;
+  }
 }
+
+
