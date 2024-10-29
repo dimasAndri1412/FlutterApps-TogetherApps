@@ -3,6 +3,7 @@ import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
@@ -18,25 +19,85 @@ class googleMapsViews extends StatefulWidget {
 class _googleMapsViewsState extends State<googleMapsViews> {
 
   GoogleMapController? mapControllers;
+  Set<Marker> initMarkers = {};
+  LatLng? selectedLocation;
 
   static const LatLng _googleView = LatLng(
       -6.200000,
       106.816666
   );
 
-  void onMapCreated(GoogleMapController controller) async{
+  void onMapCreated(GoogleMapController controller) {
     mapControllers = controller;
-    if (mounted) {
+
+    newPositionNotfier.addListener(() {
+      LatLng? newLocation = newPositionNotfier.value;
+      if (newLocation != null) {
+
+        mapControllers?.animateCamera(CameraUpdate.newLatLng(newLocation));
+
+        setState(() {
+          initMarkers = {
+            Marker(
+              markerId: MarkerId("searchedLocation"),
+              position: newLocation,
+              infoWindow: InfoWindow(title: "Searched Location"),
+            ),
+          };
+        });
+      }
+    });
+  }
+
+  void onTapLocation(LatLng selectedPositioned) async {
+
+    setState(() {
+      selectedLocation = selectedPositioned;
+    });
+
+    mapControllers?.animateCamera(CameraUpdate.newLatLng(selectedPositioned));
+
+    try{
+
+      List<Placemark> placsMrks = await placemarkFromCoordinates(
+          selectedPositioned.latitude,
+          selectedPositioned.longitude
+      );
+
+      String selectLocationName = placsMrks.isNotEmpty
+      ? placsMrks.first.name
+      ?? 'unamed location'
+      : 'unkown';
+
       setState(() {
-        initMarkers.remove(
+        initMarkers = {
           Marker(
-            markerId: MarkerId("_initialLocation"),
-            position: _googleView,
-            infoWindow: InfoWindow(title: "Jakarta"),
+              markerId: MarkerId("selectedLocations"),
+              position: selectedLocation!,
+              infoWindow: InfoWindow(
+                  title: selectLocationName,
+                  snippet: '${placsMrks.first.name},${placsMrks.first.locality},${placsMrks.first.country}',
+              ),
           ),
-        );
+        };
       });
+
+      SearchLocationController.text = selectLocationName;
+      stateLocationController.text = placsMrks.first.administrativeArea.toString();
+      subStateLocationController.text = placsMrks.first.subAdministrativeArea.toString();
+      localityLocationController.text = placsMrks.first.locality.toString();
+      SubLocalityLocationController.text = placsMrks.first.subLocality.toString();
+      StreetLocationController.text = placsMrks.first.street.toString();
+      nameLocationController.text = SearchLocationController.text;
+      postalCodeController.text = placsMrks.first.postalCode.toString();
+
+      print(placsMrks);
+
+
+    }catch(errs) {
+      print(errs);
     }
+
   }
 
   @override
@@ -68,6 +129,7 @@ class _googleMapsViewsState extends State<googleMapsViews> {
                   zoom: 11.0
               ),
               markers: initMarkers,
+              onTap: onTapLocation,
               onCameraMove: null,
             ),
           ),

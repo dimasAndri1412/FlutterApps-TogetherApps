@@ -1,8 +1,8 @@
+import 'package:absent_project/MapsViews/MatterialMaps/GmapsController.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
 import '../controller/Keys.dart';
 
 class _ChartData {
@@ -22,10 +22,16 @@ class _UserHomeState extends State<UserHome> {
   late List<_ChartData> data;
   late TooltipBehavior _tooltip;
 
+  void shiftClockIns() async {
+    final findShiftClockInValues = await findShiftClockIn();
+    shiftClockOutController.text = findShiftClockInValues!;
+  }
+
   void initState() {
     super.initState();
     data = getWeeklyData();
     _tooltip = TooltipBehavior(enable: true);
+    shiftClockIns();
   }
 
   List<_ChartData> getWeeklyData(){
@@ -158,7 +164,7 @@ class _UserHomeState extends State<UserHome> {
                             Padding(
                               padding: const EdgeInsets.only(top: 8),
                               child: TextFormField(
-                                controller: shiftLocationFieldController,
+                                controller: shiftClockOutController,
                                 readOnly: true,
                                 decoration: InputDecoration(
                                   labelText: "To day's Schedule",

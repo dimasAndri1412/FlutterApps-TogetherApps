@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 import 'Keys.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -106,9 +108,13 @@ class ctr_data {
     userNameLocationFieldController.clear();
     projectLocationFieldController.clear();
     shiftLocationFieldController.clear();
+    shiftClockOutController.clear();
     fullNamesLocationController.clear();
     noteLocationController.clear();
     avatarPicUrlController.clear();
+    clockInController.clear();
+    notesClockOut.clear();
+    notesClockIn.clear();
     elapsedTimesController.value.clear();
   }
 

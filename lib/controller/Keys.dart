@@ -94,6 +94,7 @@ final Set<Marker> initMarkers = {};
 final Set<Marker> initMarkerLocation = {};
 final Location locationController = new Location();
 LatLng? currentPosition = null;
+ValueNotifier<LatLng?> newPositionNotfier = ValueNotifier(null);
 CameraPosition? cameraPosition = null;
 Set<Circle> circless = {};
 

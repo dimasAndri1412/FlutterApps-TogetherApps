@@ -1,9 +1,8 @@
-import 'package:absent_project/MapsViews/MapsLocationPages/GmapsLocationPage.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/GmapsStopWatchController.dart';
+import 'package:absent_project/MapsViews/MatterialMaps/VerifyUsersLogOutMaps.dart';
 import 'package:absent_project/controller/AbsentController/ClockInController.dart';
 import 'package:absent_project/controller/AbsentController/ClockInState.dart';
 import 'package:absent_project/controller/Keys.dart';
-import 'package:absent_project/home/ApplicationBar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -37,12 +36,14 @@ class _gmapsClockOutButtonsState extends State<gmapsClockOutButtons> {
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   stopWatchControllers.resetStopwatch();
-                  Get.offAll(() => ApplicationBar());
+                  answerController.clear();
+                  verifyRolesClockOut().verifyRolesUsersClockOut();
                 } else {
                   final snackBar = SnackBar(
                       content: const Text("Failure Clock Out!")
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  answerController.clear();
                 }
               });
             }
