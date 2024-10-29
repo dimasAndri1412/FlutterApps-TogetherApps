@@ -1,6 +1,13 @@
+import 'dart:async';
+
+import 'package:absent_project/approvalls/cuti/user/pengajuan_cuti.dart';
+import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberListPaidLeave.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
+import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberStatusPaidLeave.dart';
+import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/UserListPaidLeave.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ListPengajuanCuti extends StatefulWidget {
   const ListPengajuanCuti({
@@ -14,6 +21,46 @@ class ListPengajuanCuti extends StatefulWidget {
 class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
   final MemberRequestPaidLeaveController memberInfo =
       MemberRequestPaidLeaveController();
+  List<MemberListPaidLeave> getListUser = [];
+  List<MemberStatuspaidleave> getStatus = [];
+
+  String defaultStatus = 'All';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchPaidLeaveRequest();
+    fetchStatusPaidLeave();
+  }
+
+  Future<void> fetchPaidLeaveRequest() async {
+    try {
+      List<MemberListPaidLeave>? paidLeaveRequest =
+          await MemberRequestPaidLeaveController().getList();
+      setState(() {
+        getListUser = paidLeaveRequest!;
+      });
+    } catch (e) {
+      print('Error fetching overtime requests: $e');
+    }
+  }
+
+  Future<void> fetchStatusPaidLeave() async {
+    try {
+      List<MemberStatuspaidleave>? statusList =
+          await MemberRequestPaidLeaveController().getStatus();
+      setState(() {
+        getStatus = statusList ?? [];
+      });
+    } catch (e) {
+      print('Error fetching overtime requests: $e');
+    }
+  }
+
+  // Future<List<UserListPaidLeave>?> fetchLeaveData() async {
+  //   return await memberInfo.getLeaveNew();
+  // }
 
 /*  @override
   void initState() {
@@ -21,57 +68,65 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
     memberInfo.updateLeaveCount();
   }*/
 
-  final List<Map<String, String>> usercuti = [
-    {
-      'name': 'Rogape',
-      'reason': 'Jalan - jalan ke Bali',
-      'date': '2024-12-01',
-      'status': 'Approved'
-    },
-    {
-      'name': 'Rogape',
-      'reason': 'Pergi ke RSJ',
-      'date': '2024-12-02',
-      'status': 'Approved'
-    },
-    {
-      'name': 'Rogape',
-      'reason': 'Jinakin Bom',
-      'date': '2024-12-03',
-      'status': 'Approved'
-    },
-    {
-      'name': 'Rogape',
-      'reason': 'jajan ke Paris',
-      'date': '2024-12-04',
-      'status': 'Rejected'
-    },
-    {
-      'name': 'Rogape',
-      'reason': 'beli sendal di US',
-      'date': '2024-12-05',
-      'status': 'Approved'
-    },
-    {
-      'name': 'Rogape',
-      'reason': 'cari pokemon',
-      'date': '2024-12-06',
-      'status': 'Rejected'
-    },
-    {
-      'name': 'Rogape',
-      'reason': 'cuti menikah',
-      'date': '2024-12-07',
-      'status': 'Approved'
-    },
-  ];
+  // final List<Map<String, String>> usercuti = [
+  //   {
+  //     'name': 'Rogape',
+  //     'reason': 'Jalan - jalan ke Bali',
+  //     'date': '2024-12-01',
+  //     'status': 'Approved'
+  //   },
+  //   {
+  //     'name': 'Rogape',
+  //     'reason': 'Pergi ke RSJ',
+  //     'date': '2024-12-02',
+  //     'status': 'Approved'
+  //   },
+  //   {
+  //     'name': 'Rogape',
+  //     'reason': 'Jinakin Bom',
+  //     'date': '2024-12-03',
+  //     'status': 'Approved'
+  //   },
+  //   {
+  //     'name': 'Rogape',
+  //     'reason': 'jajan ke Paris',
+  //     'date': '2024-12-04',
+  //     'status': 'Rejected'
+  //   },
+  //   {
+  //     'name': 'Rogape',
+  //     'reason': 'beli sendal di US',
+  //     'date': '2024-12-05',
+  //     'status': 'Approved'
+  //   },
+  //   {
+  //     'name': 'Rogape',
+  //     'reason': 'cari pokemon',
+  //     'date': '2024-12-06',
+  //     'status': 'Rejected'
+  //   },
+  //   {
+  //     'name': 'Rogape',
+  //     'reason': 'cuti menikah',
+  //     'date': '2024-12-07',
+  //     'status': 'Approved'
+  //   },
+  // ];
 
-  String filterStatus = 'All';
-  List<Map<String, String>> get filteredCuti {
-    if (filterStatus == "All") {
-      return usercuti;
-    }
-    return usercuti.where((cuti) => cuti['status'] == filterStatus).toList();
+  // String filterStatus = 'All';
+  // List<Map<String, String>> get filteredCuti {
+  //   if (filterStatus == "All") {
+  //     return usercuti;
+  //   }
+  //   return usercuti.where((cuti) => cuti['status'] == filterStatus).toList();
+  // }
+
+  List<MemberListPaidLeave> get filteredCuti {
+    return getListUser.where((cuti) {
+      final matchesStatus =
+          defaultStatus == 'All' || cuti.status == defaultStatus;
+      return matchesStatus;
+    }).toList();
   }
 
   //Function Filter Alert Dialog
@@ -90,51 +145,33 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Divider(),
-                // ListTile(
-                //   leading: Icon(Icons.new_releases),
-                //   title: Text('New'),
-                //   onTap: () {
-                //     setState(() {
-                //       filterStatus = 'New';
-                //     });
-                //     Navigator.pop(context);
-                //   },
-                // ),
                 Divider(),
                 ListTile(
                   leading: Icon(Icons.select_all),
                   title: Text('All'),
                   onTap: () {
                     setState(() {
-                      filterStatus = 'All';
+                      defaultStatus = 'All';
                     });
                     Navigator.pop(context);
                   },
                 ),
-                Divider(),
-                ListTile(
-                  leading: Icon(Icons.done),
-                  title: Text('Approved'),
-                  onTap: () {
-                    setState(() {
-                      filterStatus = 'Approved';
-                    });
-                    Navigator.pop(context);
-                  },
-                ),
-                Divider(),
-                ListTile(
-                  leading: Icon(Icons.dnd_forwardslash),
-                  title: Text('Rejected'),
-                  onTap: () {
-                    setState(() {
-                      filterStatus = 'Rejected';
-                    });
-                    Navigator.pop(context);
-                  },
-                ),
-                Divider(),
+                ...getStatus.map((status) => ListTile(
+                      leading: status.status == "New"
+                          ? Icon(Icons.new_releases)
+                          : status.status == "Approved"
+                              ? Icon(Icons.done)
+                              : status.status == "Rejected"
+                                  ? Icon(Icons.dnd_forwardslash)
+                                  : null,
+                      title: Text(status.status),
+                      onTap: () {
+                        setState(() {
+                          defaultStatus = status.status;
+                        });
+                        Navigator.pop(context);
+                      },
+                    ))
               ],
             ),
           ),
@@ -144,7 +181,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
   }
 
   //function detail cuti
-  void _showDetail(BuildContext context) {
+  void _showDetail(BuildContext context, MemberListPaidLeave getSelected) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -197,8 +234,13 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("isi"),
-                              Text("isi"),
+                              // Text("isi"),
+                              // Text("isi"),
+                              Text(getSelected.status),
+                              if (getSelected.status == 'Rejected')
+                                Text(getSelected.reason_rejected)
+                              else
+                                Text(getSelected.reason_leave)
                             ],
                           ),
                         ),
@@ -311,22 +353,33 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                             Text(":"),
                           ],
                         ),
-                        FutureBuilder(
-                            future: memberInfo.getLeave(),
+                        // FutureBuilder(
+                        FutureBuilder/*<List<UserListPaidLeave>?>*/(
+                            // future: memberInfo.getLeave(),
+                            future: memberInfo.getLeaveNew(),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
                                 return CircularProgressIndicator();
                               } else if (snapshot.hasError) {
                                 return Text("Error: ${snapshot.error}");
+                                // } else if (!snapshot.hasData ||
+                                //     snapshot.data!.isEmpty) {
+                                //   return Text("No Data Available");
                               } else {
+                                //
+                                // var user = snapshot.data!.first;
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    // Text("${memberInfo.leaveUsed}"),
+                                    // Text("${user.leave_used}"),
                                     Text("${memberInfo.leaveUsed}"),
                                     SizedBox(
                                       height: 5,
                                     ),
+                                    // Text("${memberInfo.initial}"),
+                                    // Text("${user.remaining_leave}"),
                                     Text("${memberInfo.remainingLeave}"),
                                   ],
                                 );
@@ -355,7 +408,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Filter: $filterStatus',
+                    'Filter: $defaultStatus',
                     style: TextStyle(color: Colors.black, fontSize: 14),
                   ),
                   Icon(
@@ -380,17 +433,16 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
           //       } else {
           // return
           Expanded(
-              // child: RefreshIndicator(
-              // onRefresh: () => memberInfo.refresh(),
               child: ListView.builder(
-            /*itemCount: snapshot.data?.length,*/
             itemCount: filteredCuti.length,
             itemBuilder: (context, index) {
               //panggil usercuti sebagai cutiisi
               /*var getUser = snapshot.data![index];*/
-              final isicuti = filteredCuti[index];
+              // final isicuti = filteredCuti[index];
+              final memberInfo = filteredCuti[index];
+
               return GestureDetector(
-                onTap: () => _showDetail(context),
+                onTap: () => _showDetail(context, memberInfo),
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
@@ -407,7 +459,8 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                       ),
                       title: Text(
                         /*getUser.reasonLeave,*/
-                        isicuti['reason']!,
+                        // isicuti['reason']!,
+                        memberInfo.reason_leave,
                         style: const TextStyle(
                             color: Colors.black, fontWeight: FontWeight.bold),
                       ),
@@ -422,7 +475,8 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               ),
                               Text(
                                 /*getUser.startDateLeave,*/
-                                isicuti['date']!,
+                                // isicuti['date']!,
+                                memberInfo.date_start_leave,
                                 style: const TextStyle(
                                     color: Colors.grey, fontSize: 10),
                               ),
@@ -434,7 +488,8 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               const SizedBox(width: 5),
                               Text(
                                 /*getUser.name,*/
-                                isicuti['name']!,
+                                // isicuti['name']!,
+                                memberInfo.name,
                                 style: const TextStyle(
                                     color: Colors.grey, fontSize: 10),
                               ),
@@ -444,12 +499,16 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                       ),
                       trailing: Text(
                         /*getUser.status,*/
-                        usercuti[index]['status']!,
+                        // usercuti[index]['status']!,
+                        memberInfo.status,
+
                         style: TextStyle(
                             /*color: getUser.status== 'new'*/
-                            color: isicuti['status'] == 'Approved'
+                            // color: isicuti['status'] == 'Approved'
+                            color: memberInfo.status == 'Approved'
                                 ? Colors.green
-                                : isicuti['status'] == 'New'
+                                // : isicuti['status'] == 'New'
+                                : memberInfo.status == 'New'
                                     ? Colors.blue
                                     : Colors.red,
                             fontWeight: FontWeight.bold,
@@ -473,9 +532,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
         padding: const EdgeInsets.only(bottom: 15),
         child: FloatingActionButton(
           onPressed: () {
-            memberInfo.getInfo();
-            /*Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => const PengajuanCuti()));*/
+            Get.to(() => const PengajuanCuti());
           },
           backgroundColor: const Color.fromARGB(255, 98, 171, 232),
           elevation: 5,

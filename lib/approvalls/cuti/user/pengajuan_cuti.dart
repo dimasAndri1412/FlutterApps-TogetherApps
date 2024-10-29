@@ -173,10 +173,11 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                               padding: const EdgeInsets.only(left: 10),
                               child: TextFormField(
                                 readOnly: true,
-                                controller: projectController,
+                                autofocus: false,
+                                controller: projectPaidLeave,
                                 decoration: InputDecoration(
                                     labelText: "Project",
-                                    hintText: "Please input your project here",
+                                    hintText: "",
                                     hintStyle: TextStyle(color: Colors.grey),
                                     border: InputBorder.none),
                                 // controller: projectLeaveController,

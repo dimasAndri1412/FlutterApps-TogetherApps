@@ -8,26 +8,22 @@ import 'package:http/http.dart' as http;
 
 import '../../controller/Keys.dart';
 
-
 class ConfirmationDialog extends StatefulWidget {
   AdminApprovalOvertimeModel getData;
-  ConfirmationDialog({super.key,
-  required this.getData});
+  ConfirmationDialog({super.key, required this.getData});
 
   @override
   State<ConfirmationDialog> createState() => _ConfirmationDialogState();
 }
 
 class _ConfirmationDialogState extends State<ConfirmationDialog> {
-
   updateApproved() async {
     final response = await http.post(
-      Uri.parse("http://10.233.77.55/FlutterAPI/approvals/admin/overtime/update_approved.php"),
-      body: {
-        "reqNo": widget.getData.reqNo
-      },
+      Uri.parse(
+          "http://192.168.2.159:8080/FlutterAPI/approvals/admin/overtime/update_approved.php"),
+      body: {"reqNo": widget.getData.reqNo},
     );
-    if (response.statusCode == 200){
+    if (response.statusCode == 200) {
       return true;
     }
     return false;
@@ -57,8 +53,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Center(
-                  child: 
-                  Icon(
+                  child: Icon(
                     Icons.warning_rounded,
                     color: Colors.white,
                     size: 80.0,
@@ -87,12 +82,14 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
               children: [
                 ElevatedButton(
                   onPressed: () async {
-                    final pdf = await GeneratePDFOvertime(getData: widget.getData).GeneratePDF();
+                    final pdf =
+                        await GeneratePDFOvertime(getData: widget.getData)
+                            .GeneratePDF();
                     await Printing.layoutPdf(onLayout: (format) => pdf);
                     setState(() {
-                      if (widget.getData.status == "Approved"){
+                      if (widget.getData.status == "Approved") {
                         //page only print
-                      }else{
+                      } else {
                         updateApproved();
                       }
                     });
@@ -100,12 +97,16 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.print, color: Colors.white,),
-                      SizedBox(width: 10,),
-                      Text('Approve & Print Document',
-                        style: TextStyle(
-                          color: Colors.white
-                        ),
+                      Icon(
+                        Icons.print,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Approve & Print Document',
+                        style: TextStyle(color: Colors.white),
                       ),
                     ],
                   ),
@@ -114,35 +115,38 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 12.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 32.0, vertical: 12.0),
                   ),
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 Container(
                   width: 260,
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
-                    }, 
-                    child: Text("Cancel",
-                      style: TextStyle(
-                        color: Colors.red
-                      ),
+                    },
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(color: Colors.red),
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.red, width: 2.0)
-
-                      ),
-                      padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 12.0),
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: BorderSide(color: Colors.red, width: 2.0)),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 32.0, vertical: 12.0),
                     ),
                   ),
                 )
               ],
             ),
-            SizedBox(height: 20,)
+            SizedBox(
+              height: 20,
+            )
           ],
         ),
       ),

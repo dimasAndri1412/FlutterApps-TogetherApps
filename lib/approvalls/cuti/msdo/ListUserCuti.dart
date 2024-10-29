@@ -21,7 +21,6 @@ class ListUserCuti extends StatefulWidget {
 }
 
 class _ListUserCutiState extends State<ListUserCuti> {
-
   List<AdminApprovalPadiLeaveGetStatusModel> getStatus = [];
   List<AdminApprovalPaidLeaveGetProjectModel> getProject = [];
 
@@ -37,22 +36,21 @@ class _ListUserCutiState extends State<ListUserCuti> {
 
   Color _getStatusColor(String status) {
     switch (status) {
-      case 'approved':
+      case 'Approved':
         return Colors.green;
-      case 'rejected':
+      case 'Rejected':
         return Colors.red;
-      case 'new':
+      case 'New':
         return Colors.blue;
       default:
         return Colors.blue; // Default color if status is unknown
     }
   }
 
-
   Future<void> fetchStatusOT() async {
     try {
       List<AdminApprovalPadiLeaveGetStatusModel>? statusList =
-      await AdminApprovalPaidLeaveController().getStatus();
+          await AdminApprovalPaidLeaveController().getStatus();
 
       setState(() {
         getStatus = statusList!;
@@ -65,7 +63,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
   Future<void> fetchProjectOT() async {
     try {
       List<AdminApprovalPaidLeaveGetProjectModel>? projectList =
-      await AdminApprovalPaidLeaveController().getProject();
+          await AdminApprovalPaidLeaveController().getProject();
 
       setState(() {
         getProject = projectList!;
@@ -75,133 +73,130 @@ class _ListUserCutiState extends State<ListUserCuti> {
     }
   }
 
-
-  final List<String> project = ['Project', 'MSDO Project', 'Development Project'];
-  final List<String> status = ['Status', 'new', 'approved', 'rejected'];
-
+  final List<String> project = [
+    'Project',
+    'MSDO Project',
+    'Development Project'
+  ];
+  final List<String> status = ['Status', 'New', 'Approved', 'Rejected'];
 
   @override
   Widget build(BuildContext context) {
     // List<Map<String, String>> filteredRequests = selectedStatus == null
     //     ? requests
     //     : requests.where((request) => request['status'] == selectedStatus).toList();
-  // String dropdownProject = project.first;
-  // String dropdownStatus = status.first;
+    // String dropdownProject = project.first;
+    // String dropdownStatus = status.first;
 
     return Scaffold(
-      appBar: AppBar(
-        title:Center(
-          child: Text(
-            "Paid Leave Approval",
-            style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-        ),
-        automaticallyImplyLeading: false,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-                  colors: [
-                    Color.fromARGB(255, 147, 195, 234),
-                    Color.fromARGB(255, 98, 171, 232),
-                    Color.fromARGB(255, 123, 185, 235),
-                  ]
-                ),
-          ),
-        ),
-        elevation: 0,
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.all(10),
-            child: Text("Filter by :",
+        appBar: AppBar(
+          title: Center(
+            child: Text(
+              "Paid Leave Approval",
               style: TextStyle(
-                fontSize: 16, 
-                fontWeight: FontWeight.bold
+                  fontSize: 15,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          automaticallyImplyLeading: false,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [
+                Color.fromARGB(255, 147, 195, 234),
+                Color.fromARGB(255, 98, 171, 232),
+                Color.fromARGB(255, 123, 185, 235),
+              ]),
+            ),
+          ),
+          elevation: 0,
+        ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.all(10),
+              child: Text(
+                "Filter by :",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.all(10),
-            child: Row(
-              children: [
+            Container(
+              margin: EdgeInsets.all(10),
+              child: Row(children: [
                 DropdownButton<String>(
-                  value: selectedProject,
-                  onChanged: (String? value) {
-                    setState(() {
-                      selectedProject = value!;
-                    });
-                  },
-                  items: [
-                    DropdownMenuItem<String>(
+                    value: selectedProject,
+                    onChanged: (String? value) {
+                      setState(() {
+                        selectedProject = value!;
+                      });
+                    },
+                    items: [
+                      DropdownMenuItem<String>(
                         value: "Project",
                         child: Text("Project"),
-                    ),
-                    ...getProject.map((project){
-                      return DropdownMenuItem<String>(
-                          value: project.project,
-                          child: Text(project.project)
-                      );
-                    }).toList()
-                  ]
+                      ),
+                      ...getProject.map((project) {
+                        return DropdownMenuItem<String>(
+                            value: project.project,
+                            child: Text(project.project));
+                      }).toList()
+                    ]),
+                SizedBox(
+                  width: 10,
                 ),
-                SizedBox(width: 10,),
                 DropdownButton<String>(
-                  value: selectedStatus,
-                  onChanged: (String? value) {
-                    setState(() {
-                      selectedStatus = value!;
-                    });
-                  },
-                  items: [
-                    DropdownMenuItem(
-                        value: "Status",
-                        child: Text("Status")
-                    ),
-                    ...getStatus.map((status) {
-                      return DropdownMenuItem(
-                          value: status.status,
-                          child: Text(status.status)
-                      );
-                    }).toList()
-                  ]
-                )
-              ] 
+                    value: selectedStatus,
+                    onChanged: (String? value) {
+                      setState(() {
+                        selectedStatus = value!;
+                      });
+                    },
+                    items: [
+                      DropdownMenuItem(value: "Status", child: Text("Status")),
+                      ...getStatus.map((status) {
+                        return DropdownMenuItem(
+                            value: status.status, child: Text(status.status));
+                      }).toList()
+                    ])
+              ]),
             ),
-          ),
-          FutureBuilder(
-              future: AdminApprovalPaidLeaveController().getUsers(),
-              builder: (context, snapshot) {
-                if (snapshot.data == null) {
-                  return const Center(child:Text("There is no request need to approve"));
-                } else {
-                  var filteredData = snapshot.data!.where((data) {
-                    bool matchesProject = selectedProject == 'Project' || data.project == selectedProject;
-                    bool matchesStatus = selectedStatus == 'Status' || data.status == selectedStatus;
-                    return matchesProject && matchesStatus; 
-                  }).toList();
+            FutureBuilder(
+                future: AdminApprovalPaidLeaveController().getUsers(),
+                builder: (context, snapshot) {
+                  if (snapshot.data == null) {
+                    return const Center(
+                        child: Text("There is no request need to approve"));
+                  } else {
+                    var filteredData = snapshot.data!.where((data) {
+                      bool matchesProject = selectedProject == 'Project' ||
+                          data.project == selectedProject;
+                      bool matchesStatus = selectedStatus == 'Status' ||
+                          data.status == selectedStatus;
+                      return matchesProject && matchesStatus;
+                    }).toList();
 
-                  return Expanded(
+                    return Expanded(
                       child: ListView.builder(
                         // itemCount: snapshot.data?.length,
                         itemCount: filteredData.length,
                         itemBuilder: (context, index) {
                           // final getData = snapshot.data![index];
                           final getData = filteredData[index];
-                          final statusColor = _getStatusColor(
-                              getData.status ?? "Unknown");
+                          final statusColor =
+                              _getStatusColor(getData.status ?? "Unknown");
                           return GestureDetector(
                               onTap: () {
                                 // Get.to(() => DetailCutiUser(getUserDetail: getData,));
-                                if (getData.status == "new") {
-                                Get.to(() => DetailCutiUser(getUserDetail: getData));
-                                } 
-                                else if (getData.status == "approved") {
-                                  Get.to(() => ApprovedDetail(getUserDetail: getData));
-                                } 
-                                else if (getData.status == "rejected") {
-                                  Get.to(() => RejectedDetail(getUserDetail: getData));
+                                if (getData.status == "New") {
+                                  Get.to(() =>
+                                      DetailCutiUser(getUserDetail: getData));
+                                } else if (getData.status == "Approved") {
+                                  Get.to(() =>
+                                      ApprovedDetail(getUserDetail: getData));
+                                } else if (getData.status == "Rejected") {
+                                  Get.to(() =>
+                                      RejectedDetail(getUserDetail: getData));
                                 }
                               },
                               child: Container(
@@ -217,21 +212,21 @@ class _ListUserCutiState extends State<ListUserCuti> {
                                 child: Column(
                                   children: [
                                     Padding(
-                                      padding:  EdgeInsets.only(
+                                      padding: EdgeInsets.only(
                                           left: 20, top: 15, right: 20),
                                       child: Row(
                                         children: [
                                           Text(
                                             "No. Req : ",
-                                            style: TextStyle(
-                                                color: Colors.grey),
+                                            style:
+                                                TextStyle(color: Colors.grey),
                                           ),
                                           Text(getData.reqNo),
                                           Spacer(),
                                           Container(
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius
-                                                  .circular(5),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
                                               color: statusColor,
                                             ),
                                             height: 20,
@@ -258,9 +253,8 @@ class _ListUserCutiState extends State<ListUserCuti> {
                                     ListTile(
                                       leading: CircleAvatar(
                                           backgroundImage: AssetImage(
-                                            'assets/images/document.png',
-                                          )
-                                      ),
+                                        'assets/images/document.png',
+                                      )),
                                       title: Text(
                                         "Paid Leave Request",
                                         style: TextStyle(
@@ -268,8 +262,8 @@ class _ListUserCutiState extends State<ListUserCuti> {
                                             fontSize: 14),
                                       ),
                                       subtitle: Column(
-                                        crossAxisAlignment: CrossAxisAlignment
-                                            .start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Row(
                                             children: [
@@ -344,17 +338,13 @@ class _ListUserCutiState extends State<ListUserCuti> {
                                     ),
                                   ],
                                 ),
-                              )
-                          );
+                              ));
                         },
                       ),
                     );
                   }
-                }
-              ),
-        ],
-      )
-      );
+                }),
+          ],
+        ));
   }
 }
-    

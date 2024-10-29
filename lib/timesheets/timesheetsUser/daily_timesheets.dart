@@ -1,19 +1,27 @@
 import 'package:absent_project/controller/TimeSheetsController/TimesheetsUser/TimesheetsController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class DailyTimesheets extends StatefulWidget {
   const DailyTimesheets(
       {Key? key,
       required this.trackedTime,
       required this.selectedDay,
-      required this.formattedDate})
+      required this.formattedDate,
+      required this.firstIn,
+      required this.lastOut,
+      required this.workedHours
+      })
       : super(key: key);
 
   // final DateTime selectedDay;
   final Map<String, String>? trackedTime;
   final String formattedDate;
   final DateTime selectedDay;
+  final DateTime? firstIn;
+  final DateTime? lastOut;
+  final String? workedHours;
 
   @override
   State<DailyTimesheets> createState() => _DailyTimesheetsState();
@@ -82,7 +90,9 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                           'First In',
                           style: TextStyle(color: Colors.grey),
                         ),
-                        Text(data['firstIn']!),
+                        Text(widget.firstIn != null 
+                          ? DateFormat('kk:mm').format(widget.firstIn!) 
+                          : '-'),
                         SizedBox(height: 16),
                         Text(
                           "Breaks",
@@ -99,13 +109,15 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                           "Last Out",
                           style: TextStyle(color: Colors.grey),
                         ),
-                        Text(data['lastOut']!),
+                        Text(widget.lastOut != null 
+                          ? DateFormat('kk:mm').format(widget.lastOut!) 
+                          : '-'),
                         SizedBox(height: 16),
                         Text(
                           "Worked Hours",
                           style: TextStyle(color: Colors.grey),
                         ),
-                        Text(data['workedHours']!),
+                        Text(widget.workedHours ?? '-'),
                       ],
                     ),
                   ],
@@ -124,7 +136,7 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                 future: _controller.getAnswers(widget.selectedDay), 
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator(); 
+                    return Center(child: CircularProgressIndicator(),); 
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}'); 
                   } else if (!snapshot.hasData) {

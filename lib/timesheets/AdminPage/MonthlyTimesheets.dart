@@ -83,6 +83,8 @@ class MonthlyTimesheets extends StatelessWidget {
                 pw.TableRow(
                   children: [
                     pw.Container(
+                      width: 80,
+                      height: 30,
                       alignment: pw.Alignment.center,
                       color: PdfColors.red200,
                       child: pw.Text(
@@ -93,6 +95,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       ),
                     ),
                     pw.Container(
+                      height: 30,
                       alignment: pw.Alignment.center,
                       color: PdfColors.red200,
                       child: pw.Text(
@@ -103,6 +106,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       ),
                     ),
                     pw.Container(
+                      height: 30,
                       alignment: pw.Alignment.center,
                       color: PdfColors.red200,
                       child: pw.Text(
@@ -113,6 +117,8 @@ class MonthlyTimesheets extends StatelessWidget {
                       ),
                     ),
                     pw.Container(
+                      width: 50,
+                      height: 30,
                       alignment: pw.Alignment.center,
                       color: PdfColors.red200,
                       child: pw.Text(
@@ -123,6 +129,8 @@ class MonthlyTimesheets extends StatelessWidget {
                       ),
                     ),
                     pw.Container(
+                      width: 50,
+                      height: 30,
                       alignment: pw.Alignment.center,
                       color: PdfColors.red200,
                       child: pw.Text(
@@ -133,6 +141,8 @@ class MonthlyTimesheets extends StatelessWidget {
                       ),
                     ),
                     pw.Container(
+                      width: 70,
+                      height: 30,
                       alignment: pw.Alignment.center,
                       color: PdfColors.red200,
                       child: pw.Text(
@@ -143,6 +153,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       ),
                     ),
                     pw.Container(
+                      height: 30,
                       alignment: pw.Alignment.center,
                       color: PdfColors.red200,
                       child: pw.Text(

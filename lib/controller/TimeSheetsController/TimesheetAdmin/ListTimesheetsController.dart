@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:absent_project/controller/LoginController.dart';
 import 'package:absent_project/controller/TimeSheetsController/TimesheetAdmin/ListTimesheetsModel.dart';
+import 'package:absent_project/controller/TimeSheetsController/TimesheetAdmin/MonthlyReportModel.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:absent_project/controller/TimeSheetsController/TimesheetsUser/MonthlyTimesheetModel.dart';
@@ -13,7 +14,7 @@ class ListTimesheetsController {
 
     try {
       final response = await http.post(
-        Uri.parse("http://192.168.100.84/FlutterAPI/timesheet/admin/timesheets.php"),
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/timesheet/admin/timesheets.php"),
         body: {
           'date': formattedDate,
         },
@@ -39,7 +40,7 @@ class ListTimesheetsController {
 
     try {
       final response = await http.post(
-        Uri.parse("http://192.168.100.84/FlutterAPI/timesheet/admin/dailyTimesheets.php"),
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/timesheet/admin/dailyTimesheets.php"),
         body: {
           'date': formattedDate,
           'clock_in_id' : clockInId
@@ -66,7 +67,7 @@ class ListTimesheetsController {
       DateTime firstDayOfMonth = DateTime(selectedYear, selectedMonth);
 
       final response = await http.post(
-        Uri.parse("http://192.168.100.84/FlutterAPI/timesheet/user/monthly_timesheets.php"),
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/timesheet/user/monthly_timesheets.php"),
         body: {
           'user_id': userId,
           'month': selectedMonth.toString(),
@@ -93,7 +94,7 @@ class ListTimesheetsController {
 
   Future<String> fetchFullName(String userId) async {
     try {
-      var response = await http.get(Uri.parse('http://192.168.100.84/FlutterAPI/GetUserById.php/$userId'));
+      var response = await http.get(Uri.parse('http://192.168.2.159:8080/FlutterAPI/GetUserById.php/$userId'));
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         return data['full_name'];
@@ -115,12 +116,12 @@ class ListTimesheetsController {
     }
   }
 
-  Future<MonthlyTimesheetModel> getMonthlyReport (String userId, int selectedMonth, int selectedYear) async {
+  Future<MonthlyReportModel> getMonthlyReport (String userId, int selectedMonth, int selectedYear) async {
     try {
       DateTime firstDayOfMonth = DateTime(selectedYear, selectedMonth);
 
       final response = await http.post(
-        Uri.parse("http://192.168.100.84/FlutterAPI/timesheet/user/monthly_timesheets.php"),
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/timesheet/admin/monthly_report.php"),
         body: {
           'user_id': userId,
           'month': selectedMonth.toString(),
@@ -129,12 +130,15 @@ class ListTimesheetsController {
       );
 
       print("API Response Status: ${response.statusCode}");
-      print("API Response Body: ${response.body}"); 
+      print("Monthly report: ${response.body}"); 
 
       if (response.statusCode == 200) {
-        final List<dynamic> jsonData = json.decode(response.body);
-        final MonthlyTimesheetModel monthlyTimesheetModel= MonthlyTimesheetModel.fromJson(jsonData[0]);
-        return monthlyTimesheetModel  ;
+        final Map<String, dynamic> jsonData = json.decode(response.body);
+        if (jsonData.isNotEmpty && jsonData['status'] == 'success') {
+          return MonthlyReportModel.fromJson(jsonData);
+        } else {
+          throw Exception("Failed to parse data");
+        }
       }  else {
         throw Exception("Failed to fetch data");
       }
