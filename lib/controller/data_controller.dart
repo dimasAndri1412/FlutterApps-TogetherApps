@@ -103,6 +103,7 @@ class ctr_data {
     radiusController.clear();
   }
 
+
   clear_maps_clock_in_out_func() {
     locationFieldController.clear();
     userNameLocationFieldController.clear();

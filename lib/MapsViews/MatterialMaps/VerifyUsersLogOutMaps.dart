@@ -40,7 +40,6 @@ class verifyRolesClockOut {
         ctr_data().clear_maps_clock_in_out_func();
       }
 
-
     } catch (err) {
       return "OTP Code it's not match!";
     }

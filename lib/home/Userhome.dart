@@ -19,6 +19,7 @@ class UserHome extends StatefulWidget {
 }
 
 class _UserHomeState extends State<UserHome> {
+
   late List<_ChartData> data;
   late TooltipBehavior _tooltip;
 

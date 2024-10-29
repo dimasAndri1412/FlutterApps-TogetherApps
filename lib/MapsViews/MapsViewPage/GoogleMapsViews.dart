@@ -93,7 +93,6 @@ class _googleMapsViewsState extends State<googleMapsViews> {
 
       print(placsMrks);
 
-
     }catch(errs) {
       print(errs);
     }

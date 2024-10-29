@@ -40,7 +40,6 @@ class _googleMapsWrapper extends State<googleMapsWrapper> {
           latitudeLocationController.text = location.latitude.toString();
           longtitudeLocationController.text = location.longitude.toString();
 
-
           //Address full
           List<Placemark>placeMrks = await placemarkFromCoordinates(
               location.latitude,
