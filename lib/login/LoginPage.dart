@@ -1,12 +1,8 @@
-import 'package:absent_project/ChangesPasswordPage/ChangesPasswordMenu.dart';
 import 'package:absent_project/controller/AbsentController/ClockInState.dart';
-import 'package:absent_project/home/applicationbar_user.dart';
 import 'package:flutter/material.dart';
 import 'package:absent_project/login/form.dart';
-import 'package:absent_project/home/ApplicationBar.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
-
 
 void main() => runApp(
     MultiProvider(

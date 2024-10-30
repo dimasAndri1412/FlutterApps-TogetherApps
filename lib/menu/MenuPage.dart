@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import '../controller/Keys.dart';
+
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
 
@@ -177,6 +179,8 @@ class _MenuPageState extends State<MenuPage> {
               ),
               TextButton(
                 onPressed: () {
+                  emailController.clear();
+                  passwordController.clear();
                   Get.offAll(() => LoginPage());
                 },
                 child: Text(
