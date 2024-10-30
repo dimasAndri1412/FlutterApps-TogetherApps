@@ -1,8 +1,10 @@
+import 'package:absent_project/MapsViews/MapsInformationPages/DetailLocations.dart';
 import 'package:absent_project/MapsViews/MapsInformationPages/locationListControllers.dart';
 import 'package:absent_project/MapsViews/MapsViewPage/GoogleMapsPages.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:get/get.dart';
 
 class listLocationsMaps extends StatefulWidget {
   const listLocationsMaps({super.key});
@@ -150,7 +152,9 @@ class _listLocationsMapsState extends State<listLocationsMaps> {
                               locationViews.locationImg
                             ),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            Get.to(() => detailLocatiosMaps(listLocationMaps: locationViews));
+                          },
                         ),
                       );
                     },
