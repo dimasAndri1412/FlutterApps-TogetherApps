@@ -58,69 +58,6 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
     }
   }
 
-  // Future<List<UserListPaidLeave>?> fetchLeaveData() async {
-  //   return await memberInfo.getLeaveNew();
-  // }
-
-/*  @override
-  void initState() {
-    super.initState();
-    memberInfo.updateLeaveCount();
-  }*/
-
-  // final List<Map<String, String>> usercuti = [
-  //   {
-  //     'name': 'Rogape',
-  //     'reason': 'Jalan - jalan ke Bali',
-  //     'date': '2024-12-01',
-  //     'status': 'Approved'
-  //   },
-  //   {
-  //     'name': 'Rogape',
-  //     'reason': 'Pergi ke RSJ',
-  //     'date': '2024-12-02',
-  //     'status': 'Approved'
-  //   },
-  //   {
-  //     'name': 'Rogape',
-  //     'reason': 'Jinakin Bom',
-  //     'date': '2024-12-03',
-  //     'status': 'Approved'
-  //   },
-  //   {
-  //     'name': 'Rogape',
-  //     'reason': 'jajan ke Paris',
-  //     'date': '2024-12-04',
-  //     'status': 'Rejected'
-  //   },
-  //   {
-  //     'name': 'Rogape',
-  //     'reason': 'beli sendal di US',
-  //     'date': '2024-12-05',
-  //     'status': 'Approved'
-  //   },
-  //   {
-  //     'name': 'Rogape',
-  //     'reason': 'cari pokemon',
-  //     'date': '2024-12-06',
-  //     'status': 'Rejected'
-  //   },
-  //   {
-  //     'name': 'Rogape',
-  //     'reason': 'cuti menikah',
-  //     'date': '2024-12-07',
-  //     'status': 'Approved'
-  //   },
-  // ];
-
-  // String filterStatus = 'All';
-  // List<Map<String, String>> get filteredCuti {
-  //   if (filterStatus == "All") {
-  //     return usercuti;
-  //   }
-  //   return usercuti.where((cuti) => cuti['status'] == filterStatus).toList();
-  // }
-
   List<MemberListPaidLeave> get filteredCuti {
     return getListUser.where((cuti) {
       final matchesStatus =
@@ -183,94 +120,129 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
   //function detail cuti
   void _showDetail(BuildContext context, MemberListPaidLeave getSelected) {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(32))),
-            contentPadding: EdgeInsets.only(top: 10.0),
-            content: Container(
-              // height: 200,
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(32)),
+          ),
+          contentPadding: EdgeInsets.only(top: 10.0),
+          content: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(
+                  child: Text(
+                    "Detail Paid Leave",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+                  ),
+                ),
+                Divider(color: Colors.grey),
+                Padding(
+                  padding: const EdgeInsets.all(25),
+                  child: Table(
+                    // Set border to null for transparent lines
+                    border: TableBorder(
+                      horizontalInside: BorderSide.none,
+                      verticalInside: BorderSide.none,
+                    ),
+                    columnWidths: {
+                      0: FlexColumnWidth(2),
+                      1: FlexColumnWidth(0.5),
+                      2: FlexColumnWidth(3),
+                    },
                     children: [
-                      Text(
-                        "Detail Cuti",
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.w500),
+                      // Row for Status
+                      TableRow(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8.0),
+                            child:
+                                Text("Status", style: TextStyle(fontSize: 15)),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8.0),
+                            child: Text(":", style: TextStyle(fontSize: 15)),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8.0),
+                            child: Text(getSelected.status,
+                                style: TextStyle(fontSize: 15)),
+                          ),
+                        ],
+                      ),
+                      // Row for Description / Reason
+                      TableRow(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8.0),
+                            child: Text("Description",
+                                style: TextStyle(fontSize: 15)),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8.0),
+                            child: Text(":", style: TextStyle(fontSize: 15)),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8.0),
+                            child: Text(
+                              getSelected.status == 'Rejected'
+                                  ? getSelected.reason_rejected
+                                  : getSelected.reason_leave,
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          ),
+                        ],
+                      ),
+                      TableRow(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8.0),
+                            child: Text("Days", style: TextStyle(fontSize: 15)),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8.0),
+                            child: Text(":", style: TextStyle(fontSize: 15)),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8.0),
+                            child: Text(
+                              getSelected.jumlah_hari,
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                  Divider(
-                    color: Colors.grey,
-                    // thickness: 1
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(25),
-                    child: Row(
-                      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      // crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Status ", style: TextStyle(fontSize: 15)),
-                            Text("Description ", style: TextStyle(fontSize: 15))
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(": "),
-                            Text(": "),
-                          ],
-                        ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Text("isi"),
-                              // Text("isi"),
-                              Text(getSelected.status),
-                              if (getSelected.status == 'Rejected')
-                                Text(getSelected.reason_rejected)
-                              else
-                                Text(getSelected.reason_leave)
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(32.0),
-                            bottomRight: Radius.circular(32.0)),
-                      ),
-                      child: Text(
-                        "Close",
-                        style: TextStyle(color: Colors.white),
-                        textAlign: TextAlign.center,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(32.0),
+                        bottomRight: Radius.circular(32.0),
                       ),
                     ),
+                    child: Text(
+                      "Close",
+                      style: TextStyle(color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -333,6 +305,12 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
+                        Column(
+                          children: [
+                            Icon(Icons.offline_bolt_outlined),
+                            Icon(Icons.offline_bolt_outlined),
+                          ],
+                        ),
                         Column(
                             // mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -433,92 +411,107 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
           //       } else {
           // return
           Expanded(
-              child: ListView.builder(
-            itemCount: filteredCuti.length,
-            itemBuilder: (context, index) {
-              //panggil usercuti sebagai cutiisi
-              /*var getUser = snapshot.data![index];*/
-              // final isicuti = filteredCuti[index];
-              final memberInfo = filteredCuti[index];
+              child: Padding(
+            padding: const EdgeInsets.only(bottom: 40),
+            child: ListView.builder(
+              itemCount: filteredCuti.length,
+              itemBuilder: (context, index) {
+                //panggil usercuti sebagai cutiisi
+                /*var getUser = snapshot.data![index];*/
+                // final isicuti = filteredCuti[index];
+                final memberInfo = filteredCuti[index];
 
-              return GestureDetector(
-                onTap: () => _showDetail(context, memberInfo),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(width: 0.5, color: Colors.grey)),
-                    child: ListTile(
-                      leading: Image.asset(
-                        'assets/images/job.png',
-                        scale: 5,
-                      ),
-                      title: Text(
-                        /*getUser.reasonLeave,*/
-                        // isicuti['reason']!,
-                        memberInfo.reason_leave,
-                        style: const TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              const Icon(Icons.calendar_month),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                /*getUser.startDateLeave,*/
-                                // isicuti['date']!,
-                                memberInfo.date_start_leave,
-                                style: const TextStyle(
-                                    color: Colors.grey, fontSize: 10),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              const Icon(Icons.supervised_user_circle_outlined),
-                              const SizedBox(width: 5),
-                              Text(
-                                /*getUser.name,*/
-                                // isicuti['name']!,
-                                memberInfo.name,
-                                style: const TextStyle(
-                                    color: Colors.grey, fontSize: 10),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                      trailing: Text(
-                        /*getUser.status,*/
-                        // usercuti[index]['status']!,
-                        memberInfo.status,
+                return GestureDetector(
+                  onTap: () => _showDetail(context, memberInfo),
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(width: 0.5, color: Colors.grey)),
+                      child: ListTile(
+                        leading: Image.asset(
+                          'assets/images/job.png',
+                          scale: 5,
+                        ),
+                        title: Text(
+                          /*getUser.reasonLeave,*/
+                          // isicuti['reason']!,
+                          memberInfo.reason_leave,
+                          style: const TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(Icons.calendar_month),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  /*getUser.startDateLeave,*/
+                                  // isicuti['date']!,
+                                  memberInfo.date_start_leave,
+                                  style: const TextStyle(
+                                      color: Colors.grey, fontSize: 10),
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text("-"),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  memberInfo.date_end_leave,
+                                  style: const TextStyle(
+                                      color: Colors.grey, fontSize: 10),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const Icon(Icons.offline_bolt_outlined),
+                                const SizedBox(width: 5),
+                                Text(
+                                  /*getUser.name,*/
+                                  // isicuti['name']!,
+                                  memberInfo.jumlah_hari,
+                                  style: const TextStyle(
+                                      color: Colors.grey, fontSize: 10),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                        trailing: Text(
+                          /*getUser.status,*/
+                          // usercuti[index]['status']!,
+                          memberInfo.status,
 
-                        style: TextStyle(
-                            /*color: getUser.status== 'new'*/
-                            // color: isicuti['status'] == 'Approved'
-                            color: memberInfo.status == 'Approved'
-                                ? Colors.green
-                                // : isicuti['status'] == 'New'
-                                : memberInfo.status == 'New'
-                                    ? Colors.blue
-                                    : Colors.red,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15),
+                          style: TextStyle(
+                              /*color: getUser.status== 'new'*/
+                              // color: isicuti['status'] == 'Approved'
+                              color: memberInfo.status == 'Approved'
+                                  ? Colors.green
+                                  // : isicuti['status'] == 'New'
+                                  : memberInfo.status == 'New'
+                                      ? Colors.blue
+                                      : Colors.red,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           )
               // )
               )

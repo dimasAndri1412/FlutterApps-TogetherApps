@@ -41,70 +41,86 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
   }
 
   updateLeave() async {
-    var data = await http.post(
+    try {
+      var data = await http.post(
         Uri.parse(
-            "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/getFullNameOther.php"),
+          "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/getFullNameOther.php",
+        ),
         body: {
-          // "username": emailController.text,
-          "full_name": namePaidLeave.text
-        });
-    var jsonData = json.decode(data.body);
-    // namePaidLeave.text = jsonData[0]['full_name'];
-    // print("Data.body: ${data.body}");
+          // "full_name": namePaidLeave.text,
+          "full_name": widget.getUserDetail.username,
+        },
+      );
 
-    leaveUsed = int.parse(jsonData[0]['leave_used']);
-    remainingLeave = int.parse(jsonData[0]['remaining_leave']);
+      print("Data.body: ${data.body}");
+      var jsonData = json.decode(data.body);
 
-    leave_used.text = leaveUsed.toString();
-    remaining_leave.text = remainingLeave.toString();
+      if (jsonData is List && jsonData.isNotEmpty) {
+        leaveUsed = int.parse(jsonData[0]['leave_used']);
+        remainingLeave = int.parse(jsonData[0]['remaining_leave']);
 
-    print("Leave Used dari API: $leaveUsed");
-    print("Remaining Leave dari API: $remainingLeave");
+        leave_used.text = leaveUsed.toString();
+        remaining_leave.text = remainingLeave.toString();
 
-    var getData = await http.post(
+        print("Leave Used dari API: $leaveUsed");
+        print("Remaining Leave dari API: $remainingLeave");
+      } else {
+        print("No data or empty array returned from getFullNameOther.php.");
+        return;
+      }
+
+      var getData = await http.post(
         Uri.parse(
-            "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/getCountLeave.php"),
+          "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/getCountLeave.php",
+        ),
         body: {
-          "name": namePaidLeave.text,
-        });
-    var getJsondata = json.decode(getData.body);
-    print("getData.body: ${getData.body}");
+          // "name": namePaidLeave.text,
+          "name": widget.getUserDetail.username,
+        },
+      );
 
-    countStatus = int.parse(getJsondata[0]['countStatus']);
-    initial = remainingLeave;
+      print("getData.body: ${getData.body}");
+      var getJsondata = json.decode(getData.body);
 
-    if (countStatus > 0) {
-      leaveUsed = (countStatus);
-      // initial -= leaveUsed;
-      initial = totalLeave - leaveUsed;
-    } else {
-      // leaveUsed = 0;
-      print("NO DATA COUNT");
+      if (getJsondata is List && getJsondata.isNotEmpty) {
+        countStatus = int.parse(getJsondata[0]['countStatus']);
+        initial = remainingLeave;
+
+        if (countStatus > 0) {
+          leaveUsed = countStatus;
+          initial = totalLeave - leaveUsed;
+        } else {
+          print("NO DATA COUNT");
+        }
+
+        print("countStatus getting: $countStatus");
+        print("Leave used getting: $leaveUsed");
+        print("initial getting: $initial");
+        print("Remaining Leave getting: $remainingLeave");
+      } else {
+        print("No data found in getCountLeave.php.");
+      }
+
+      await refresh();
+    } catch (e) {
+      print("Error parsing JSON data: $e");
     }
-
-    print("countStatus getting : $countStatus");
-    print("Leave used getting: $leaveUsed");
-    print("initial getting: $initial");
-    print("Remaining Leave getting: $remainingLeave");
-
-    // await updatePaidLeave();
-    // await updatePaidLeave(widget.getUserDetail.username, leaveUsed, initial);
-    await refresh();
   }
 
   Future refresh() async {
     await Future.delayed(const Duration(seconds: 3));
     // await updatePaidLeave(widget.getUserDetail.username, leaveUsed, initial);
-    await updatePaidLeave(namePaidLeave.text, leaveUsed, initial);
+    await updatePaidLeave(leaveUsed, initial);
   }
 
-  updatePaidLeave(String username, int leaveUsed, int initial) async {
+  updatePaidLeave(int leaveUsed, int initial) async {
     final response = await http.post(
         Uri.parse(
             "http://192.168.2.159:8080/FlutterAPI/approvals/admin/paid_leave/update_leave.php"),
         body: {
           // 'username': username,
-          'full_name': namePaidLeave.text,
+          // 'full_name': namePaidLeave.text,
+          'full_name': widget.getUserDetail.username,
           'leave_used': leaveUsed.toString(),
           'remaining_leave': initial.toString()
         });
