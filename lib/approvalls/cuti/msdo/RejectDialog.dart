@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveModel.dart';
 import 'package:http/http.dart' as http;
 
+import 'ListUserCuti.dart';
+
 class RejectDialog extends StatefulWidget {
   AdminApprovalPaidLeaveModel getData;
   RejectDialog({super.key, required this.getData});
@@ -105,6 +107,8 @@ class _RejectDialogState extends State<RejectDialog> {
                     onPressed: () {
                       Navigator.pop(context);
                       updateRejected();
+                      reason_rejectedController.text = '';
+                      const ListUserCuti();
                     },
                     child: Text(
                       "Reject",
