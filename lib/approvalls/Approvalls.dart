@@ -21,6 +21,7 @@ class _ApprovallsState extends State<Approvalls> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           flexibleSpace: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(colors: [

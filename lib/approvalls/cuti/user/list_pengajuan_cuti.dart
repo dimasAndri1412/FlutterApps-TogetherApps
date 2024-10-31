@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:absent_project/approvalls/approvalls_user.dart';
 import 'package:absent_project/approvalls/cuti/user/pengajuan_cuti.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberListPaidLeave.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberStatusPaidLeave.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/UserListPaidLeave.dart';
 import 'package:absent_project/controller/Keys.dart';
+import 'package:absent_project/home/applicationbar_user.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -247,292 +249,309 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "List Paid Leave Request",
-          style: TextStyle(fontSize: 15),
-        ),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(colors: [
-              Color.fromARGB(255, 147, 195, 234),
-              Color.fromARGB(255, 98, 171, 232),
-              Color.fromARGB(255, 123, 185, 235),
-            ]),
+    return PopScope(
+      canPop: false,
+      // onPopInvokedWithResult: (context, result) {
+      //   Get.to(ApprovallsUser());
+      // },
+      onPopInvoked: (didPop) {
+        Get.to(ApplicationBarUser());
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Center(
+            child: Text(
+              "List Paid Leave Request",
+              style: TextStyle(fontSize: 15),
+            ),
           ),
+          automaticallyImplyLeading: false,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [
+                Color.fromARGB(255, 147, 195, 234),
+                Color.fromARGB(255, 98, 171, 232),
+                Color.fromARGB(255, 123, 185, 235),
+              ]),
+            ),
+          ),
+          elevation: 0,
         ),
-        elevation: 0,
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding:
-                const EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 0),
-            child: Container(
-              width: 500,
-              // height: 100,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Color.fromARGB(255, 147, 195, 234),
-                        blurRadius: 5,
-                        offset: Offset(0, 0))
-                  ]),
-              /////////
-              child: Column(
-                // mainAxisSize: MainAxisSize.min,
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Text(
-                      "Leave Statistics",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          letterSpacing: 2),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 30, right: 30, top: 10, bottom: 0),
+              child: Container(
+                width: 500,
+                // height: 100,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Color.fromARGB(255, 147, 195, 234),
+                          blurRadius: 5,
+                          offset: Offset(0, 0))
+                    ]),
+                /////////
+                child: Column(
+                  // mainAxisSize: MainAxisSize.min,
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Text(
+                        "Leave Statistics",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            letterSpacing: 2),
+                      ),
                     ),
-                  ),
-                  Divider(
-                    color: Colors.grey,
-                    thickness: 1,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          children: [
-                            Icon(Icons.offline_bolt_outlined),
-                            Icon(Icons.offline_bolt_outlined),
-                          ],
-                        ),
-                        Column(
-                            // mainAxisAlignment: MainAxisAlignment.start,
+                    Divider(
+                      color: Colors.grey,
+                      thickness: 1,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            children: [
+                              Icon(Icons.offline_bolt_outlined),
+                              Icon(Icons.offline_bolt_outlined),
+                            ],
+                          ),
+                          Column(
+                              // mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Leave Used"),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text("Remaining Leave")
+                              ]),
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Leave Used"),
+                              Text(":"),
                               SizedBox(
                                 height: 5,
                               ),
-                              Text("Remaining Leave")
-                            ]),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(":"),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(":"),
-                          ],
-                        ),
-                        // FutureBuilder(
-                        FutureBuilder/*<List<UserListPaidLeave>?>*/(
-                            // future: memberInfo.getLeave(),
-                            future: memberInfo.getLeaveNew(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return CircularProgressIndicator();
-                              } else if (snapshot.hasError) {
-                                return Text("Error: ${snapshot.error}");
-                                // } else if (!snapshot.hasData ||
-                                //     snapshot.data!.isEmpty) {
-                                //   return Text("No Data Available");
-                              } else {
-                                //
-                                // var user = snapshot.data!.first;
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    // Text("${memberInfo.leaveUsed}"),
-                                    // Text("${user.leave_used}"),
-                                    Text("${memberInfo.leaveUsed}"),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    // Text("${memberInfo.initial}"),
-                                    // Text("${user.remaining_leave}"),
-                                    Text("${memberInfo.remainingLeave}"),
-                                  ],
-                                );
-                              }
-                            })
-                      ],
+                              Text(":"),
+                            ],
+                          ),
+                          // FutureBuilder(
+                          FutureBuilder/*<List<UserListPaidLeave>?>*/(
+                              // future: memberInfo.getLeave(),
+                              future: memberInfo.getLeaveNew(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return CircularProgressIndicator();
+                                } else if (snapshot.hasError) {
+                                  return Text("Error: ${snapshot.error}");
+                                  // } else if (!snapshot.hasData ||
+                                  //     snapshot.data!.isEmpty) {
+                                  //   return Text("No Data Available");
+                                } else {
+                                  //
+                                  // var user = snapshot.data!.first;
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      // Text("${memberInfo.leaveUsed}"),
+                                      // Text("${user.leave_used}"),
+                                      Text("${memberInfo.leaveUsed}"),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      // Text("${memberInfo.initial}"),
+                                      // Text("${user.remaining_leave}"),
+                                      Text("${memberInfo.remainingLeave}"),
+                                    ],
+                                  );
+                                }
+                              })
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            GestureDetector(
+              onTap: () => _showFilterOptions(context),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                margin: EdgeInsets.only(left: 15, top: 10),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey, width: 2),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Filter: $defaultStatus',
+                      style: TextStyle(color: Colors.black, fontSize: 14),
                     ),
-                  )
-                ],
+                    Icon(
+                      Icons.arrow_drop_down_rounded,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          GestureDetector(
-            onTap: () => _showFilterOptions(context),
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              margin: EdgeInsets.only(left: 15, top: 10),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey, width: 2),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'Filter: $defaultStatus',
-                    style: TextStyle(color: Colors.black, fontSize: 14),
-                  ),
-                  Icon(
-                    Icons.arrow_drop_down_rounded,
-                    color: Colors.black,
-                  ),
-                ],
-              ),
+            const SizedBox(
+              height: 10,
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
 
-          // FutureBuilder(
-          //     future: MemberRequestPaidLeaveController().getList(),
-          //     builder: (context, snapshot) {
-          //       if (snapshot.connectionState == ConnectionState.waiting) {
-          //         return const CircularProgressIndicator();
-          //       } else if (snapshot.hasError) {
-          //         return const Text("");
-          //       } else {
-          // return
-          Expanded(
-              child: Padding(
-            padding: const EdgeInsets.only(bottom: 40),
-            child: ListView.builder(
-              itemCount: filteredCuti.length,
-              itemBuilder: (context, index) {
-                //panggil usercuti sebagai cutiisi
-                /*var getUser = snapshot.data![index];*/
-                // final isicuti = filteredCuti[index];
-                final memberInfo = filteredCuti[index];
+            // FutureBuilder(
+            //     future: MemberRequestPaidLeaveController().getList(),
+            //     builder: (context, snapshot) {
+            //       if (snapshot.connectionState == ConnectionState.waiting) {
+            //         return const CircularProgressIndicator();
+            //       } else if (snapshot.hasError) {
+            //         return const Text("");
+            //       } else {
+            // return
+            Expanded(
+                child: Padding(
+              padding: const EdgeInsets.only(bottom: 40),
+              child: ListView.builder(
+                itemCount: filteredCuti.length,
+                itemBuilder: (context, index) {
+                  //panggil usercuti sebagai cutiisi
+                  /*var getUser = snapshot.data![index];*/
+                  // final isicuti = filteredCuti[index];
+                  final memberInfo = filteredCuti[index];
 
-                return GestureDetector(
-                  onTap: () => _showDetail(context, memberInfo),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(width: 0.5, color: Colors.grey)),
-                      child: ListTile(
-                        leading: Image.asset(
-                          'assets/images/job.png',
-                          scale: 5,
-                        ),
-                        title: Text(
-                          /*getUser.reasonLeave,*/
-                          // isicuti['reason']!,
-                          memberInfo.reason_leave,
-                          style: const TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                const Icon(Icons.calendar_month),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  /*getUser.startDateLeave,*/
-                                  // isicuti['date']!,
-                                  memberInfo.date_start_leave,
-                                  style: const TextStyle(
-                                      color: Colors.grey, fontSize: 10),
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text("-"),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  memberInfo.date_end_leave,
-                                  style: const TextStyle(
-                                      color: Colors.grey, fontSize: 10),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const Icon(Icons.offline_bolt_outlined),
-                                const SizedBox(width: 5),
-                                Text(
-                                  /*getUser.name,*/
-                                  // isicuti['name']!,
-                                  memberInfo.jumlah_hari,
-                                  style: const TextStyle(
-                                      color: Colors.grey, fontSize: 10),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                        trailing: Text(
-                          /*getUser.status,*/
-                          // usercuti[index]['status']!,
-                          memberInfo.status,
+                  return GestureDetector(
+                    onTap: () => _showDetail(context, memberInfo),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 5),
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(width: 0.5, color: Colors.grey)),
+                        child: ListTile(
+                          leading: Image.asset(
+                            'assets/images/job.png',
+                            scale: 5,
+                          ),
+                          title: Text(
+                            /*getUser.reasonLeave,*/
+                            // isicuti['reason']!,
+                            memberInfo.reason_leave,
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  const Icon(Icons.calendar_month),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    /*getUser.startDateLeave,*/
+                                    // isicuti['date']!,
+                                    memberInfo.date_start_leave,
+                                    style: const TextStyle(
+                                        color: Colors.grey, fontSize: 10),
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text("-"),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    memberInfo.date_end_leave,
+                                    style: const TextStyle(
+                                        color: Colors.grey, fontSize: 10),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  const Icon(Icons.offline_bolt_outlined),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    /*getUser.name,*/
+                                    // isicuti['name']!,
+                                    memberInfo.jumlah_hari,
+                                    style: const TextStyle(
+                                        color: Colors.grey, fontSize: 10),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                          trailing: Text(
+                            /*getUser.status,*/
+                            // usercuti[index]['status']!,
+                            memberInfo.status,
 
-                          style: TextStyle(
-                              /*color: getUser.status== 'new'*/
-                              // color: isicuti['status'] == 'Approved'
-                              color: memberInfo.status == 'Approved'
-                                  ? Colors.green
-                                  // : isicuti['status'] == 'New'
-                                  : memberInfo.status == 'New'
-                                      ? Colors.blue
-                                      : Colors.red,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15),
+                            style: TextStyle(
+                                /*color: getUser.status== 'new'*/
+                                // color: isicuti['status'] == 'Approved'
+                                color: memberInfo.status == 'Approved'
+                                    ? Colors.green
+                                    // : isicuti['status'] == 'New'
+                                    : memberInfo.status == 'New'
+                                        ? Colors.blue
+                                        : Colors.red,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                );
-              },
-            ),
-          )
-              // )
-              )
-          // ;
-          // }
-          // }
-          // )
-        ],
-      ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 15),
-        child: FloatingActionButton(
-          onPressed: () {
-            Get.to(() => const PengajuanCuti());
-          },
-          backgroundColor: const Color.fromARGB(255, 98, 171, 232),
-          elevation: 5,
-          child: const Icon(Icons.edit),
+                  );
+                },
+              ),
+            )
+                // )
+                )
+            // ;
+            // }
+            // }
+            // )
+          ],
         ),
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(bottom: 15),
+          child: FloatingActionButton(
+            onPressed: () {
+              Get.to(() => const PengajuanCuti());
+              reasonPaidLeave.text = '';
+              startDatePaidLeave.text = '';
+            },
+            backgroundColor: const Color.fromARGB(255, 98, 171, 232),
+            elevation: 5,
+            child: const Icon(Icons.edit),
+          ),
+        ),
+        floatingActionButtonLocation:
+            FloatingActionButtonLocation.miniEndDocked,
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
     );
   }
 

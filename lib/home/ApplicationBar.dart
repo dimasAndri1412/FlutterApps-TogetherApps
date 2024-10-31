@@ -16,7 +16,6 @@ class ApplicationBar extends StatefulWidget {
 }
 
 class _ApplicationBarState extends State<ApplicationBar> {
-
   // int currentIndex = 0;
   // List<Widget> body = [
   //   Home(),
@@ -24,23 +23,24 @@ class _ApplicationBarState extends State<ApplicationBar> {
   //   ClockInState.hasClockedIn ? gmapsElapsedTimesPages() : gmapsLocationPages(),
   //   Timesheets(),
   //   Approvalls(),
-  //   MenuPage() 
+  //   MenuPage()
   // ];
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Consumer<ClockInState>(
-      builder: (context, clockInState, child) {
-        List<Widget> body = [
-          Home(),
-          clockInState.hasClockedIn ? gmapsElapsedTimesPages() : gmapsLocationPages(),
-          Timesheets(),
-          Approvalls(),
-          MenuPage()
-        ];
+    return Consumer<ClockInState>(builder: (context, clockInState, child) {
+      List<Widget> body = [
+        Home(),
+        clockInState.hasClockedIn
+            ? gmapsElapsedTimesPages()
+            : gmapsLocationPages(),
+        Timesheets(),
+        Approvalls(),
+        MenuPage()
+      ];
 
-        int notificationCount = 5;
-        List<String> notifications = [
+      int notificationCount = 5;
+      List<String> notifications = [
         "Notification 1",
         "Notification 2",
         "Notification 3",
@@ -48,108 +48,107 @@ class _ApplicationBarState extends State<ApplicationBar> {
         "Notification 5"
       ];
 
-        return Scaffold(
-          appBar: AppBar(
-            flexibleSpace: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                      colors: [
-                        Color.fromARGB(255, 147, 195, 234),
-                        Color.fromARGB(255, 98, 171, 232),
-                        Color.fromARGB(255, 123, 185, 235),
-                      ]
-                    ),
-                    
-              ),
-              
+      return Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(colors: [
+                Color.fromARGB(255, 147, 195, 234),
+                Color.fromARGB(255, 98, 171, 232),
+                Color.fromARGB(255, 123, 185, 235),
+              ]),
             ),
-            elevation: 0,
-            actions: [
-              Stack(
-                children: [
-                  PopupMenuButton<String>(
-                    icon: Icon(Icons.notifications, color: Colors.white,),
-                    onSelected: (String result) {
-                      setState(() {
-                        notifications.remove(result);
-                        notificationCount--;
-                      });
-                    },
-                    itemBuilder: (BuildContext context) {
-                      return notifications.map((String choice) {
-                        return PopupMenuItem<String>(
-                          value: choice,
-                          child: Text(choice),
-                        );
-                      }).toList();
-                    },
+          ),
+          elevation: 0,
+          actions: [
+            Stack(
+              children: [
+                PopupMenuButton<String>(
+                  icon: Icon(
+                    Icons.notifications,
+                    color: Colors.white,
                   ),
-                  if (notificationCount > 0)
-                    Positioned(
-                      right: 11,
-                      top: 11,
-                      child: Container(
-                        padding: EdgeInsets.all(2),
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(6),
+                  onSelected: (String result) {
+                    setState(() {
+                      notifications.remove(result);
+                      notificationCount--;
+                    });
+                  },
+                  itemBuilder: (BuildContext context) {
+                    return notifications.map((String choice) {
+                      return PopupMenuItem<String>(
+                        value: choice,
+                        child: Text(choice),
+                      );
+                    }).toList();
+                  },
+                ),
+                if (notificationCount > 0)
+                  Positioned(
+                    right: 11,
+                    top: 11,
+                    child: Container(
+                      padding: EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      constraints: BoxConstraints(
+                        minWidth: 12,
+                        minHeight: 12,
+                      ),
+                      child: Text(
+                        '$notificationCount',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 8,
                         ),
-                        constraints: BoxConstraints(
-                          minWidth: 12,
-                          minHeight: 12,
-                        ),
-                        child: Text(
-                          '$notificationCount',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 8,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                ],
-              ),
-            ],
-          ),
-          body: Center(
-            child: body[currentIndex],
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              selectedItemColor: Color.fromARGB(255, 64, 157, 234),
-              currentIndex: currentIndex,
-              onTap: (int newIndex) {
-                setState(() {
-                  currentIndex = newIndex;
-                });
-              },
-              items: const [
-                BottomNavigationBarItem(
-                  label: "Home",
-                  icon: Icon(Icons.home),
-                ),
-                BottomNavigationBarItem(
-                  label: "Time Clock",
-                  icon: Icon(Icons.lock_clock),
-                ),
-                BottomNavigationBarItem(
-                  label: "Timesheets",
-                  icon: Icon(Icons.note),
-                ),
-                BottomNavigationBarItem(
-                  label: "Approvals",
-                  icon: Icon(Icons.check_circle), 
-                ),
-                BottomNavigationBarItem(
-                  label: "Menu",
-                  icon: Icon(Icons.menu),
-                )
+                  ),
               ],
             ),
-        );
-      }
-    );
+          ],
+        ),
+        body: Center(
+          child: body[currentIndex],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: Color.fromARGB(255, 64, 157, 234),
+          currentIndex: currentIndex,
+          onTap: (int newIndex) {
+            setState(() {
+              currentIndex = newIndex;
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(
+              label: "Home",
+              icon: Icon(Icons.home),
+            ),
+            BottomNavigationBarItem(
+              label: "Time Clock",
+              icon: Icon(Icons.lock_clock),
+            ),
+            BottomNavigationBarItem(
+              label: "Timesheets",
+              icon: Icon(Icons.note),
+            ),
+            BottomNavigationBarItem(
+              label: "Approvals",
+              icon: Icon(Icons.check_circle),
+            ),
+            BottomNavigationBarItem(
+              label: "Menu",
+              icon: Icon(Icons.menu),
+            )
+          ],
+        ),
+      );
+    });
     // contoh notifikasi
   }
 }

@@ -1,5 +1,6 @@
 import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveModel.dart';
 import 'package:http/http.dart' as http;
@@ -108,7 +109,8 @@ class _RejectDialogState extends State<RejectDialog> {
                       Navigator.pop(context);
                       updateRejected();
                       reason_rejectedController.text = '';
-                      const ListUserCuti();
+                      // const ListUserCuti();
+                      Get.offAll(const ListUserCuti());
                     },
                     child: Text(
                       "Reject",

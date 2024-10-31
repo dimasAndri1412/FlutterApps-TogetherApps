@@ -1,6 +1,8 @@
+import 'package:absent_project/approvalls/cuti/msdo/ListUserCuti.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:printing/printing.dart';
 import 'package:absent_project/approvalls/cuti/GeneratePDF_MSDO.dart';
 import 'package:http/http.dart' as http;
@@ -111,6 +113,8 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
     await Future.delayed(const Duration(seconds: 3));
     // await updatePaidLeave(widget.getUserDetail.username, leaveUsed, initial);
     await updatePaidLeave(leaveUsed, initial);
+    await Future.delayed(const Duration(milliseconds: 100));
+    Get.offAll(const ListUserCuti());
   }
 
   updatePaidLeave(int leaveUsed, int initial) async {
