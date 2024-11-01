@@ -27,6 +27,10 @@ class _gmapsClockOutQuestionsState extends State<gmapsClockOutQuestions> {
     _fetchQuestions();
     _fetchPlatform();
 
+    selectedQuestionControllers.clear();
+    selectedPlatformControllers.clear();
+    answersControllers.clear();
+
     _addQuestionField();
   }
 
@@ -66,6 +70,11 @@ class _gmapsClockOutQuestionsState extends State<gmapsClockOutQuestions> {
     for (var controller in answersControllers) {
       controller.dispose();
     }
+
+    selectedQuestionControllers.clear();
+    selectedPlatformControllers.clear();
+    answersControllers.clear();
+
     super.dispose();
   }
 
