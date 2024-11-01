@@ -54,6 +54,8 @@ class Recognizer {
           reshapedArray[index] = (float32Array[c * height * width + h * width + w]-127.5)/127.5;
         }
       }
+      print("Nilai minimum setelah normalisasi: ${reshapedArray.reduce((a, b) => a < b ? a : b)}");
+      print("Nilai maksimum setelah normalisasi: ${reshapedArray.reduce((a, b) => a > b ? a : b)}");
     }
     return reshapedArray.reshape([1,112,112,3]);
   }
@@ -90,6 +92,49 @@ class Recognizer {
     }
   }
 
+  Future<Recognition> detect (img.Image image, Rect location) async {
+    // Coba ambil embeddingList dari server
+    if (embeddingList == null) {
+      try {
+        await fetchEmbedding();
+      } catch (e) {
+        print("Embedding tidak ditemukan di server, melanjutkan dengan hasil inferensi baru.");
+      }
+    }
+
+    // Proses input image
+    var input = imageToArray(image);
+    print("Input shape: ${input.shape}");
+
+    // Output array untuk hasil inferensi
+    List output = List.filled(1 * 192, 0).reshape([1, 192]);
+
+    // Lakukan inferensi
+    final runs = DateTime.now().millisecondsSinceEpoch;
+    interpreter.run(input, output);
+    final run = DateTime.now().millisecondsSinceEpoch - runs;
+
+    // Tampilkan hasil output dari model
+    print('Time to run inference: $run ms, output: ${jsonEncode(output)}');
+
+    // Konversi output ke List<double> untuk disimpan sebagai embedding baru
+    List<double> outputArray = output.first.cast<double>();
+
+    // Jika embeddingList dari server kosong, gunakan output sebagai embedding baru
+    if (embeddingList == null || embeddingList!.isEmpty) {
+      print("Embedding baru yang dihasilkan: $outputArray");
+      // Simpan outputArray sebagai embedding baru di server atau database lokal
+    } else {
+      // Temukan embedding terdekat jika embeddingList tersedia
+      Pair pair = findNearest(outputArray, embeddingList!);
+      print("distance= ${pair.distance}");
+      return Recognition(pair.name, location, outputArray, pair.distance);
+    }
+
+    return Recognition("New Embedding", location, outputArray, 0);
+  }
+
+
 
   Future<Recognition> recognize(img.Image image, Rect location) async {
     // Pastikan embeddingList tidak null
@@ -103,13 +148,17 @@ class Recognizer {
     // Proses input image
     var input = imageToArray(image);
     print(input.shape.toString());
-
+    
     // Output array untuk hasil inferensi
     List output = List.filled(1 * 192, 0).reshape([1, 192]);
 
     // Lakukan inferensi
     final runs = DateTime.now().millisecondsSinceEpoch;
     interpreter.run(input, output);
+    print("Output asli dari model (sebelum casting): $output");
+    print("Tipe data output asli: ${output.runtimeType}");
+
+
     final run = DateTime.now().millisecondsSinceEpoch - runs;
     print(jsonEncode(output));
     print('Time to run inference: $run ms$output');

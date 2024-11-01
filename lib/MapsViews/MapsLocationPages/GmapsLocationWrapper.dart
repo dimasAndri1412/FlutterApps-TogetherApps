@@ -108,7 +108,7 @@ class _gmapsLocationWrapperState extends State<gmapsLocationWrapper> {
           //if (lastClockInValues == null ){
 
             //if (inRadius!) {
-              Get.offAll(CameraDetection());
+              Get.offAll(() => CameraDetection());
             //} else {
              // locationNamesController.text = 'Invalid Radius Location';
             //}

@@ -1,4 +1,5 @@
 import 'package:absent_project/controller/AbsentController/ClockInController.dart';
+import 'package:absent_project/controller/KPIQuestionsController/platform/platformModel.dart';
 import 'package:absent_project/controller/KPIQuestionsController/question/QuestionModel.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/material.dart';
@@ -12,121 +13,160 @@ class gmapsClockOutQuestions extends StatefulWidget {
 
 class _gmapsClockOutQuestionsState extends State<gmapsClockOutQuestions> {
   final ClockInController _controller = ClockInController();
-  List <QuestionModel> _questions = [];
+  List<QuestionModel> _questions = [];
+  List<PlatformModel> _platforms = [];
   bool _isLoading = true;
-  // Map<int, TextEditingController> _controllers = {};
+
+  // List<int?> selectedQuestions = [null]; 
+  // List<int?> selectedPlatforms = [null]; 
+  // List<TextEditingController> answerControllers = [TextEditingController()]; 
 
   @override
   void initState() {
     super.initState();
     _fetchQuestions();
+    _fetchPlatform();
+
+    _addQuestionField();
   }
 
   void _fetchQuestions() async {
     List<QuestionModel> questions = await _controller.show_question();
     setState(() {
       _questions = questions;
-      initializeControllers(questions);  
-      // for (var question in questions) {
-      //   _controllers[question.idQuestion] = TextEditingController(
-      //     text: question.idQuestion.toString(),
-      //   );
-      // }
       _isLoading = false;
     });
   }
 
-  void initializeControllers(List<QuestionModel> questions) {
-  for (var question in questions) {
-    final questionId = question.idQuestion.toString();
-    if (!answerController.containsKey(questionId)) {
-      answerController[questionId] = TextEditingController();
-      print('Controller initialized for questionId: $questionId');
+  void _fetchPlatform() async {
+    List<PlatformModel>? platforms = await _controller.show_platform();
+    if (platforms != null) {
+      setState(() {
+        _platforms = platforms;
+      });
     }
   }
-}
+
+  void _addQuestionField() {
+    setState(() {
+      selectedQuestionControllers.add(TextEditingController());
+      selectedPlatformControllers.add(TextEditingController());
+      answersControllers.add(TextEditingController()); 
+    });
+  }
+
+  @override
+  void dispose() {
+    for (var controller in selectedQuestionControllers) {
+      controller.dispose();
+    }
+    for (var controller in selectedPlatformControllers) {
+      controller.dispose();
+    }
+    for (var controller in answersControllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: EdgeInsets.all(20),
       width: double.infinity,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-            child: Text(
-              "Please insert question below : ",
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 11,
-                fontWeight: FontWeight.bold
-              ),
+          Text(
+            "What did you do today?",
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 10,),
-          _isLoading
-            ? Center(child: CircularProgressIndicator())
-            : _questions.isEmpty
-            ? Center(
-                child: Text(
-                  "No question for this position",
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.red,
-                  ),
-                ),
-              )
-            : ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: _questions.length,
-              itemBuilder: (context, index){
-                final question = _questions[index];
-                return Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                      child: Text(
-                        question.questionText,
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold
-                        ),
+          SizedBox(height: 10),
+
+          for (int i = 0; i < selectedQuestionControllers.length; i++)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      DropdownButton<int>(
+                        hint: Text("Select a question"),
+                        value:  int.tryParse(selectedQuestionControllers[i].text),
+                        items: _questions.map((question) {
+                          return DropdownMenuItem<int>(
+                            value: question.idQuestion,
+                            child: Text(question.questionText),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            // selectedQuestions[i] = value;
+                            // selectedPlatforms[i] = null;
+                            selectedQuestionControllers[i].text = value.toString();
+                            selectedPlatformControllers[i].clear(); 
+                          });
+                          print("Selected Question ID: $value"); 
+                        },
                       ),
-                    ),
-                    SizedBox(height: 10,),
+                      SizedBox(width: 10),
+
+                      if (selectedQuestionControllers[i].text.isNotEmpty) ...[
+                        DropdownButton<int>(
+                          hint: Text("Select a platform"),
+                          value: int.tryParse(selectedPlatformControllers[i].text),
+                          items: _platforms.map((platform) {
+                            return DropdownMenuItem<int>(
+                              value: platform.idPlatform,
+                              child: Text(platform.platformName),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              // selectedPlatforms[i] = value;
+                              selectedPlatformControllers[i].text = value.toString();
+                            });
+                            print("Selected platform ID: $value");
+                          },
+                        ),
+                        SizedBox(height: 10),
+                      ],
+                    ],
+                  ),
+                  if (selectedPlatformControllers[i].text.isNotEmpty)
                     Container(
-                      height: 100,
-                      width: 350,
+                      height: 50,
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10)
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 5, left: 8),
+                        padding: const EdgeInsets.only(left: 8),
                         child: TextField(
-                          // controller: _controllers[question.idQuestion],
-                          controller: answerController[question.idQuestion.toString()],
-                          maxLines: null,
-                          minLines: 1,
+                          controller: answersControllers[i],
+                          maxLines: 1,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            // labelText: '${question.idQuestion}',
+                            hintText: "Detail",
                           ),
                         ),
                       ),
                     ),
-                  ],
-                );
-              }
-              )
+                ],
+              ),
+            ),
+
+          IconButton(
+            onPressed: _addQuestionField,
+            icon: Icon(Icons.add),
+          ),
         ],
-      )
+      ),
     );
   }
 }

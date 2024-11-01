@@ -23,7 +23,7 @@ class ChangesPasswordButtons extends StatefulWidget {
 }
 
 class _ChangesPasswordButtonsState extends State<ChangesPasswordButtons> {
-  final Changespasswordcamera _cameraState = Changespasswordcamera(); 
+  // final Changespasswordcamera _cameraState = Changespasswordcamera(); 
   final PositionController positionController = Get.find();
   @override
   Widget build(BuildContext context) {

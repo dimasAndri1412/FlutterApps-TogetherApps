@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:absent_project/controller/KPIQuestionsController/platform/platformModel.dart';
 import 'package:absent_project/controller/KPIQuestionsController/question/QuestionModel.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/controller/LoginController.dart';
@@ -150,6 +151,34 @@ class ClockInController {
     }
   }
 
+  show_platform() async {
+    try {
+      String? userId = await _loginController.getUserId();
+      if (userId == null) {
+        print('User ID tidak ditemukan');
+        return false;
+      }
+
+      final response = await http.post(
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/KPI/getPlatform.php"),
+        body: {
+          'user_id' : userId
+        }
+      );
+      print('platform: ${response.body}');
+      if (response.statusCode == 200) {
+        print('success');
+        List<dynamic> jsonData = jsonDecode(response.body);
+        List<PlatformModel> platforms = jsonData.map((item) => PlatformModel.fromJson(item)).toList();
+        return platforms;
+      } else {
+        print("fail");
+      }
+    } catch (e) {
+      print('Error : $e');
+    }
+  }
+
   clock_out() async {
     try {
       String? userId = await _loginController.getUserId();
@@ -184,13 +213,17 @@ class ClockInController {
         }
       }
 
-      for (var question in questions) {
-        final questionId = question.idQuestion.toString(); 
-        final answer = answerController[questionId]?.text ?? ''; 
-        request.fields[questionId] = answer;
-        print('Submitting answer for question $questionId: $answer');
+      List<Map<String,dynamic>> questionAnswers = [];
+      for (var i = 0; i < selectedQuestionControllers.length; i++) {
+        questionAnswers.add({
+          'question_id' : selectedQuestionControllers[i].text,
+          'platform_id' : selectedPlatformControllers[i].text,
+          'answer' : answersControllers[i].text
+        });
       }
 
+      request.fields['question_answers'] = jsonEncode(questionAnswers);
+      
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
 

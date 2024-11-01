@@ -57,7 +57,7 @@ class _gmapsElapsedTimesWrapperState extends State<gmapsElapsedTimesWrapper> {
         floatingActionButton: FloatingActionButton.extended(
           onPressed: (){
             stopWatchControllers.stopStopwatch();
-            Get.to(CameraDetection());
+            Get.to(() => CameraDetection());
           },
           label: Text(
             "Stop",

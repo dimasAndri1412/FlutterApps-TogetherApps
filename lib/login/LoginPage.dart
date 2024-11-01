@@ -1,4 +1,5 @@
 import 'package:absent_project/ChangesPasswordPage/ChangesPasswordMenu.dart';
+import 'package:absent_project/MapsViews/MapsClockOutElapsedTime/GmapsClockOutPages.dart';
 import 'package:absent_project/controller/AbsentController/ClockInState.dart';
 import 'package:absent_project/home/applicationbar_user.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,8 @@ void main() => runApp(
       ],
     child: const GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: LoginPage()
+      // gmapsClockOutPages(imagePath: 'assets/images/analysis.png',),
     ),
   ),
 );

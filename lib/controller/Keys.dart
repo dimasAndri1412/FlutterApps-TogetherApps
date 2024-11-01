@@ -135,6 +135,10 @@ final positionId = TextEditingController();
 final questionText = TextEditingController();
 final positionName = TextEditingController();
 final Map<String, TextEditingController> answerController = {};
+List<TextEditingController> selectedQuestionControllers = [];
+List<TextEditingController> selectedPlatformControllers = [];
+List<TextEditingController> answersControllers = [];
+
 
 //revampOTPController
 final revampOTPControllers = TextEditingController();
