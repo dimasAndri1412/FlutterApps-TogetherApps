@@ -17,6 +17,7 @@ class _ApprovallsUserState extends State<ApprovallsUser> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           flexibleSpace: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(colors: [
@@ -28,7 +29,7 @@ class _ApprovallsUserState extends State<ApprovallsUser> {
           ),
           elevation: 0,
           title: Center(
-            child: Text("A P P R O V A L"),
+            child: Text("APPROVAL"),
           ),
         ),
         body: Container(

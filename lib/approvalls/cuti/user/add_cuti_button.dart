@@ -1,7 +1,10 @@
+import 'package:absent_project/approvalls/cuti/user/list_pengajuan_cuti.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeave.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
 import 'package:flutter/material.dart';
 import 'package:absent_project/controller/Keys.dart';
+import 'package:get/get.dart';
+import 'list_pengajuan_cuti.dart';
 
 class addCutiButton extends StatefulWidget {
   const addCutiButton({super.key});
@@ -11,7 +14,6 @@ class addCutiButton extends StatefulWidget {
 }
 
 class _addCutiButtonState extends State<addCutiButton> {
-
 /*  @override
   void initState() {
     // TODO: implement initState
@@ -38,8 +40,8 @@ class _addCutiButtonState extends State<addCutiButton> {
             ),
           ),
           onPressed: () {
-            if (formKeyss_.currentState!.validate()?? false ) {
-              if(remaining_leave.text != "0" ) {
+            if (formKeyss_.currentState!.validate() ?? false) {
+              if (remaining_leave.text != "0") {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -53,16 +55,19 @@ class _addCutiButtonState extends State<addCutiButton> {
                             MemberRequestPaidLeaveController().save();
                             Navigator.of(context).pop();
                             MemberRequestPaidLeaveController().clearInfo();
+                            Get.offAll(const ListPengajuanCuti());
+                            // const ListPengajuanCuti();
                           },
                         ),
                       ],
                     );
                   },
                 );
-              }else{
+              } else {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text("You dont have any leave left")),
-                );MemberRequestPaidLeaveController().clearInfo();
+                );
+                MemberRequestPaidLeaveController().clearInfo();
               }
             } else {
               ScaffoldMessenger.of(context).showSnackBar(

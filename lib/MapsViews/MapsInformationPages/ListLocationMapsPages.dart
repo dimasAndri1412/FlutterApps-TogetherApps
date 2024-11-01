@@ -1,52 +1,57 @@
-import 'package:absent_project/Registration/addUserMenu.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:absent_project/MapsViews/MapsInformationPages/DetailLocations.dart';
+import 'package:absent_project/MapsViews/MapsInformationPages/locationListControllers.dart';
+import 'package:absent_project/MapsViews/MapsViewPage/GoogleMapsPages.dart';
 import 'package:faker/faker.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-import 'package:absent_project/menu/adminManagement/DetailUser.dart';
 
-import '../../controller/ListAndDetailUserController/ListUserController.dart';
-
-class ListUser extends StatefulWidget {
-  const ListUser({super.key});
+class listLocationsMaps extends StatefulWidget {
+  const listLocationsMaps({super.key});
 
   @override
-  State<ListUser> createState() => _ListUserState();
+  State<listLocationsMaps> createState() => _listLocationsMapsState();
 }
 
-class _ListUserState extends State<ListUser> {
-  ListUserController _controller = ListUserController();
-  List<dynamic> users = [];
+class _listLocationsMapsState extends State<listLocationsMaps> {
+
+  listLocationsContollers locationControllers = listLocationsContollers();
+  List<dynamic> locations = [];
   var faker = new Faker();
+
+  Future<void> viewLocation() async {
+    var viewsLocations = await locationControllers.getListLocations();
+    setState(() {
+      locations = viewsLocations ?? [];
+    });
+  }
+
+  Future<void> deleteListLocations(String locationNames) async {
+    var resp = await listLocationsContollers().deleteLocation(locationNames as String);
+    if (resp['success']) {
+      await viewLocation();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text(
+              resp['message']
+            )
+        )
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text(
+              "Failed Delete User"
+            )
+        )
+      );
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    _fetchUsers(); // Fetch user list when the widget is initialized
-  }
-
-  Future<void> _fetchUsers() async {
-    var fetchedUsers = await _controller.getUsers();
-    setState(() {
-      users = fetchedUsers ?? [];
-    });
-  }
-
-  Future<void> _onDismissed(String email) async {
-    var response = await _controller.deleteUser(email);
-    if (response['success']) {
-      await _fetchUsers();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(response['message'])),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Failed to delete user")),
-      );
-    }
+    viewLocation();
   }
 
   @override
@@ -112,7 +117,7 @@ class _ListUserState extends State<ListUser> {
             ],
           ),
           FutureBuilder(
-            future: _controller.getUsers(),
+            future: locationControllers.getListLocations(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
@@ -125,9 +130,9 @@ class _ListUserState extends State<ListUser> {
                   child: ListView.builder(
                     itemCount: snapshot.data?.length,
                     itemBuilder: (context, int index) {
-                      var user = snapshot.data![index];
+                      var locationViews = snapshot.data![index];
                       return Slidable(
-                        key: ValueKey(user.email),
+                        key: ValueKey(locationViews.locationsNames),
                         endActionPane: ActionPane(
                           motion: const BehindMotion(),
                           children: [
@@ -135,18 +140,20 @@ class _ListUserState extends State<ListUser> {
                               backgroundColor: Colors.red,
                               icon: Icons.delete,
                               label: "Delete",
-                              onPressed: (context) => _onDismissed(user.email),
+                              onPressed: (context) => deleteListLocations(locationViews.locationsNames),
                             ),
                           ],
                         ),
                         child: ListTile(
-                          subtitle: Text(user.grup),
-                          title: Text(user.username),
+                          subtitle: Text(locationViews.streetNames),
+                          title: Text(locationViews.locationsNames),
                           leading: CircleAvatar(
-                            backgroundImage: NetworkImage(user.avatarUrl),
+                            backgroundImage: NetworkImage(
+                              locationViews.locationImg
+                            ),
                           ),
                           onTap: () {
-                            Get.to(() => DetailUser(userList: user));
+                            Get.to(() => detailLocatiosMaps(listLocationMaps: locationViews));
                           },
                         ),
                       );
@@ -161,7 +168,7 @@ class _ListUserState extends State<ListUser> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => addUserMenu()),
+            MaterialPageRoute(builder: (context) => googleMapsPages()),
           );
         },
         backgroundColor: Color.fromARGB(255, 139, 190, 232),

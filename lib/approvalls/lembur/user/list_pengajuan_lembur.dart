@@ -30,7 +30,6 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
     fetchStatusOT();
   }
 
-
   Future<void> fetchOvertimeRequests() async {
     try {
       List<MemberRequestOvertimeGetListModel>? overtimeRequests =
@@ -43,7 +42,6 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
       print('Error fetching overtime requests: $e');
     }
   }
-
 
   Future<void> fetchStatusOT() async {
     try {
@@ -118,18 +116,21 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                   },
                 ),
                 ...getStatus.map((status) => ListTile(
-                  leading: status.status == "New" ? Icon(Icons.new_releases)
-                  : status.status == "Approved" ? Icon(Icons.done)
-                      : status.status == "Rejected" ? Icon(Icons.dnd_forwardslash)
-                  : null,
-                  title: Text(status.status),
-                  onTap: (){
-                    setState(() {
-                      defaultStatus = status.status;
-                    });
-                    Navigator.pop(context);
-                  },
-                ))
+                      leading: status.status == "New"
+                          ? Icon(Icons.new_releases)
+                          : status.status == "Approved"
+                              ? Icon(Icons.done)
+                              : status.status == "Rejected"
+                                  ? Icon(Icons.dnd_forwardslash)
+                                  : null,
+                      title: Text(status.status),
+                      onTap: () {
+                        setState(() {
+                          defaultStatus = status.status;
+                        });
+                        Navigator.pop(context);
+                      },
+                    ))
               ],
             ),
           ),
@@ -139,7 +140,8 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
   }
 
   //function detail lembur
-  void _showDetail(BuildContext context, MemberRequestOvertimeGetListModel getSelected) {
+  void _showDetail(
+      BuildContext context, MemberRequestOvertimeGetListModel getSelected) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -193,7 +195,7 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(getSelected.status),
-                              if(getSelected.status == "Rejected")
+                              if (getSelected.status == "Rejected")
                                 Text(getSelected.reason_rejected)
                               else
                                 Text(getSelected.activity),
@@ -399,9 +401,9 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                           style: TextStyle(
                               color: getData.status == 'Approved'
                                   ? Colors.green
-                                  :getData.status == "New"
-                                    ?Colors.blue
-                                    : Colors.red,
+                                  : getData.status == "New"
+                                      ? Colors.blue
+                                      : Colors.red,
                               fontWeight: FontWeight.bold,
                               fontSize: 15),
                         ),

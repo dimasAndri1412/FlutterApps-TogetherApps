@@ -1,12 +1,12 @@
-import 'package:absent_project/MapsViews/MapsViewPage/GoogleMapsPages.dart';
+import 'package:absent_project/MapsViews/MapsInformationPages/ListLocationMapsPages.dart';
 import 'package:absent_project/controller/LoginController.dart';
 import 'package:absent_project/login/LoginPage.dart';
 import 'package:absent_project/menu/KPI%20Question/positionList.dart';
 import 'package:absent_project/menu/adminManagement/ListUser.dart';
-// import 'package:first_project/login/setting/admin.dart' as admin;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import '../controller/Keys.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -74,7 +74,10 @@ class _MenuPageState extends State<MenuPage> {
           title: Text("Locations"),
           leading: Icon(Icons.location_pin),
           onTap: () {
-            Get.offAll(() => googleMapsPages());
+            Navigator.push(
+              context, MaterialPageRoute(
+                builder: (context) => listLocationsMaps()),
+            );
           },
         ),
         Divider(
@@ -137,7 +140,11 @@ class _MenuPageState extends State<MenuPage> {
           title: Text(titleLocation),
           leading: Icon(iconDataLocation),
           onTap: () {
-            Get.offAll(() => googleMapsPages());
+            Navigator.push(
+              context, MaterialPageRoute(
+                builder: (context) => listLocationsMaps()
+            ),
+            );
           },
         ),
         Divider(
@@ -177,6 +184,8 @@ class _MenuPageState extends State<MenuPage> {
               ),
               TextButton(
                 onPressed: () {
+                  emailController.clear();
+                  passwordController.clear();
                   Get.offAll(() => LoginPage());
                 },
                 child: Text(

@@ -16,6 +16,7 @@ class googleMapsWrapper extends StatefulWidget {
 class _googleMapsWrapper extends State<googleMapsWrapper> {
 
   Marker? _currentMarker;
+  GoogleMapController? mapControllers;
 
   Future<void> SearchLocation() async {
     String query = SearchLocationController.text;
@@ -26,23 +27,27 @@ class _googleMapsWrapper extends State<googleMapsWrapper> {
         List<Location> locations = await locationFromAddress(query);
         if (locations.isNotEmpty) {
 
-          //langtitude and longtitude
           Location location = locations.first;
           LatLng positions = LatLng(
               location.latitude,
               location.longitude
           );
 
-          mapControllers.animateCamera(CameraUpdate.newLatLng(positions));
+          newPositionNotfier.value = positions;
+
+          mapControllers?.animateCamera(CameraUpdate.newLatLng(positions));
 
           latitudeLocationController.text = location.latitude.toString();
           longtitudeLocationController.text = location.longitude.toString();
 
-
           //Address full
-          List<Placemark>placeMrks = await placemarkFromCoordinates(location.latitude, location.longitude);
+          List<Placemark>placeMrks = await placemarkFromCoordinates(
+              location.latitude,
+              location.longitude
+          );
+
           String addressMrk = placeMrks.isNotEmpty
-              ? '${placeMrks.first.street}, ${placeMrks.first.locality}, ${placeMrks.first.country}}'
+              ? '${placeMrks.first.street}, ${placeMrks.first.locality}, ${placeMrks.first.country}'
               : 'Address is not found';
 
           stateLocationController.text = placeMrks.first.administrativeArea.toString();
@@ -88,6 +93,7 @@ class _googleMapsWrapper extends State<googleMapsWrapper> {
       }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

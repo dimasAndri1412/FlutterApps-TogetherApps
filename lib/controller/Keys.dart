@@ -22,6 +22,7 @@ final GlobalKey<FormState> formKeyss_ = GlobalKey<FormState>();
 
 //Paid Leave Controller
 final TextEditingController namePaidLeave = TextEditingController();
+final TextEditingController projectPaidLeave = TextEditingController();
 final TextEditingController positionPaidLeave = TextEditingController();
 final TextEditingController departmentPaidLeave = TextEditingController();
 final TextEditingController typePaidLeave = TextEditingController();
@@ -36,7 +37,6 @@ final TextEditingController statusPaidLeave = TextEditingController();
 final TextEditingController leave_used = TextEditingController();
 final TextEditingController remaining_leave = TextEditingController();
 
-
 //overtime controller
 final TextEditingController nameOTController = TextEditingController();
 final TextEditingController projectOTController = TextEditingController();
@@ -49,7 +49,6 @@ final TextEditingController timeEndOTController = TextEditingController();
 final TextEditingController activityOTController = TextEditingController();
 final TextEditingController statusOTController = TextEditingController();
 final TextEditingController reason_rejectedController = TextEditingController();
-
 
 //Controller
 final UserNameController = TextEditingController();
@@ -68,8 +67,8 @@ final IDController = TextEditingController();
 final ConfPassController = TextEditingController();
 final ProjectController = TextEditingController();
 final UserIdController = TextEditingController();
-final FaceImageController = TextEditingController(); 
-final EmbeddingController= TextEditingController();
+final FaceImageController = TextEditingController();
+final EmbeddingController = TextEditingController();
 final IdMemberControllers = TextEditingController();
 
 //GoogleMapController
@@ -94,6 +93,7 @@ final Set<Marker> initMarkers = {};
 final Set<Marker> initMarkerLocation = {};
 final Location locationController = new Location();
 LatLng? currentPosition = null;
+ValueNotifier<LatLng?> newPositionNotfier = ValueNotifier(null);
 CameraPosition? cameraPosition = null;
 Set<Circle> circless = {};
 
@@ -112,9 +112,9 @@ final historyController = TextEditingController();
 String avatarURLs = '';
 
 // clock-in
-final locationClockIn = TextEditingController(); 
-final shiftController = TextEditingController(); 
-final notesClockIn = TextEditingController(); 
+final locationClockIn = TextEditingController();
+final shiftController = TextEditingController();
+final notesClockIn = TextEditingController();
 final clockInImageController = TextEditingController();
 final notesClockInController = TextEditingController();
 final shiftClockOutController = TextEditingController();
@@ -147,18 +147,17 @@ final emailValuesControllers = TextEditingController();
 //revampOTPKey
 final GlobalKey<FormState> revampOTPScreenKey = GlobalKey<FormState>();
 
-
 //ElapsedTimeKey
 final GlobalKey<FormState> gmapsElapsedTimeKey = GlobalKey<FormState>();
 
 //gmapsConfirmKey
-final GlobalKey<FormState>gmapsConfirmKey = GlobalKey<FormState>();
+final GlobalKey<FormState> gmapsConfirmKey = GlobalKey<FormState>();
 
 //gmaps
-final GlobalKey<FormState>GoogleMapsForm = GlobalKey<FormState>();
+final GlobalKey<FormState> GoogleMapsForm = GlobalKey<FormState>();
 
 //gmapsConfirmKey
-final GlobalKey<FormState>gmapsClockConfirmKey = GlobalKey<FormState>();
+final GlobalKey<FormState> gmapsClockConfirmKey = GlobalKey<FormState>();
 
 //Key ForgotPassword
 final GlobalKey<FormState> formsForgotKeys = GlobalKey<FormState>();
