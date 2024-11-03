@@ -8,6 +8,7 @@ import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLe
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/UserListPaidLeave.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/home/applicationbar_user.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,6 +28,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
   List<MemberStatuspaidleave> getStatus = [];
 
   String defaultStatus = 'All';
+  bool isButtonEnabled = true;
 
   @override
   void initState() {
@@ -34,6 +36,40 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
     super.initState();
     fetchPaidLeaveRequest();
     fetchStatusPaidLeave();
+  }
+
+
+  void _checkDate(){
+    final today = DateTime.now();
+    print("sekarang tanggal ${today.day}}");
+    if(today.day > 11) {
+      isButtonEnabled = false;
+      _showWarningDialog();
+    }else{
+      Get.to(() => const PengajuanCuti());
+      reasonPaidLeave.text = '';
+      startDatePaidLeave.text = '';
+    }
+  }
+
+  void _showWarningDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Peringatan"),
+          content: const Text("Silahkan ajukan cuti dari tanggal 1 - 11"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<void> fetchPaidLeaveRequest() async {
@@ -539,11 +575,9 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
         floatingActionButton: Padding(
           padding: const EdgeInsets.only(bottom: 15),
           child: FloatingActionButton(
-            onPressed: () {
-              Get.to(() => const PengajuanCuti());
-              reasonPaidLeave.text = '';
-              startDatePaidLeave.text = '';
-            },
+            onPressed: isButtonEnabled ? () {
+             _checkDate();
+            } : null,
             backgroundColor: const Color.fromARGB(255, 98, 171, 232),
             elevation: 5,
             child: const Icon(Icons.edit),

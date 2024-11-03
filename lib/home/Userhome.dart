@@ -24,9 +24,10 @@ class _UserHomeState extends State<UserHome> {
   late TooltipBehavior _tooltip;
 
   void shiftClockIns() async {
-    final findShiftClockInValues = await findShiftClockIn();
-    shiftClockOutController.text = findShiftClockInValues!;
+    final findShiftClockInValues = await findShiftClockIn() ?? "Shift tidak ditemukan";
+    shiftClockOutController.text = findShiftClockInValues;
   }
+
 
   void initState() {
     super.initState();
