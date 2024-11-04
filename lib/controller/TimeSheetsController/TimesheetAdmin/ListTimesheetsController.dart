@@ -134,7 +134,7 @@ class ListTimesheetsController {
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> jsonData = json.decode(response.body);
-        if (jsonData.isNotEmpty && jsonData['status'] == 'success') {
+        if (jsonData.isNotEmpty && response.statusCode == 200) {
           return MonthlyReportModel.fromJson(jsonData);
         } else {
           throw Exception("Failed to parse data");

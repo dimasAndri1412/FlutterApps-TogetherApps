@@ -178,19 +178,18 @@ class MonthlyReport extends StatelessWidget {
               ),
             ),
             pw.Container(
-              margin: pw.EdgeInsets.all(20),
+              margin: pw.EdgeInsets.only(left: 20, right: 20),
               child: pw.ListView.builder(
-                itemCount: timesheets.answerText?.length ?? 0,  
+                itemCount: timesheets.answers.length ?? 0,  
                 itemBuilder: (context, index) {
+                  final answer = timesheets.answers[index];
                   return pw.Row(
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
                     children: [
                       pw.Text('${index + 1}. ', style: pw.TextStyle(fontSize: 11)),
                       pw.Expanded(
                         child: pw.Text(
-                          timesheets.answerText != null && timesheets.answerText![index].isNotEmpty 
-                            ? timesheets.answerText![index] 
-                            : 'Tidak ada jawaban',  
+                          'Melakukan ${answer.totalAnswers} kali ${answer.questionText}',  
                           style: pw.TextStyle(fontSize: 11),
                         ),
                       ),
