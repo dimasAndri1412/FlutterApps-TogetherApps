@@ -1,14 +1,10 @@
 import 'dart:async';
 
-import 'package:absent_project/approvalls/approvalls_user.dart';
 import 'package:absent_project/approvalls/cuti/user/pengajuan_cuti.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberListPaidLeave.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberStatusPaidLeave.dart';
-import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/UserListPaidLeave.dart';
-import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/home/applicationbar_user.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,7 +25,6 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
 
   String defaultStatus = 'All';
   bool isButtonEnabled = true;
-  bool _hasCheckedDate = false;
 
   @override
   void initState() {
@@ -112,7 +107,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Center(
+          title: const Center(
               child: Text(
             'Select Filter',
             style: TextStyle(fontWeight: FontWeight.w500),
@@ -122,10 +117,10 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Divider(),
+                const Divider(),
                 ListTile(
-                  leading: Icon(Icons.select_all),
-                  title: Text('All'),
+                  leading: const Icon(Icons.select_all),
+                  title: const Text('All'),
                   onTap: () {
                     setState(() {
                       defaultStatus = 'All';
@@ -135,11 +130,11 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                 ),
                 ...getStatus.map((status) => ListTile(
                       leading: status.status == "New"
-                          ? Icon(Icons.new_releases)
+                          ? const Icon(Icons.new_releases)
                           : status.status == "Approved"
-                              ? Icon(Icons.done)
+                              ? const Icon(Icons.done)
                               : status.status == "Rejected"
-                                  ? Icon(Icons.dnd_forwardslash)
+                                  ? const Icon(Icons.dnd_forwardslash)
                                   : null,
                       title: Text(status.status),
                       onTap: () {
@@ -163,122 +158,120 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(32)),
           ),
-          contentPadding: EdgeInsets.only(top: 10.0),
-          content: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Center(
-                  child: Text(
-                    "Detail Paid Leave",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
-                  ),
+          contentPadding: const EdgeInsets.only(top: 10.0),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Center(
+                child: Text(
+                  "Detail Paid Leave",
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
                 ),
-                Divider(color: Colors.grey),
-                Padding(
-                  padding: const EdgeInsets.all(25),
-                  child: Table(
-                    // Set border to null for transparent lines
-                    border: TableBorder(
-                      horizontalInside: BorderSide.none,
-                      verticalInside: BorderSide.none,
-                    ),
-                    columnWidths: {
-                      0: FlexColumnWidth(2),
-                      1: FlexColumnWidth(0.5),
-                      2: FlexColumnWidth(3),
-                    },
-                    children: [
-                      // Row for Status
-                      TableRow(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child:
-                                Text("Status", style: TextStyle(fontSize: 15)),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text(":", style: TextStyle(fontSize: 15)),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text(getSelected.status,
-                                style: TextStyle(fontSize: 15)),
-                          ),
-                        ],
-                      ),
-                      // Row for Description / Reason
-                      TableRow(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text("Description",
-                                style: TextStyle(fontSize: 15)),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text(":", style: TextStyle(fontSize: 15)),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text(
-                              getSelected.status == 'Rejected'
-                                  ? getSelected.reason_rejected
-                                  : getSelected.reason_leave,
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      TableRow(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text("Days", style: TextStyle(fontSize: 15)),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text(":", style: TextStyle(fontSize: 15)),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text(
-                              getSelected.jumlah_hari,
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+              ),
+              const Divider(color: Colors.grey),
+              Padding(
+                padding: const EdgeInsets.all(25),
+                child: Table(
+                  // Set border to null for transparent lines
+                  border: const TableBorder(
+                    horizontalInside: BorderSide.none,
+                    verticalInside: BorderSide.none,
                   ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
+                  columnWidths: const {
+                    0: FlexColumnWidth(2),
+                    1: FlexColumnWidth(0.5),
+                    2: FlexColumnWidth(3),
                   },
-                  child: Container(
-                    padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(32.0),
-                        bottomRight: Radius.circular(32.0),
-                      ),
+                  children: [
+                    // Row for Status
+                    TableRow(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
+                          child:
+                              Text("Status", style: TextStyle(fontSize: 15)),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(":", style: TextStyle(fontSize: 15)),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(getSelected.status,
+                              style: const TextStyle(fontSize: 15)),
+                        ),
+                      ],
                     ),
-                    child: Text(
-                      "Close",
-                      style: TextStyle(color: Colors.white),
-                      textAlign: TextAlign.center,
+                    // Row for Description / Reason
+                    TableRow(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text("Description",
+                              style: TextStyle(fontSize: 15)),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(":", style: TextStyle(fontSize: 15)),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                            getSelected.status == 'Rejected'
+                                ? getSelected.reason_rejected
+                                : getSelected.reason_leave,
+                            style: const TextStyle(fontSize: 15),
+                          ),
+                        ),
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text("Days", style: TextStyle(fontSize: 15)),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(":", style: TextStyle(fontSize: 15)),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                            getSelected.jumlah_hari,
+                            style: const TextStyle(fontSize: 15),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+                  decoration: const BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(32.0),
+                      bottomRight: Radius.circular(32.0),
                     ),
                   ),
+                  child: const Text(
+                    "Close",
+                    style: TextStyle(color: Colors.white),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },
@@ -293,11 +286,11 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
       //   Get.to(ApprovallsUser());
       // },
       onPopInvoked: (didPop) {
-        Get.to(ApplicationBarUser());
+        Get.to(const ApplicationBarUser());
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Center(
+          title: const Center(
             child: Text(
               "List Paid Leave Request",
               style: TextStyle(fontSize: 15),
@@ -305,7 +298,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
           ),
           automaticallyImplyLeading: false,
           flexibleSpace: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
                 Color.fromARGB(255, 147, 195, 234),
                 Color.fromARGB(255, 98, 171, 232),
@@ -327,7 +320,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                           color: Color.fromARGB(255, 147, 195, 234),
                           blurRadius: 5,
@@ -338,7 +331,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                   // mainAxisSize: MainAxisSize.min,
                   // crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Center(
+                    const Center(
                       child: Text(
                         "Leave Statistics",
                         style: TextStyle(
@@ -347,22 +340,22 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                             letterSpacing: 2),
                       ),
                     ),
-                    Divider(
+                    const Divider(
                       color: Colors.grey,
                       thickness: 1,
                     ),
                     Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Column(
+                          const Column(
                             children: [
                               Icon(Icons.offline_bolt_outlined),
                               Icon(Icons.offline_bolt_outlined),
                             ],
                           ),
-                          Column(
+                          const Column(
                               // mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -372,7 +365,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                                 ),
                                 Text("Remaining Leave")
                               ]),
-                          Column(
+                          const Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(":"),
@@ -389,7 +382,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
                                     ConnectionState.waiting) {
-                                  return CircularProgressIndicator();
+                                  return const CircularProgressIndicator();
                                 } else if (snapshot.hasError) {
                                   return Text("Error: ${snapshot.error}");
                                   // } else if (!snapshot.hasData ||
@@ -405,7 +398,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                                       // Text("${memberInfo.leaveUsed}"),
                                       // Text("${user.leave_used}"),
                                       Text("${memberInfo.leaveUsed}"),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       // Text("${memberInfo.initial}"),
@@ -428,8 +421,8 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
             GestureDetector(
               onTap: () => _showFilterOptions(context),
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                margin: EdgeInsets.only(left: 15, top: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                margin: const EdgeInsets.only(left: 15, top: 10),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey, width: 2),
                   borderRadius: BorderRadius.circular(30),
@@ -439,9 +432,9 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                   children: [
                     Text(
                       'Filter: $defaultStatus',
-                      style: TextStyle(color: Colors.black, fontSize: 14),
+                      style: const TextStyle(color: Colors.black, fontSize: 14),
                     ),
-                    Icon(
+                    const Icon(
                       Icons.arrow_drop_down_rounded,
                       color: Colors.black,
                     ),
@@ -516,7 +509,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                                   const SizedBox(
                                     width: 5,
                                   ),
-                                  Text("-"),
+                                  const Text("-"),
                                   const SizedBox(
                                     width: 5,
                                   ),
