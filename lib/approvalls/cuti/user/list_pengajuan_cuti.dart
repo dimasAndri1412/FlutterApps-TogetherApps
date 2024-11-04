@@ -29,6 +29,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
 
   String defaultStatus = 'All';
   bool isButtonEnabled = true;
+  bool _hasCheckedDate = false;
 
   @override
   void initState() {
@@ -38,17 +39,18 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
     fetchStatusPaidLeave();
   }
 
-
   void _checkDate(){
     final today = DateTime.now();
-    print("sekarang tanggal ${today.day}}");
-    if(today.day > 11) {
-      isButtonEnabled = false;
-      _showWarningDialog();
-    }else{
-      Get.to(() => const PengajuanCuti());
-      reasonPaidLeave.text = '';
-      startDatePaidLeave.text = '';
+    if(today.day > 11){
+      setState(() {
+        isButtonEnabled = false;
+      });
+     _showWarningDialog();
+    }else {
+      setState(() {
+        isButtonEnabled = true;
+        Get.to(()=>const PengajuanCuti());
+      });
     }
   }
 
@@ -575,9 +577,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
         floatingActionButton: Padding(
           padding: const EdgeInsets.only(bottom: 15),
           child: FloatingActionButton(
-            onPressed: isButtonEnabled ? () {
-             _checkDate();
-            } : null,
+            onPressed: _checkDate,
             backgroundColor: const Color.fromARGB(255, 98, 171, 232),
             elevation: 5,
             child: const Icon(Icons.edit),
