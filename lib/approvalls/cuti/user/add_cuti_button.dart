@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:get/get.dart';
 import 'list_pengajuan_cuti.dart';
+import 'package:intl/intl.dart';
 
 class addCutiButton extends StatefulWidget {
   const addCutiButton({super.key});
@@ -14,69 +15,94 @@ class addCutiButton extends StatefulWidget {
 }
 
 class _addCutiButtonState extends State<addCutiButton> {
-/*  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    MemberRequestPaidLeaveController().getLeave();
-  }*/
+  final MemberRequestPaidLeaveController leaveInfo =
+      MemberRequestPaidLeaveController();
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        MaterialButton(
-          child: Container(
-            height: 40,
-            width: 200,
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 124, 185, 236),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Center(
-              child: Text(
-                "Submit",
-                style: TextStyle(color: Colors.white),
+    return FutureBuilder(
+      future: leaveInfo.getCountandLeave(),
+      builder: (context, snapshot) {
+        return Column(
+          children: [
+            MaterialButton(
+              child: Container(
+                height: 40,
+                width: 200,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 124, 185, 236),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Center(
+                  child: Text(
+                    "Submit",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
               ),
-            ),
-          ),
-          onPressed: () {
-            if (formKeyss_.currentState!.validate() ?? false) {
-              if (remaining_leave.text != "0") {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text('Form Approved'),
-                      content: Text('The form has been submit !'),
-                      actions: <Widget>[
-                        TextButton(
-                          child: Text('OK'),
-                          onPressed: () {
-                            MemberRequestPaidLeaveController().save();
-                            Navigator.of(context).pop();
-                            MemberRequestPaidLeaveController().clearInfo();
-                            Get.offAll(const ListPengajuanCuti());
-                            // const ListPengajuanCuti();
-                          },
-                        ),
-                      ],
+              onPressed: () {
+                if (formKeyss_.currentState!.validate() ?? false) {
+                  // if (leaveInfo.remainingLeave != 0) {
+                  if (startDatePaidLeave.text.isNotEmpty &&
+                      endDatePaidLeave.text.isNotEmpty) {
+                    DateTime startDate =
+                        DateFormat('yyyy-MM-dd').parse(startDatePaidLeave.text);
+                    DateTime endDate =
+                        DateFormat('yyyy-MM-dd').parse(endDatePaidLeave.text);
+
+                    //utk menghitung selisi
+                    Duration difference = endDate.difference(startDate);
+
+                    if (difference.inDays > leaveInfo.remainingLeave) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                              "You cannot take more leave than your remaining leave")));
+                    } else if (leaveInfo.remainingLeave != 0) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Form Approved'),
+                            content: Text('The form has been submit !'),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text('OK'),
+                                onPressed: () {
+                                  MemberRequestPaidLeaveController().save();
+                                  Navigator.of(context).pop();
+                                  MemberRequestPaidLeaveController()
+                                      .clearInfo();
+                                  Get.offAll(const ListPengajuanCuti());
+                                  // const ListPengajuanCuti();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                              "You cannot take more leave than your remaining leave")));
+                    }
+                    // } else if (leaveInfo.countStatus > leaveInfo.remainingLeave) {
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("You dont have any leave left")),
                     );
-                  },
-                );
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("You dont have any leave left")),
-                );
-                MemberRequestPaidLeaveController().clearInfo();
-              }
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Form is not valid')),
-              );
-            }
-          },
-        ),
-      ],
+                    // MemberRequestPaidLeaveController().clearInfo();
+                    print("total remaining leave: ${leaveInfo.remainingLeave}");
+                  }
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Form is not valid')),
+                  );
+                }
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

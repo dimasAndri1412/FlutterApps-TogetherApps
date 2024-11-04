@@ -134,6 +134,24 @@ class MemberRequestPaidLeaveController {
     remainingLeave = int.parse(jsonGetName[0]['remaining_leave']);
   }
 
+  Future getCountandLeave() async {
+    var getCount = await http.post(
+        Uri.parse(
+          "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/getCountLeave.php",
+        ),
+        body: {"name": emailController.text});
+    var jsonGetCount = json.decode(getCount.body);
+    countStatus = int.parse(jsonGetCount[0]['countStatus']);
+
+    var getName = await http.post(
+        Uri.parse(
+            "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/getLeaveNew.php"),
+        body: {"username": emailController.text});
+    var jsonGetName = json.decode(getName.body);
+
+    leaveUsed = int.parse(jsonGetName[0]['leave_used']);
+    remainingLeave = int.parse(jsonGetName[0]['remaining_leave']);
+  }
   // Future getLeave() async {
   //   var data = await http.post(
   //       Uri.parse(
