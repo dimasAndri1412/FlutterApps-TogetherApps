@@ -7,6 +7,10 @@ import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLe
 import 'package:absent_project/home/applicationbar_user.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:printing/printing.dart';
+
+import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveModel.dart';
+import '../GeneratePDF_MSDO.dart';
 
 class ListPengajuanCuti extends StatefulWidget {
   const ListPengajuanCuti({
@@ -157,122 +161,407 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(32)),
-          ),
-          contentPadding: const EdgeInsets.only(top: 10.0),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Center(
+        return Scaffold(
+            appBar: AppBar(
+              title:const Center(
                 child: Text(
-                  "Detail Paid Leave",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+                  "Detail Approval",
+                  style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
-              const Divider(color: Colors.grey),
-              Padding(
-                padding: const EdgeInsets.all(25),
-                child: Table(
-                  // Set border to null for transparent lines
-                  border: const TableBorder(
-                    horizontalInside: BorderSide.none,
-                    verticalInside: BorderSide.none,
+              automaticallyImplyLeading: false,
+              flexibleSpace: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                      colors: [
+                        Color.fromARGB(255, 147, 195, 234),
+                        Color.fromARGB(255, 98, 171, 232),
+                        Color.fromARGB(255, 123, 185, 235),
+                      ]
                   ),
-                  columnWidths: const {
-                    0: FlexColumnWidth(2),
-                    1: FlexColumnWidth(0.5),
-                    2: FlexColumnWidth(3),
-                  },
-                  children: [
-                    // Row for Status
-                    TableRow(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.0),
-                          child:
-                              Text("Status", style: TextStyle(fontSize: 15)),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(":", style: TextStyle(fontSize: 15)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(getSelected.status,
-                              style: const TextStyle(fontSize: 15)),
-                        ),
-                      ],
+                ),
+              ),
+              elevation: 0,
+            ),
+            body:SingleChildScrollView(
+              child:  Column(
+                children: [
+                  Center(
+                    child: Container(
+                      margin: const EdgeInsets.all(10),
+                      height: 40,
+                      width: 200,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(20)
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.notifications_active, color: Colors.orange,),
+                          const SizedBox(width: 5,),
+                          const Text(
+                            "Status : ",
+                          ),
+                          Text(
+                            getSelected.status,
+                            style: const TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                    // Row for Description / Reason
-                    TableRow(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text("Description",
-                              style: TextStyle(fontSize: 15)),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(":", style: TextStyle(fontSize: 15)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            getSelected.status == 'Rejected'
-                                ? getSelected.reason_rejected
-                                : getSelected.reason_leave,
-                            style: const TextStyle(fontSize: 15),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 10),
+                    height: 70,
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 152, 188, 210).withOpacity(0.2),
+                    ),
+                    child: ListTile(
+                        leading: const CircleAvatar(
+                          radius: 18,
+                          backgroundColor: Colors.blue,
+                          child: Icon(
+                            Icons.document_scanner_sharp,
+                            color: Colors.white,
                           ),
                         ),
-                      ],
+                        title:Row(
+                          children: [
+                            const Text(
+                              "No Request : ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14),
+                            ),
+                            Text(getSelected.req_no,
+                              style: const TextStyle(
+                                  fontSize: 14
+                              ),
+                            )
+                          ],
+                        ),
+                        subtitle: Row(
+                          children: [
+                            const Text(
+                              "Submitted Date ",
+                              style: TextStyle(
+                                  fontSize: 12),
+                            ),
+                            Text(getSelected.submittedDate,
+                              style: const TextStyle(
+                                  fontSize: 12
+                              ),
+                            )
+                          ],
+                        )
                     ),
-                    TableRow(
+                  ),
+                  Container(
+                      margin: const EdgeInsets.only(top: 5, left: 10, right: 10),
+                      width: 350,
+                      height: 450,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(0),
+                        border: Border.all(width: 2, color: Colors.grey),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Request Detail",
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15
+                              ),
+                            ),
+                            const Divider(
+                              color: Colors.grey,
+                              thickness: 0.5,
+                              indent: 2,
+                              endIndent: 2,
+                            ),
+                            const SizedBox(height: 10,),
+                            IntrinsicHeight(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          "Submitted by",
+                                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        Text(
+                                          getSelected.name,
+                                          style: const TextStyle(fontSize: 13),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          "Phone Number",
+                                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        Text(
+                                          getSelected.phoneNumber,
+                                          style: const TextStyle(fontSize: 13),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            const Divider(
+                              color: Colors.grey,
+                              thickness: 0.5,
+                              indent: 2,
+                              endIndent: 2,
+                            ),
+                            const SizedBox(height: 5),
+                            IntrinsicHeight(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          "Position",
+                                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        Text(
+                                          getSelected.position,
+                                          style: const TextStyle(fontSize: 13),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          "Department",
+                                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        Text(
+                                          getSelected.departement,
+                                          style: const TextStyle(fontSize: 13),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Divider(
+                              color: Colors.grey,
+                              thickness: 0.5,
+                              indent: 2,
+                              endIndent: 2,
+                            ),
+                            const SizedBox(height: 5,),
+                            IntrinsicHeight(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        const Text("Leave Type",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 13
+                                          ),
+                                        ),
+                                        const SizedBox(height: 5,),
+                                        Text(getSelected.types_leave,
+                                          style: const TextStyle(
+                                              fontSize: 13
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 20,),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        const Text("Shift",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 13
+                                          ),
+                                        ),
+                                        const SizedBox(height: 5,),
+                                        Text(getSelected.shift,
+                                          style: const TextStyle(
+                                              fontSize: 13
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 5,),
+                            const Divider(
+                              color: Colors.grey,
+                              thickness: 0.5,
+                              indent: 2,
+                              endIndent: 2,
+                            ),
+                            const SizedBox(height: 5,),
+                            Row(
+                              children: [
+                                const Text("Reason of Leave : ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13
+                                  ),
+                                ),
+                                Expanded(
+                                    child: Text(getSelected.reason_leave,
+                                      style: const TextStyle(
+                                          fontSize: 13
+                                      ),
+                                    )
+                                )
+                              ],
+                            ),
+                            const SizedBox(height: 5,),
+                            const Text("Leave Date ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13
+                              ),
+                            ),
+                            const SizedBox(height: 5,),
+                            Row(
+                              children: [
+                                Container(
+                                  width: 140,
+                                  height: 35,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.grey)
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      getSelected.date_start_leave,
+                                      style: const TextStyle(
+                                          fontSize: 13
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const Spacer(),
+                                const Text(" - "),
+                                const Spacer(),
+                                Container(
+                                  width: 140,
+                                  height: 35,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.grey)
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      getSelected.date_end_leave,
+                                      style: const TextStyle(
+                                          fontSize: 13
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            const SizedBox(height: 20,),
+                            Row(
+                              children: [
+                                const Text("Name Of PIC : ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13
+                                  ),
+                                ),
+                                Text(getSelected.name_of_pic,
+                                  style: const TextStyle(
+                                      fontSize: 13
+                                  ),
+                                )
+                              ],
+                            ),
+                            const SizedBox(height: 5,),
+                            Row(
+                              children: [
+                                const Text("Will return to work on : ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13
+                                  ),
+                                ),
+                                Text(getSelected.date_back_to_work,
+                                  style: const TextStyle(
+                                      fontSize: 13
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.all(16.0),
+                    child: Column(
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text("Days", style: TextStyle(fontSize: 15)),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(":", style: TextStyle(fontSize: 15)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            getSelected.jumlah_hari,
-                            style: const TextStyle(fontSize: 15),
-                          ),
-                        ),
+                          Center(
+                            child: ElevatedButton(
+                              onPressed: getSelected.status == "Approved" ? () async {
+                                final adminModel = AdminApprovalPaidLeaveModel.fromMemberList(getSelected);
+
+                                print("Remaining leave in Admin Model: ${adminModel.remaining_leave}");
+
+                                final pdfGenerator = PDFGenerator_MSDO(getUserDetail: adminModel).GeneratePDF();
+
+                                await Printing.layoutPdf(
+                                    onLayout: (format) => pdfGenerator);
+
+                              } : null,
+                              child: const Text("print"),
+                            ),
+
+                          )
                       ],
                     ),
-                  ],
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-                  decoration: const BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(32.0),
-                      bottomRight: Radius.circular(32.0),
-                    ),
                   ),
-                  child: const Text(
-                    "Close",
-                    style: TextStyle(color: Colors.white),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
+
+                ],
               ),
-            ],
-          ),
+            )
         );
       },
     );
@@ -527,7 +816,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                                   Text(
                                     /*getUser.name,*/
                                     // isicuti['name']!,
-                                    memberInfo.jumlah_hari,
+                                    memberInfo.jumlah_hari.toString(),
                                     style: const TextStyle(
                                         color: Colors.grey, fontSize: 10),
                                   ),

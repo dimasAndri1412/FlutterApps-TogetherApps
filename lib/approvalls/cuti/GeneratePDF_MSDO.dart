@@ -11,6 +11,7 @@ class PDFGenerator_MSDO extends StatelessWidget {
 
 
   Future<Uint8List> GeneratePDF() async {
+
     final pdf = pw.Document();
     final barcode = Barcode.code128();
     final svg = barcode.toSvg('Septian Sakti');
