@@ -46,9 +46,14 @@ class _detailMonthlyDialogState extends State<detailMonthlyDialog> {
             } else if(snapshot.hasData){
               MonthlyTimesheetModel timesheet = snapshot.data!;
               String? formattedClockIn = timesheet.clockIn != null ? DateFormat('HH:mm:ss').format(timesheet.clockIn!) : null;
-              String? formattedClockOut = timesheet.clockOut != null ? DateFormat('HH:mm:ss').format(timesheet.clockIn!) : null;
+              String? formattedClockOut = timesheet.clockOut != null ? DateFormat('HH:mm:ss').format(timesheet.clockOut!) : null;
+
               List<String> questions = timesheet.questionText ?? [];
               List<String> answers = timesheet.answerText ?? [];
+              List<String> platform = timesheet.platform ?? [];
+
+              bool hasData = questions.isNotEmpty && answers.isNotEmpty && platform.isNotEmpty;
+              int itemCount = hasData ? [questions.length, answers.length, platform.length].reduce((a, b) => a < b ? a : b) : 0;
 
               return Column(
                   mainAxisSize: MainAxisSize.min,
@@ -155,10 +160,11 @@ class _detailMonthlyDialogState extends State<detailMonthlyDialog> {
                             ],
                           ),
                           SizedBox(height: 10,),
-                          SizedBox(
+                          hasData
+                          ? SizedBox(
                               height: 220.0, 
                               child: ListView.builder(
-                                itemCount: questions.length,
+                                itemCount: itemCount,
                                 itemBuilder: (context, index) {
                                   return Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -166,7 +172,7 @@ class _detailMonthlyDialogState extends State<detailMonthlyDialog> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "${questions[index]}",
+                                          "${questions[index]} ${platform[index]}",
                                           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
                                         ),
                                         SizedBox(height: 4),
@@ -180,8 +186,13 @@ class _detailMonthlyDialogState extends State<detailMonthlyDialog> {
                                   );
                                 },
                               ),
+                            )
+                          : Center(
+                              child: Text(
+                                "Data tidak tersedia.",
+                                style: TextStyle(color: Colors.red, fontSize: 13),
+                              ),
                             ),
-
                         ],
                       )
                     ),

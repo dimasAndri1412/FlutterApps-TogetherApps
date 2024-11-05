@@ -121,12 +121,15 @@ class _monthlyTimesheetsState extends State<monthlyTimesheets> {
                                 SizedBox(
                                 width: 3,
                               ),
-                              Text(
-                                timesheet.location ?? "n/a",
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.blue),
-                              ),
+                              Flexible(
+                                child: Text(
+                                  timesheet.location ?? "n/a",
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.blue),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              )
                             ],
                           ),
                         ],

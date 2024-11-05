@@ -4,6 +4,7 @@ import 'package:absent_project/menu/KPI%20Question/addQuestionDialog.dart';
 import 'package:absent_project/menu/KPI%20Question/deleteQuestionDialog.dart';
 import 'package:absent_project/menu/KPI%20Question/editQuestionDialog.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Detailkpiquestion extends StatefulWidget {
   final int positionId;

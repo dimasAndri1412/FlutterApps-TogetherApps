@@ -6,6 +6,7 @@ class MonthlyTimesheetModel{
   final String? elapsedTime;
   final List<String>? questionText;
   final List<String>? answerText;
+  final List<String>? platform;
   final String? clockOutId;
   final String? grup;
   final String? fullName;
@@ -19,6 +20,7 @@ class MonthlyTimesheetModel{
     this.elapsedTime,
     this.questionText,
     this.answerText,
+    this.platform,
     this.grup,
     this.fullName
   });
@@ -33,6 +35,7 @@ class MonthlyTimesheetModel{
       elapsedTime: json['elapsed_time'] as String?,
       questionText: json['questions'] != null ? List<String>.from(json['questions']) : null,
       answerText: json['answers'] != null ? List<String>.from(json['answers']) : null,
+      platform: json['platform'] != null ? List<String>.from(json['platform']) : null,
       grup: json['grup'] as String?,
       fullName: json['full_name'] as String?,
     );

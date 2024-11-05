@@ -71,7 +71,7 @@ import 'package:http/http.dart' as http;
   deleteQuestion(int questionId) async{
     try {
       final response = await http.post(
-        Uri.parse("http://192.168.100.84/FlutterAPI/KPI/deleteQuestions.php"),
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/KPI/deleteQuestions.php"),
         body: {
           'id_question' : questionId.toString()
         }

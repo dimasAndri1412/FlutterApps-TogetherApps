@@ -1,7 +1,10 @@
 import 'package:absent_project/controller/KPIQuestionsController/position/PositionController.dart';
 import 'package:absent_project/menu/KPI%20Question/addPositionDialog.dart';
+import 'package:absent_project/menu/KPI%20Question/deletePositionDialog.dart';
 import 'package:absent_project/menu/KPI%20Question/detailKpiQuestion.dart';
+import 'package:absent_project/menu/KPI%20Question/editPositionDialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 
 class kpiQuestion extends StatefulWidget {
@@ -18,6 +21,7 @@ class _kpiQuestionState extends State<kpiQuestion> {
     super.initState();
     positionController.fetchPositions();
   }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,35 +84,82 @@ class _kpiQuestionState extends State<kpiQuestion> {
                   itemCount: positionController.positions.length,
                   itemBuilder: (context, index) {
                     final position = positionController.positions[index];
-                    return GestureDetector(
-                      onTap: (){
-                        Get.to(() => Detailkpiquestion(positionId: position.idPosition));
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(top: 10, right: 25, left: 25, bottom: 10),
-                        width: 350,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color.fromARGB(255, 147, 195, 234),
-                              blurRadius: 15,
-                              offset: Offset(0, 2),
-                            )
-                          ],
-                        ),
-                        child: Center(
-                          child: Text(
-                            position.positionName, // Display position name
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                    return Slidable(
+                      endActionPane: ActionPane(
+                        motion: const DrawerMotion(),
+                        children: [
+                          SlidableAction(
+                            onPressed: (context) {
+                              showDialog(
+                                context: context, 
+                                builder: (BuildContext context) {
+                                  return editPositionDialog(
+                                    positionId: position.idPosition,
+                                    positionName: position.positionName,
+                                  );
+                                }
+                              ).then((_){
+                                positionController.fetchPositions();
+                              });
+                            },
+                            backgroundColor: Colors.blue,
+                            foregroundColor: Colors.white,
+                            icon: Icons.edit,
+                            label: 'Edit',
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          SlidableAction(
+                            onPressed: (context) {
+                              showDialog(
+                                context: context, 
+                                builder: (BuildContext context) {
+                                  return deletePositionDialog(
+                                    positionId: position.idPosition,
+                                  );
+                                }
+                              ).then((_){
+                                positionController.fetchPositions();
+                                Get.snackbar('Success', 'Position deleted successfully');
+                              }); 
+                            },
+                            backgroundColor: Colors.red,
+                            foregroundColor: Colors.white,
+                            icon: Icons.delete,
+                            label: 'Delete',
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ],
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.to(() => Detailkpiquestion(positionId: position.idPosition));
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(top: 10, right: 25, left: 25, bottom: 10),
+                          width: 350,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromARGB(255, 147, 195, 234),
+                                blurRadius: 15,
+                                offset: Offset(0, 2),
+                              )
+                            ],
+                          ),
+                          child: Center(
+                            child: Text(
+                              position.positionName, 
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
-                      )
+                      ),
                     );
                   },
                 );
@@ -126,6 +177,7 @@ class _kpiQuestionState extends State<kpiQuestion> {
             }
           ).then((_){
             positionController.fetchPositions();
+            Get.snackbar('Success', 'Position added successfully');
           });
         },
         backgroundColor: Colors.orange[600],

@@ -9,6 +9,7 @@ class PositionController extends GetxController {
   var isLoading = true.obs;
   var errorMessage = ''.obs;
    var selectedPosition = Rxn<int>();
+   
   Future<void> fetchPositions() async {
     try {
       isLoading(true);
@@ -26,6 +27,7 @@ class PositionController extends GetxController {
       isLoading(false);
     }
   }
+
   void setPosition(int? positionId) {
     selectedPosition.value = positionId;
   }
@@ -45,6 +47,44 @@ class PositionController extends GetxController {
       }
     } catch (e) {
       print('Error : $e');
+    }
+  }
+
+  editPosition(int positionId, String positionName) async {
+    try {
+      final response = await http.post(
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/KPI/editPositions.php"),
+        body: {
+          'id_position' : positionId.toString(),
+          'position_name': positionName
+        }
+      );
+      print('response bodyL ${response.body}');
+      if (response.statusCode == 200) {
+        print('Position updated');
+      } else {
+        print('Failed brow hayo');
+      }
+    } catch (e) {
+      print('Error : $e');
+    }
+  }
+
+  deletePosition(int positionId) async{
+    try {
+      final response = await http.post(
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/KPI/deletePositions.php"),
+        body: {
+          'id_position' : positionId.toString()
+        }
+      );
+      if (response.statusCode == 200) {
+        print('Position deleted');
+      } else {
+        print('failed brow');
+      }
+    } catch (e) {
+      print('error : $e');
     }
   }
 }

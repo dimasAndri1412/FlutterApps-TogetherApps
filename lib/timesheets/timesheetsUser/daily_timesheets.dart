@@ -153,13 +153,26 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                answer['question_text'] ?? "Question",
-                                style: TextStyle(
-                                  fontWeight: 
-                                  FontWeight.bold, 
-                                  fontSize: 12
-                                ),
+                              Row(
+                                children: [
+                                  Text(
+                                    answer['question_text'] ?? "Question",
+                                    style: TextStyle(
+                                      fontWeight: 
+                                      FontWeight.bold, 
+                                      fontSize: 12
+                                    ),
+                                  ),
+                                  SizedBox(width: 5,),
+                                  Text(
+                                    answer['platform_name'] ?? "Platform",
+                                    style: TextStyle(
+                                      fontWeight: 
+                                      FontWeight.bold, 
+                                      fontSize: 12
+                                    ),
+                                  ),
+                                ],
                               ),
                               SizedBox(height: 5),
                               Text(
