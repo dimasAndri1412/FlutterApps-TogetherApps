@@ -1,3 +1,5 @@
+import '../MemberRequestPaidLeave/MemberListPaidLeave.dart';
+
 class AdminApprovalPaidLeaveModel {
   final String username;
   final String position;
@@ -15,8 +17,9 @@ class AdminApprovalPaidLeaveModel {
   final String status;
   final String submittedDate;
   final String reason_rejected;
-  final String leave_used;
-  final String remaining_leave;
+  final int leave_used;
+  final int remaining_leave;
+  final int jumlah_hari;
 
   AdminApprovalPaidLeaveModel({
     required this.username,
@@ -37,6 +40,7 @@ class AdminApprovalPaidLeaveModel {
     required this.reason_rejected,
     required this.leave_used,
     required this.remaining_leave,
+    required this.jumlah_hari
   });
 
   factory AdminApprovalPaidLeaveModel.fromJson(Map<String, dynamic> json) {
@@ -59,8 +63,36 @@ class AdminApprovalPaidLeaveModel {
       reason_rejected: json['reason_rejected'],
       leave_used: json['leave_used'],
       remaining_leave: json['remaining_leave'],
+      jumlah_hari: json['jumlah_hari']
     );
   }
+
+  factory AdminApprovalPaidLeaveModel.fromMemberList(MemberListPaidLeave member) {
+    print("Converting from MemberListPaidLeave to AdminApprovalPaidLeaveModel:");
+    print("Remaining leave: ${member.remaining_leave}");
+    return AdminApprovalPaidLeaveModel(
+      reqNo: member.req_no,
+      username: member.name,
+      position: member.position,
+      project: member.project,
+      departement: member.departement,
+      types_leave: member.types_leave,
+      reason_leave: member.reason_leave,
+      name_of_pic: member.name_of_pic,
+      phoneNumber: member.phoneNumber,
+      shift: member.shift,
+      date_start_leave: member.date_start_leave,
+      date_end_leave: member.date_end_leave,
+      date_back_to_work: member.date_back_to_work,
+      status: member.status,
+      submittedDate: member.submittedDate,
+      reason_rejected: member.reason_rejected,
+      leave_used: member.leave_used,
+      remaining_leave: member.remaining_leave,
+      jumlah_hari: member.jumlah_hari,
+    );
+  }
+
 
   get name => null;
 }
