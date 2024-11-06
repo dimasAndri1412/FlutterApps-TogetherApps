@@ -57,7 +57,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
         getStatus = statusList!;
       });
     } catch (e) {
-      print('Error fetching overtime requests: $e');
+      print('Error fetching paid leave requests: $e');
     }
   }
 
@@ -70,7 +70,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
         getProject = projectList!;
       });
     } catch (e) {
-      print('Error fetching overtime requests: $e');
+      print('Error fetching paid leave requests: $e');
     }
   }
 
@@ -174,6 +174,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
               FutureBuilder(
                   future: AdminApprovalPaidLeaveController().getUsers(),
                   builder: (context, snapshot) {
+                    print("Snapshot data: ${snapshot.data}");
                     if (snapshot.data == null) {
                       return const Center(
                           child: Text("There is no request need to approve"));

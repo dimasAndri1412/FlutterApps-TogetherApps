@@ -40,36 +40,34 @@ class AdminApprovalPaidLeaveModel {
     required this.reason_rejected,
     required this.leave_used,
     required this.remaining_leave,
-    required this.jumlah_hari
+    required this.jumlah_hari,
   });
 
   factory AdminApprovalPaidLeaveModel.fromJson(Map<String, dynamic> json) {
     return AdminApprovalPaidLeaveModel(
-      username: json['name'],
-      position: json['position'],
-      project: json['project'],
-      departement: json['departement'],
-      types_leave: json['types_leave'],
-      reason_leave: json['reason_leave'],
-      name_of_pic: json['name_of_pic'],
-      phoneNumber: json['phone_number'],
-      shift: json['shift'],
-      date_start_leave: json['date_start_leave'],
-      date_end_leave: json['date_end_leave'],
-      date_back_to_work: json['date_back_to_work'],
-      reqNo: json['reqNo'],
-      status: json['status'],
-      submittedDate: json['submittedDate'],
-      reason_rejected: json['reason_rejected'],
-      leave_used: json['leave_used'],
-      remaining_leave: json['remaining_leave'],
-      jumlah_hari: json['jumlah_hari']
+      username: json['name'] ?? 'Unknown',
+      position: json['position'] ?? 'Unknown',
+      project: json['project'] ?? 'Unknown',
+      departement: json['departement'] ?? 'Unknown',
+      types_leave: json['types_leave'] ?? 'Unknown',
+      reason_leave: json['reason_leave'] ?? 'Unknown',
+      name_of_pic: json['name_of_pic'] ?? 'Unknown',
+      phoneNumber: json['phone_number'] ?? 'Unknown',
+      shift: json['shift'] ?? 'Unknown',
+      date_start_leave: json['date_start_leave'] ?? '',
+      date_end_leave: json['date_end_leave'] ?? '',
+      date_back_to_work: json['date_back_to_work'] ?? '',
+      reqNo: json['reqNo'] ?? '',
+      status: json['status'] ?? 'Unknown',
+      submittedDate: json['submittedDate'] ?? '',
+      reason_rejected: json['reason_rejected'] ?? '',
+      leave_used: int.tryParse(json['leave_used']?.toString() ?? '0') ?? 0,
+      remaining_leave: int.tryParse(json['remaining_leave']?.toString() ?? '0') ?? 0,
+      jumlah_hari: int.tryParse(json['jumlah_hari']?.toString() ?? '0') ?? 0,
     );
   }
 
   factory AdminApprovalPaidLeaveModel.fromMemberList(MemberListPaidLeave member) {
-    print("Converting from MemberListPaidLeave to AdminApprovalPaidLeaveModel:");
-    print("Remaining leave: ${member.remaining_leave}");
     return AdminApprovalPaidLeaveModel(
       reqNo: member.req_no,
       username: member.name,
@@ -93,6 +91,5 @@ class AdminApprovalPaidLeaveModel {
     );
   }
 
-
-  get name => null;
+  String get name => username;
 }
