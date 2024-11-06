@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertimeModel.dart';
+
 class RejectedReasonDialog extends StatelessWidget {
-  const RejectedReasonDialog({super.key});
+  AdminApprovalOvertimeModel gettingData;
+  RejectedReasonDialog({super.key, required this.gettingData});
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +14,10 @@ class RejectedReasonDialog extends StatelessWidget {
       ),
       child: Container(
         // width: 100,
-      //  decoration: BoxDecoration(
-      //    color: Colors.red[100],
-      //    borderRadius: BorderRadius.circular(20)
-      //  ),
+        //  decoration: BoxDecoration(
+        //    color: Colors.red[100],
+        //    borderRadius: BorderRadius.circular(20)
+        //  ),
         // height: 200,
         child: Padding(
           padding: EdgeInsets.all(20),
@@ -22,31 +25,28 @@ class RejectedReasonDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Center(
-                child: CircleAvatar(
-                  radius: 35, 
-                  backgroundColor: Colors.grey[300],
-                  child: Icon(
-                    Icons.cancel, 
-                    color: Colors.red,
-                    size: 50,
-                  ),
-                )
-              ),
-              SizedBox(height: 10,),
-              Center(
-                child: Text("lalala",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16
-                  ),
+                  child: CircleAvatar(
+                radius: 35,
+                backgroundColor: Colors.grey[300],
+                child: Icon(
+                  Icons.cancel,
+                  color: Colors.red,
+                  size: 50,
                 ),
+              )),
+              SizedBox(
+                height: 10,
               ),
-              SizedBox(height: 10,),
               Center(
                 child: Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                )
-              )
+                  "Rejected Reason",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Center(child: Text(gettingData.reason_rejected))
             ],
           ),
         ),

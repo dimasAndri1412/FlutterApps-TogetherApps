@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:absent_project/approvalls/lembur/user/pengajuan_lembur.dart';
+import 'package:absent_project/approvalls/lembur/msdo/pengajuan_lembur.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestOvertime/MemberRequestOvertimeGetListModel.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/material.dart';
@@ -370,13 +370,22 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                             ),
                             Row(
                               children: [
-                                Icon(Icons.supervised_user_circle_outlined),
+                                Icon(Icons.timer_outlined),
                                 SizedBox(width: 5),
                                 Text(
-                                  /* getData.full_name,
-                                  */
-
-                                  getData.full_name,
+                                  getData.start_time,
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 10),
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                const Text("-"),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  getData.end_time,
                                   style: TextStyle(
                                       color: Colors.grey, fontSize: 10),
                                 ),
@@ -416,23 +425,23 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
           ),
         ],
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 15),
-        child: FloatingActionButton(
-          onPressed: () {
-            Get.to(() => const PengajuanLembur());
-            /* Get.to(() => const PengajuanLembur());
-            */
+      // floatingActionButton: Padding(
+      //   padding: const EdgeInsets.only(bottom: 15),
+      //   child: FloatingActionButton(
+      //     onPressed: () {
+      //       Get.to(() => const PengajuanLembur());
+      //       /* Get.to(() => const PengajuanLembur());
+      //       */
 
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => PengajuanLembur()));
-          },
-          backgroundColor: Color.fromARGB(255, 98, 171, 232),
-          child: Icon(Icons.edit),
-          elevation: 5,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
+      //       Navigator.of(context).push(
+      //           MaterialPageRoute(builder: (context) => PengajuanLembur()));
+      //     },
+      //     backgroundColor: Color.fromARGB(255, 98, 171, 232),
+      //     child: Icon(Icons.edit),
+      //     elevation: 5,
+      //   ),
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
     );
   }
 

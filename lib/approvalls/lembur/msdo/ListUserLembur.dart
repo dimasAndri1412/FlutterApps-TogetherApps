@@ -1,6 +1,7 @@
 import 'package:absent_project/approvalls/lembur/msdo/ApprovedDetail.dart';
 import 'package:absent_project/approvalls/lembur/msdo/DetailLemburUser.dart';
 import 'package:absent_project/approvalls/lembur/msdo/RejectedDetail.dart';
+import 'package:absent_project/approvalls/lembur/msdo/pengajuan_lembur.dart';
 import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertimeGetStatusModel.dart';
 import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertimeModel.dart';
 import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertmaControlleri.dart';
@@ -46,21 +47,20 @@ class _ListUserLemburState extends State<ListUserLembur> {
   Future<void> fetchOvertimeRequests() async {
     try {
       List<AdminApprovalOvertimeModel>? overtimeRequests =
-      await AdminApprovalOvertimaController().getList();
+          await AdminApprovalOvertimaController().getList();
       setState(() {
         getListUser = overtimeRequests!;
       });
     } catch (e) {
       // Handle errors or exceptions here
-      print('Error fetching overtime requests: $e');
+      print('Errorrr fetching overtime requests: $e');
     }
   }
-
 
   Future<void> fetchStatusOT() async {
     try {
       List<AdminApprovalOvertimeGetStatusModel>? statusList =
-      await AdminApprovalOvertimaController().getStatus();
+          await AdminApprovalOvertimaController().getStatus();
 
       setState(() {
         getStatus = statusList!;
@@ -73,7 +73,7 @@ class _ListUserLemburState extends State<ListUserLembur> {
   Future<void> fetchProjectOT() async {
     try {
       List<AdminApprovalOvertimeGetProjectModel>? projectList =
-      await AdminApprovalOvertimaController().getProject();
+          await AdminApprovalOvertimaController().getProject();
 
       setState(() {
         getProject = projectList!;
@@ -95,7 +95,6 @@ class _ListUserLemburState extends State<ListUserLembur> {
         return Colors.blue; // Default color if status is unknown
     }
   }
-
 
   List<AdminApprovalOvertimeModel> get filteredLembur {
     return getListUser.where((lembur) {
@@ -119,22 +118,21 @@ class _ListUserLemburState extends State<ListUserLembur> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:Center(
+        title: Center(
           child: Text(
             "Overtime Approval MSDO Project",
-            style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
         automaticallyImplyLeading: false,
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-                  colors: [
-                    Color.fromARGB(255, 147, 195, 234),
-                    Color.fromARGB(255, 98, 171, 232),
-                    Color.fromARGB(255, 123, 185, 235),
-                  ]
-                ),
+            gradient: LinearGradient(colors: [
+              Color.fromARGB(255, 147, 195, 234),
+              Color.fromARGB(255, 98, 171, 232),
+              Color.fromARGB(255, 123, 185, 235),
+            ]),
           ),
         ),
         elevation: 0,
@@ -144,18 +142,15 @@ class _ListUserLemburState extends State<ListUserLembur> {
         children: <Widget>[
           Container(
             margin: EdgeInsets.all(10),
-            child: Text("Filter by :",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold
-              ),
+            child: Text(
+              "Filter by :",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
           Container(
             margin: EdgeInsets.all(10),
-            child: Row(
-              children: [
-                DropdownButton<String>(
+            child: Row(children: [
+              DropdownButton<String>(
                   value: selectedProject,
                   onChanged: (String? value) {
                     setState(() {
@@ -167,17 +162,17 @@ class _ListUserLemburState extends State<ListUserLembur> {
                       value: "Project",
                       child: Text("Project"),
                     ),
-                    ...getProject.map((project){
+                    ...getProject.map((project) {
                       return DropdownMenuItem(
-                          child: Text(project.project),
-                          value: project.project,
+                        child: Text(project.project),
+                        value: project.project,
                       );
-                    }
-                    )
-                  ]
-                ),
-                SizedBox(width: 20,),
-                DropdownButton<String>(
+                    })
+                  ]),
+              SizedBox(
+                width: 20,
+              ),
+              DropdownButton<String>(
                   value: selectedStatus,
                   onChanged: (String? value) {
                     setState(() {
@@ -192,7 +187,8 @@ class _ListUserLemburState extends State<ListUserLembur> {
                     ...getStatus.map((status) {
                       return DropdownMenuItem<String>(
                         value: status.status ?? '', // Use status value
-                        child: Text(status.status ?? ''), // Display status in dropdown
+                        child: Text(
+                            status.status ?? ''), // Display status in dropdown
                       );
                     }).toList(),
                   ]
@@ -205,170 +201,173 @@ class _ListUserLemburState extends State<ListUserLembur> {
                         ),
                   )
                       .toList(),*/
-                )
-              ]
-            ),
+                  )
+            ]),
           ),
           Expanded(
-          child: ListView.builder(
-            // itemCount: requests.length,
-            itemCount: filteredLembur.length,
-            itemBuilder: (context, index) {
-              // final request = requests[index];
-              final getData = filteredLembur[index];
-              final statusColor = _getStatusColor(getData.status ?? "Unknown");
-              return GestureDetector(
-              onTap: () {
-              //  Get.to(() => DetailLemburUser(getData: getData));
-                if (getData.status == "New") {
-                Get.to(() => DetailLemburUser(getData: getData));
-                } 
-                else if (getData.status == "Approved") {
-                  Get.to(() => ApprovedDetail(getData: getData));
-                } 
-                else if (getData.status == "Rejected") {
-                  Get.to(() => RejectedDetail(getData: getData));
-                }
-              },
-                child : Container(
-                  margin: EdgeInsets.all(10),
-                  width: 350,
-                  // height: 150,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(0),
-                    border: Border.all(width: 0.5, color: Colors.grey),
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 20, top: 15, right: 20),
-                        child: Row(
-                          children: [
-                            Text(
-                              "No. Req : ",
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                            Text(getData.reqNo),
-                            Spacer(),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color:statusColor,
-                              ),
-                              height: 20,
-                              width: 80,
-                              child: Center(
-                                child: Text(
-                                  getData.status ?? "New",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12),
+            child: ListView.builder(
+              // itemCount: requests.length,
+              itemCount: filteredLembur.length,
+              itemBuilder: (context, index) {
+                // final request = requests[index];
+                final getData = filteredLembur[index];
+                final statusColor =
+                    _getStatusColor(getData.status ?? "Unknown");
+                return GestureDetector(
+                    onTap: () {
+                      //  Get.to(() => DetailLemburUser(getData: getData));
+                      if (getData.status == "New") {
+                        Get.to(() => DetailLemburUser(getData: getData));
+                      } else if (getData.status == "Approved") {
+                        Get.to(() => ApprovedDetail(getData: getData));
+                      } else if (getData.status == "Rejected") {
+                        Get.to(() => RejectedDetail(getData: getData));
+                      }
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(10),
+                      width: 350,
+                      // height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(0),
+                        border: Border.all(width: 0.5, color: Colors.grey),
+                      ),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding:
+                                EdgeInsets.only(left: 20, top: 15, right: 20),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "No. Req : ",
+                                  style: TextStyle(color: Colors.grey),
                                 ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Divider(
-                        color: Colors.grey,
-                        thickness: 0.5,
-                        indent: 20,
-                        endIndent: 20,
-                      ),
-                      ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage: AssetImage(
+                                Text(getData.reqNo),
+                                Spacer(),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: statusColor,
+                                  ),
+                                  height: 20,
+                                  width: 80,
+                                  child: Center(
+                                    child: Text(
+                                      getData.status ?? "New",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          Divider(
+                            color: Colors.grey,
+                            thickness: 0.5,
+                            indent: 20,
+                            endIndent: 20,
+                          ),
+                          ListTile(
+                            leading: CircleAvatar(
+                                backgroundImage: AssetImage(
                               'assets/images/workaholism.png',
-                            )
-                        ),
-                        title: Text(
-                          "Overtime Request",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 14),
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
+                            )),
+                            title: Text(
+                              "Overtime Request",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14),
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Icon(
-                                  Icons.people_alt_outlined,
-                                  size: 18,
-                                  color: Colors.grey,
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.people_alt_outlined,
+                                      size: 18,
+                                      color: Colors.grey,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      "Submitted by",
+                                      style: TextStyle(fontSize: 12, height: 2),
+                                    ),
+                                    SizedBox(
+                                      width: 3,
+                                    ),
+                                    Text(
+                                      getData.full_name,
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.blue),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(
-                                  width: 5,
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.people_alt_outlined,
+                                      size: 18,
+                                      color: Colors.grey,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      "Project",
+                                      style: TextStyle(fontSize: 12, height: 2),
+                                    ),
+                                    SizedBox(
+                                      width: 3,
+                                    ),
+                                    Text(
+                                      getData.project,
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.blue),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  "Submitted by",
-                                  style: TextStyle(fontSize: 12, height: 2),
-                                ),
-                                SizedBox(
-                                  width: 3,
-                                ),
-                                Text(
-                                  getData.full_name,
-                                  style: TextStyle(
-                                      fontSize: 12, color: Colors.blue),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.calendar_month,
+                                      size: 18,
+                                      color: Colors.grey,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      getData.submittedDate,
+                                      style: TextStyle(fontSize: 12),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.people_alt_outlined,
-                                  size: 18,
-                                  color: Colors.grey,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  "Project",
-                                  style: TextStyle(
-                                      fontSize: 12, height: 2),
-                                ),
-                                 SizedBox(
-                                  width: 3,
-                                ),
-                                Text(
-                                  getData.project,
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.blue),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.calendar_month,
-                                  size: 18,
-                                  color: Colors.grey,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  getData.submittedDate,
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                )
-              );
-            },
+                    ));
+              },
+            ),
           ),
-        ),
         ],
-      )
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.to(const PengajuanLembur());
+        },
+        backgroundColor: const Color.fromARGB(255, 98, 171, 232),
+        elevation: 5,
+        child: const Icon(Icons.edit),
+      ),
     );
   }
 }

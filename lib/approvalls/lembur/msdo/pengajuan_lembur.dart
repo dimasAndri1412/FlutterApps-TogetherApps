@@ -1,9 +1,14 @@
+import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertmaControlleri.dart';
+import 'package:absent_project/controller/ApprovalController/MemberRequestOvertime/MemberRequestOvertimeGetListModel.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:absent_project/approvalls/lembur/user/add_lembur_button.dart';
+import 'package:absent_project/approvalls/lembur/msdo/add_lembur_button.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestOvertime/MemberRequestOvertimeController.dart';
 import 'package:absent_project/controller/Keys.dart';
+
+import '../../../controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertimeModel.dart';
 
 class PengajuanLembur extends StatefulWidget {
   const PengajuanLembur({super.key});
@@ -13,6 +18,11 @@ class PengajuanLembur extends StatefulWidget {
 }
 
 class _PengajuanLemburState extends State<PengajuanLembur> {
+  final MemberRequestOvertimeController overtimeController =
+      MemberRequestOvertimeController();
+  List<MemberRequestOvertimeGetListModel> nameList = [];
+  MemberRequestOvertimeGetListModel? selectedName;
+
   MemberRequestOvertimeController request = MemberRequestOvertimeController();
   final GlobalKey<FormState> formKey =
       GlobalKey<FormState>(); // Unique GlobalKey for Form
@@ -23,6 +33,20 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
   void initState() {
     super.initState();
     request.getInfo();
+    fetchNames();
+  }
+
+  Future<void> fetchNames() async {
+    List<MemberRequestOvertimeGetListModel>? fetchedNames =
+        await overtimeController.getAllName();
+    if (fetchedNames != null) {
+      setState(() {
+        nameList = fetchedNames;
+      });
+      print('Data fetched: ${nameList.length} items'); // Debug line
+    } else {
+      print('No data fetched or empty list'); // Debug line
+    }
   }
 
   @override
@@ -86,29 +110,43 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                             ],
                           ),
                           SizedBox(height: 50),
-                          Container(
-                            decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.grey, width: 1),
-                                borderRadius: BorderRadius.circular(12)),
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: TextFormField(
-                                readOnly: true,
-                                decoration: InputDecoration(
-                                    labelText: "Name",
-                                    hintText: "Please input you name here",
-                                    hintStyle: TextStyle(color: Colors.grey),
-                                    border: InputBorder.none),
-                                controller: nameOTController,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter your name here';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
+                          DropdownButtonFormField<
+                              MemberRequestOvertimeGetListModel>(
+                            decoration: InputDecoration(
+                                labelText: "Name",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                )),
+                            hint: Text("Please select name"),
+                            items: nameList.map((name) {
+                              return DropdownMenuItem(
+                                value: name,
+                                child: Text(name.full_name),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                selectedName = value;
+
+                                if (selectedName != null) {
+                                  nameOTController.text =
+                                      selectedName!.full_name;
+                                  projectOTController.text =
+                                      selectedName!.project;
+                                } else {
+                                  nameOTController.clear();
+                                  projectController.clear();
+                                }
+                              });
+                              print(
+                                  'Selected Name: ${selectedName?.full_name}');
+                            },
+                            validator: (value) {
+                              if (value == null) {
+                                return 'Please select name';
+                              }
+                              return null;
+                            },
                           ),
                           SizedBox(height: 20),
                           Container(
@@ -143,6 +181,7 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                             child: Padding(
                               padding: EdgeInsets.only(left: 10),
                               child: TextFormField(
+                                readOnly: true,
                                 decoration: InputDecoration(
                                     labelText: "Project",
                                     hintText: "Please input your project here",
@@ -197,7 +236,7 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                                     hintText: "Please input your location here",
                                     hintStyle: TextStyle(color: Colors.grey),
                                     border: InputBorder.none),
-                                // controller: departmentOTController,
+                                controller: locationOTController,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter your location here';
@@ -285,6 +324,7 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                                         controller: timeStartOTController,
                                         readOnly: true,
                                         decoration: InputDecoration(
+                                            labelText: "Start Overtime",
                                             hintStyle:
                                                 TextStyle(color: Colors.grey),
                                             border: InputBorder.none,
@@ -341,6 +381,7 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                                         controller: timeEndOTController,
                                         readOnly: true,
                                         decoration: InputDecoration(
+                                            labelText: "End Overtime",
                                             hintStyle:
                                                 TextStyle(color: Colors.grey),
                                             border: InputBorder.none,
@@ -415,9 +456,3 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
     );
   }
 }
-/*
-void main() {
-  runApp(MaterialApp(
-    home: PengajuanLembur(),
-  ));
-}*/

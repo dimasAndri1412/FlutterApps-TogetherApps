@@ -12,7 +12,7 @@ class AdminApprovalOvertimaController {
     var data = await http.post(Uri.parse(
         "http://192.168.2.159:8080/FlutterAPI/approvals/admin/overtime/getListUser.php"));
     var jsonData = json.decode(data.body);
-    nameOTController.text = jsonData[0]['full_name'];
+    // nameOTController.text = jsonData[0]['full_name'];
 
     List<AdminApprovalOvertimeModel> users = [];
 
@@ -22,6 +22,21 @@ class AdminApprovalOvertimaController {
     }
     return users;
   }
+
+  // Future<List<AdminApprovalOvertimeModel>?> getAllName() async {
+  //   var data = await http.post(Uri.parse(
+  //       "http://192.168.2.159:8080/FlutterAPI/approvals/admin/overtime/getAllName.php"));
+  //   var jsonData = json.decode(data.body);
+  //   // nameOTController.text = jsonData[0]['full_name'];
+
+  //   List<AdminApprovalOvertimeModel> users = [];
+
+  //   for (var u in jsonData) {
+  //     AdminApprovalOvertimeModel user = AdminApprovalOvertimeModel.fromJson(u);
+  //     users.add(user);
+  //   }
+  //   return users;
+  // }
 
   updateRejected() async {
     final response = await http.post(
@@ -69,4 +84,10 @@ class AdminApprovalOvertimaController {
     }
     return users;
   }
+
+  // Future getFormNames() async {
+  //   var data = await http.post(Uri.parse(
+  //       "http://192.168.2.159:8080/FlutterAPI/approvals/admin/overtime/getListUser.php"));
+  //   var jsonData = json.decode(data.body);
+  // }
 }

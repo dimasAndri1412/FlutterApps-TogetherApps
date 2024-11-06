@@ -36,9 +36,11 @@ final TextEditingController onDutyPaidLeave = TextEditingController();
 final TextEditingController statusPaidLeave = TextEditingController();
 final TextEditingController leave_used = TextEditingController();
 final TextEditingController remaining_leave = TextEditingController();
+final TextEditingController reason_rejectedController = TextEditingController();
 
 //overtime controller
 final TextEditingController nameOTController = TextEditingController();
+final TextEditingController locationOTController = TextEditingController();
 final TextEditingController projectOTController = TextEditingController();
 final TextEditingController positionOTController = TextEditingController();
 final TextEditingController departmentOTController = TextEditingController();
@@ -48,7 +50,8 @@ final TextEditingController timeStartOTController = TextEditingController();
 final TextEditingController timeEndOTController = TextEditingController();
 final TextEditingController activityOTController = TextEditingController();
 final TextEditingController statusOTController = TextEditingController();
-final TextEditingController reason_rejectedController = TextEditingController();
+final TextEditingController reason_OTrejectedController =
+    TextEditingController();
 
 //Controller
 final UserNameController = TextEditingController();
@@ -138,7 +141,6 @@ final Map<String, TextEditingController> answerController = {};
 List<TextEditingController> selectedQuestionControllers = [];
 List<TextEditingController> selectedPlatformControllers = [];
 List<TextEditingController> answersControllers = [];
-
 
 //revampOTPController
 final revampOTPControllers = TextEditingController();

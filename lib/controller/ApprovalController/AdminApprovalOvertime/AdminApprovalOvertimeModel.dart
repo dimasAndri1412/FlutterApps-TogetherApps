@@ -1,4 +1,4 @@
-class AdminApprovalOvertimeModel{
+class AdminApprovalOvertimeModel {
   String full_name;
   String position;
   String project;
@@ -12,6 +12,7 @@ class AdminApprovalOvertimeModel{
   String status;
   String reqNo;
   String submittedDate;
+  String reason_rejected;
   bool selected;
 
   AdminApprovalOvertimeModel({
@@ -28,6 +29,7 @@ class AdminApprovalOvertimeModel{
     required this.status,
     required this.reqNo,
     required this.submittedDate,
+    required this.reason_rejected,
     this.selected = false,
   });
   factory AdminApprovalOvertimeModel.fromJson(Map<String, dynamic> json) {
@@ -45,6 +47,7 @@ class AdminApprovalOvertimeModel{
       status: json['status'],
       reqNo: json['reqNo'],
       submittedDate: json['submittedDate'],
+      reason_rejected: json['reason_rejected'],
     );
   }
 
@@ -53,4 +56,3 @@ class AdminApprovalOvertimeModel{
     return 'MemberRequestOvertimeGetListModel{activity: $activity, start_date: $start_date, full_name: $full_name, status: $status}';
   }
 }
-
