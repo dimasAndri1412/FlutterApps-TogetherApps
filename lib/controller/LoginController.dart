@@ -50,8 +50,8 @@ class LoginController {
         var response = await http.post(url,
             body: {"username": usernameInput, "password": passwordInput});
         dataUser = jsonDecode(response.body);
-        print("Status code: ${response.statusCode}");
-        print("Response body: ${response.body}");
+        // print("Status code: ${response.statusCode}");
+        // print("Response body: ${response.body}");
 
         if (dataUser.length < 1) {
           alert = "Can't login";

@@ -128,7 +128,7 @@ class _CameraDetectionState extends State<CameraDetection> {
       Recognition recognition;
       try {
         recognition = await recognizer.recognize(croppedFace!, faceRect);
-        if(recognition.distance>1.22){
+        if(recognition.distance>1){
           recognition.name = "Unknown";
         }
       } catch (e) {
@@ -397,13 +397,15 @@ class _CameraDetectionState extends State<CameraDetection> {
           icon: Icon(Icons.camera),
           color: Colors.white,
           iconSize: 50,
-          onPressed: isNotRegist
+          onPressed: 
+            isNotRegist
             ? null
             : isUnknown
             ? null // if Unknown maka gabisa pencet
             : noFaceDetected
             ? null 
-            : () async {
+            :
+            () async {
             try {
               await controller.stopImageStream(); 
               XFile picture = await controller.takePicture();

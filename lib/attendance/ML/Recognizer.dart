@@ -68,22 +68,28 @@ class Recognizer {
     }
 
     final response = await http.post(
-      Uri.parse('http://192.168.2.159:8080/FlutterAPI/attendance/admin/GetEmbeddingById.php'),
+      Uri.parse('http://192.168.100.84/FlutterAPI/attendance/admin/GetEmbeddingById.php'),
       body: {'user_id': userId},
     );
 
+    print("response embed : ${response.body}");
+
     if (response.statusCode == 200) {
       var registeredEmbedding = jsonDecode(response.body);
-      print(registeredEmbedding); // Debugging print
+      // print(registeredEmbedding); 
 
       // Mendapatkan string embedding dan menghilangkan tanda kutip tambahan
-      String embeddingString = registeredEmbedding[0]['embedding'].replaceAll("\"", "");
+      // String embeddingString = registeredEmbedding[0]['embedding'].replaceAll("\"", "");
+      String embeddingString = registeredEmbedding[0]['embedding'];
 
       // Pisahkan string menjadi daftar dan ubah setiap elemen menjadi double
       embeddingList = embeddingString
-          .split(',')
-          .map((e) => double.parse(e))
+          .replaceAll('[', '') 
+          .replaceAll(']', '') 
+          .split(',') 
+          .map((e) => double.tryParse(e.trim()) ?? 0.0) 
           .toList();
+      print("embeddingList : ${embeddingList}");
 
       return embeddingList!;
 
@@ -182,7 +188,7 @@ class Recognizer {
     distance = sqrt(distance);
 
     // Tentukan ambang batas untuk mencocokkan
-    double threshold = 2.0; // Sesuaikan dengan kebutuhan Anda
+    double threshold = 1.0; // Sesuaikan dengan kebutuhan Anda
     if (distance <= threshold) {
       return Pair("Success", distance);
     } else {

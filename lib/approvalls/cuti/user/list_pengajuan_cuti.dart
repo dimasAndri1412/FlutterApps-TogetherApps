@@ -541,14 +541,14 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                           Center(
                             child: ElevatedButton(
                               onPressed: getSelected.status == "Approved" ? () async {
-                                final adminModel = AdminApprovalPaidLeaveModel.fromMemberList(getSelected);
+                                // final adminModel = AdminApprovalPaidLeaveModel.fromMemberList(getSelected);
 
-                                print("Remaining leave in Admin Model: ${adminModel.remaining_leave}");
+                                // print("Remaining leave in Admin Model: ${adminModel.remaining_leave}");
 
-                                final pdfGenerator = PDFGenerator_MSDO(getUserDetail: adminModel).GeneratePDF();
+                                // final pdfGenerator = PDFGenerator_MSDO(getUserDetail: adminModel).GeneratePDF();
 
-                                await Printing.layoutPdf(
-                                    onLayout: (format) => pdfGenerator);
+                                // await Printing.layoutPdf(
+                                //     onLayout: (format) => pdfGenerator);
 
                               } : null,
                               child: const Text("print"),
