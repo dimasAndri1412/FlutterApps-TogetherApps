@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:absent_project/controller/AbsentController/RegistratedFace.dart';
+import 'package:absent_project/controller/Keys.dart';
 import 'package:http/http.dart' as http;
 import 'package:absent_project/controller/LoginController.dart';
 import 'package:image/image.dart' as img;
@@ -125,6 +126,7 @@ class Recognizer {
 
     // Konversi output ke List<double> untuk disimpan sebagai embedding baru
     List<double> outputArray = output.first.cast<double>();
+    EmbeddingController.text = jsonEncode(outputArray);
 
     // Jika embeddingList dari server kosong, gunakan output sebagai embedding baru
     if (embeddingList == null || embeddingList!.isEmpty) {
