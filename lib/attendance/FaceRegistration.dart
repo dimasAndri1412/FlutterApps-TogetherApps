@@ -7,6 +7,7 @@ import 'package:absent_project/MapsViews/MapsClockOutElapsedTime/GmapsClockOutPa
 import 'package:absent_project/MapsViews/MapsConfirmLocationPages/GmapsConfirmPages.dart';
 import 'package:absent_project/attendance/CircleClipper.dart';
 import 'package:absent_project/attendance/FaceDetectorPainter.dart';
+import 'package:absent_project/controller/AbsentController/ClockInController.dart';
 import 'package:absent_project/controller/AbsentController/ClockInState.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/cupertino.dart';
@@ -117,12 +118,28 @@ class _FaceRegistrationState extends State<FaceRegistration> {
     FaceImageController.text = croppedImagePath;
   }
 
-  Future<File> saveCroppedFaceToFile(img.Image croppedFace) async {
-  final directory = await getApplicationDocumentsDirectory(); // Make sure to import 'path_provider'
-  final filePath = '${directory.path}/cropped_face.png'; // Change file name as needed
-  final file = File(filePath);
-  await file.writeAsBytes(img.encodePng(croppedFace));
-  return file;
+  Future<File> saveCroppedFaceToFile(img.Image croppedFace, String userName) async {
+    final directory = await getApplicationDocumentsDirectory(); 
+    // final filePath = '${directory.path}/cropped_face.png'; 
+    // final file = File(filePath);
+    // await file.writeAsBytes(img.encodePng(croppedFace));
+    // return file;
+    final fileName = 'regist_${userName}.png'; // Nama file dengan nama pengguna
+    final filePath = '${directory.path}/$fileName';
+    final file = File(filePath);
+    await file.writeAsBytes(img.encodePng(croppedFace));
+    return file;
+  }
+
+Future<void> saveUserFaceImage(img.Image croppedFace) async {
+  try {
+    ClockInController clockInController = ClockInController();
+    String userName = await clockInController.fetchUserName();
+    File savedFile = await saveCroppedFaceToFile(croppedFace, userName);
+    print('File saved at: ${savedFile.path}');
+  } catch (e) {
+    print('Error: $e');
+  }
 }
 
   img.Image? image;
@@ -135,13 +152,15 @@ class _FaceRegistrationState extends State<FaceRegistration> {
     image = Platform.isIOS?_convertBGRA8888ToImage(frame!) as img.Image?:_convertNV21(frame!);
     image =img.copyRotate(image!, angle: camDirec == CameraLensDirection.front?90:270);
 
+    ClockInController clockInController = ClockInController();
+    String userName = await clockInController.fetchUserName();
     for (Face face in faces) {
       Rect faceRect = face.boundingBox;
       //TODO crop face
       img.Image croppedFace = img.copyCrop(image!, x:faceRect.left.toInt(),y:faceRect.top.toInt(),width:faceRect.width.toInt(),height:faceRect.height.toInt());
 
       // Save cropped image to file
-      File croppedImageFile = await saveCroppedFaceToFile(croppedFace);
+      File croppedImageFile = await saveCroppedFaceToFile(croppedFace, userName);
 
       // Save the path of the cropped image
       saveCroppedImagePath(croppedImageFile.path);
