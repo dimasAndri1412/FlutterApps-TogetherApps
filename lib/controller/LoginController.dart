@@ -63,6 +63,9 @@ class LoginController {
           IDUsers = dataUser[0]['ID'];
           position = dataUser[0]['ID'];
           device = dataUser[0]['device'];
+
+          await saveManagerName(username!);
+          
         };
 
         await saveUserId(IDUsers!);
@@ -108,5 +111,11 @@ class LoginController {
     } catch (Exception) {
       return "Failed Request!";
     }
+  }
+  
+  Future<void> saveManagerName(String username) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('manager_name', username);
+    print('Manager Name: $username');
   }
 }

@@ -141,7 +141,7 @@ class _ListUserState extends State<ListUser> {
                         ),
                         child: ListTile(
                           subtitle: Text(user.grup),
-                          title: Text(user.username),
+                          title: Text(user.fullname),
                           leading: CircleAvatar(
                             backgroundImage: NetworkImage(user.avatarUrl),
                           ),
