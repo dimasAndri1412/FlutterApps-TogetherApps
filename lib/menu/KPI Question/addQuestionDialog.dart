@@ -4,6 +4,8 @@ import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controller/KPIQuestionsController/question/QuestionModel.dart';
+
 class addQuestionDialog extends StatefulWidget {
   final int positionId;
 
@@ -14,6 +16,19 @@ class addQuestionDialog extends StatefulWidget {
 }
 
 class _addQuestionDialogState extends State<addQuestionDialog> {
+  final Questioncontroller _controller = Questioncontroller();
+  List<QuestionModel> _questions = [];
+  bool _isLoading = true;
+
+  void _fetchQuestions() async {
+    List<QuestionModel> questions = await _controller.getQuestions(widget.positionId);
+
+    setState(() {
+      _questions = questions;
+      _isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // String positionName = 'uknown';
@@ -102,6 +117,7 @@ class _addQuestionDialogState extends State<addQuestionDialog> {
 
                       questionText.clear();
                       Navigator.pop(context);
+                      _fetchQuestions();
                     }, 
                     child: Text("Add Question",
                       style: TextStyle(

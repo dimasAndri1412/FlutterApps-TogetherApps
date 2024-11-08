@@ -55,17 +55,12 @@ class AdminApprovalPaidLeaveController {
           "http://192.168.2.159:8080/FlutterAPI/approvals/admin/paid_leave/getUsers.php");
       var data = await http.post(url, body: {"name": namePaidLeave.text});
 
-      print("Response status: ${data.statusCode}");
-      print("Response body: ${data.body}");
-
       var jsonData = json.decode(data.body);
       List<AdminApprovalPaidLeaveModel> users = [];
       for (var u in jsonData) {
-        print("Parsing user: $u"); // Menampilkan setiap item JSON
         AdminApprovalPaidLeaveModel user = AdminApprovalPaidLeaveModel.fromJson(u);
         users.add(user);
       }
-      print("Parsed users: $users");
       return users;
     } catch (e) {
       print("Error: $e");

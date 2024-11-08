@@ -70,7 +70,7 @@ class _ListUserCutiState extends State<ListUserCuti> {
         getProject = projectList!;
       });
     } catch (e) {
-      print('Error fetching paid leave requests: $e');
+      print('Error fetching Status requests: $e');
     }
   }
 
