@@ -1,32 +1,28 @@
 //GettingProject
 import 'dart:async';
-
 import 'package:absent_project/MapsViews/MatterialMaps/FindLastLogOutControllers.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/FindLocationControllersNew.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/FindMapLocationControllers.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/FindProjectControllers.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/findShifClockInController.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/validationDatesForClockIn.dart';
-import 'package:absent_project/MapsViews/modelMaps/newLocationModels.dart';
 import 'package:absent_project/MapsViews/modelMaps/usernameModel.dart' as projectsModels;
 import 'package:absent_project/MapsViews/modelMaps/mapsModels.dart' as gmapsModels;
 import 'package:absent_project/MapsViews/modelMaps/clockOutModels.dart' as clockOutModels;
 import 'package:absent_project/MapsViews/modelMaps/lastLogOutsModels.dart' as lastClockOutModel;
 import 'package:absent_project/MapsViews/modelMaps/validateModels.dart' as validationModels;
-import 'package:absent_project/MapsViews/modelMaps/newProjectModels.dart' as projectsLocModel;
+import 'package:absent_project/MapsViews/modelMaps/newLocationProjectModels.dart' as newProjectsModels;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
 
 //Get Project
 Future<String?> findProjectss() async {
-  final findsProjectController projectControllers = findsProjectController();
-  await projectControllers.findUsers();
+  final findLocationsControllersNews controllerProjects = findLocationsControllersNews();
+  await controllerProjects.findLocationsNews();
 
-  String? valueProject = projectsModels.projectModel;
-
-  final String? valuesProjects = valueProject;
-  return valuesProjects;
+  String? projectsNamesValues = newProjectsModels.projectNamesLocations;
+  return projectsNamesValues;
 }
 
 Future<String?> findUserNameLocation() async {
