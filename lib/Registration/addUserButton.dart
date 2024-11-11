@@ -23,15 +23,15 @@ class _addUserButtonState extends State<addUserButton> {
             if (formKeys.currentState!.validate()) {
               ctr_data().savefunc().then((value) {
                 if (value) {
-                  final snackBar = SnackBar(
-                    content: const Text('Data Berhasil Disimpan'),
+                  const snackBar = SnackBar(
+                    content: Text('Data Berhasil Disimpan'),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   sendingEmail().sendingEmailFunc();
                   ctr_data().clear_func_otp();
                   Get.offAll(() => LoginPage());
                 } else {
-                  final snackBar = SnackBar(
+                  const snackBar = SnackBar(
                     content: const Text('Data Gagal Disimpan'),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);

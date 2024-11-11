@@ -9,14 +9,14 @@ import 'UserList.dart';
 
 class ListUserController {
 
-  Future<String?> getManagerName() async {
+  Future<String?> getUserId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('manager_name');
+    return prefs.getString('user_id');
   }
 
   Future<List<UserList>?> getUsers() async {
 
-    String? managerName = await getManagerName();
+    String? managerName = await getUserId();
     if(managerName == null){
       print('Manager Name Not Found');
       return null;
