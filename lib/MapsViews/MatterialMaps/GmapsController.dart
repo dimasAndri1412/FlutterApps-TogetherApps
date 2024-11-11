@@ -15,7 +15,6 @@ import 'package:absent_project/MapsViews/modelMaps/newLocationProjectModels.dart
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
-
 //Get Project
 Future<String?> findProjectss() async {
   final findLocationsControllersNews controllerProjects = findLocationsControllersNews();
