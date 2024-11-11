@@ -15,32 +15,40 @@ class ListUserController {
   }
 
   Future<List<UserList>?> getUsers() async {
-
     String? managerName = await getUserId();
-    if(managerName == null){
+    if (managerName == null) {
       print('Manager Name Not Found');
       return null;
     }
 
-    var data = await http.get(
-        Uri.parse("http://192.168.2.159:8080/FlutterAPI/readuserlist.php?manager_name=$managerName"));
-    var jsonData = json.decode(data.body);
-
-    List<UserList> users = [];
-
-    for (var u in jsonData) {
-      UserList user = UserList(
-          u["username"] ?? "",
-          u["full_name"] ?? "",
-          u["role"] ?? "",
-          u["project_name"] ?? "",
-          u["email_address"] ?? "",
-          u["phone_number"] ?? "",
-          u["image_path"] ?? ""
-      );
-      users.add(user);
+    var data = await http.post(
+        Uri.parse(
+            "http://192.168.2.159:8080/FlutterAPI/readuserlist.php"
+        ), body: {
+      "manager_name": managerName,
     }
-    return users;
+    );
+
+    if (data.statusCode == 200) {
+      var jsonData = json.decode(data.body);
+
+      List<UserList> users = [];
+
+      for (var u in jsonData) {
+        UserList user = UserList(
+            u["username"] ?? "",
+            u["full_name"] ?? "",
+            u["role"] ?? "",
+            u["project_name"] ?? "",
+            u["email_address"] ?? "",
+            u["phone_number"] ?? "",
+            u["image_path"] ?? ""
+        );
+        users.add(user);
+      }
+      return users;
+    }
+    return null;
   }
 
   Future<Map<String, dynamic>> deleteUser(String email) async {

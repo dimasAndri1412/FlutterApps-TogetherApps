@@ -18,6 +18,7 @@ class LoginController {
       login_flag,
       IDUsers,
       position,
+      fullname,
       device;
 
   var dataUser;
@@ -58,13 +59,12 @@ class LoginController {
         } else {
           username = dataUser[0]['USERNAME'];
           password = dataUser[0]['PASSWORD'];
+          fullname = dataUser[0]['full_name'];
           role = dataUser[0]['ROLE'];
           login_flag = dataUser[0]['login_flag'];
           IDUsers = dataUser[0]['ID'];
           position = dataUser[0]['ID'];
           device = dataUser[0]['device'];
-
-          await saveManagerName(username!);
           
         };
 
