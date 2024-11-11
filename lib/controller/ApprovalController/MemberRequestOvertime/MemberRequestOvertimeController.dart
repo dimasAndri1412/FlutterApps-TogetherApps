@@ -13,23 +13,6 @@ import 'MemberRequestOvertimeModel.dart';
 
 class MemberRequestOvertimeController {
   final MemberRequestOvertimeModel getData = MemberRequestOvertimeModel();
-  // final MemberRequestOvertimeGetListModel getData2 = MemberRequestOvertimeGetListModel();
-
-  // Future<List<MemberRequestOvertimeGetListModel>?> getInfoList() async {
-  //   var data = await http.post(
-  //       Uri.parse(
-  //           "http://192.168.2.159:8080/FlutterAPI/approvals/member/overtime/getFullName.php"),
-  //       body: {
-  //         "username": emailController.text,
-  //       });
-  //   var jsonData = json.decode(data.body);
-  //   List<MemberRequestOvertimeGetListModel> users = [];
-  //   for (var u in jsonData) {
-  //     MemberRequestOvertimeGetListModel user =
-  //         MemberRequestOvertimeGetListModel.fromJson(u);
-  //     users.add(user);
-  //   }
-  // }
 
   Future getInfo() async {
     var data = await http.post(

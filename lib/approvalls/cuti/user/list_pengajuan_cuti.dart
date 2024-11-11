@@ -4,6 +4,7 @@ import 'package:absent_project/approvalls/cuti/user/pengajuan_cuti.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberListPaidLeave.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberStatusPaidLeave.dart';
+import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/home/applicationbar_user.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -38,17 +39,18 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
     fetchStatusPaidLeave();
   }
 
-  void _checkDate(){
+  void _checkDate() {
     final today = DateTime.now();
-    if(today.day > 11){
+    if (today.day > 11) {
       setState(() {
         isButtonEnabled = false;
       });
-     _showWarningDialog();
-    }else {
+      _showWarningDialog();
+    } else {
       setState(() {
         isButtonEnabled = true;
-        Get.to(()=>const PengajuanCuti());
+        Get.to(() => const PengajuanCuti());
+        reasonPaidLeave.text = '';
       });
     }
   }
@@ -163,28 +165,29 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
       builder: (BuildContext context) {
         return Scaffold(
             appBar: AppBar(
-              title:const Center(
+              title: const Center(
                 child: Text(
                   "Detail Approval",
-                  style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
               automaticallyImplyLeading: false,
               flexibleSpace: Container(
                 decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [
-                        Color.fromARGB(255, 147, 195, 234),
-                        Color.fromARGB(255, 98, 171, 232),
-                        Color.fromARGB(255, 123, 185, 235),
-                      ]
-                  ),
+                  gradient: LinearGradient(colors: [
+                    Color.fromARGB(255, 147, 195, 234),
+                    Color.fromARGB(255, 98, 171, 232),
+                    Color.fromARGB(255, 123, 185, 235),
+                  ]),
                 ),
               ),
               elevation: 0,
             ),
-            body:SingleChildScrollView(
-              child:  Column(
+            body: SingleChildScrollView(
+              child: Column(
                 children: [
                   Center(
                     child: Container(
@@ -194,14 +197,18 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(20)
-                      ),
+                          borderRadius: BorderRadius.circular(20)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Icon(Icons.notifications_active, color: Colors.orange,),
-                          const SizedBox(width: 5,),
+                          const Icon(
+                            Icons.notifications_active,
+                            color: Colors.orange,
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
                           const Text(
                             "Status : ",
                           ),
@@ -209,18 +216,19 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                             getSelected.status,
                             style: const TextStyle(
                                 color: Colors.blue,
-                                fontWeight: FontWeight.bold
-                            ),
+                                fontWeight: FontWeight.bold),
                           )
                         ],
                       ),
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 10),
+                    margin: const EdgeInsets.only(
+                        top: 5, left: 20, right: 20, bottom: 10),
                     height: 70,
                     decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 152, 188, 210).withOpacity(0.2),
+                      color: const Color.fromARGB(255, 152, 188, 210)
+                          .withOpacity(0.2),
                     ),
                     child: ListTile(
                         leading: const CircleAvatar(
@@ -231,17 +239,16 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                             color: Colors.white,
                           ),
                         ),
-                        title:Row(
+                        title: Row(
                           children: [
                             const Text(
                               "No Request : ",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 14),
                             ),
-                            Text(getSelected.req_no,
-                              style: const TextStyle(
-                                  fontSize: 14
-                              ),
+                            Text(
+                              getSelected.req_no,
+                              style: const TextStyle(fontSize: 14),
                             )
                           ],
                         ),
@@ -249,20 +256,18 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                           children: [
                             const Text(
                               "Submitted Date ",
-                              style: TextStyle(
-                                  fontSize: 12),
+                              style: TextStyle(fontSize: 12),
                             ),
-                            Text(getSelected.submittedDate,
-                              style: const TextStyle(
-                                  fontSize: 12
-                              ),
+                            Text(
+                              getSelected.submittedDate,
+                              style: const TextStyle(fontSize: 12),
                             )
                           ],
-                        )
-                    ),
+                        )),
                   ),
                   Container(
-                      margin: const EdgeInsets.only(top: 5, left: 10, right: 10),
+                      margin:
+                          const EdgeInsets.only(top: 5, left: 10, right: 10),
                       width: 350,
                       height: 450,
                       decoration: BoxDecoration(
@@ -271,7 +276,8 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                         border: Border.all(width: 2, color: Colors.grey),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
+                        padding:
+                            const EdgeInsets.only(top: 15, left: 20, right: 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -280,8 +286,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               style: TextStyle(
                                   color: Colors.blue,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 15
-                              ),
+                                  fontSize: 15),
                             ),
                             const Divider(
                               color: Colors.grey,
@@ -289,17 +294,22 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               indent: 2,
                               endIndent: 2,
                             ),
-                            const SizedBox(height: 10,),
+                            const SizedBox(
+                              height: 10,
+                            ),
                             IntrinsicHeight(
                               child: Row(
                                 children: [
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         const Text(
                                           "Submitted by",
-                                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 13),
                                         ),
                                         const SizedBox(height: 5),
                                         Text(
@@ -312,11 +322,14 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                                   const SizedBox(width: 20),
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         const Text(
                                           "Phone Number",
-                                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 13),
                                         ),
                                         const SizedBox(height: 5),
                                         Text(
@@ -342,11 +355,14 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                                 children: [
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         const Text(
                                           "Position",
-                                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 13),
                                         ),
                                         const SizedBox(height: 5),
                                         Text(
@@ -359,11 +375,14 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                                   const SizedBox(width: 20),
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         const Text(
                                           "Department",
-                                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 13),
                                         ),
                                         const SizedBox(height: 5),
                                         Text(
@@ -382,45 +401,53 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                               indent: 2,
                               endIndent: 2,
                             ),
-                            const SizedBox(height: 5,),
+                            const SizedBox(
+                              height: 5,
+                            ),
                             IntrinsicHeight(
                               child: Row(
                                 children: [
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        const Text("Leave Type",
+                                        const Text(
+                                          "Leave Type",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 13
-                                          ),
+                                              fontSize: 13),
                                         ),
-                                        const SizedBox(height: 5,),
-                                        Text(getSelected.types_leave,
-                                          style: const TextStyle(
-                                              fontSize: 13
-                                          ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                          getSelected.types_leave,
+                                          style: const TextStyle(fontSize: 13),
                                         )
                                       ],
                                     ),
                                   ),
-                                  const SizedBox(width: 20,),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        const Text("Shift",
+                                        const Text(
+                                          "Shift",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 13
-                                          ),
+                                              fontSize: 13),
                                         ),
-                                        const SizedBox(height: 5,),
-                                        Text(getSelected.shift,
-                                          style: const TextStyle(
-                                              fontSize: 13
-                                          ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                          getSelected.shift,
+                                          style: const TextStyle(fontSize: 13),
                                         )
                                       ],
                                     ),
@@ -428,53 +455,55 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 5,),
+                            const SizedBox(
+                              height: 5,
+                            ),
                             const Divider(
                               color: Colors.grey,
                               thickness: 0.5,
                               indent: 2,
                               endIndent: 2,
                             ),
-                            const SizedBox(height: 5,),
+                            const SizedBox(
+                              height: 5,
+                            ),
                             Row(
                               children: [
-                                const Text("Reason of Leave : ",
+                                const Text(
+                                  "Reason of Leave : ",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 13
-                                  ),
+                                      fontSize: 13),
                                 ),
                                 Expanded(
-                                    child: Text(getSelected.reason_leave,
-                                      style: const TextStyle(
-                                          fontSize: 13
-                                      ),
-                                    )
-                                )
+                                    child: Text(
+                                  getSelected.reason_leave,
+                                  style: const TextStyle(fontSize: 13),
+                                ))
                               ],
                             ),
-                            const SizedBox(height: 5,),
-                            const Text("Leave Date ",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13
-                              ),
+                            const SizedBox(
+                              height: 5,
                             ),
-                            const SizedBox(height: 5,),
+                            const Text(
+                              "Leave Date ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 13),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
                             Row(
                               children: [
                                 Container(
                                   width: 140,
                                   height: 35,
                                   decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.grey)
-                                  ),
+                                      border: Border.all(color: Colors.grey)),
                                   child: Center(
                                     child: Text(
                                       getSelected.date_start_leave,
-                                      style: const TextStyle(
-                                          fontSize: 13
-                                      ),
+                                      style: const TextStyle(fontSize: 13),
                                     ),
                                   ),
                                 ),
@@ -485,84 +514,80 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                                   width: 140,
                                   height: 35,
                                   decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.grey)
-                                  ),
+                                      border: Border.all(color: Colors.grey)),
                                   child: Center(
                                     child: Text(
                                       getSelected.date_end_leave,
-                                      style: const TextStyle(
-                                          fontSize: 13
-                                      ),
+                                      style: const TextStyle(fontSize: 13),
                                     ),
                                   ),
                                 )
                               ],
                             ),
-                            const SizedBox(height: 20,),
+                            const SizedBox(
+                              height: 20,
+                            ),
                             Row(
                               children: [
-                                const Text("Name Of PIC : ",
+                                const Text(
+                                  "Name Of PIC : ",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 13
-                                  ),
+                                      fontSize: 13),
                                 ),
-                                Text(getSelected.name_of_pic,
-                                  style: const TextStyle(
-                                      fontSize: 13
-                                  ),
+                                Text(
+                                  getSelected.name_of_pic,
+                                  style: const TextStyle(fontSize: 13),
                                 )
                               ],
                             ),
-                            const SizedBox(height: 5,),
+                            const SizedBox(
+                              height: 5,
+                            ),
                             Row(
                               children: [
-                                const Text("Will return to work on : ",
+                                const Text(
+                                  "Will return to work on : ",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 13
-                                  ),
+                                      fontSize: 13),
                                 ),
-                                Text(getSelected.date_back_to_work,
-                                  style: const TextStyle(
-                                      fontSize: 13
-                                  ),
+                                Text(
+                                  getSelected.date_back_to_work,
+                                  style: const TextStyle(fontSize: 13),
                                 ),
                               ],
                             ),
                           ],
                         ),
-                      )
-                  ),
+                      )),
                   Padding(
-                      padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Column(
                       children: [
-                          Center(
-                            child: ElevatedButton(
-                              onPressed: getSelected.status == "Approved" ? () async {
-                                // final adminModel = AdminApprovalPaidLeaveModel.fromMemberList(getSelected);
+                        Center(
+                          child: ElevatedButton(
+                            onPressed: getSelected.status == "Approved"
+                                ? () async {
+                                    // final adminModel = AdminApprovalPaidLeaveModel.fromMemberList(getSelected);
 
-                                // print("Remaining leave in Admin Model: ${adminModel.remaining_leave}");
+                                    // print("Remaining leave in Admin Model: ${adminModel.remaining_leave}");
 
-                                // final pdfGenerator = PDFGenerator_MSDO(getUserDetail: adminModel).GeneratePDF();
+                                    // final pdfGenerator = PDFGenerator_MSDO(getUserDetail: adminModel).GeneratePDF();
 
-                                // await Printing.layoutPdf(
-                                //     onLayout: (format) => pdfGenerator);
-
-                              } : null,
-                              child: const Text("print"),
-                            ),
-
-                          )
+                                    // await Printing.layoutPdf(
+                                    //     onLayout: (format) => pdfGenerator);
+                                  }
+                                : null,
+                            child: const Text("print"),
+                          ),
+                        )
                       ],
                     ),
                   ),
-
                 ],
               ),
-            )
-        );
+            ));
       },
     );
   }
@@ -710,7 +735,8 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
             GestureDetector(
               onTap: () => _showFilterOptions(context),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 margin: const EdgeInsets.only(left: 15, top: 10),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey, width: 2),

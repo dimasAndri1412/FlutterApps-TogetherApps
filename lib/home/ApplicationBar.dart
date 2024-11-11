@@ -9,7 +9,8 @@ import 'package:absent_project/controller/AbsentController/ClockInState.dart';
 import 'package:provider/provider.dart';
 
 class ApplicationBar extends StatefulWidget {
-  const ApplicationBar({super.key});
+  final int initialIndex;
+  const ApplicationBar({super.key, this.initialIndex = 0});
 
   @override
   State<ApplicationBar> createState() => _ApplicationBarState();
@@ -26,6 +27,14 @@ class _ApplicationBarState extends State<ApplicationBar> {
   //   MenuPage()
   // ];
   int currentIndex = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    currentIndex = widget.initialIndex;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ClockInState>(builder: (context, clockInState, child) {

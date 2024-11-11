@@ -1,7 +1,9 @@
+import 'package:absent_project/approvalls/lembur/msdo/ListUserLembur.dart';
 import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertimeModel.dart';
 import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertmaControlleri.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class RejectDialog extends StatefulWidget {
@@ -18,7 +20,7 @@ class _RejectDialogState extends State<RejectDialog> {
       Uri.parse(
           "http://192.168.2.159:8080/FlutterAPI/approvals/admin/overtime/update_rejected.php"),
       body: {
-        "reason_rejected": reason_rejectedController.text,
+        "reason_rejected": reason_OTrejectedController.text,
         "reqNo": widget.getData.reqNo,
       },
     );
@@ -88,7 +90,7 @@ class _RejectDialogState extends State<RejectDialog> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 5, left: 8),
                     child: TextField(
-                      controller: reason_rejectedController,
+                      controller: reason_OTrejectedController,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Enter the reason here',
@@ -105,6 +107,8 @@ class _RejectDialogState extends State<RejectDialog> {
                     onPressed: () {
                       Navigator.pop(context);
                       updateRejected();
+                      reason_OTrejectedController.text = '';
+                      Get.offAll(ListUserLembur());
                     },
                     child: Text(
                       "Reject",
