@@ -80,6 +80,7 @@ class MonthlyTimesheets extends StatelessWidget {
             pw.Table(
               border: pw.TableBorder.all(),
               children: [
+                // Header row
                 pw.TableRow(
                   children: [
                     pw.Container(
@@ -89,9 +90,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       color: PdfColors.red200,
                       child: pw.Text(
                         'Date', 
-                        style: pw.TextStyle(
-                          fontWeight: pw.FontWeight.bold,
-                        )
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                       ),
                     ),
                     pw.Container(
@@ -100,9 +99,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       color: PdfColors.red200,
                       child: pw.Text(
                         'Name of Project', 
-                        style: pw.TextStyle(
-                          fontWeight: pw.FontWeight.bold
-                        )
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                       ),
                     ),
                     pw.Container(
@@ -111,9 +108,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       color: PdfColors.red200,
                       child: pw.Text(
                         'Location', 
-                        style: pw.TextStyle(
-                          fontWeight: pw.FontWeight.bold
-                        )
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                       ),
                     ),
                     pw.Container(
@@ -123,9 +118,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       color: PdfColors.red200,
                       child: pw.Text(
                         'Start', 
-                        style: pw.TextStyle(
-                          fontWeight: pw.FontWeight.bold
-                        )
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                       ),
                     ),
                     pw.Container(
@@ -135,9 +128,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       color: PdfColors.red200,
                       child: pw.Text(
                         'End', 
-                        style: pw.TextStyle(
-                          fontWeight: pw.FontWeight.bold
-                        )
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                       ),
                     ),
                     pw.Container(
@@ -147,9 +138,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       color: PdfColors.red200,
                       child: pw.Text(
                         'Total', 
-                        style: pw.TextStyle(
-                          fontWeight: pw.FontWeight.bold
-                        )
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                       ),
                     ),
                     pw.Container(
@@ -158,13 +147,12 @@ class MonthlyTimesheets extends StatelessWidget {
                       color: PdfColors.red200,
                       child: pw.Text(
                         'Activity / Remark',
-                        style: pw.TextStyle(
-                          fontWeight: pw.FontWeight.bold
-                        )
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                       ),
                     ),
                   ],
                 ),
+                // Data rows
                 ...dates.map((date) {
                   final timesheet = timesheets.firstWhere(
                     (item) => item.clockIn != null && item.clockIn!.day == date.day,
@@ -177,106 +165,144 @@ class MonthlyTimesheets extends StatelessWidget {
                       elapsedTime: 'Off',
                       questionText: [],
                       answerText: ['Off'],
-                      grup: 'Off'
+                      grup: 'Off',
+                      overtime: null, 
                     ),
                   );
 
                   final isDataAvailable = timesheet.clockIn != null;
-                  // print("Total rows: ${dates.length}");
+                  final overtimeData = timesheet.overtime;
 
-                  // print("Date: $date, Timesheet: ${timesheet.grup}");
-
-                  return pw.TableRow(
-                    children: [
-                      pw.Container(
-                        alignment: pw.Alignment.center,
-                        color: isDataAvailable ? PdfColors.white : PdfColors.yellow,
-                        child: pw.Padding(
-                          padding: pw.EdgeInsets.all(2),
+                  List<pw.TableRow> rows = [
+                    pw.TableRow(
+                      children: [
+                        pw.Container(
+                          alignment: pw.Alignment.center,
+                          color: isDataAvailable ? PdfColors.white : PdfColors.yellow,
                           child: pw.Text(
                             '${date.day}-${date.month}-${date.year}',
-                            style: pw.TextStyle(
-                              fontSize: 11
-                            )
+                            style: pw.TextStyle(fontSize: 11),
                           ),
                         ),
-                      ),
-                      pw.Container(
-                        alignment: pw.Alignment.center,
-                        color: isDataAvailable ? PdfColors.white : PdfColors.yellow,
-                        child: pw.Padding(
-                          padding: pw.EdgeInsets.all(2),
+                        pw.Container(
+                          alignment: pw.Alignment.center,
+                          color: isDataAvailable ? PdfColors.white : PdfColors.yellow,
                           child: pw.Text(
                             isDataAvailable ? timesheet.grup ?? 'Unknown' : 'Off',
-                            style: pw.TextStyle(
-                              fontSize: 11
-                            )  
+                            style: pw.TextStyle(fontSize: 11),
                           ),
                         ),
-                      ), 
-                      pw.Container(
-                        alignment: pw.Alignment.center,
-                        color: isDataAvailable ? PdfColors.white : PdfColors.yellow,
-                        child: pw.Padding(
-                          padding: pw.EdgeInsets.all(2),
-                          child:  pw.Text(isDataAvailable ? timesheet.location ?? 'Unknown' : 'Off',
-                            style: pw.TextStyle(
-                              fontSize: 11
-                            )
+                        pw.Container(
+                          alignment: pw.Alignment.center,
+                          color: isDataAvailable ? PdfColors.white : PdfColors.yellow,
+                          child: pw.Text(
+                            isDataAvailable ? timesheet.location ?? 'Unknown' : 'Off',
+                            style: pw.TextStyle(fontSize: 11),
                           ),
-                        ), 
+                        ),
+                        pw.Container(
+                          alignment: pw.Alignment.center,
+                          color: isDataAvailable ? PdfColors.white : PdfColors.yellow,
+                          child: pw.Text(
+                            isDataAvailable && timesheet.clockIn != null ? '${timesheet.clockIn!.hour}:${timesheet.clockIn!.minute}' : '-',
+                            style: pw.TextStyle(fontSize: 11),
+                          ),
+                        ),
+                        pw.Container(
+                          alignment: pw.Alignment.center,
+                          color: isDataAvailable ? PdfColors.white : PdfColors.yellow,
+                          child: pw.Text(
+                            isDataAvailable && timesheet.clockOut != null ? '${timesheet.clockOut!.hour}:${timesheet.clockOut!.minute}' : '-',
+                            style: pw.TextStyle(fontSize: 11),
+                          ),
+                        ),
+                        pw.Container(
+                          alignment: pw.Alignment.center,
+                          color: isDataAvailable ? PdfColors.white : PdfColors.yellow,
+                          child: pw.Text(
+                            isDataAvailable ? timesheet.elapsedTime ?? '0' : '-',
+                            style: pw.TextStyle(fontSize: 11),
+                          ),
+                        ),
+                        pw.Container(
+                          alignment: pw.Alignment.center,
+                          color: isDataAvailable ? PdfColors.white : PdfColors.yellow,
+                          child: pw.Text(
+                            isDataAvailable ? "Running ${timesheet.shift}" : 'Off',
+                            style: pw.TextStyle(fontSize: 11),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ];
+
+                  if (overtimeData != null) {
+                    rows.add(
+                      pw.TableRow(
+                        children: [
+                          pw.Container(
+                            color: PdfColors.blue,
+                            alignment: pw.Alignment.center,
+                            child: pw.Text(
+                              overtimeData.formattedDate ?? '-',
+                              style: pw.TextStyle(fontSize: 11),
+                            ),
+                          ),
+                          pw.Container(
+                            color: PdfColors.blue,
+                            alignment: pw.Alignment.center,
+                            child: pw.Text(
+                              timesheet.grup ?? '-',
+                              style: pw.TextStyle(fontSize: 11),
+                            ),
+                          ),
+                          pw.Container(
+                            color: PdfColors.blue,
+                            alignment: pw.Alignment.center,
+                            child: pw.Text(
+                              overtimeData.location ?? '-',
+                              style: pw.TextStyle(fontSize: 11),
+                            ),
+                          ),
+                          pw.Container(
+                            color: PdfColors.blue,
+                            alignment: pw.Alignment.center,
+                            child: pw.Text(
+                              overtimeData.formattedStartTime ?? '-',
+                              style: pw.TextStyle(fontSize: 11),
+                            ),
+                          ),
+                          pw.Container(
+                            color: PdfColors.blue,
+                            alignment: pw.Alignment.center,
+                            child: pw.Text(
+                              overtimeData.formattedEndTime ?? '-',
+                              style: pw.TextStyle(fontSize: 11),
+                            ),
+                          ),
+                          pw.Container(
+                            color: PdfColors.blue,
+                            alignment: pw.Alignment.center,
+                            child: pw.Text(
+                              overtimeData.totalDuration ?? '-',
+                              style: pw.TextStyle(fontSize: 11),
+                            ),
+                          ),
+                          pw.Container(
+                            color: PdfColors.blue,
+                            alignment: pw.Alignment.center,
+                            child: pw.Text(
+                              overtimeData.activity ?? '-',
+                              style: pw.TextStyle(fontSize: 11),
+                            ),
+                          ),
+                        ],
                       ),
-                      pw.Container(
-                        alignment: pw.Alignment.center,
-                        color: isDataAvailable ? PdfColors.white : PdfColors.yellow,
-                        child: pw.Padding(
-                          padding: pw.EdgeInsets.all(2),
-                          child: pw.Text(isDataAvailable && timesheet.clockIn != null ? '${timesheet.clockIn!.hour}:${timesheet.clockIn!.minute}' : '-',
-                            style: pw.TextStyle(
-                              fontSize: 11
-                            )
-                          ),
-                        ),
-                      ), 
-                      pw.Container(
-                        alignment: pw.Alignment.center,
-                        color: isDataAvailable ? PdfColors.white : PdfColors.yellow,
-                        child: pw.Padding(
-                          padding: pw.EdgeInsets.all(2),
-                          child: pw.Text(isDataAvailable && timesheet.clockOut != null ? '${timesheet.clockOut!.hour}:${timesheet.clockOut!.minute}' : '-',
-                            style: pw.TextStyle(
-                              fontSize: 11
-                            )
-                          ),
-                        ),
-                      ),
-                     pw.Container(
-                      alignment: pw.Alignment.center,
-                      color: isDataAvailable ? PdfColors.white : PdfColors.yellow,
-                      child:  pw.Padding(
-                          padding: pw.EdgeInsets.all(2),
-                          child:  pw.Text(isDataAvailable ? timesheet.elapsedTime ?? '0' : '-',
-                            style: pw.TextStyle(
-                              fontSize: 11
-                            )
-                          ),
-                        ), 
-                     ),
-                      pw.Container(
-                        alignment: pw.Alignment.center,
-                        color: isDataAvailable ? PdfColors.white : PdfColors.yellow,
-                        child: pw.Padding(
-                          padding: pw.EdgeInsets.all(2),
-                          child:  pw.Text(isDataAvailable ? "Running ${timesheet.shift}"  : 'Off',
-                            style: pw.TextStyle(
-                              fontSize: 11
-                            )
-                          ),
-                        ), 
-                      )
-                    ],
-                  );
-                }).toList(),
+                    );
+                  }
+
+                  return rows;
+                }).expand((row) => row).toList(),
               ],
             ),
             pw.SizedBox(height: 20),
