@@ -95,7 +95,9 @@ class _ListUserCutiState extends State<ListUserCuti> {
       //   Get.to(ApprovallsUser());
       // },
       onPopInvoked: (didPop) {
-        Get.to(ApplicationBar());
+        Get.to(ApplicationBar(
+          initialIndex: 3,
+        ));
       },
       child: Scaffold(
           appBar: AppBar(

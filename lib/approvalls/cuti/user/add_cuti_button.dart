@@ -21,7 +21,7 @@ class _addCutiButtonState extends State<addCutiButton> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: leaveInfo.getCountandLeave(),
+      future: leaveInfo.getLeaveNew(),
       builder: (context, snapshot) {
         return Column(
           children: [
@@ -53,7 +53,10 @@ class _addCutiButtonState extends State<addCutiButton> {
                     //utk menghitung selisi
                     Duration difference = endDate.difference(startDate);
 
-                    if (difference.inDays > leaveInfo.remainingLeave) {
+                    if (difference.inDays + 1 > leaveInfo.remainingLeave) {
+                      print("total hari: ${difference.inDays + 1}");
+                      print("sisah cuti: ${leaveInfo.remainingLeave}");
+
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(
                               "You cannot take more leave than your remaining leave")));
@@ -74,6 +77,9 @@ class _addCutiButtonState extends State<addCutiButton> {
                                       .clearInfo();
                                   Get.offAll(const ListPengajuanCuti());
                                   // const ListPengajuanCuti();
+                                  print("total hari: ${difference.inDays}");
+                                  print(
+                                      "sisah cuti: ${leaveInfo.remainingLeave}");
                                 },
                               ),
                             ],

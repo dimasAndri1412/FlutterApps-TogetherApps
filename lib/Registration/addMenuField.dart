@@ -2,9 +2,7 @@ import 'package:absent_project/Registration/Functions/fucntionKey.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:dropdownfield2/dropdownfield2.dart';
 import '../controller/Keys.dart';
-import '../controller/projectListContoller.dart';
 
 class addUserField extends StatefulWidget {
   const addUserField({super.key});
@@ -261,12 +259,12 @@ class _addUserFieldState extends State<addUserField> {
                     },
                   )),
               Container(
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.all(10),
+                decoration: const BoxDecoration(
                     border: Border(bottom: BorderSide(color: Colors.black87))),
                 child: TextFormField(
                   controller: EmailController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       labelText: "Email",
                       hintText: "Please Insert Your Email",
                       hintStyle: TextStyle(color: Colors.black26),
@@ -289,80 +287,22 @@ class _addUserFieldState extends State<addUserField> {
                 ),
               ),
               Container(
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
+                  padding: const EdgeInsets.all(10),
+                  decoration: const BoxDecoration(
                       border:
                           Border(bottom: BorderSide(color: Colors.black87))),
                   child: TextFormField(
                     obscureText: passHiding,
                     controller: PassController,
                     readOnly: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Password',
                       hintText: 'Please Insert your password',
                       hintStyle: TextStyle(color: Colors.black26),
                       border: InputBorder.none,
                       prefixIcon: Icon(Icons.lock),
-                      // suffixIcon: IconButton(
-                      //   icon: Icon(passHiding
-                      //       ? Icons.visibility_off
-                      //       : Icons.visibility),
-                      //   onPressed: () {
-                      //     setState(
-                      //       () {
-                      //         passHiding = !passHiding;
-                      //       },
-                      //     );
-                      //   },
-                      // ),
                     ),
-                    // validator: (value) {
-                    //   if (value == null || value.isEmpty) {
-                    //     return 'Password can not empty!';
-                    //   } else if (value.length < 8) {
-                    //     PassController.clear();
-                    //     return 'Password Should be greater than 8 characters';
-                    //   }
-                    //   return null;
-                    // },
                   )),
-              // Container(
-              //   padding: EdgeInsets.all(10),
-              //   decoration: BoxDecoration(
-              //       border: Border(bottom: BorderSide(color: Colors.black87))),
-              //   child: TextFormField(
-              //     obscureText: passHiding,
-              //     keyboardType: TextInputType.emailAddress,
-              //     controller: PassController,
-              //     decoration: InputDecoration(
-              //       labelText: ' Confirm Password',
-              //       hintText: 'Please Insert your password',
-              //       hintStyle: TextStyle(color: Colors.black26),
-              //       border: InputBorder.none,
-              //       prefixIcon: Icon(Icons.lock),
-              //       suffixIcon: IconButton(
-              //         icon: Icon(
-              //             passHiding ? Icons.visibility_off : Icons.visibility),
-              //         onPressed: () {
-              //           setState(
-              //             () {
-              //               passHiding = !passHiding;
-              //             },
-              //           );
-              //         },
-              //       ),
-              //     ),
-              //      validator: (value) {
-              //        if (value == null || value.isEmpty) {
-              //          return 'Password can not empty!';
-              //        } else if (value != PassController.text) {
-              //          ConfPassController.clear();
-              //          return "Sorry Password Not Match!";
-              //        }
-              //        return null;
-              //      },
-              //   ),
-              // )
             ],
           ),
         )

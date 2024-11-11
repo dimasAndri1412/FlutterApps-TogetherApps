@@ -1,7 +1,9 @@
+import 'package:absent_project/approvalls/lembur/msdo/ListUserLembur.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestOvertime/MemberRequestOvertimeController.dart';
 import 'package:flutter/material.dart';
 import 'package:absent_project/approvalls/lembur/msdo/pengajuan_lembur.dart';
 import 'package:absent_project/controller/Keys.dart';
+import 'package:get/get.dart';
 
 class addLemburButton extends StatefulWidget {
   const addLemburButton({super.key});
@@ -50,7 +52,7 @@ class _addLemburButtonState extends State<addLemburButton> {
                           MemberRequestOvertimeController().save();
                           Navigator.of(context).pop();
                           MemberRequestOvertimeController().clearInfo();
-                          //MemberRequestOvertimeController().clearInfo();
+                          Get.offAll(ListUserLembur());
                         },
                       ),
                     ],

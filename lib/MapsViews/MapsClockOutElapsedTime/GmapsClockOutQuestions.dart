@@ -17,6 +17,7 @@ class _gmapsClockOutQuestionsState extends State<gmapsClockOutQuestions> {
   List<PlatformModel> _platforms = [];
   bool _isLoading = true;
 
+  
   // List<int?> selectedQuestions = [null]; 
   // List<int?> selectedPlatforms = [null]; 
   // List<TextEditingController> answerControllers = [TextEditingController()]; 
@@ -83,7 +84,9 @@ class _gmapsClockOutQuestionsState extends State<gmapsClockOutQuestions> {
     return Container(
       margin: EdgeInsets.all(20),
       width: double.infinity,
-      child: Column(
+      child: Form(
+        key: questionKey,
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
@@ -102,46 +105,66 @@ class _gmapsClockOutQuestionsState extends State<gmapsClockOutQuestions> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
+                  Wrap(
+                    spacing: 10, 
+                    runSpacing: 10,
                     children: [
-                      DropdownButton<int>(
-                        hint: Text("Select a question"),
-                        value:  int.tryParse(selectedQuestionControllers[i].text),
-                        items: _questions.map((question) {
-                          return DropdownMenuItem<int>(
-                            value: question.idQuestion,
-                            child: Text(question.questionText),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            // selectedQuestions[i] = value;
-                            // selectedPlatforms[i] = null;
-                            selectedQuestionControllers[i].text = value.toString();
-                            selectedPlatformControllers[i].clear(); 
-                          });
-                          print("Selected Question ID: $value"); 
-                        },
-                      ),
-                      SizedBox(width: 10),
-
-                      if (selectedQuestionControllers[i].text.isNotEmpty) ...[
-                        DropdownButton<int>(
-                          hint: Text("Select a platform"),
-                          value: int.tryParse(selectedPlatformControllers[i].text),
-                          items: _platforms.map((platform) {
+                      Expanded(
+                        flex: 1,
+                        child: DropdownButtonFormField<int>(
+                          hint: Text("Select a question"),
+                          value:  int.tryParse(selectedQuestionControllers[i].text),
+                          items: _questions.map((question) {
                             return DropdownMenuItem<int>(
-                              value: platform.idPlatform,
-                              child: Text(platform.platformName),
+                              value: question.idQuestion,
+                              child: Text(question.questionText),
                             );
                           }).toList(),
                           onChanged: (value) {
                             setState(() {
-                              // selectedPlatforms[i] = value;
-                              selectedPlatformControllers[i].text = value.toString();
+                              // selectedQuestions[i] = value;
+                              // selectedPlatforms[i] = null;
+                              selectedQuestionControllers[i].text = value.toString();
+                              selectedPlatformControllers[i].clear(); 
                             });
-                            print("Selected platform ID: $value");
+                            print("Selected Question ID: $value"); 
                           },
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Please select a question';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      SizedBox(width: 10),
+
+                      if (selectedQuestionControllers[i].text.isNotEmpty) ...[
+                        Expanded(
+                          flex: 1,
+                          child: DropdownButtonFormField<int>(
+                            hint: Text("Select a platform"),
+                            value: int.tryParse(selectedPlatformControllers[i].text),
+                            items: _platforms.map((platform) {
+                              return DropdownMenuItem<int>(
+                                value: platform.idPlatform,
+                                child: Text(platform.platformName),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                // selectedPlatforms[i] = value;
+                                selectedPlatformControllers[i].text = value.toString();
+                              });
+                              print("Selected platform ID: $value");
+                            },
+                            validator: (value) {
+                            if (value == null) {
+                              return 'Please select a platform';
+                            }
+                            return null;
+                          },
+                          ),
                         ),
                         SizedBox(height: 10),
                       ],
@@ -154,17 +177,25 @@ class _gmapsClockOutQuestionsState extends State<gmapsClockOutQuestions> {
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: TextField(
-                          controller: answersControllers[i],
-                          maxLines: 1,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Detail",
+                      child: Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: TextFormField(
+                            controller: answersControllers[i],
+                            maxLines: 1,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Detail",
+                            ),
+                            validator: (value) {
+                              if (value == null) {
+                                return 'Please select a question';
+                              }
+                              return null;
+                            },
                           ),
                         ),
-                      ),
+                      )
                     ),
                 ],
               ),
@@ -175,6 +206,7 @@ class _gmapsClockOutQuestionsState extends State<gmapsClockOutQuestions> {
             icon: Icon(Icons.add),
           ),
         ],
+      )
       ),
     );
   }

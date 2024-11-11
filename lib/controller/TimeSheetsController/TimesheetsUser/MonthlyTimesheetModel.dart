@@ -1,3 +1,5 @@
+import 'package:absent_project/controller/TimeSheetsController/TimesheetAdmin/OvertimeModel.dart';
+
 class MonthlyTimesheetModel{
   final DateTime? clockIn;
   final String? location;
@@ -6,6 +8,7 @@ class MonthlyTimesheetModel{
   final String? elapsedTime;
   final List<String>? questionText;
   final List<String>? answerText;
+  final OvertimeModel? overtime;
   final List<String>? platform;
   final String? clockOutId;
   final String? grup;
@@ -19,6 +22,7 @@ class MonthlyTimesheetModel{
     this.clockOutId,
     this.elapsedTime,
     this.questionText,
+    this.overtime,
     this.answerText,
     this.platform,
     this.grup,
@@ -36,6 +40,7 @@ class MonthlyTimesheetModel{
       questionText: json['questions'] != null ? List<String>.from(json['questions']) : null,
       answerText: json['answers'] != null ? List<String>.from(json['answers']) : null,
       platform: json['platform'] != null ? List<String>.from(json['platform']) : null,
+      overtime: json['overtime'] != null ? OvertimeModel.fromJson(json['overtime']) : null,
       grup: json['grup'] as String?,
       fullName: json['full_name'] as String?,
     );

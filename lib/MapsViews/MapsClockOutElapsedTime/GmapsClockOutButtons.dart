@@ -25,7 +25,7 @@ class _gmapsClockOutButtonsState extends State<gmapsClockOutButtons> {
       children: <Widget>[
         GestureDetector(
           onTap: (){
-            if(gmapsClockConfirmKey.currentState!.validate()){
+            if(gmapsClockConfirmKey.currentState!.validate() && questionKey.currentState!.validate()){
               ClockInController().clock_out().then((value) {
                 print("Clock Out Result: $value");
                 if (value) {
