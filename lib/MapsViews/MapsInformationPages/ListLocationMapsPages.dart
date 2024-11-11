@@ -1,3 +1,4 @@
+import 'package:absent_project/MapsViews/MapControllerPages/LocationControllersPages.dart';
 import 'package:absent_project/MapsViews/MapsInformationPages/DetailLocations.dart';
 import 'package:absent_project/MapsViews/MapsInformationPages/locationListControllers.dart';
 import 'package:absent_project/MapsViews/MapsViewPage/GoogleMapsPages.dart';
@@ -14,15 +15,16 @@ class listLocationsMaps extends StatefulWidget {
 }
 
 class _listLocationsMapsState extends State<listLocationsMaps> {
-
   listLocationsContollers locationControllers = listLocationsContollers();
   List<dynamic> locations = [];
   var faker = new Faker();
+  bool settingEnabled = true;
 
   Future<void> viewLocation() async {
     var viewsLocations = await locationControllers.getListLocations();
     setState(() {
       locations = viewsLocations ?? [];
+      settingEnabled = locations.isEmpty;
     });
   }
 
@@ -31,19 +33,11 @@ class _listLocationsMapsState extends State<listLocationsMaps> {
     if (resp['success']) {
       await viewLocation();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text(
-              resp['message']
-            )
-        )
+          SnackBar(content: Text(resp['message']))
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text(
-              "Failed Delete User"
-            )
-        )
+          SnackBar(content: Text("Failed to delete location"))
       );
     }
   }
@@ -56,13 +50,6 @@ class _listLocationsMapsState extends State<listLocationsMaps> {
 
   @override
   Widget build(BuildContext context) {
-    const rowSpacer = TableRow(
-      children: [
-        SizedBox(height: 8),
-        SizedBox(height: 8),
-      ],
-    );
-
     return Scaffold(
       body: Column(
         children: [
@@ -116,18 +103,34 @@ class _listLocationsMapsState extends State<listLocationsMaps> {
               ),
             ],
           ),
-          FutureBuilder(
-            future: locationControllers.getListLocations(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Center(child: Text("Error loading users"));
-              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return const Center(child: Text("No users found"));
-              } else {
-                return Expanded(
-                  child: ListView.builder(
+          Expanded(
+            child: FutureBuilder(
+              future: locationControllers.getListLocations(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                      child: CircularProgressIndicator()
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                      child: Text("Error loading locations",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.red)
+                      )
+                  );
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("No locations found.", style: TextStyle(fontSize: 16)),
+                        SizedBox(height: 10),
+                      ],
+                    ),
+                  );
+                } else {
+                  return ListView.builder(
                     itemCount: snapshot.data?.length,
                     itemBuilder: (context, int index) {
                       var locationViews = snapshot.data![index];
@@ -148,9 +151,7 @@ class _listLocationsMapsState extends State<listLocationsMaps> {
                           subtitle: Text(locationViews.streetNames),
                           title: Text(locationViews.locationsNames),
                           leading: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                              locationViews.locationImg
-                            ),
+                            backgroundImage: NetworkImage(locationViews.locationImg),
                           ),
                           onTap: () {
                             Get.to(() => detailLocatiosMaps(listLocationMaps: locationViews));
@@ -158,21 +159,42 @@ class _listLocationsMapsState extends State<listLocationsMaps> {
                         ),
                       );
                     },
-                  ),
-                );
-              }
-            },
+                  );
+                }
+              },
+            ),
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => googleMapsPages()),
-          );
-        },
-        backgroundColor: Color.fromARGB(255, 139, 190, 232),
-        child: const Icon(Icons.add),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            heroTag: null,
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => googleMapsPages()),
+              );
+            },
+            backgroundColor: Colors.blueAccent,
+            child: const Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+          ),
+          SizedBox(height: 10),
+          FloatingActionButton(
+            heroTag: null,
+            onPressed: settingEnabled ? null : () {
+              Get.offAll(locationsControllersPages());
+            },
+            backgroundColor: settingEnabled ? Colors.grey : Colors.blueAccent,
+            child: const Icon(
+              Icons.settings,
+              color: Colors.white,
+            ),
+          ),
+        ],
       ),
     );
   }

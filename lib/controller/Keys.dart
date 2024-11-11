@@ -142,6 +142,17 @@ List<TextEditingController> selectedQuestionControllers = [];
 List<TextEditingController> selectedPlatformControllers = [];
 List<TextEditingController> answersControllers = [];
 
+Map<String, TextEditingController> controlersss = {
+    "projectController": TextEditingController(),
+    "locationController": TextEditingController(),
+};
+
+//projectContollersAddLoc
+final List<Map<String, TextEditingController>> projectControllerss = [];
+
+//mapsContollersSetting
+final GlobalKey<FormState> mapsContollerSettingsKey = GlobalKey<FormState>();
+
 //revampOTPController
 final revampOTPControllers = TextEditingController();
 final emailValuesControllers = TextEditingController();

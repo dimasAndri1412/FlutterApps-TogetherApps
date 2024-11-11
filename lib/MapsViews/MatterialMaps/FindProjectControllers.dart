@@ -24,7 +24,7 @@ class findsProjectController {
         }
       );
       projectUsers = jsonDecode(resps.body);
-      projectsModels.projectModel = projectUsers[0]['grup'];
+      projectsModels.projectModel = projectUsers[0]['project_id'];
       projectsModels.fullNameModel = projectUsers[0]['full_name'];
       projectsModels.usersModels = projectUsers[0]['USERNAME'];
       projectsModels.avatarModel = projectUsers[0]['image_path'];

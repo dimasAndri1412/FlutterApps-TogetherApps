@@ -18,45 +18,47 @@ class _GmapsViewsState extends State<GmapsViews> {
   GoogleMapController? mapControllers;
 
   void mapsCreateds(GoogleMapController controllers) async {
-    final findCoordinates = await coordinateLocation();
+    final findCoordinates = await coordinateLocatioNew();
     mapControllers = controllers;
 
     if (mounted) {
       setState(() {
-        initMarkerLocation.add(
+        for (var coord  in findCoordinates) {
+          initMarkerLocation.add(
             Marker(
-                markerId: MarkerId("locations"),
-                position: findCoordinates,
+                markerId: MarkerId(coord.toString()),
+                position: coord,
                 infoWindow: InfoWindow(
-                    title: "location Project"
+                  title: "Locations Project"
                 )
             )
-        );
+          );
+        }
       });
     }
   }
 
   void radiusPosition() async {
 
-    final findRadiusPosition = await findRadiusLocation();
-    final locationPosition = await coordinateLocation();
+    final findradius = await findRadiusLocationNew();
 
-    if (findRadiusPosition != null) {
+    if(mounted) {
 
-      if (mounted) {
-        setState(() {
-          circless = {
+      setState(() {
+        circless = {
+          for (var location in findradius)
             Circle(
-              circleId: CircleId('radiusPosition'),
-              center: locationPosition,
-              radius: findRadiusPosition,
+                circleId: CircleId(
+                  location["coordinate"].toString(),
+                ),
+              center: location["coordinate"],
+              radius: location["radius"],
               strokeColor: Colors.blueAccent,
               strokeWidth: 1,
-              fillColor: Color.fromARGB(255, 147, 195, 234).withOpacity(0.6),
+              fillColor: Color.fromARGB(255, 147, 195, 234).withOpacity(0.6)
             )
-          };
-        });
-      }
+        };
+      });
     }
   }
 
@@ -122,7 +124,6 @@ class _GmapsViewsState extends State<GmapsViews> {
                 currentLocation.latitude!,
                 currentLocation.longitude!
             );
-            print(currentPosition);
           });
         }
       }

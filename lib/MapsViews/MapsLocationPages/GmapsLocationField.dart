@@ -13,6 +13,11 @@ class gmapsLocationFields extends StatefulWidget {
 
 class _gmapsLocationFieldsState extends State<gmapsLocationFields> {
 
+  void  locationNamesValues() async {
+    final findlocations = await findLocationNames();
+    locationNamesController.text = findlocations!;
+  }
+
   void streetAndNameLocation() async {
     final findlocationAndStreet = await findLocationNames();
     locationNamesController.text = findlocationAndStreet!;
