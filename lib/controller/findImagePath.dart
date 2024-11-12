@@ -1,9 +1,8 @@
 import 'dart:convert';
-import 'package:absent_project/controller/Keys.dart';
+import 'package:absent_project/MapsViews/MatterialMaps/FindProjectControllers.dart';
 import 'package:http/http.dart' as http;
 import 'package:absent_project/controller/Models/imagePathModels.dart' as imagesModels;
-
-
+import 'package:absent_project/MapsViews/modelMaps/usernameModel.dart' as projectsModels;
 
 class findImageController {
 
@@ -12,7 +11,10 @@ class findImageController {
 
   Future findImages() async{
 
-    String IdInputs = IdMemberControllers.text;
+    final findsProjectController userControllers = findsProjectController();
+    await userControllers.findUsers();
+
+    String? IdInputs = projectsModels.idUsersModels;
 
     try{
 
@@ -20,7 +22,7 @@ class findImageController {
       var resp = await http.post(
           findAPI,
           body: {
-            'user_id' : '12'
+            'user_id' : IdInputs
           }
       );
 
@@ -30,7 +32,7 @@ class findImageController {
 
 
     } catch(exception) {
-      return "Can not find otp code";
+      return "Can not find images";
     }
   }
 }

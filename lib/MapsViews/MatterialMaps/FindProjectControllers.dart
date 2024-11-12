@@ -24,6 +24,7 @@ class findsProjectController {
         }
       );
       projectUsers = jsonDecode(resps.body);
+      projectsModels.idUsersModels = projectUsers[0]['ID'];
       projectsModels.projectModel = projectUsers[0]['project_id'];
       projectsModels.fullNameModel = projectUsers[0]['full_name'];
       projectsModels.usersModels = projectUsers[0]['USERNAME'];
