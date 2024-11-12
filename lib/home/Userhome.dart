@@ -1,4 +1,7 @@
 import 'package:absent_project/MapsViews/MatterialMaps/GmapsController.dart';
+import 'package:absent_project/controller/AbsentController/WeeklyController.dart';
+import 'package:absent_project/controller/AbsentController/WeeklyModel.dart';
+import 'package:absent_project/home/WeeklyBar.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -19,7 +22,7 @@ class UserHome extends StatefulWidget {
 }
 
 class _UserHomeState extends State<UserHome> {
-
+  
   late List<_ChartData> data;
   late TooltipBehavior _tooltip;
 
@@ -190,7 +193,7 @@ class _UserHomeState extends State<UserHome> {
                       margin: EdgeInsets.only(
                           top: 10, bottom: 10, left: 30, right: 30),
                       // width: 350,
-                      height: 230,
+                      height: 300,
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
@@ -201,19 +204,23 @@ class _UserHomeState extends State<UserHome> {
                               offset: Offset(5, 10),
                             )
                           ]),
-                      child: SfCartesianChart(
-                          primaryXAxis: CategoryAxis(),
-                          primaryYAxis: NumericAxis(
-                              minimum: 0, maximum: 40, interval: 10),
-                          tooltipBehavior: _tooltip,
-                          series: <CartesianSeries<_ChartData, String>>[
-                            BarSeries<_ChartData, String>(
-                                dataSource: data,
-                                xValueMapper: (_ChartData data, _) => data.x,
-                                yValueMapper: (_ChartData data, _) => data.y,
-                                name: 'Nilai',
-                                color: Color.fromRGBO(8, 142, 255, 1))
-                          ]),
+                          child: ClipRRect(  
+                            borderRadius: BorderRadius.circular(20),
+                            child: WeeklyBar(),  
+                            ),
+                      // child: SfCartesianChart(
+                      //     primaryXAxis: CategoryAxis(),
+                      //     primaryYAxis: NumericAxis(
+                      //         minimum: 0, maximum: 40, interval: 10),
+                      //     tooltipBehavior: _tooltip,
+                      //     series: <CartesianSeries<_ChartData, String>>[
+                      //       BarSeries<_ChartData, String>(
+                      //           dataSource: data,
+                      //           xValueMapper: (_ChartData data, _) => data.x,
+                      //           yValueMapper: (_ChartData data, _) => data.y,
+                      //           name: 'Nilai',
+                      //           color: Color.fromRGBO(8, 142, 255, 1))
+                      //     ]),
                     ),
                     Container(
                       margin: EdgeInsets.only(
