@@ -238,10 +238,10 @@ class _TimesheetsUserState extends State<TimesheetsUser> {
                                 height: 16,
                               ),
                               Text(
-                                "Breaks",
+                                "",
                                 style: TextStyle(color: Colors.grey),
                               ),
-                              Text('-'),
+                              Text(''),
                               // style: TextStyle(fontWeight: FontWeight.bold)),
                             ],
                           ),

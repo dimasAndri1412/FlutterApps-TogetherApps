@@ -199,7 +199,6 @@ class _PersonalSettingState extends State<PersonalSetting> {
         child: ListTile(
           title: Text(title),
           subtitle: Text(subtitle),
-          trailing: Icon(Icons.chevron_right, color: Colors.grey.shade400),
           tileColor: Colors.white,
         ),
       ),

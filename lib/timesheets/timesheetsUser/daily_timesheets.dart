@@ -95,10 +95,10 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                           : '-'),
                         SizedBox(height: 16),
                         Text(
-                          "Breaks",
+                          "",
                           style: TextStyle(color: Colors.grey),
                         ),
-                        Text(data['breaks']!),
+                        Text(''),
                       ],
                     ),
                     // Second Column
