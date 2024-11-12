@@ -131,8 +131,9 @@ class MemberRequestOvertimeController {
       // Cek status HTTP
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.body);
-        // getData.project = jsonData[0]['grup'];
-        // print('Raw JSON response: $jsonData'); // Log untuk memeriksa respons API
+        // getData.project = jsonData[0]['project_name'];
+        print(
+            'Raw JSON response: $jsonData'); // Log untuk memeriksa respons API
 
         // Pastikan jsonData adalah List
         if (jsonData is List) {
@@ -140,6 +141,7 @@ class MemberRequestOvertimeController {
             return MemberRequestOvertimeGetListModel.fromJson(u);
           }).toList();
 
+          print('Parsed user list: $users');
           return users;
         } else {
           print('Unexpected JSON format');
