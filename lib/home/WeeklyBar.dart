@@ -27,7 +27,6 @@ class _WeeklyBarState extends State<WeeklyBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Weekly Attendance Chart')),
       body: FutureBuilder<List<WeeklyModel>>(
         future: _weeklyData,
         builder: (context, snapshot) {
@@ -51,27 +50,74 @@ class _WeeklyBarState extends State<WeeklyBar> {
               return _ChartData(formattedDay, totalHours);
             }).toList();
 
+            List<String> weekDaysOrder = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            // chartData.sort((a, b) => weekDaysOrder.indexOf(a.day).compareTo(weekDaysOrder.indexOf(b.day)));
+
+            // print("Ordered chart data:");
+            // for (var data in chartData) {
+            //   print("${data.day} - ${data.totalHours}");
+            // }
+            chartData.sort((a, b) => weekDaysOrder.indexOf(a.day).compareTo(weekDaysOrder.indexOf(b.day)));
+
+            //hitung workedHours
+            double totalWorkedHours = chartData.fold(0, (sum, item) => sum + item.totalHours);
+            int totalHours = totalWorkedHours.toInt();
+            int totalMinutes = ((totalWorkedHours - totalHours) * 60).round();
+            String formattedTotalWorkedHours = '${totalHours}h ${totalMinutes}m';
+
             return Padding(
               padding: const EdgeInsets.all(16.0),
-              child: SfCartesianChart(
-                primaryXAxis: CategoryAxis(
-                  title: AxisTitle(text: 'Day of the Week')
-                ),
-                primaryYAxis: NumericAxis(
-                  minimum: 0,
-                  title: AxisTitle(text: 'Total Hours')
-                ),
-                tooltipBehavior: _tooltip,
-                series: <CartesianSeries<_ChartData, String>>[
-                  BarSeries<_ChartData, String>(
-                    dataSource: chartData,
-                    xValueMapper: (_ChartData data, _) => data.day, // Hari 
-                    yValueMapper: (_ChartData data, _) => data.totalHours, // Total jam 
-                    name: 'Total Time',
-                    color: Color.fromRGBO(8, 142, 255, 1),
-                  )
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("Worked Hours : $formattedTotalWorkedHours",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13
+                    ),
+                  ),
+                  SfCartesianChart(
+                    primaryXAxis: CategoryAxis(
+                      isInversed: true,
+                    ),
+                    primaryYAxis: NumericAxis(
+                      minimum: 0,
+                      maximum: 18,
+                      interval: 3,
+                      opposedPosition: true,
+                    ),
+                    tooltipBehavior: _tooltip,
+                    series: <CartesianSeries<_ChartData, String>>[
+                      BarSeries<_ChartData, String>(
+                        dataSource: chartData,
+                        xValueMapper: (_ChartData data, _) => data.day, // Hari 
+                        yValueMapper: (_ChartData data, _) => data.totalHours, // Total jam 
+                        name: 'Total Time',
+                        color: Colors.green,
+                        dataLabelSettings: DataLabelSettings(
+                          isVisible: true,
+                          labelAlignment: ChartDataLabelAlignment.outer,
+                          builder: (dynamic data, dynamic point, dynamic series, int pointIndex, int seriesIndex) {
+                            // Mengonversi jam ke format "18h 00m"
+                            int hours = data.totalHours.toInt();
+                            int minutes = ((data.totalHours - hours) * 60).toInt();
+                            String timeText = '${hours}h ${minutes.toString().padLeft(2, '0')}m';
+
+                            return Text(
+                              timeText, 
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12
+                              )
+                            );
+                          },
+                        ),
+                      )
+                    ],
+                  ),
                 ],
-              ),
+              )
             );
           }
         },
@@ -88,7 +134,7 @@ class _WeeklyBarState extends State<WeeklyBar> {
   }
 
   String _getDayFromDateString(String dateString) {
-    // misahin hari dari waktu (misalnya "Monday, 00:27:56" menjadi "Monday")
+    // misahin hari dari waktu 
     var parts = dateString.split(',');
     if (parts.isNotEmpty) {
       String dayName = parts[0].trim();  // get nama hari
