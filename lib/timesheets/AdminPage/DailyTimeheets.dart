@@ -228,14 +228,14 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                             margin: EdgeInsets.only(left: 20, right: 20, bottom: 5),
                             child: Row(
                               children: [
-                                Text('Breaks',
+                                Text('',
                                   style: TextStyle(
                                     color: Colors.grey,
                                     fontSize: 12,
                                     fontWeight: FontWeight.normal
                                   ),
                                 ),
-                                SizedBox(width: 150,),
+                                SizedBox(width: 190,),
                                 Text('Worked Hours',
                                   style: TextStyle(
                                     color: Colors.grey,
@@ -251,13 +251,13 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text('0h 00m',
+                                Text('',
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold
                                   ),
                                 ),
-                                SizedBox(width: 140,),
+                                SizedBox(width: 200,),
                                 Text(daily.elapsedTime ?? "-",
                                   style: TextStyle(
                                     fontSize: 14,
@@ -282,34 +282,69 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                                 Navigator.of(context)
                                   .push(MaterialPageRoute(builder: (context) => TimeEntry()));
                               },
-                              child: ListTile(
-                                title: Text(formattedClockIn ?? "-"),
-                                subtitle: Text(daily.shift ?? "-"),
-                                leading: CircleAvatar(
-                                  radius: 30,
-                                  backgroundImage: NetworkImage(daily.pictClockIn)
-                                ),
-                                trailing: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(
-                                      Icons.phone_android,
-                                      size: 17,
-                                      color: Colors.grey,
-                                    ),
-                                    Icon(
-                                      Icons.location_on_outlined,
-                                      size: 18,
-                                      color: Colors.grey  
-                                    ),
-                                    Icon(
-                                      Icons.arrow_forward_ios_sharp,
-                                      size: 18,
-                                      color: Colors.grey,  
-                                    )
-                                  ],
+                                child: ListTile(
+                                  title: Text(formattedClockIn ?? "-"),
+                                  subtitle: Text(daily.shift ?? "-"),
+                                  leading: CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: NetworkImage(daily.pictClockIn)
+                                  ),
+                                  trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.phone_android,
+                                        size: 17,
+                                        color: Colors.grey,
+                                      ),
+                                      Icon(
+                                        Icons.location_on_outlined,
+                                        size: 18,
+                                        color: Colors.grey  
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward_ios_sharp,
+                                        size: 18,
+                                        color: Colors.grey,  
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
+                              if(daily.clockOut != null)
+                              GestureDetector(
+                                onTap: (){
+                                Navigator.of(context)
+                                  .push(MaterialPageRoute(builder: (context) => TimeEntry()));
+                              },
+                                child: ListTile(
+                                  title: Text(formattedClockOut ?? "-"),
+                                  subtitle: Text(daily.shift ?? "-"),
+                                  leading: CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: NetworkImage(daily.pictClockOut)
+                                  ),
+                                  trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.phone_android,
+                                        size: 17,
+                                        color: Colors.grey,
+                                      ),
+                                      Icon(
+                                        Icons.location_on_outlined,
+                                        size: 18,
+                                        color: Colors.grey  
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward_ios_sharp,
+                                        size: 18,
+                                        color: Colors.grey,  
+                                      )
+                                    ],
+                                  ),
+                                ),
                               )
                             ],
                             onExpansionChanged: (bool expanded) {
@@ -323,180 +358,180 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                       )
                     ),
                     SizedBox(height: 20,),
-                    Container(
-                      // height: 260,
-                      decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 0,
-                          blurRadius: 2,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.all(10),
-                            child: Text(
-                              'Payroll Hours',
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 20, right: 80, bottom: 5),
-                            child: Row(
-                              children: [
-                                Text('Regular hours',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.normal
-                                  ),
-                                ),
-                                SizedBox(width: 100,),
-                                Text('Overtime hours  ',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.normal
-                                  ),
-                                )
-                              ],
-                            )
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 20, right: 20, top: 2),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(daily.elapsedTime ?? "-",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold
-                                  ),
-                                ),
-                                SizedBox(width: 150,),
-                                Text('-',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold
-                                  ),
-                                )
-                              ],
-                            )
-                          ),
-                          SizedBox(height: 10,),
-                          ExpansionTile(
-                            title: const Text('Breakdown',
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold
-                              ),
-                            ),
-                            // subtitle: const Text('Custom expansion arrow icon'),
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(left: 10, right: 10),
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  border: Border.all(),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: Row(
-                                    children: [
-                                      Text("Tracked hours"),
-                                      Spacer(),
-                                      Text("7h 56m",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(left: 10, right: 10),
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  border: Border.all(),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: Row(
-                                    children: [
-                                      Text("Worked hours"),
-                                      Spacer(),
-                                      Text("7h 56m",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ),
-                              SizedBox(height: 20,),
-                              Container(
-                                margin: EdgeInsets.only(left: 10, right: 10),
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  border: Border.all(),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: Row(
-                                    children: [
-                                      Text("Payroll hours"),
-                                      Spacer(),
-                                      Text("7h 56m",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(left: 10, right: 10, bottom: 30),
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  border: Border.all(),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: Row(
-                                    children: [
-                                      Text("Regular hours"),
-                                      Spacer(),
-                                      Text("7h 56m",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              )
-                            ],
-                            onExpansionChanged: (bool expanded) {
-                              setState(() {
-                                _customTileExpanded = expanded;
-                              });
-                            },
-                          ),
-                        ],
-                      )
-                    ),
+                    // Container(
+                    //   // height: 260,
+                    //   decoration: BoxDecoration(
+                    //   color: Colors.white,
+                    //   boxShadow: [
+                    //     BoxShadow(
+                    //       color: Colors.grey.withOpacity(0.5),
+                    //       spreadRadius: 0,
+                    //       blurRadius: 2,
+                    //       offset: Offset(0, 3), // changes position of shadow
+                    //     ),
+                    //   ],
+                    //   ),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Container(
+                    //         margin: EdgeInsets.all(10),
+                    //         child: Text(
+                    //           'Payroll Hours',
+                    //           style: TextStyle(
+                    //             fontSize: 13,
+                    //             fontWeight: FontWeight.bold
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       Container(
+                    //         margin: EdgeInsets.only(left: 20, right: 80, bottom: 5),
+                    //         child: Row(
+                    //           children: [
+                    //             Text('Regular hours',
+                    //               style: TextStyle(
+                    //                 color: Colors.grey,
+                    //                 fontSize: 12,
+                    //                 fontWeight: FontWeight.normal
+                    //               ),
+                    //             ),
+                    //             SizedBox(width: 100,),
+                    //             Text('Overtime hours  ',
+                    //               style: TextStyle(
+                    //                 color: Colors.grey,
+                    //                 fontSize: 12,
+                    //                 fontWeight: FontWeight.normal
+                    //               ),
+                    //             )
+                    //           ],
+                    //         )
+                    //       ),
+                    //       Container(
+                    //         margin: EdgeInsets.only(left: 20, right: 20, top: 2),
+                    //         child: Row(
+                    //           mainAxisAlignment: MainAxisAlignment.start,
+                    //           children: [
+                    //             Text(daily.elapsedTime ?? "-",
+                    //               style: TextStyle(
+                    //                 fontSize: 14,
+                    //                 fontWeight: FontWeight.bold
+                    //               ),
+                    //             ),
+                    //             SizedBox(width: 150,),
+                    //             Text('-',
+                    //               style: TextStyle(
+                    //                 fontSize: 14,
+                    //                 fontWeight: FontWeight.bold
+                    //               ),
+                    //             )
+                    //           ],
+                    //         )
+                    //       ),
+                    //       SizedBox(height: 10,),
+                    //       ExpansionTile(
+                    //         title: const Text('Breakdown',
+                    //           style: TextStyle(
+                    //             fontSize: 13,
+                    //             fontWeight: FontWeight.bold
+                    //           ),
+                    //         ),
+                    //         // subtitle: const Text('Custom expansion arrow icon'),
+                    //         children: <Widget>[
+                    //           Container(
+                    //             margin: EdgeInsets.only(left: 10, right: 10),
+                    //             height: 50,
+                    //             decoration: BoxDecoration(
+                    //               border: Border.all(),
+                    //             ),
+                    //             child: Padding(
+                    //               padding: EdgeInsets.all(10),
+                    //               child: Row(
+                    //                 children: [
+                    //                   Text("Tracked hours"),
+                    //                   Spacer(),
+                    //                   Text("7h 56m",
+                    //                     style: TextStyle(
+                    //                       fontWeight: FontWeight.bold
+                    //                     ),
+                    //                   )
+                    //                 ],
+                    //               ),
+                    //             )
+                    //           ),
+                    //           Container(
+                    //             margin: EdgeInsets.only(left: 10, right: 10),
+                    //             height: 50,
+                    //             decoration: BoxDecoration(
+                    //               border: Border.all(),
+                    //             ),
+                    //             child: Padding(
+                    //               padding: EdgeInsets.all(10),
+                    //               child: Row(
+                    //                 children: [
+                    //                   Text("Worked hours"),
+                    //                   Spacer(),
+                    //                   Text("7h 56m",
+                    //                     style: TextStyle(
+                    //                       fontWeight: FontWeight.bold
+                    //                     ),
+                    //                   )
+                    //                 ],
+                    //               ),
+                    //             )
+                    //           ),
+                    //           SizedBox(height: 20,),
+                    //           Container(
+                    //             margin: EdgeInsets.only(left: 10, right: 10),
+                    //             height: 50,
+                    //             decoration: BoxDecoration(
+                    //               border: Border.all(),
+                    //             ),
+                    //             child: Padding(
+                    //               padding: EdgeInsets.all(10),
+                    //               child: Row(
+                    //                 children: [
+                    //                   Text("Payroll hours"),
+                    //                   Spacer(),
+                    //                   Text("7h 56m",
+                    //                     style: TextStyle(
+                    //                       fontWeight: FontWeight.bold
+                    //                     ),
+                    //                   )
+                    //                 ],
+                    //               ),
+                    //             )
+                    //           ),
+                    //           Container(
+                    //             margin: EdgeInsets.only(left: 10, right: 10, bottom: 30),
+                    //             height: 50,
+                    //             decoration: BoxDecoration(
+                    //               border: Border.all(),
+                    //             ),
+                    //             child: Padding(
+                    //               padding: EdgeInsets.all(10),
+                    //               child: Row(
+                    //                 children: [
+                    //                   Text("Regular hours"),
+                    //                   Spacer(),
+                    //                   Text("7h 56m",
+                    //                     style: TextStyle(
+                    //                       fontWeight: FontWeight.bold
+                    //                     ),
+                    //                   )
+                    //                 ],
+                    //               ),
+                    //             )
+                    //           )
+                    //         ],
+                    //         onExpansionChanged: (bool expanded) {
+                    //           setState(() {
+                    //             _customTileExpanded = expanded;
+                    //           });
+                    //         },
+                    //       ),
+                    //     ],
+                    //   )
+                    // ),
                     SizedBox(height: 10,),
                     TextButton(
                       child: Center(

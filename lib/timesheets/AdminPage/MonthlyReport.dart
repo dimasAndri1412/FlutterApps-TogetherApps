@@ -21,6 +21,9 @@ class MonthlyReport extends StatelessWidget {
     final Uint8List imageLogo = await loadAssetImage('assets/images/LogoBIT.png');
     final logo = pw.MemoryImage(imageLogo);
 
+    final Uint8List imageLogo2 = await loadAssetImage('assets/images/header_report2.jpg');
+    final logo2 = pw.MemoryImage(imageLogo2);
+
     ListTimesheetsController listTimesheetsController = ListTimesheetsController();
     MonthlyReportModel timesheets = await listTimesheetsController.getMonthlyReport(userId, selectedMonth, selectedYear);
     print('timesheets : $timesheets');
@@ -56,9 +59,15 @@ class MonthlyReport extends StatelessWidget {
                 pw.Opacity(
                   opacity: 0.5,
                   child: pw.Image(logo, width: 200, height: 100)
+                ),
+                pw.Spacer(),
+                pw.Opacity(
+                  opacity: 0.5,
+                  child: pw.Image(logo2, width: 200, height: 100)
                 )
               ]
             ),
+            pw.SizedBox(height: 10),
             pw.Header(
               level: 0,
               child: pw.Center(
