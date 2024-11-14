@@ -141,7 +141,6 @@ class DetailUser extends StatelessWidget {
       ),
     );
   }
-
  /* void openDialog() {
     showDialog(
       context: BuildContext,

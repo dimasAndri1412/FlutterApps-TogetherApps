@@ -16,6 +16,7 @@ class _revampResgitrationWrapperState extends State<revampResgitrationWrapper> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 147, 195, 234),
       body: Column(
+
         children: <Widget>[
           revampRegistrationHeader(),
           SizedBox(

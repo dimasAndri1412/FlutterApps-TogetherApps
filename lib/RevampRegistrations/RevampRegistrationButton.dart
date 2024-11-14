@@ -37,9 +37,6 @@ class _revampRegistrationButtonsState extends State<revampRegistrationButtons> {
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 });
-
-                // Navigator.of(context).push(
-                //     MaterialPageRoute(builder: (context) => testPagesNew()));
               }
             },
             child: Container(

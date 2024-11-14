@@ -1,4 +1,5 @@
 class dropDownCompanyValuesList{
   final String companyNames;
-  dropDownCompanyValuesList(this.companyNames);
+  dropDownCompanyValuesList(
+      this.companyNames);
 }

@@ -1,4 +1,3 @@
-import 'package:drop_shadow_image/drop_shadow_image.dart';
 import 'package:flutter/material.dart';
 
 class revampRegistrationHeader extends StatelessWidget{

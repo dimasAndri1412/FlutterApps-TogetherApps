@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 class revampRegistrationPages extends StatelessWidget {
   const revampRegistrationPages({super.key});
 
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
