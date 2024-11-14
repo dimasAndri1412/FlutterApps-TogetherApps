@@ -190,10 +190,10 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
               children: [
                 ElevatedButton(
                   onPressed: () async {
-                    final pdf = await PDFGenerator_MSDO(
-                      getUserDetail: widget.getUserDetail,
-                    ).GeneratePDF();
-                    await Printing.layoutPdf(onLayout: (format) => pdf);
+                    // final pdf = await PDFGenerator_MSDO(
+                    //   getUserDetail: widget.getUserDetail,
+                    // ).GeneratePDF();
+                    // await Printing.layoutPdf(onLayout: (format) => pdf);
                     setState(() {
                       updateApproved();
 
@@ -204,14 +204,14 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
-                        Icons.print,
+                        Icons.done,
                         color: Colors.white,
                       ),
                       SizedBox(
                         width: 10,
                       ),
                       Text(
-                        'Approve & Print Document',
+                        'Approve Document',
                         style: TextStyle(color: Colors.white),
                       ),
                     ],

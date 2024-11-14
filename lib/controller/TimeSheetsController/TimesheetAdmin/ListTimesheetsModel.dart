@@ -6,6 +6,7 @@ class ListTimesheetsModel{
   final String? fullName;
   final String imagePath;
   final String pictClockIn;
+  final String pictClockOut;
   final String? shift;
   final String userId;
 
@@ -17,6 +18,7 @@ class ListTimesheetsModel{
     this.fullName,
     required this.imagePath,
     required this.pictClockIn,
+    required this.pictClockOut,
     this.shift,
     required this.userId,
   });
@@ -30,6 +32,7 @@ class ListTimesheetsModel{
       fullName: json['full_name'] ?? " ",
       imagePath: json['image_path'] ?? " ",
       pictClockIn: json['pict_clock_in'] ?? " ",
+      pictClockOut: json['pict_clock_out'] ?? " ",
       shift: json['shift'] ?? " ",
       userId: json['user_id'] ?? " "
     );

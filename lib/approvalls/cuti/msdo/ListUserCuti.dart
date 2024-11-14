@@ -101,11 +101,21 @@ class _ListUserCutiState extends State<ListUserCuti> {
       },
       child: Scaffold(
           appBar: AppBar(
+            leading: IconButton(
+                onPressed: () {
+                  Get.to(ApplicationBar(
+                    initialIndex: 3,
+                  ));
+                },
+                icon: Icon(
+                  Icons.arrow_back_ios_sharp,
+                  color: Colors.white,
+                )),
             title: Center(
               child: Text(
                 "Paid Leave Approval",
                 style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 25,
                     color: Colors.white,
                     fontWeight: FontWeight.bold),
               ),

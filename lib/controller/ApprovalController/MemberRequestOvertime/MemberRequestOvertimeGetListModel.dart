@@ -1,18 +1,18 @@
 class MemberRequestOvertimeGetListModel {
-  String full_name;
-  String position;
-  String project;
-  String department;
-  String location;
-  String shift;
-  String start_date;
-  String start_time;
-  String end_time;
-  String activity;
-  String status;
-  String reqNo;
-  String submittedDate;
-  String reason_rejected;
+  final String full_name;
+  final String position;
+  final String project;
+  final String department;
+  final String location;
+  final String shift;
+  final String start_date;
+  final String start_time;
+  final String end_time;
+  final String activity;
+  final String status;
+  final String reqNo;
+  final String submittedDate;
+  final String reason_rejected;
 
   MemberRequestOvertimeGetListModel({
     required this.full_name,
@@ -35,9 +35,9 @@ class MemberRequestOvertimeGetListModel {
       Map<String, dynamic> json) {
     return MemberRequestOvertimeGetListModel(
       full_name: json['full_name'] ?? 'Unknown', // Nilai default jika null
-      position: json['position'] ?? 'Unknown',
-      project: json['grup'] ?? 'Unknown',
-      department: json['department'] ?? 'Unknown',
+      position: json['position_name'] ?? 'Unknown',
+      project: json['project_name'] ?? 'Unknown',
+      department: json['division_name'] ?? 'Unknown',
       location: json['location'] ?? 'Unknown',
       shift: json['shift'] ?? 'Unknown',
       start_date: json['start_date'] ?? 'Unknown',
@@ -45,9 +45,16 @@ class MemberRequestOvertimeGetListModel {
       end_time: json['end_time'] ?? 'Unknown',
       activity: json['activity'] ?? 'Unknown',
       status: json['status'] ?? 'Unknown',
-      reqNo: json['reqNo'] ?? 'Unknown',
+      reqNo: json['req_no'] ?? 'Unknown',
       submittedDate: json['submittedDate'] ?? 'Unknown',
       reason_rejected: json['reason_rejected'] ?? 'Unknown',
     );
+  }
+
+  // Override toString untuk debugging
+  @override
+  String toString() {
+    // TODO: implement toString
+    return 'MemberRequestOvertimeGetListModel(full_name: $full_name, position: $position, project: $project, department:$department, location: $location,shift: $shift,start_date: $start_date,start_time: $start_time, end_time: $end_time, activity: $activity, status: $status, reqNo: $reqNo, submittedDate: $submittedDate, reason_rejected: $reason_rejected)';
   }
 }

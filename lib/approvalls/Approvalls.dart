@@ -33,87 +33,143 @@ class _ApprovallsState extends State<Approvalls> {
           ),
           elevation: 0,
           title: Center(
-            child: Text("APPROVAL"),
+            child: Text("APPROVAL",
+                style: TextStyle(
+                    fontWeight: FontWeight.w500, color: Colors.white)),
           ),
         ),
         body: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              MaterialButton(
-                padding: EdgeInsets.only(top: 20),
-                child: Container(
-                  width: 160,
-                  height: 160,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color.fromARGB(255, 147, 195, 234),
-                        blurRadius: 15,
-                        offset: Offset(5, 10),
-                      )
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                          margin: EdgeInsets.all(20),
-                          child: Image.asset(
-                            'assets/images/to-do-list.png',
-                            width: 80,
-                          )),
-                      Container(
-                        margin: EdgeInsets.only(top: 0),
-                        child: Text("Overtime Approval"),
-                      )
-                    ],
-                  ),
-                ),
-                onPressed: () {
-                  Get.to(() => ListUserLembur());
-                },
-              ),
-              MaterialButton(
-                padding: EdgeInsets.only(left: 20, top: 20),
-                child: Container(
-                  width: 160,
-                  height: 160,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color.fromARGB(255, 147, 195, 234),
-                        blurRadius: 15,
-                        offset: Offset(5, 10),
-                      )
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                          margin: EdgeInsets.all(20),
-                          child: Image.asset(
-                            'assets/images/raise-hand.png',
-                            width: 80,
-                          )),
-                      Container(
-                        margin: EdgeInsets.only(top: 0),
-                        child: Text("Paid Leave Approval"),
-                      )
-                    ],
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          ListUserCuti(), // Instantiate the class with prefix
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  MaterialButton(
+                    padding: EdgeInsets.only(top: 20),
+                    child: Container(
+                      width: 160,
+                      height: 160,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromARGB(255, 147, 195, 234),
+                            blurRadius: 15,
+                            offset: Offset(5, 10),
+                          )
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.all(20),
+                              child: Image.asset(
+                                'assets/images/to-do-list.png',
+                                width: 80,
+                              )),
+                          Container(
+                            margin: EdgeInsets.only(top: 0),
+                            child: Text("Overtime Approval"),
+                          )
+                        ],
+                      ),
                     ),
-                  );
-                },
+                    onPressed: () {
+                      Get.to(() => ListUserLembur());
+                    },
+                  ),
+                  MaterialButton(
+                    padding: EdgeInsets.only(left: 20, top: 20),
+                    child: Container(
+                      width: 160,
+                      height: 160,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromARGB(255, 147, 195, 234),
+                            blurRadius: 15,
+                            offset: Offset(5, 10),
+                          )
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.all(20),
+                              child: Image.asset(
+                                'assets/images/raise-hand.png',
+                                width: 80,
+                              )),
+                          Container(
+                            margin: EdgeInsets.only(top: 0),
+                            child: Text("Paid Leave Approval"),
+                          )
+                        ],
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ListUserCuti(), // Instantiate the class with prefix
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      MaterialButton(
+                        // padding: EdgeInsets.only(top: 0),
+                        child: Container(
+                          width: 160,
+                          height: 160,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromARGB(255, 147, 195, 234),
+                                blurRadius: 15,
+                                offset: Offset(5, 10),
+                              )
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                  margin: EdgeInsets.all(20),
+                                  child: Image.asset(
+                                    'assets/images/hospital.png',
+                                    width: 80,
+                                  )),
+                              Container(
+                                margin: EdgeInsets.only(top: 0),
+                                child: Text("Sick Approval"),
+                              )
+                            ],
+                          ),
+                        ),
+                        onPressed: () {},
+                      ),
+                      MaterialButton(
+                        onPressed: () {},
+                        child: Container(
+                          width: 160,
+                        ),
+                      )
+                    ]),
               ),
             ],
           ),

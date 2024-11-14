@@ -29,10 +29,18 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
 
   TimeOfDay selectedTime = TimeOfDay.now();
 
+  List<String> shiftLeave = [
+    "Shift I",
+    "Shift II",
+    "Shift III",
+  ];
+
+  String selectedShiftLeave = '';
+
   @override
   void initState() {
     super.initState();
-    request.getInfo();
+    // request.getInfo();
     fetchNames();
   }
 
@@ -131,8 +139,12 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                                 if (selectedName != null) {
                                   nameOTController.text =
                                       selectedName!.full_name;
+                                  positionOTController.text =
+                                      selectedName!.position;
                                   projectOTController.text =
                                       selectedName!.project;
+                                  departmentOTController.text =
+                                      selectedName!.department;
                                 } else {
                                   nameOTController.clear();
                                   projectController.clear();
@@ -157,6 +169,7 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                             child: Padding(
                               padding: EdgeInsets.only(left: 10),
                               child: TextFormField(
+                                readOnly: true,
                                 decoration: InputDecoration(
                                     labelText: "Position",
                                     hintText: "Please input your position here",
@@ -206,6 +219,7 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                             child: Padding(
                               padding: EdgeInsets.only(left: 10),
                               child: TextFormField(
+                                readOnly: true,
                                 decoration: InputDecoration(
                                     labelText: "Department",
                                     hintText:
@@ -247,6 +261,42 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                             ),
                           ),
                           SizedBox(height: 20),
+                          Container(
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: Colors.grey, width: 1),
+                                  borderRadius: BorderRadius.circular(12)),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: DropdownSearch<String>(
+                                  popupProps: PopupProps.dialog(
+                                    showSelectedItems: true,
+                                    // disabledItemFn: (String s) => s.startsWith('I'),
+                                  ),
+                                  items: shiftLeave,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedShiftLeave = value as String;
+                                      shiftOTController.text =
+                                          selectedShiftLeave;
+                                    });
+                                  },
+                                  dropdownDecoratorProps:
+                                      DropDownDecoratorProps(
+                                    dropdownSearchDecoration: InputDecoration(
+                                        labelText: "Your Shift",
+                                        hintText: "Choose your shift !",
+                                        border: InputBorder.none),
+                                  ),
+                                  // onChanged: print,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your shift here';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              )),
                           SizedBox(height: 30),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

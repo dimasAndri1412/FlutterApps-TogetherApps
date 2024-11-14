@@ -62,15 +62,17 @@ class AdminApprovalPaidLeaveModel {
       submittedDate: json['submittedDate'] ?? '',
       reason_rejected: json['reason_rejected'] ?? '',
       leave_used: int.tryParse(json['leave_used']?.toString() ?? '0') ?? 0,
-      remaining_leave: int.tryParse(json['remaining_leave']?.toString() ?? '0') ?? 0,
+      remaining_leave:
+          int.tryParse(json['remaining_leave']?.toString() ?? '0') ?? 0,
       jumlah_hari: int.tryParse(json['jumlah_hari']?.toString() ?? '0') ?? 0,
     );
   }
 
-  factory AdminApprovalPaidLeaveModel.fromMemberList(MemberListPaidLeave member) {
+  factory AdminApprovalPaidLeaveModel.fromMemberList(
+      MemberListPaidLeave member) {
     return AdminApprovalPaidLeaveModel(
-      reqNo: member.req_no,
-      username: member.name,
+      reqNo: member.reqNo,
+      username: member.username,
       position: member.position,
       project: member.project,
       departement: member.departement,

@@ -1,5 +1,5 @@
 class MemberListPaidLeave {
-  final String name;
+  final String username;
   final String position;
   final String project;
   final String departement;
@@ -11,7 +11,7 @@ class MemberListPaidLeave {
   final String date_start_leave;
   final String date_end_leave;
   final String date_back_to_work;
-  final String req_no;
+  final String reqNo;
   final String status;
   final String submittedDate;
   final String reason_rejected;
@@ -20,7 +20,7 @@ class MemberListPaidLeave {
   final int jumlah_hari;
 
   MemberListPaidLeave({
-    required this.name,
+    required this.username,
     required this.position,
     required this.project,
     required this.departement,
@@ -32,7 +32,7 @@ class MemberListPaidLeave {
     required this.date_start_leave,
     required this.date_end_leave,
     required this.date_back_to_work,
-    required this.req_no,
+    required this.reqNo,
     required this.status,
     required this.submittedDate,
     required this.reason_rejected,
@@ -43,7 +43,7 @@ class MemberListPaidLeave {
 
   factory MemberListPaidLeave.fromJson(Map<String, dynamic> json) {
     return MemberListPaidLeave(
-      name: json['name'] ?? '',
+      username: json['name'] ?? '',
       position: json['position'] ?? '',
       project: json['project'] ?? '',
       departement: json['departement'] ?? '',
@@ -55,7 +55,7 @@ class MemberListPaidLeave {
       date_start_leave: json['date_start_leave'] ?? '',
       date_end_leave: json['date_end_leave'] ?? '',
       date_back_to_work: json['date_back_to_work'] ?? '',
-      req_no: json['req_no'] ?? '',
+      reqNo: json['req_no'] ?? '',
       status: json['status'] ?? '',
       submittedDate: json['submittedDate'] ?? '',
       reason_rejected: json['reason_rejected'] ?? '',
@@ -67,6 +67,6 @@ class MemberListPaidLeave {
 
   @override
   String toString() {
-    return 'MemberListPaidLeave{reason_leave: $reason_leave, date_start_leave: $date_start_leave, date_end_leave: $date_end_leave, name: $name, status: $status, jumlah_hari: $jumlah_hari}';
+    return 'MemberListPaidLeave{reason_leave: $reason_leave, date_start_leave: $date_start_leave, date_end_leave: $date_end_leave, name: $username, status: $status, jumlah_hari: $jumlah_hari}';
   }
 }
