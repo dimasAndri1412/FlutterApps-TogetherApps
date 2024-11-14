@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:absent_project/approvalls/cuti/user/generatePDF_MSDOuser.dart';
 import 'package:absent_project/approvalls/cuti/user/pengajuan_cuti.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberListPaidLeave.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
@@ -41,7 +42,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
 
   void _checkDate() {
     final today = DateTime.now();
-    if (today.day > 11) {
+    if (today.day > 15) {
       setState(() {
         isButtonEnabled = false;
       });
@@ -247,7 +248,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                                   fontWeight: FontWeight.bold, fontSize: 14),
                             ),
                             Text(
-                              getSelected.req_no,
+                              getSelected.reqNo,
                               style: const TextStyle(fontSize: 14),
                             )
                           ],
@@ -313,7 +314,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                                         ),
                                         const SizedBox(height: 5),
                                         Text(
-                                          getSelected.name,
+                                          getSelected.username,
                                           style: const TextStyle(fontSize: 13),
                                         ),
                                       ],
@@ -530,7 +531,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                             Row(
                               children: [
                                 const Text(
-                                  "Name Of PIC : ",
+                                  "Emergency Contact : ",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 13),
@@ -561,30 +562,55 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                           ],
                         ),
                       )),
+                  SizedBox(height: 20),
+                  Container(
+                      margin: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Text(
+                          "Your request has been Approved",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 11),
+                        ),
+                      )),
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        Center(
-                          child: ElevatedButton(
-                            onPressed: getSelected.status == "Approved"
-                                ? () async {
-                                    // final adminModel = AdminApprovalPaidLeaveModel.fromMemberList(getSelected);
-
-                                    // print("Remaining leave in Admin Model: ${adminModel.remaining_leave}");
-
-                                    // final pdfGenerator = PDFGenerator_MSDO(getUserDetail: adminModel).GeneratePDF();
-
-                                    // await Printing.layoutPdf(
-                                    //     onLayout: (format) => pdfGenerator);
-                                  }
-                                : null,
-                            child: const Text("print"),
+                    padding: EdgeInsets.only(bottom: 20),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        final pdf = await PDFGenerator_MSDOuser(
+                                getUserDetail: getSelected)
+                            .GeneratePDF();
+                        await Printing.layoutPdf(onLayout: (format) => pdf);
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.print, color: Colors.green[300]),
+                          SizedBox(
+                            width: 10,
                           ),
-                        )
-                      ],
+                          Text(
+                            'Print Document',
+                            style: TextStyle(color: Colors.green[300]),
+                          ),
+                        ],
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          side: BorderSide(color: Colors.green, width: 2.0),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 80.0, vertical: 12.0),
+                      ),
                     ),
-                  ),
+                  )
                 ],
               ),
             ));
@@ -600,15 +626,24 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
       //   Get.to(ApprovallsUser());
       // },
       onPopInvoked: (didPop) {
-        Get.to(const ApplicationBarUser());
+        Get.to(const ApplicationBarUser(
+          initialIndex: 3,
+        ));
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Center(
-            child: Text(
-              "List Paid Leave Request",
-              style: TextStyle(fontSize: 15),
-            ),
+          leading: IconButton(
+              onPressed: () {
+                Get.to(ApplicationBarUser(initialIndex: 3));
+              },
+              icon: Icon(
+                Icons.arrow_back_ios_sharp,
+                color: Colors.white,
+              )),
+          title: Text(
+            "List Paid Leave Request",
+            style: TextStyle(
+                fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
           ),
           automaticallyImplyLeading: false,
           flexibleSpace: Container(
@@ -792,81 +827,117 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(width: 0.5, color: Colors.grey)),
-                        child: ListTile(
-                          leading: Image.asset(
-                            'assets/images/job.png',
-                            scale: 5,
-                          ),
-                          title: Text(
-                            /*getUser.reasonLeave,*/
-                            // isicuti['reason']!,
-                            memberInfo.reason_leave,
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, top: 15, right: 20),
+                              child: Row(children: [
+                                Text(
+                                  "No. Req : ",
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                                Text(memberInfo.reqNo),
+                                Spacer(),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: memberInfo.status == 'Approved'
+                                          ? Colors.green
+                                          : memberInfo.status == 'New'
+                                              ? Colors.blue
+                                              : Colors.red),
+                                  height: 20,
+                                  width: 80,
+                                  child: Center(
+                                    child: Text(
+                                      memberInfo.status,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12),
+                                    ),
+                                  ),
+                                ),
+                              ]),
+                            ),
+                            Divider(
+                              color: Colors.grey,
+                              thickness: 0.5,
+                              indent: 20,
+                              endIndent: 20,
+                            ),
+                            ListTile(
+                              leading: CircleAvatar(
+                                  backgroundImage: AssetImage(
+                                'assets/images/document.png',
+                              )),
+                              title: Text(
+                                /*getUser.reasonLeave,*/
+                                // isicuti['reason']!,
+                                memberInfo.reason_leave,
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14),
+                              ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Icon(Icons.calendar_month),
-                                  const SizedBox(
-                                    width: 5,
+                                  Row(
+                                    children: [
+                                      Icon(Icons.people_alt_outlined,
+                                          size: 18, color: Colors.grey),
+                                      SizedBox(width: 5),
+                                      Text("Approved by ",
+                                          style: TextStyle(
+                                              fontSize: 12, height: 2)),
+                                      SizedBox(width: 3),
+                                    ],
                                   ),
-                                  Text(
-                                    /*getUser.startDateLeave,*/
-                                    // isicuti['date']!,
-                                    memberInfo.date_start_leave,
-                                    style: const TextStyle(
-                                        color: Colors.grey, fontSize: 10),
+                                  Row(
+                                    children: [
+                                      const Icon(Icons.calendar_month,
+                                          size: 18, color: Colors.grey),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        /*getUser.startDateLeave,*/
+                                        // isicuti['date']!,
+                                        memberInfo.date_start_leave,
+                                        style: const TextStyle(fontSize: 10),
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      const Text("-"),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        memberInfo.date_end_leave,
+                                        style: const TextStyle(fontSize: 10),
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  const Text("-"),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    memberInfo.date_end_leave,
-                                    style: const TextStyle(
-                                        color: Colors.grey, fontSize: 10),
-                                  ),
+                                  Row(
+                                    children: [
+                                      const Icon(Icons.offline_bolt_outlined,
+                                          size: 18, color: Colors.grey),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        /*getUser.name,*/
+                                        // isicuti['name']!,
+                                        memberInfo.jumlah_hari.toString(),
+                                        style: const TextStyle(fontSize: 10),
+                                      ),
+                                    ],
+                                  )
                                 ],
                               ),
-                              Row(
-                                children: [
-                                  const Icon(Icons.offline_bolt_outlined),
-                                  const SizedBox(width: 5),
-                                  Text(
-                                    /*getUser.name,*/
-                                    // isicuti['name']!,
-                                    memberInfo.jumlah_hari.toString(),
-                                    style: const TextStyle(
-                                        color: Colors.grey, fontSize: 10),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                          trailing: Text(
-                            /*getUser.status,*/
-                            // usercuti[index]['status']!,
-                            memberInfo.status,
-
-                            style: TextStyle(
-                                /*color: getUser.status== 'new'*/
-                                // color: isicuti['status'] == 'Approved'
-                                color: memberInfo.status == 'Approved'
-                                    ? Colors.green
-                                    // : isicuti['status'] == 'New'
-                                    : memberInfo.status == 'New'
-                                        ? Colors.blue
-                                        : Colors.red,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15),
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ApplicationBarUser extends StatefulWidget {
-  const ApplicationBarUser({super.key});
+  final int initialIndex;
+  const ApplicationBarUser({super.key, this.initialIndex = 0});
 
   @override
   State<ApplicationBarUser> createState() => _ApplicationBarUserState();
@@ -26,6 +27,14 @@ class _ApplicationBarUserState extends State<ApplicationBarUser> {
   //   MenuPageUser()
   // ];
   int currentIndex = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    currentIndex = widget.initialIndex;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ClockInState>(builder: (context, clockInState, child) {

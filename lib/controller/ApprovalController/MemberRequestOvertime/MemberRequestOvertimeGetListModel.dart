@@ -45,7 +45,7 @@ class MemberRequestOvertimeGetListModel {
       end_time: json['end_time'] ?? 'Unknown',
       activity: json['activity'] ?? 'Unknown',
       status: json['status'] ?? 'Unknown',
-      reqNo: json['reqNo'] ?? 'Unknown',
+      reqNo: json['req_no'] ?? 'Unknown',
       submittedDate: json['submittedDate'] ?? 'Unknown',
       reason_rejected: json['reason_rejected'] ?? 'Unknown',
     );

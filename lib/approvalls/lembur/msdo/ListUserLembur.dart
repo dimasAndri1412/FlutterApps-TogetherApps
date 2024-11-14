@@ -118,11 +118,21 @@ class _ListUserLemburState extends State<ListUserLembur> {
       },
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+              onPressed: () {
+                Get.to(ApplicationBar(
+                  initialIndex: 3,
+                ));
+              },
+              icon: Icon(
+                Icons.arrow_back_ios_sharp,
+                color: Colors.white,
+              )),
           title: Center(
             child: Text(
               "Overtime Approval MSDO Project",
               style: TextStyle(
-                  fontSize: 15,
+                  fontSize: 20,
                   color: Colors.white,
                   fontWeight: FontWeight.bold),
             ),

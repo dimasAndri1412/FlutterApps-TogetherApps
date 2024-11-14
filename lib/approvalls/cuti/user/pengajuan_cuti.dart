@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class PengajuanCuti extends StatefulWidget {
   const PengajuanCuti({super.key});
@@ -24,9 +25,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
 
   List<String> typeLeave = [
     "Maternity leave ",
-    "Sick leave",
     "Permission leave",
-    "Leave late coming / leaving early",
     "Leave government call / Umrah"
   ];
 
@@ -292,7 +291,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                               padding: const EdgeInsets.only(left: 10),
                               child: TextFormField(
                                 decoration: InputDecoration(
-                                    labelText: "Name of PIC",
+                                    labelText: "Emergency Contact",
                                     hintText: "Please input your PIC here",
                                     hintStyle: TextStyle(color: Colors.grey),
                                     border: InputBorder.none),
@@ -316,16 +315,24 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                                 borderRadius: BorderRadius.circular(12)),
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10),
-                              child: TextFormField(
+                              child: IntlPhoneField(
+                                controller: phonePaidLeave,
+                                keyboardType: TextInputType.phone,
+                                focusNode: FocusNode(),
+                                dropdownTextStyle: TextStyle(fontSize: 20),
                                 decoration: InputDecoration(
                                     labelText: "Handphone Number",
                                     hintText: "Please input your number here",
                                     hintStyle: TextStyle(color: Colors.grey),
                                     border: InputBorder.none),
-                                controller: phonePaidLeave,
+                                initialCountryCode: 'ID',
+                                onChanged: (phone) {
+                                  print(phone.completeNumber);
+                                },
                                 validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter your phone number here';
+                                  if (value == null ||
+                                      value.completeNumber.isEmpty) {
+                                    return "Phone Nummber Can not empty";
                                   }
                                   return null;
                                 },

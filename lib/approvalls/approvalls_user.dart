@@ -29,7 +29,9 @@ class _ApprovallsUserState extends State<ApprovallsUser> {
           ),
           elevation: 0,
           title: Center(
-            child: Text("APPROVAL"),
+            child: Text("APPROVAL",
+                style: TextStyle(
+                    fontWeight: FontWeight.w500, color: Colors.white)),
           ),
         ),
         body: Container(
@@ -62,7 +64,7 @@ class _ApprovallsUserState extends State<ApprovallsUser> {
                           )),
                       Container(
                         margin: EdgeInsets.only(top: 0),
-                        child: Text("Pengajuan Lembur"),
+                        child: Text("Overtime Approval"),
                       )
                     ],
                   ),
@@ -101,7 +103,7 @@ class _ApprovallsUserState extends State<ApprovallsUser> {
                           )),
                       Container(
                         margin: EdgeInsets.only(top: 0),
-                        child: Text("Pengajuan Cuti"),
+                        child: Text("Paid Leave Approval"),
                       )
                     ],
                   ),
