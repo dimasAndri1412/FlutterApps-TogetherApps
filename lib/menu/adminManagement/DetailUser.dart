@@ -51,7 +51,9 @@ class DetailUser extends StatelessWidget {
                               shape: BoxShape.circle,
                               image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: NetworkImage(userList.avatarUrl),
+                                image: userList.avatarUrl != null && userList.avatarUrl.isNotEmpty
+                                       ? NetworkImage(userList.avatarUrl)
+                                       : AssetImage('assets/images/reload.png') as ImageProvider,
                               ),
                             ),
                           ),

@@ -29,6 +29,55 @@ class ctr_data {
     }
     return false;
   }
+  
+  revampSaveFunc() async {
+    
+    final respSave = await http.post(
+      Uri.parse("http://192.168.2.159:8080/FlutterAPI/revampRegistrationInsert.php"),
+      body: {
+        "full_name": FullNameController.text,
+        "USERNAME": UserNameController.text,
+        "birth_date": BirthDateController.text,
+        "address": AddressController.text,
+        "ROLE": RolesController.text,
+        "phone_number": PhoneNumbersController.text,
+        "email_address": EmailController.text,
+        "PASSWORD": PassController.text,
+        "project_name": ProjectController.text,
+        "position_name": revampPostionController.text,
+        "division_name": revampDivisionController.text,
+        "company_name": revampCompanyController.text
+      }
+    );
+    print("response : ${respSave.body}");
+    if (respSave.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
+
+  revamp_clear_func() {
+    FullNameController.clear();
+    UserNameController.clear();
+    BirthDateController.clear();
+    AddressController.clear();
+    RolesController.clear();
+    PhoneNumbersController.clear();
+    //EmailController.clear();
+    NewConfPasswordController.clear();
+    NewPasswordContorller.clear();
+    PassController.clear();
+    ConfPassController.clear();
+    ProjectController.clear();
+    OTPController.clear();
+    UserIdController.clear();
+    FaceImageController.clear();
+    EmbeddingController.clear();
+    revampOTPControllers.clear();
+    revampCompanyController.clear();
+    revampDivisionController.clear();
+    revampPostionController.clear();
+  }
 
   //fungsi untuk melakukan penghapusan data//
   clear_func() {

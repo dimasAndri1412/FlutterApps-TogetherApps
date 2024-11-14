@@ -1,4 +1,5 @@
 import 'package:absent_project/Registration/addUserMenu.dart';
+import 'package:absent_project/RevampRegistrations/RevampRegistrationPages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -104,6 +105,14 @@ class _ListUserState extends State<ListUser> {
                       hintStyle: TextStyle(color: Colors.grey.withOpacity(0.5)),
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,
+                      prefixIcon: IconButton(
+                        onPressed: (){
+                          Get.back();
+                        },
+                        icon: Icon(
+                          Icons.arrow_back_ios_new,
+                        ),
+                      ),
                       suffixIcon: Icon(Icons.search_rounded),
                     ),
                   ),
@@ -161,11 +170,14 @@ class _ListUserState extends State<ListUser> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => addUserMenu()),
+            MaterialPageRoute(builder: (context) => revampRegistrationPages()),
           );
         },
-        backgroundColor: Color.fromARGB(255, 139, 190, 232),
-        child: const Icon(Icons.add),
+        backgroundColor: Color.fromARGB(255, 98, 171, 232),
+        child: const Icon(
+            Icons.add,
+            color: Colors.white,
+        ),
       ),
     );
   }

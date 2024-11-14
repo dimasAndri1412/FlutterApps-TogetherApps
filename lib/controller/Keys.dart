@@ -142,10 +142,21 @@ List<TextEditingController> selectedQuestionControllers = [];
 List<TextEditingController> selectedPlatformControllers = [];
 List<TextEditingController> answersControllers = [];
 
+//locationControllerNew
 Map<String, TextEditingController> controlersss = {
     "projectController": TextEditingController(),
     "locationController": TextEditingController(),
 };
+
+//revamp registration
+final revampPostionController = TextEditingController();
+final revampDivisionController = TextEditingController();
+final revampCompanyController = TextEditingController();
+final revampProjectController = TextEditingController();
+final revampRolesController = TextEditingController();
+
+//revamp registration key
+final GlobalKey<FormState> revampRegistrationsKey = GlobalKey<FormState>();
 
 //projectContollersAddLoc
 final List<Map<String, TextEditingController>> projectControllerss = [];
