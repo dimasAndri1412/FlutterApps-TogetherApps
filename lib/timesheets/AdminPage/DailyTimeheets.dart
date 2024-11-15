@@ -3,9 +3,12 @@
 import 'package:absent_project/approvalls/Approvalls.dart';
 import 'package:absent_project/controller/TimeSheetsController/TimesheetAdmin/ListTimesheetsController.dart';
 import 'package:absent_project/controller/TimeSheetsController/TimesheetAdmin/ListTimesheetsModel.dart';
+import 'package:absent_project/home/ApplicationBar.dart';
 import 'package:absent_project/timesheets/AdminPage/MonthlyReport.dart';
 import 'package:absent_project/timesheets/AdminPage/MonthlyTimesheets.dart';
-import 'package:absent_project/timesheets/AdminPage/TimeEntry.dart';
+import 'package:absent_project/timesheets/AdminPage/TimeEntryClockIn.dart';
+import 'package:absent_project/timesheets/AdminPage/TimeEntryClockOut.dart';
+import 'package:absent_project/timesheets/AdminPage/Timesheets.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:printing/printing.dart';
@@ -38,9 +41,15 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
   @override
   void initState() {
     super.initState();
-    // Hanya panggil future sekali saat widget diinisialisasi
-    _future = listTimesheetsController.getDaily(widget.selectedDay, widget.clockInId);
+   
+    _loadData();
   }
+
+  void _loadData() {
+  setState(() {
+    _future = listTimesheetsController.getDaily(widget.selectedDay, widget.clockInId);
+  });
+}
 
   @override
   Widget build(BuildContext context) {
@@ -49,13 +58,22 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
 
     return Scaffold(
       appBar: AppBar(
-        title:Center(
-          child: Text(
+        title:
+          Text(
             "Daily Timesheets",
             style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
           ),
-        ),
-        automaticallyImplyLeading: false,
+        // leading: IconButton(
+        //   icon: Icon(Icons.arrow_back, color: Colors.white,),
+        //   onPressed: () {
+        //     Navigator.pushReplacement(
+        //       context,
+        //       MaterialPageRoute(
+        //         builder: (context) => ApplicationBar(), 
+        //       ),
+        //     );
+        //   },
+        // ),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -280,7 +298,7 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                               GestureDetector(
                                 onTap: (){
                                 Navigator.of(context)
-                                  .push(MaterialPageRoute(builder: (context) => TimeEntry()));
+                                  .push(MaterialPageRoute(builder: (context) => TimeEntry(ClockInId: daily.clockInID)));
                               },
                                 child: ListTile(
                                   title: Text(formattedClockIn ?? "-"),
@@ -315,7 +333,7 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                               GestureDetector(
                                 onTap: (){
                                 Navigator.of(context)
-                                  .push(MaterialPageRoute(builder: (context) => TimeEntry()));
+                                  .push(MaterialPageRoute(builder: (context) => TimeEntryClockOut(clockOutId: daily.clockOutID, clockInId: daily.clockInID,)));
                               },
                                 child: ListTile(
                                   title: Text(formattedClockOut ?? "-"),

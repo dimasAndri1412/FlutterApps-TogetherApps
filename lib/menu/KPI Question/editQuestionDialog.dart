@@ -1,12 +1,14 @@
 import 'package:absent_project/controller/KPIQuestionsController/question/QuestionController.dart';
+import 'package:absent_project/controller/KPIQuestionsController/question/QuestionModel.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/material.dart';
 
 class editQuestionDialog extends StatefulWidget {
   final int questionId;
   final String questionText;
+  final int positionId;
 
-  const editQuestionDialog({required this.questionId, required this.questionText});
+  const editQuestionDialog({required this.questionId, required this.questionText, required this.positionId});
 
   @override
   State<editQuestionDialog> createState() => _editQuestionDialogState();
@@ -27,6 +29,18 @@ class _editQuestionDialogState extends State<editQuestionDialog> {
     // TODO: implement dispose
     textController.dispose();
     super.dispose();
+  }
+
+  final Questioncontroller _controller = Questioncontroller();
+  List<QuestionModel> _questions = [];
+  bool _isLoading = true;
+  void _fetchQuestions() async {
+    List<QuestionModel> questions = await _controller.getQuestions(widget.positionId);
+
+    setState(() {
+      _questions = questions;
+      _isLoading = false;
+    });
   }
 
   @override
@@ -111,6 +125,7 @@ class _editQuestionDialogState extends State<editQuestionDialog> {
 
                       questionText.clear();
                       Navigator.pop(context);
+                      _fetchQuestions();
                     }, 
                     child: Text("Update Question",
                       style: TextStyle(

@@ -1,6 +1,7 @@
 class ListTimesheetsModel{
   final DateTime? clockIn;
   final String clockInID;
+  final String clockOutID;
   final DateTime? clockOut;
   final String? elapsedTime;
   final String? fullName;
@@ -13,6 +14,7 @@ class ListTimesheetsModel{
   ListTimesheetsModel({
     this.clockIn,
     required this.clockInID,
+    required this.clockOutID,
     this.clockOut,
     this.elapsedTime,
     this.fullName,
@@ -27,6 +29,7 @@ class ListTimesheetsModel{
     return ListTimesheetsModel(
       clockIn: json['clock_in'] != null ? DateTime.parse(json['clock_in']) : null,
       clockInID: json['clock_in_id'] ?? " ",
+      clockOutID: json['clock_out_id'] ?? " ",
       clockOut: json['clock_out'] != null ? DateTime.parse(json['clock_out']) : null,
       elapsedTime: json['elapsed_time'] ?? " ",
       fullName: json['full_name'] ?? " ",

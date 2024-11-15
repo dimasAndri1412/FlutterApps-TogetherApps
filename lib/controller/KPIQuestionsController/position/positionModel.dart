@@ -6,7 +6,7 @@ class positionModel {
 
   factory positionModel.fromJson(Map<String, dynamic> json) {
     return positionModel(
-      idPosition: int.parse(json['id_position'].toString()),
+      idPosition: int.parse(json['id'].toString()),
       positionName: json['position_name'],
     );
   }
