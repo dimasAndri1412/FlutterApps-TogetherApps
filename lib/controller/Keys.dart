@@ -156,6 +156,9 @@ final revampCompanyController = TextEditingController();
 final revampProjectController = TextEditingController();
 final revampRolesController = TextEditingController();
 
+//revamRegistControllerss
+final List<Map<String, TextEditingController>> revampResgistControllerss = [];
+
 //revamp registration key
 final GlobalKey<FormState> revampRegistrationsKey = GlobalKey<FormState>();
 
