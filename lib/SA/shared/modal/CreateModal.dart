@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../controller/UserController.dart';
 import '../../json/UsersJson/AddUserJson.dart';
@@ -36,6 +37,48 @@ class _CreateModalState extends State<CreateModal> {
 
   // Instansiasi UserController langsung di sini
   final UserController userController = UserController(apiService: ApiService());
+  List<Positions> _positions = [];
+  int? _selectedPositionId;
+
+  @override
+  void initState(){
+    super.initState();
+    _loadPositions();
+  }
+
+  Future<void> _loadPositions() async{
+    try{
+      List<Positions> positions = await userController.getPositions();
+      setState(() {
+        _positions = positions;
+      });
+    }catch (error){
+      print('Failed to load positions: $error');
+    }
+}
+
+  void _submitForm() {
+    if (_formKey.currentState!.validate()) {
+      Map<String, dynamic> userData = {
+        "login": {
+          "username": _usernameController.text,
+          "password": _passwordController.text,
+          "full_name": _fullnameController.text,
+          "phone_number": _phoneController.text,
+          "birth_date": _birthdateController.text,
+          "address": _addressController.text,
+          "email_address": _emailController.text,
+        },
+        "company": {"company_name": _companyController.text},
+        "division": {"division_name": _divisionController.text},
+        "project": {"project_name": _projectController.text},
+        "position": {"position_id": _selectedPositionId},
+      };
+
+      userController.createUser(userData, context);
+      clearFields();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,16 +161,21 @@ class _CreateModalState extends State<CreateModal> {
                                   ),
                                   const SizedBox(height: 10,),
                                   // Position Name
-                                  TextFormFieldCustom(
-                                    controller: _positionController,
-                                    label: 'Position',
-                                    icon: Icons.abc_outlined ,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return "Position can't be empty";
-                                      }
-                                      return null;
+                                  DropdownButtonFormField<int>(
+                                    value: _selectedPositionId,
+                                    hint: const Text("Select Position"),
+                                    items: _positions.map((position) {
+                                      return DropdownMenuItem<int>(
+                                        value: position.id,
+                                        child: Text(position.position_name),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedPositionId = value;
+                                      });
                                     },
+                                    validator: (value) => value == null ? 'Please select a position' : null,
                                   ),
                                   const SizedBox(height: 10,),
                                   // Username
@@ -235,33 +283,7 @@ class _CreateModalState extends State<CreateModal> {
                                     textColor: Colors.white,
                                     backgroundColor: Colors.blueAccent,
                                     onPressed: () {
-                                      if (_formKey.currentState!.validate()) {
-                                        AddUserJson addUserJson = AddUserJson(
-                                          login: Users(
-                                            username: _usernameController.text,
-                                            password: _passwordController.text,
-                                            role: 'ADMIN',
-                                            full_name: _fullnameController.text,
-                                            phone_number: _phoneController.text,
-                                            birth_date: _birthdateController.text,
-                                            address: _addressController.text,
-                                            shiftingStatus: "-", // Default value
-                                            email: _emailController.text,
-                                            login_flag: 0,
-                                            image_path: "-", // Default value
-                                            leave_used: 0,
-                                            remaining_leave: 12,
-                                            device: "-", // Default value
-                                          ),
-                                          company: Companies(company_name: _companyController.text),
-                                          division: Divisions(division_name: _divisionController.text),
-                                          project: Projects(project_name: _projectController.text),
-                                          position: Positions(position_name: _positionController.text),
-                                        );
-
-                                        userController.createUser(addUserJson, context);
-                                        clearFields();
-                                      }
+                                      _submitForm();
                                     },
                                   )
                                 ],
