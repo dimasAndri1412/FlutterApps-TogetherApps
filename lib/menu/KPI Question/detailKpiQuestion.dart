@@ -117,6 +117,7 @@ class _DetailkpiquestionState extends State<Detailkpiquestion> {
                                 return editQuestionDialog(
                                   questionId: question.idQuestion,
                                   questionText: question.questionText,
+                                  positionId: question.idPosition,
                                 );
                               }
                             ).then((_){
