@@ -1,18 +1,17 @@
 import 'dart:convert';
-import 'package:absent_project/MapsViews/MatterialMaps/FindMapLocationControllers.dart';
 import 'package:absent_project/MapsViews/modelMaps/usernameModel.dart' as projectsModels;
 import 'package:http/http.dart' as http;
 import '../../controller/Keys.dart';
 
 class findsProjectController {
 
-  String? usersNames, fullNames, projectGroup, avatarURL;
+  String? usersNames, fullNames, projectGroup, avatarURL, companyID;
   var projectUsers;
 
   Future findUsers() async {
 
     String usersInputs = emailController.text;
-    String userNames = 'dimas';
+    //String userNamesInputs = 'septian';
 
     try {
 
@@ -29,8 +28,7 @@ class findsProjectController {
       projectsModels.fullNameModel = projectUsers[0]['full_name'];
       projectsModels.usersModels = projectUsers[0]['USERNAME'];
       projectsModels.avatarModel = projectUsers[0]['image_path'];
-
-      final findCoordinate = await findGmapsLocation();
+      projectsModels.companyIdModel = projectUsers[0]['company_id'];
 
     } catch(errs) {
       return "Can Not Find The Project";

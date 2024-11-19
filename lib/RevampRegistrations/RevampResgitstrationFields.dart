@@ -60,15 +60,16 @@ class _revampResgitartionFieldsState extends State<revampResgitartionFields> {
     }
   }
 
-  Future<void> getListCompany() async{
+  Future<void> getListCompany() async {
     final dropDownRegistrationList companyValues = dropDownRegistrationList();
     final fetchCompany = await companyValues.getCompanyListValues();
-    if(fetchCompany != null) {
+    if (fetchCompany != null) {
       setState(() {
         companyListings = fetchCompany;
       });
     }
   }
+
 
   void addNewsContainers() {
     setState(() {
@@ -498,58 +499,7 @@ class _revampResgitartionFieldsState extends State<revampResgitartionFields> {
                 )
             ),
             child: DropdownButtonFormField<String>(
-              value: divisionListings.map((divisions) => divisions.divisionNames).contains(controllersss["revampDivisionController"]?.text)
-                  ? controllersss["revampDivisionController"]?.text
-                  : null,
-              items: [
-                DropdownMenuItem(
-                  value: null,
-                  child: Text(
-                    "-- Select Your Division --",
-                    style: TextStyle(color: Colors.black26),
-                  ),
-                ),
-                ...divisionListings.map((division) {
-                  return DropdownMenuItem(
-                    value: division.divisionNames,
-                    child: Text(division.divisionNames),
-                  );
-                }).toList(),
-              ],
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                prefixIcon: Icon(
-                  Icons.portrait_sharp,
-                ),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  dropDisivionValues = value;
-                  if (value != null && value.isNotEmpty) {
-                    controllersss["revampDivisionController"]?.text = value;
-                  }else {
-                    revampDivisionController.clear();
-                  }
-                });
-              },
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return "Please select a Division";
-                }
-                return null;
-              },
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(
-                        color: Colors.black87)
-                )
-            ),
-            child: DropdownButtonFormField<String>(
-              value: companyListings.map((companys) => companys.companyNames).contains(controllersss["revampCompanyController"]?.text)
+              value: companyListings.map((company) => company.companyNames).contains(controllersss["revampCompanyController"]?.text)
                   ? controllersss["revampCompanyController"]?.text
                   : null,
               items: [
@@ -578,14 +528,14 @@ class _revampResgitartionFieldsState extends State<revampResgitartionFields> {
                   dropCompanyValues = value;
                   if (value != null && value.isNotEmpty) {
                     controllersss["revampCompanyController"]?.text = value;
-                  }else {
-                    revampCompanyController.clear();
+                  } else {
+                    controllersss["revampCompanyController"]?.clear();
                   }
                 });
               },
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "Please Select A Company";
+                  return "Please select a Company";
                 }
                 return null;
               },
