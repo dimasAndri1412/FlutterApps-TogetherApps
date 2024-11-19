@@ -1,8 +1,5 @@
-import 'package:absent_project/SA/json/UsersJson/AddUserJson.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
-
+import '../model/Positions.dart';
 import '../services/ApiService.dart';
 
 class UserController {
@@ -10,23 +7,39 @@ class UserController {
 
   UserController({required this.apiService});
 
-  // Method untuk menambahkan user baru
-  Future<void> createUser(AddUserJson addUserJson, BuildContext context) async {
-    Map<String, dynamic> userData = addUserJson.toJson();
+  Future<List<Positions>> getPositions() async {
+    try {
+      return await apiService.getPosition();
+    } catch (error) {
+      throw Exception('Failed to fetch positions');
+    }
+  }
 
+  Future<void> createUser(Map<String, dynamic> userData, BuildContext context) async {
     try {
       var response = await apiService.createUser(userData);
       if (response['status'] == 'success') {
-       const SnackBar snackBar = SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
             content: Text("User created successfully!"),
-            backgroundColor: Colors.greenAccent,
+            backgroundColor: Colors.green,
+          ),
         );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       } else {
-        print("Error: ${response['message']}");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Error: ${response['message']}"),
+            backgroundColor: Colors.red,
+          ),
+        );
       }
     } catch (error) {
-      print("Error: $error");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Error: $error"),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 }
