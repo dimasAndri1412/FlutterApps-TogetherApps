@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:absent_project/controller/FindEmailForValidation.dart';
 import 'package:absent_project/controller/FindOTPController.dart';
 import 'package:absent_project/controller/findImagePath.dart';
@@ -11,24 +12,51 @@ final String TokenAcces2 = "owvl tynj qlqb inyv";
 
 final String AdminEmail = "absentsnotif@gmail.com";
 
-final String bodyEmails = "HI,${FullNameController.text}\n"
-                          "\n"
-                          "YOUR GOT DEFAULT USER :"
-                          "\n"
-                          "==============================\n"
-                          "USERNAME : ${UserNameController.text}\n"
-                          "PASSWORD : ${PassController.text}\n"
-                          "==============================\n"
-                          "\n"
-                          "PLEASE CHANGE THE DEFAULT PASSWORD WITH THE PASSWORD!\n"
-                          "THAT YOU WANT, AND IT'S EASY TO REMEMBER.\n"
-                          "AND TRY TO LOGIN WITH THE PASSWORD THAT HAS BEEN CHANGED.\n"
-                          "\n"
-                          "\n"
-                          "Thanks you\n"
-                          "\n"
-                          "Best Regard\n"
-                          "ADMIN";
+String valueBodyEmail() {
+  String emailContent = "";
+  for (var bodyController in revampResgistControllerss) {
+    emailContent +=
+    "HI, ${bodyController["revampFullNameController"]?.text}\n"
+        "\n"
+        "YOUR GOT DEFAULT USER :\n"
+        "==============================\n"
+        "USERNAME : ${bodyController["revampUserNameController"]?.text}\n"
+        "PASSWORD : ${bodyController["revampPasswordController"]?.text}\n"
+        "==============================\n"
+        "\n"
+        "PLEASE CHANGE THE DEFAULT PASSWORD WITH THE PASSWORD!\n"
+        "THAT YOU WANT, AND IT'S EASY TO REMEMBER.\n"
+        "AND TRY TO LOGIN WITH THE PASSWORD THAT HAS BEEN CHANGED.\n"
+        "\n"
+        "Thank you\n"
+        "\n"
+        "Best Regard\n"
+        "ADMIN\n\n";
+  }
+  return emailContent;
+}
+
+final String bodyEmails = valueBodyEmail();
+
+//revampBodyEmail
+String revampValueBodyEmails(Map<String, TextEditingController> bodyEmailController){
+  return "HI, ${bodyEmailController["revampFullNameController"]?.text}\n"
+      "\n"
+      "YOUR GOT DEFAULT USER :\n"
+      "==============================\n"
+      "USERNAME : ${bodyEmailController["revampUserNameController"]?.text}\n"
+      "PASSWORD : ${bodyEmailController["revampPasswordController"]?.text}\n"
+      "==============================\n"
+      "\n"
+      "PLEASE CHANGE THE DEFAULT PASSWORD WITH THE PASSWORD!\n"
+      "THAT YOU WANT, AND IT'S EASY TO REMEMBER.\n"
+      "AND TRY TO LOGIN WITH THE PASSWORD THAT HAS BEEN CHANGED.\n"
+      "\n"
+      "Thank you\n"
+      "\n"
+      "Best Regard\n"
+      "ADMIN\n\n";
+}
 
 
 final String bodyEmailsForgots =

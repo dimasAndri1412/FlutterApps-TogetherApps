@@ -23,10 +23,12 @@ class _revampResgitartionFieldsState extends State<revampResgitartionFields> {
   String? dropDisivionValues;
   String? dropCompanyValues;
   String? dropPositionValues;
+  List<Widget> addtionalRegistContainers = [];
   List<dropDownButtonListProjectValue> projectsListings = [];
   List<dropDownDivisionListValues> divisionListings = [];
   List<dropDownPositionValueList> positionListings = [];
   List<dropDownCompanyValuesList> companyListings = [];
+
 
   Future<void> getListProjectNames() async {
     final dropDownListValues projectsValues = dropDownListValues();
@@ -58,14 +60,46 @@ class _revampResgitartionFieldsState extends State<revampResgitartionFields> {
     }
   }
 
-  Future<void> getListCompany() async{
+  Future<void> getListCompany() async {
     final dropDownRegistrationList companyValues = dropDownRegistrationList();
     final fetchCompany = await companyValues.getCompanyListValues();
-    if(fetchCompany != null) {
+    if (fetchCompany != null) {
       setState(() {
         companyListings = fetchCompany;
       });
     }
+  }
+
+
+  void addNewsContainers() {
+    setState(() {
+      Map<String, TextEditingController> controllersss = {
+        "revampUserNameController" : TextEditingController(),
+        "revampFullNameController" : TextEditingController(),
+        "revampBirthDayController" : TextEditingController(),
+        "revampAddressController" : TextEditingController(),
+        "revampRolesController" : TextEditingController(),
+        "revampPasswordController" : TextEditingController(),
+        "revampPhoneNumberController" : TextEditingController(),
+        "revampEmailController" : TextEditingController(),
+        "revampProjectController" : TextEditingController(),
+        "revampPositionController" : TextEditingController(),
+        "revampDivisionController" : TextEditingController(),
+        "revampCompanyController" : TextEditingController(),
+      };
+      revampResgistControllerss.add(controllersss);
+      addtionalRegistContainers.add(buildsRegistContainers(controllersss));
+    });
+  }
+
+  void removeRegistContainer() {
+    setState(() {
+      if(addtionalRegistContainers.isNotEmpty) {
+        revampResgistControllerss.last.values.forEach((controller) => controller.dispose());
+        revampResgistControllerss.removeLast();
+        addtionalRegistContainers.removeLast();
+      }
+    });
   }
 
   @override
@@ -76,6 +110,478 @@ class _revampResgitartionFieldsState extends State<revampResgitartionFields> {
     super.dispose();
   }
 
+  Widget startBuildRegistContainers(Map<String, TextEditingController> controlersss) {
+    return Container(
+      key: UniqueKey(),
+      margin: EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 4),
+            blurRadius: 10,
+            color: Colors.black26,
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                "Add Registration",
+                style: TextStyle(
+                    color: Colors.blueAccent,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(width: 10),
+              FloatingActionButton(
+                onPressed: addNewsContainers,
+                heroTag: null,
+                backgroundColor: Colors.blueAccent,
+                child: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildsRegistContainers(Map<String, TextEditingController> controllersss) {
+    return Container(
+      key: UniqueKey(),
+      margin: EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 4),
+            blurRadius: 10,
+            color: Colors.black26,
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(
+                        color: Colors.black87)
+                )
+            ),
+            child: TextFormField(
+              controller: controllersss["revampFullNameController"],
+              decoration: InputDecoration(
+                  labelText: "Fullname",
+                  hintText: "Please Insert Fullname",
+                  hintStyle: TextStyle(color: Colors.black26),
+                  border: InputBorder.none,
+                  prefixIcon: Icon(Icons.people)),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Username Can not Empty!";
+                }
+                return null;
+              },
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(
+                        color: Colors.black87)
+                )
+            ),
+            child: TextFormField(
+              controller: controllersss["revampUserNameController"],
+              decoration: InputDecoration(
+                  labelText: "UserName",
+                  hintText: "Please Insert Username",
+                  hintStyle: TextStyle(color: Colors.black26),
+                  border: InputBorder.none,
+                  prefixIcon: Icon(Icons.people)),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Username Can not Empty!";
+                }
+                return null;
+              },
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(15),
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(
+                        color: Colors.black87)
+                )
+            ),
+            child: TextFormField(
+              controller: controllersss["revampBirthDayController"],
+              decoration: InputDecoration(
+                  labelText: "BirthDate",
+                  hintText: "Pleas Enter Your BirthDate",
+                  hintStyle: TextStyle(color: Colors.black26),
+                  border: InputBorder.none,
+                  icon: Icon(Icons.calendar_today)),
+              readOnly: true,
+              onTap: () async {
+                DateTime? pickedDates = await showDatePicker(
+                    builder: (context, child) {
+                      return Theme(
+                        data: Theme.of(context).copyWith(
+                          colorScheme: ColorScheme.light(
+                              primary: Colors.lightBlue,
+                              onPrimary: Colors.white,
+                              onSurface: Colors.black),
+                          textButtonTheme: TextButtonThemeData(
+                            style: TextButton.styleFrom(
+                                foregroundColor: Colors.blueAccent),
+                          ),
+                        ),
+                        child: child!,
+                      );
+                    },
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(1950),
+                    lastDate: DateTime(2100));
+
+                if (pickedDates != null) {
+                  String formatedDates =
+                  DateFormat('yyyy-MM-dd').format(pickedDates);
+                  setState(() {
+                    controllersss["revampBirthDayController"]?.text = formatedDates;
+                  });
+                } else {}
+              },
+              validator: (value) {
+                if (value!.isEmpty || value == null) {
+                  return "BirtDate Can Not Empty!";
+                }
+                return null;
+              },
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: Colors.black87))),
+            child: TextFormField(
+              controller: controllersss["revampAddressController"],
+              decoration: InputDecoration(
+                  labelText: "Address",
+                  hintText: "Please Insert you address",
+                  hintStyle: TextStyle(color: Colors.black26),
+                  border: InputBorder.none,
+                  prefixIcon: Icon(Icons.location_city)),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Address Can not Empty!";
+                }
+                return null;
+              },
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(
+                        color: Colors.black87)
+                )
+            ),
+            child: DropdownButtonFormField<String>(
+              value: projectsListings.map((project) => project.projectNames).contains(controllersss["revampProjectController"]?.text)
+                  ? controllersss["revampProjectController"]?.text
+                  : null,
+              items: [
+                DropdownMenuItem(
+                  value: null,
+                  child: Text(
+                    "-- Select Your Projects --",
+                    style: TextStyle(color: Colors.black26),
+                  ),
+                ),
+                ...projectsListings.map((project) {
+                  return DropdownMenuItem(
+                    value: project.projectNames,
+                    child: Text(project.projectNames),
+                  );
+                }).toList(),
+              ],
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                prefixIcon: Icon(Icons.work),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  String passwordValue = functionKeys.GeneratedPassword();
+                  dropProjectsValues = value;
+                  if (value != null && value.isNotEmpty) {
+                    controllersss["revampRolesController"]?.text = "MEMBER";
+                    controllersss["revampPasswordController"]?.text = passwordValue;
+                    controllersss["revampProjectController"]?.text = value ?? '';
+                  }else {
+                    RolesController.clear();
+                    PassController.clear();
+                  }
+                });
+              },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please select a location";
+                }
+                return null;
+              },
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(
+                        color: Colors.black87)
+                )
+            ),
+            child: TextFormField(
+              controller: controllersss["revampRolesController"],
+              readOnly: true,
+              decoration: InputDecoration(
+                  labelText: "Roles",
+                  hintText: "Please Insert Roles",
+                  hintStyle: TextStyle(color: Colors.black26),
+                  border: InputBorder.none,
+                  prefixIcon: Icon(Icons.people)),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Roles Can not Empty!";
+                }
+                return null;
+              },
+            ),
+          ),
+          Container(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              decoration: BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(
+                          color: Colors.black87)
+                  )
+              ),
+              child: IntlPhoneField(
+                controller: controllersss["revampPhoneNumberController"],
+                keyboardType: TextInputType.phone,
+                focusNode: FocusNode(),
+                dropdownTextStyle: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 18),
+                decoration: InputDecoration(
+                  hintText: "Please insert you phone nummber",
+                  hintStyle: TextStyle(color: Colors.black26),
+                  border: InputBorder.none,
+                ),
+                initialCountryCode: 'ID',
+                onChanged: (phone) {
+                  print(phone.completeNumber);
+                },
+                validator: (value) {
+                  if (value == null || value.completeNumber.isEmpty) {
+                    return "Phone Nummber Can not empty";
+                  }
+                  return null;
+                },
+              )),
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: const BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(
+                        color: Colors.black87)
+                )
+            ),
+            child: TextFormField(
+              controller: controllersss["revampEmailController"],
+              decoration: const InputDecoration(
+                  labelText: "Email",
+                  hintText: "Please Insert Your Email",
+                  hintStyle: TextStyle(color: Colors.black26),
+                  border: InputBorder.none,
+                  prefixIcon: Icon(Icons.mail)),
+              validator: (value) {
+                //validator format email
+                bool inValidEmail = RegExp(
+                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                    .hasMatch(value!);
+
+                if (value == null || value.isEmpty) {
+                  return 'Email Can not empty!';
+                } else if (!inValidEmail) {
+                  EmailController.clear();
+                  return "Incorrect Email format";
+                }
+                return null;
+              },
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(
+                        color: Colors.black87)
+                )
+            ),
+            child: DropdownButtonFormField<String>(
+              value: positionListings.map((position) => position.positionNames).contains(controllersss["revampPositionController"]?.text)
+                  ? controllersss["revampPositionController"]?.text
+                  : null,
+              items: [
+                DropdownMenuItem(
+                  value: null,
+                  child: Text(
+                    "-- Select Your Positions --",
+                    style: TextStyle(color: Colors.black26),
+                  ),
+                ),
+                ...positionListings.map((position) {
+                  return DropdownMenuItem(
+                    value: position.positionNames,
+                    child: Text(position.positionNames),
+                  );
+                }).toList(),
+              ],
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                prefixIcon: Icon(
+                  Icons.portrait_sharp,
+                ),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  dropPositionValues = value;
+                  if (value != null && value.isNotEmpty) {
+                    controllersss["revampPositionController"]?.text = value;
+                    print(controllersss["revampPositionController"]?.text);
+                  }else {
+                    revampPostionController.clear();
+                  }
+                });
+              },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please select a Position";
+                }
+                return null;
+              },
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(
+                        color: Colors.black87)
+                )
+            ),
+            child: DropdownButtonFormField<String>(
+              value: companyListings.map((company) => company.companyNames).contains(controllersss["revampCompanyController"]?.text)
+                  ? controllersss["revampCompanyController"]?.text
+                  : null,
+              items: [
+                DropdownMenuItem(
+                  value: null,
+                  child: Text(
+                    "-- Select Your Company --",
+                    style: TextStyle(color: Colors.black26),
+                  ),
+                ),
+                ...companyListings.map((company) {
+                  return DropdownMenuItem(
+                    value: company.companyNames,
+                    child: Text(company.companyNames),
+                  );
+                }).toList(),
+              ],
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                prefixIcon: Icon(
+                  Icons.home_work,
+                ),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  dropCompanyValues = value;
+                  if (value != null && value.isNotEmpty) {
+                    controllersss["revampCompanyController"]?.text = value;
+                  } else {
+                    controllersss["revampCompanyController"]?.clear();
+                  }
+                });
+              },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please select a Company";
+                }
+                return null;
+              },
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                "Add Other Location",
+                style: TextStyle(
+                    color: Colors.blueAccent,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(width: 10),
+              FloatingActionButton(
+                onPressed: addNewsContainers,
+                heroTag: null,
+                backgroundColor: Colors.blueAccent,
+                child: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(width: 15),
+              FloatingActionButton(
+                onPressed: removeRegistContainer,
+                heroTag: null,
+                backgroundColor: Colors.red,
+                child: const Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+
   @override
   void initState() {
     super.initState();
@@ -84,6 +590,7 @@ class _revampResgitartionFieldsState extends State<revampResgitartionFields> {
     getListDivision();
     getListCompany();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -94,445 +601,24 @@ class _revampResgitartionFieldsState extends State<revampResgitartionFields> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Container(
-                  margin: EdgeInsets.all(16),
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: Offset(0, 4),
-                        blurRadius: 10,
-                        color: Colors.black26,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(
-                                    color: Colors.black87)
-                            )
-                        ),
-                        child: TextFormField(
-                          controller: FullNameController,
-                          decoration: InputDecoration(
-                              labelText: "Fullname",
-                              hintText: "Please Insert Fullname",
-                              hintStyle: TextStyle(color: Colors.black26),
-                              border: InputBorder.none,
-                              prefixIcon: Icon(Icons.people)),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Username Can not Empty!";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(
-                                    color: Colors.black87)
-                            )
-                        ),
-                        child: TextFormField(
-                          controller: UserNameController,
-                          decoration: InputDecoration(
-                              labelText: "UserName",
-                              hintText: "Please Insert Username",
-                              hintStyle: TextStyle(color: Colors.black26),
-                              border: InputBorder.none,
-                              prefixIcon: Icon(Icons.people)),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Username Can not Empty!";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(15),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(
-                                    color: Colors.black87)
-                            )
-                        ),
-                        child: TextFormField(
-                          controller: BirthDateController,
-                          decoration: InputDecoration(
-                              labelText: "BirthDate",
-                              hintText: "Pleas Enter Your BirthDate",
-                              hintStyle: TextStyle(color: Colors.black26),
-                              border: InputBorder.none,
-                              icon: Icon(Icons.calendar_today)),
-                          readOnly: true,
-                          onTap: () async {
-                            DateTime? pickedDates = await showDatePicker(
-                                builder: (context, child) {
-                                  return Theme(
-                                    data: Theme.of(context).copyWith(
-                                      colorScheme: ColorScheme.light(
-                                          primary: Colors.lightBlue,
-                                          onPrimary: Colors.white,
-                                          onSurface: Colors.black),
-                                      textButtonTheme: TextButtonThemeData(
-                                        style: TextButton.styleFrom(
-                                            foregroundColor: Colors.blueAccent),
-                                      ),
-                                    ),
-                                    child: child!,
-                                  );
-                                },
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1950),
-                                lastDate: DateTime(2100));
-
-                            if (pickedDates != null) {
-                              String formatedDates =
-                              DateFormat('yyyy-MM-dd').format(pickedDates);
-                              setState(() {
-                                BirthDateController.text = formatedDates;
-                              });
-                            } else {}
-                          },
-                          validator: (value) {
-                            if (value!.isEmpty || value == null) {
-                              return "BirtDate Can Not Empty!";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            border: Border(bottom: BorderSide(color: Colors.black87))),
-                        child: TextFormField(
-                          controller: AddressController,
-                          decoration: InputDecoration(
-                              labelText: "Address",
-                              hintText: "Please Insert you address",
-                              hintStyle: TextStyle(color: Colors.black26),
-                              border: InputBorder.none,
-                              prefixIcon: Icon(Icons.location_city)),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Address Can not Empty!";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(
-                                    color: Colors.black87)
-                            )
-                        ),
-                        child: DropdownButtonFormField<String>(
-                          value: projectsListings.map((project) => project.projectNames).contains(ProjectController.text)
-                              ? ProjectController.text
-                              : null,
-                          items: [
-                            DropdownMenuItem(
-                              value: null,
-                              child: Text(
-                                "-- Select Your Projects --",
-                                style: TextStyle(color: Colors.black26),
-                              ),
-                            ),
-                            ...projectsListings.map((project) {
-                              return DropdownMenuItem(
-                                value: project.projectNames,
-                                child: Text(project.projectNames),
-                              );
-                            }).toList(),
-                          ],
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            prefixIcon: Icon(Icons.work),
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              String passwordValue = functionKeys.GeneratedPassword();
-                              dropProjectsValues = value;
-                              if (value != null && value.isNotEmpty) {
-                                RolesController.text = "MEMBER";
-                                PassController.text = passwordValue;
-                                ProjectController.text = value;
-                              }else {
-                                RolesController.clear();
-                                PassController.clear();
-                              }
-                            });
-                          },
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Please select a location";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(
-                                    color: Colors.black87)
-                            )
-                        ),
-                        child: TextFormField(
-                          controller: RolesController,
-                          readOnly: true,
-                          decoration: InputDecoration(
-                              labelText: "Roles",
-                              hintText: "Please Insert Roles",
-                              hintStyle: TextStyle(color: Colors.black26),
-                              border: InputBorder.none,
-                              prefixIcon: Icon(Icons.people)),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Roles Can not Empty!";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Container(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                      color: Colors.black87)
-                              )
-                          ),
-                          child: IntlPhoneField(
-                            controller: PhoneNumbersController,
-                            keyboardType: TextInputType.phone,
-                            focusNode: FocusNode(),
-                            dropdownTextStyle: TextStyle(fontSize: 18),
-                            style: TextStyle(fontSize: 18),
-                            decoration: InputDecoration(
-                              hintText: "Please insert you phone nummber",
-                              hintStyle: TextStyle(color: Colors.black26),
-                              border: InputBorder.none,
-                            ),
-                            initialCountryCode: 'ID',
-                            onChanged: (phone) {
-                              print(phone.completeNumber);
-                            },
-                            validator: (value) {
-                              if (value == null || value.completeNumber.isEmpty) {
-                                return "Phone Nummber Can not empty";
-                              }
-                              return null;
-                            },
-                          )),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: const BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(
-                                    color: Colors.black87)
-                            )
-                        ),
-                        child: TextFormField(
-                          controller: EmailController,
-                          decoration: const InputDecoration(
-                              labelText: "Email",
-                              hintText: "Please Insert Your Email",
-                              hintStyle: TextStyle(color: Colors.black26),
-                              border: InputBorder.none,
-                              prefixIcon: Icon(Icons.mail)),
-                          validator: (value) {
-                            //validator format email
-                            bool inValidEmail = RegExp(
-                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                .hasMatch(value!);
-
-                            if (value == null || value.isEmpty) {
-                              return 'Email Can not empty!';
-                            } else if (!inValidEmail) {
-                              EmailController.clear();
-                              return "Incorrect Email format";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(
-                                    color: Colors.black87)
-                            )
-                        ),
-                        child: DropdownButtonFormField<String>(
-                          value: positionListings.map((position) => position.positionNames).contains(revampPostionController.text)
-                              ? revampPostionController.text
-                              : null,
-                          items: [
-                            DropdownMenuItem(
-                              value: null,
-                              child: Text(
-                                "-- Select Your Positions --",
-                                style: TextStyle(color: Colors.black26),
-                              ),
-                            ),
-                            ...positionListings.map((position) {
-                              return DropdownMenuItem(
-                                value: position.positionNames,
-                                child: Text(position.positionNames),
-                              );
-                            }).toList(),
-                          ],
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            prefixIcon: Icon(
-                                Icons.portrait_sharp,
-                            ),
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              dropPositionValues = value;
-                              if (value != null && value.isNotEmpty) {
-                                revampPostionController.text = value;
-                                print(revampPostionController.text);
-                              }else {
-                                revampPostionController.clear();
-                              }
-                            });
-                          },
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Please select a location";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(
-                                    color: Colors.black87)
-                            )
-                        ),
-                        child: DropdownButtonFormField<String>(
-                          value: divisionListings.map((divisions) => divisions.divisionNames).contains(revampDivisionController.text)
-                              ? revampDivisionController.text
-                              : null,
-                          items: [
-                            DropdownMenuItem(
-                              value: null,
-                              child: Text(
-                                "-- Select Your Division --",
-                                style: TextStyle(color: Colors.black26),
-                              ),
-                            ),
-                            ...divisionListings.map((division) {
-                              return DropdownMenuItem(
-                                value: division.divisionNames,
-                                child: Text(division.divisionNames),
-                              );
-                            }).toList(),
-                          ],
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            prefixIcon: Icon(
-                              Icons.portrait_sharp,
-                            ),
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              dropDisivionValues = value;
-                              if (value != null && value.isNotEmpty) {
-                                revampDivisionController.text = value;
-                                print(revampDivisionController.text);
-                              }else {
-                                revampDivisionController.clear();
-                              }
-                            });
-                          },
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Please select a location";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(
-                                    color: Colors.black87)
-                            )
-                        ),
-                        child: DropdownButtonFormField<String>(
-                          value: companyListings.map((companys) => companys.companyNames).contains(revampCompanyController.text)
-                              ? revampCompanyController.text
-                              : null,
-                          items: [
-                            DropdownMenuItem(
-                              value: null,
-                              child: Text(
-                                "-- Select Your Company --",
-                                style: TextStyle(color: Colors.black26),
-                              ),
-                            ),
-                            ...companyListings.map((company) {
-                              return DropdownMenuItem(
-                                value: company.companyNames,
-                                child: Text(company.companyNames),
-                              );
-                            }).toList(),
-                          ],
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            prefixIcon: Icon(
-                              Icons.home_work,
-                            ),
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              dropCompanyValues = value;
-                              if (value != null && value.isNotEmpty) {
-                                revampCompanyController.text = value;
-                                print(revampCompanyController.text);
-                              }else {
-                                revampCompanyController.clear();
-                              }
-                            });
-                          },
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Please Select A Company";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                startBuildRegistContainers({
+                  "revampUserNameController" : TextEditingController(),
+                  "revampFullNameController" : TextEditingController(),
+                  "revampBirthDayController" : TextEditingController(),
+                  "revampAddressController" : TextEditingController(),
+                  "revampRolesController" : TextEditingController(),
+                  "revampPasswordController" : TextEditingController(),
+                  "revampPhoneNumberController" : TextEditingController(),
+                  "revampEmailController" : TextEditingController(),
+                  "revampProjectController" : TextEditingController(),
+                  "revampPositionController" : TextEditingController(),
+                  "revampDivisionController" : TextEditingController(),
+                  "revampCompanyController" : TextEditingController(),
+                }),
+                ...addtionalRegistContainers,
+                SizedBox(
+                  height: 10,
+                )
               ],
             ),
           ),

@@ -12,14 +12,17 @@ class sendingEmail extends StatelessWidget {
       var userEmail = AdminEmail;
       final smptServer = gmail(userEmail, TokenAcces2);
 
-      final messages = Message()
-      ..from = Address(userEmail)
-      ..recipients.add(EmailController.text)
-      ..subject = "ATTENTION YOU DEFAULT PASSWORD AND PLEASE CHANGES DEFAULT PASSWORD NOW!"
-      ..text = bodyEmails;
+      for (var sendController in revampResgistControllerss){
+        final revampBody = revampValueBodyEmails(sendController);
+        final messages = Message()
+          ..from = Address(userEmail)
+          ..recipients.add(sendController["revampEmailController"]?.text)
+          ..subject = "ATTENTION YOU DEFAULT PASSWORD AND PLEASE CHANGES DEFAULT PASSWORD NOW!"
+          ..text = revampBody;
 
-      final sendReport = await send(messages, smptServer);
-      print("Email Succes sent!!");
+        final sendReport = await send(messages, smptServer);
+        print("Email Succes sent!!");
+      }
 
     }catch(err) {
       print("error \n $err");
