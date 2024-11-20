@@ -41,6 +41,14 @@ class _FormPengajuanSakitState extends State<FormPengajuanSakit> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    dateSickLeaveController.clear();
+    noteSickLeaveController.clear();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -150,10 +158,12 @@ class _FormPengajuanSakitState extends State<FormPengajuanSakit> {
                       readOnly: true,
                       controller: dateSickLeaveController,
                       onTap: () async {
+                        DateTime now = DateTime.now();
+                        DateTime today = DateTime(now.year, now.month, now.day);    
                         await showDatePicker(
                                 context: context,
                                 initialDate: DateTime.now(),
-                                firstDate: DateTime(2000),
+                                firstDate: today,
                                 lastDate: DateTime(2100))
                             .then((selectedDate) {
                           if (selectedDate != null) {
