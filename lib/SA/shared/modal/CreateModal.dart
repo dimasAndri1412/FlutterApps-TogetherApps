@@ -43,10 +43,10 @@ class _CreateModalState extends State<CreateModal> {
   @override
   void initState(){
     super.initState();
-    _loadPositions();
+    _fetchPosition();
   }
 
-  Future<void> _loadPositions() async{
+  Future<void> _fetchPosition() async{
     try{
       List<Positions> positions = await userController.getPositions();
       setState(() {

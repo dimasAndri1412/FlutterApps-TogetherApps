@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../model/Companies.dart';
 import '../model/Positions.dart';
 import '../services/ApiService.dart';
 
@@ -12,6 +13,14 @@ class UserController {
       return await apiService.getPosition();
     } catch (error) {
       throw Exception('Failed to fetch positions');
+    }
+  }
+
+  Future<List<Companies>> getCompany() async{
+    try{
+      return await apiService.getCompany();
+    } catch(error){
+      throw Exception('Failed to fetch company');
     }
   }
 
