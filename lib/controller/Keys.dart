@@ -169,6 +169,11 @@ final GlobalKey<FormState> mapsContollerSettingsKey = GlobalKey<FormState>();
 final revampOTPControllers = TextEditingController();
 final emailValuesControllers = TextEditingController();
 
+final GlobalKey<FormState> sickLeaveKey = GlobalKey<FormState>();
+final dateSickLeaveController = TextEditingController();
+final noteSickLeaveController = TextEditingController();
+
+
 final GlobalKey<FormState> questionKey = GlobalKey<FormState>();
 
 //revampOTPKey

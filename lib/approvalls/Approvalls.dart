@@ -2,6 +2,7 @@
 import 'package:absent_project/approvalls/cuti/ProjectType.dart' as cuti;
 import 'package:absent_project/approvalls/cuti/msdo/ListUserCuti.dart';
 import 'package:absent_project/approvalls/lembur/ProjectType.dart' as lembur;
+import 'package:absent_project/approvalls/sakit/admin/ListUserSakit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -161,10 +162,19 @@ class _ApprovallsState extends State<Approvalls> {
                             ],
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ListUserSakit() // Instantiate the class with prefix
+                            ),
+                          );
+                        },
                       ),
                       MaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          
+                        },
                         child: Container(
                           width: 160,
                         ),
