@@ -175,6 +175,7 @@ final emailValuesControllers = TextEditingController();
 final GlobalKey<FormState> sickLeaveKey = GlobalKey<FormState>();
 final dateSickLeaveController = TextEditingController();
 final noteSickLeaveController = TextEditingController();
+final rejectedReasonSickLeave = TextEditingController();
 
 
 final GlobalKey<FormState> questionKey = GlobalKey<FormState>();

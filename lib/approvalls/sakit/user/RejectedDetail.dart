@@ -1,28 +1,15 @@
 import 'package:absent_project/controller/ApprovalController/SickLeaveController/Admin/ListSickLeaveModel.dart';
 import 'package:flutter/material.dart';
-import 'package:absent_project/approvalls/cuti/GeneratePDF_MSDO.dart';
-import 'package:absent_project/approvalls/cuti/msdo/ConfirmationDialog.dart';
-import 'package:absent_project/approvalls/cuti/msdo/RejectDialog.dart';
-import 'package:flutter/material.dart';
-// import 'package:absent_project/approvalls/cuti/GeneratePDF_Development.dart';
-
-import 'package:flutter/services.dart';
-import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 
-import 'package:printing/printing.dart';
-
-// import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveModel.dart';
-
-class ApprovedDetail extends StatelessWidget {
+class RejectedDetail extends StatelessWidget {
   final ListSickLeaveModel getUserDetail;
-  const ApprovedDetail({super.key,
+  const RejectedDetail({super.key,
   required this.getUserDetail});
-
 
   @override
   Widget build(BuildContext context) {
-   String? formattedDate = getUserDetail.submittedDate != null ? DateFormat('dd MMM yyyy HH:mm').format(getUserDetail.submittedDate!) : null;
+    String? formattedDate = getUserDetail.submittedDate != null ? DateFormat('dd MMM yyyy HH:mm').format(getUserDetail.submittedDate!) : null;
    String? sickDate = getUserDetail.date != null ? DateFormat('dd MMM yyyy').format(getUserDetail.date!) : null;
    String? approvedDate = getUserDetail.actionDate != null ? DateFormat('dd MMM yyyy HH:mm').format(getUserDetail.actionDate!) : null;
 
@@ -65,7 +52,7 @@ class ApprovedDetail extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(Icons.check_circle, color: Colors.green,),
+                    Icon(Icons.cancel, color: Colors.red,),
                     SizedBox(width: 5,),
                     Text(
                       "Status : ",
@@ -76,7 +63,7 @@ class ApprovedDetail extends StatelessWidget {
                     Text(
                       getUserDetail.status,
                       style: TextStyle(
-                        color: Colors.green,
+                        color: Colors.red,
                         fontWeight: FontWeight.bold
                       ),
                     )
@@ -132,7 +119,7 @@ class ApprovedDetail extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(top: 5, left: 10, right: 10),
               width: 350,
-              height: 420,
+              height: 460,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(0),
@@ -342,9 +329,9 @@ class ApprovedDetail extends StatelessWidget {
                     SizedBox(height: 30,),
                     Row(
                       children: [
-                        Icon(Icons.check, color: Colors.green,),
+                        Icon(Icons.cancel_outlined, color: Colors.red,),
                         SizedBox(width: 10,),
-                        Text("Approved by : ",
+                        Text("Rejected by : ",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 13
@@ -362,9 +349,9 @@ class ApprovedDetail extends StatelessWidget {
                     SizedBox(height: 5,),
                     Row(
                       children: [
-                        Icon(Icons.calendar_month_sharp, color: Colors.green,),
+                        Icon(Icons.calendar_month_sharp, color: Colors.red,),
                         SizedBox(width: 10,),
-                        Text("Approved Date : ",
+                        Text("Rejected Date : ",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 13
@@ -379,22 +366,43 @@ class ApprovedDetail extends StatelessWidget {
                         )
                       ],
                     ),
+
+                    SizedBox(height: 5,),
+                    Row(
+                      children: [
+                        Icon(Icons.book, color: Colors.red,),
+                        SizedBox(width: 10,),
+                        Text("Reason Rejected : ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(getUserDetail.rejectedReason,
+                            style: TextStyle(
+                              fontSize: 13
+                            ),
+                          )
+                        )
+                      ],
+                    ),
                   ],
                 ),
               )
             ),
-            SizedBox(height: 70,),
+            SizedBox(height: 40,),
             Container(
               margin: EdgeInsets.all(10),
               width: 250,
               decoration: BoxDecoration(
-                color: Colors.green,
+                color: Colors.red,
                 borderRadius: BorderRadius.circular(15)
               ),
               child: Padding(
                 padding: EdgeInsets.all(8),
                 child: Center(
-                  child: Text("This request has been Approved",
+                  child: Text("Your request has been Rejected",
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

@@ -1,31 +1,17 @@
 import 'package:absent_project/controller/ApprovalController/SickLeaveController/Admin/ListSickLeaveModel.dart';
 import 'package:flutter/material.dart';
-import 'package:absent_project/approvalls/cuti/GeneratePDF_MSDO.dart';
-import 'package:absent_project/approvalls/cuti/msdo/ConfirmationDialog.dart';
-import 'package:absent_project/approvalls/cuti/msdo/RejectDialog.dart';
-import 'package:flutter/material.dart';
-// import 'package:absent_project/approvalls/cuti/GeneratePDF_Development.dart';
-
-import 'package:flutter/services.dart';
-import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 
-import 'package:printing/printing.dart';
-
-// import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveModel.dart';
-
-class ApprovedDetail extends StatelessWidget {
+class DetailPengajuan extends StatelessWidget {
   final ListSickLeaveModel getUserDetail;
-  const ApprovedDetail({super.key,
+  const DetailPengajuan({super.key,
   required this.getUserDetail});
-
 
   @override
   Widget build(BuildContext context) {
-   String? formattedDate = getUserDetail.submittedDate != null ? DateFormat('dd MMM yyyy HH:mm').format(getUserDetail.submittedDate!) : null;
-   String? sickDate = getUserDetail.date != null ? DateFormat('dd MMM yyyy').format(getUserDetail.date!) : null;
-   String? approvedDate = getUserDetail.actionDate != null ? DateFormat('dd MMM yyyy HH:mm').format(getUserDetail.actionDate!) : null;
-
+    String? formattedDate = getUserDetail.submittedDate != null ? DateFormat('dd MMM yyyy HH:mm').format(getUserDetail.submittedDate!) : null;
+     String? sickDate = getUserDetail.date != null ? DateFormat('dd MMM yyyy').format(getUserDetail.date!) : null;
+     
     return Scaffold(
       appBar: AppBar(
         title:Center(
@@ -65,18 +51,15 @@ class ApprovedDetail extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(Icons.check_circle, color: Colors.green,),
+                    Icon(Icons.notifications_active, color: Colors.orange,),
                     SizedBox(width: 5,),
                     Text(
                       "Status : ",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold
-                      ),
                     ),
                     Text(
                       getUserDetail.status,
                       style: TextStyle(
-                        color: Colors.green,
+                        color: Colors.blue,
                         fontWeight: FontWeight.bold
                       ),
                     )
@@ -132,7 +115,7 @@ class ApprovedDetail extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(top: 5, left: 10, right: 10),
               width: 350,
-              height: 420,
+              height: 380,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(0),
@@ -339,69 +322,8 @@ class ApprovedDetail extends StatelessWidget {
                         )
                       ],
                     ),
-                    SizedBox(height: 30,),
-                    Row(
-                      children: [
-                        Icon(Icons.check, color: Colors.green,),
-                        SizedBox(width: 10,),
-                        Text("Approved by : ",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(getUserDetail.approvedBy,
-                            style: TextStyle(
-                              fontSize: 13
-                            ),
-                          )
-                        )
-                      ],
-                    ),
-                    SizedBox(height: 5,),
-                    Row(
-                      children: [
-                        Icon(Icons.calendar_month_sharp, color: Colors.green,),
-                        SizedBox(width: 10,),
-                        Text("Approved Date : ",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(approvedDate ?? '-',
-                            style: TextStyle(
-                              fontSize: 13
-                            ),
-                          )
-                        )
-                      ],
-                    ),
                   ],
                 ),
-              )
-            ),
-            SizedBox(height: 70,),
-            Container(
-              margin: EdgeInsets.all(10),
-              width: 250,
-              decoration: BoxDecoration(
-                color: Colors.green,
-                borderRadius: BorderRadius.circular(15)
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(8),
-                child: Center(
-                  child: Text("This request has been Approved",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12
-                    ), 
-                  ),
-                )
               )
             ),
           ],

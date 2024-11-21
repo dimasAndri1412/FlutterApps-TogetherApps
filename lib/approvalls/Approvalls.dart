@@ -44,7 +44,7 @@ class _ApprovallsState extends State<Approvalls> {
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   MaterialButton(
                     padding: EdgeInsets.only(top: 20),
@@ -126,60 +126,59 @@ class _ApprovallsState extends State<Approvalls> {
               SizedBox(
                 height: 10,
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 40),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      MaterialButton(
-                        // padding: EdgeInsets.only(top: 0),
-                        child: Container(
-                          width: 160,
-                          height: 160,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color.fromARGB(255, 147, 195, 234),
-                                blurRadius: 15,
-                                offset: Offset(5, 10),
-                              )
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                  margin: EdgeInsets.all(20),
-                                  child: Image.asset(
-                                    'assets/images/hospital.png',
-                                    width: 80,
-                                  )),
-                              Container(
-                                margin: EdgeInsets.only(top: 0),
-                                child: Text("Sick Approval"),
-                              )
-                            ],
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ListUserSakit() // Instantiate the class with prefix
-                            ),
-                          );
-                        },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  MaterialButton(
+                    padding: EdgeInsets.only(top: 20),
+                    child: Container(
+                      width: 160,
+                      height: 160,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromARGB(255, 147, 195, 234),
+                            blurRadius: 15,
+                            offset: Offset(5, 10),
+                          )
+                        ],
                       ),
-                      MaterialButton(
-                        onPressed: () {
-                          
-                        },
-                        child: Container(
-                          width: 160,
-                        ),
-                      )
-                    ]),
+                      child: Column(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.all(20),
+                              child: Image.asset(
+                                'assets/images/hospital.png',
+                                width: 80,
+                              )),
+                          Container(
+                            margin: EdgeInsets.only(top: 0),
+                            child: Text("Sick Approval"),
+                          )
+                        ],
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ListUserSakit()),
+                      );
+                    },
+                  ),
+                  MaterialButton(
+                    padding: EdgeInsets.only(left: 20, top: 20),
+                    child: Container(
+                      width: 160,
+                      height: 160,
+                    ),
+                    onPressed: () {
+                    
+                    },
+                  ),
+                ],
               ),
             ],
           ),

@@ -10,7 +10,9 @@ class ListSickLeaveModel {
   final String note;
   final String status;
   final String approvedBy;
-  final DateTime? approvedDate;
+  final DateTime? actionDate;
+  final DateTime? submittedDate;
+  final String rejectedReason;
 
   ListSickLeaveModel({
     required this.reqId,
@@ -24,7 +26,9 @@ class ListSickLeaveModel {
     required this.note,
     required this.status,
     required this.approvedBy,
-    required this.approvedDate
+    required this.actionDate,
+    required this.submittedDate,
+    required this.rejectedReason
   });
 
   factory ListSickLeaveModel.fromJson(Map<String, dynamic> json){
@@ -40,7 +44,9 @@ class ListSickLeaveModel {
       note: json['note'] ?? " ",
       status: json['status'] ?? " ",
       approvedBy: json['approved_by'] ?? "Not yet approved",
-      approvedDate: json['approved_date'] != null ? DateTime.parse(json['approved_date']) : null,
+      actionDate: json['action_date'] != null ? DateTime.parse(json['action_date']) : null,
+      submittedDate: json['submitted_date'] != null ? DateTime.parse(json['submitted_date']) : null,
+      rejectedReason: json['rejected_reason'] ?? " ",
     );
   }
 }

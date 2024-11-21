@@ -1,24 +1,11 @@
 import 'package:absent_project/controller/ApprovalController/SickLeaveController/Admin/ListSickLeaveModel.dart';
 import 'package:flutter/material.dart';
-import 'package:absent_project/approvalls/cuti/GeneratePDF_MSDO.dart';
-import 'package:absent_project/approvalls/cuti/msdo/ConfirmationDialog.dart';
-import 'package:absent_project/approvalls/cuti/msdo/RejectDialog.dart';
-import 'package:flutter/material.dart';
-// import 'package:absent_project/approvalls/cuti/GeneratePDF_Development.dart';
-
-import 'package:flutter/services.dart';
-import 'package:http/http.dart';
 import 'package:intl/intl.dart';
-
-import 'package:printing/printing.dart';
-
-// import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveModel.dart';
 
 class ApprovedDetail extends StatelessWidget {
   final ListSickLeaveModel getUserDetail;
   const ApprovedDetail({super.key,
   required this.getUserDetail});
-
 
   @override
   Widget build(BuildContext context) {
@@ -394,7 +381,7 @@ class ApprovedDetail extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.all(8),
                 child: Center(
-                  child: Text("This request has been Approved",
+                  child: Text("Your request has been Approved",
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

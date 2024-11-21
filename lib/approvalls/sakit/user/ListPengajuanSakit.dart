@@ -1,4 +1,7 @@
+import 'package:absent_project/approvalls/sakit/user/ApprovedDetail.dart';
+import 'package:absent_project/approvalls/sakit/user/DetailPengajuan.dart';
 import 'package:absent_project/approvalls/sakit/user/FormPengajuanSakit.dart';
+import 'package:absent_project/approvalls/sakit/user/RejectedDetail.dart';
 import 'package:absent_project/controller/ApprovalController/SickLeaveController/Member/MemberSickLeaveController.dart';
 import 'package:absent_project/home/applicationbar_user.dart';
 import 'package:flutter/material.dart';
@@ -68,9 +71,18 @@ class _ListPengajuanSakitState extends State<ListPengajuanSakit> {
               future: MemberSickLeaveController().getList(),
               builder: (context, snapshot) {
                 print("Snapshot data: ${snapshot.data}");
-                if (snapshot.data == null) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
-                      child: Text("There is no request need to approve"));
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+                  return const Center(
+                    child: Text("You haven't made a request yet"),
+                  );
+                } else if (snapshot.hasError) {
+                  return const Center(
+                    child: Text("An error occurred while fetching data"),
+                  );
                 } else {
                   // var filteredData = snapshot.data!.where((data) {
                   //   bool matchesProject = selectedProject == 'Project' ||
@@ -94,17 +106,18 @@ class _ListPengajuanSakitState extends State<ListPengajuanSakit> {
                         
                         return GestureDetector(
                             onTap: () {
-                              // // Get.to(() => DetailCutiUser(getUserDetail: getData,));
-                              // if (getData.status == "New") {
-                              //   Get.to(() =>
-                              //       DetailCutiUser(getUserDetail: getData));
-                              // } else if (getData.status == "Approved") {
-                              //   Get.to(() =>
-                              //       ApprovedDetail(getUserDetail: getData));
-                              // } else if (getData.status == "Rejected") {
-                              //   Get.to(() =>
-                              //       RejectedDetail(getUserDetail: getData));
-                              // }
+                              if (getData.status == "New") {
+                                Get.to(() =>
+                                    DetailPengajuan(getUserDetail: getData));
+                              } 
+                              else if (getData.status == "Approved") {
+                                Get.to(() =>
+                                    ApprovedDetail(getUserDetail: getData));
+                              }
+                              else if (getData.status == "Rejected") {
+                                Get.to(() =>
+                                    RejectedDetail(getUserDetail: getData));
+                              }
                             },
                             child: Container(
                               margin: const EdgeInsets.all(10),
@@ -231,7 +244,11 @@ class _ListPengajuanSakitState extends State<ListPengajuanSakit> {
                                               width: 5,
                                             ),
                                             Text(
-                                              "Approved by",
+                                              getData.status == "Rejected"
+                                              ? "Rejected by"
+                                              : getData.status == "Approved"
+                                                  ? "Approved by"
+                                                  : "Status",
                                               style: TextStyle(
                                                   fontSize: 12, height: 2),
                                             ),
@@ -251,7 +268,8 @@ class _ListPengajuanSakitState extends State<ListPengajuanSakit> {
                                   ),
                                 ],
                               ),
-                            ));
+                            )
+                          );
                       },
                     ),
                   );

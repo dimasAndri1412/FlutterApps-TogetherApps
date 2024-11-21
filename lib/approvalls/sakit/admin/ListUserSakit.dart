@@ -2,6 +2,7 @@
 
 import 'package:absent_project/approvalls/sakit/admin/ApprovedDetail.dart';
 import 'package:absent_project/approvalls/sakit/admin/DetailUserSakit.dart';
+import 'package:absent_project/approvalls/sakit/admin/RejectedDetail.dart';
 import 'package:absent_project/controller/ApprovalController/SickLeaveController/Admin/AdminSickLeaveController.dart';
 import 'package:absent_project/home/ApplicationBar.dart';
 import 'package:flutter/cupertino.dart';
@@ -219,10 +220,10 @@ class _ListUserSakitState extends State<ListUserSakit> {
                                     Get.to(() =>
                                         ApprovedDetail(getUserDetail: getData));
                                   } 
-                                  // else if (getData.status == "Rejected") {
-                                  //   Get.to(() =>
-                                  //       RejectedDetail(getUserDetail: getData));
-                                  // }
+                                  else if (getData.status == "Rejected") {
+                                    Get.to(() =>
+                                        RejectedDetail(getUserDetail: getData));
+                                  }
                                 },
                                 child: Container(
                                   margin: const EdgeInsets.all(10),

@@ -1,5 +1,6 @@
 
 import 'package:absent_project/approvalls/sakit/admin/ConfirmationDialog.dart';
+import 'package:absent_project/approvalls/sakit/admin/RejectDialog.dart';
 import 'package:absent_project/controller/ApprovalController/SickLeaveController/Admin/ListSickLeaveModel.dart';
 import 'package:flutter/material.dart';
 // import 'pdf_generator.dart';
@@ -23,7 +24,7 @@ class DetailUserSakit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     String? formattedDate = getUserDetail.date != null ? DateFormat('dd MMM yyyy HH:mm').format(getUserDetail.date!) : null;
+     String? formattedDate = getUserDetail.submittedDate != null ? DateFormat('dd MMM yyyy HH:mm').format(getUserDetail.submittedDate!) : null;
      String? sickDate = getUserDetail.date != null ? DateFormat('dd MMM yyyy').format(getUserDetail.date!) : null;
      
     return Scaffold(
@@ -347,12 +348,12 @@ class DetailUserSakit extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: (){
-                      // showDialog(
-                      //   context: context,
-                      //   builder: (BuildContext context) {
-                      //     return RejectDialog(getData: getUserDetail,);
-                      //   },
-                      // );
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return RejectDialog(getData: getUserDetail,);
+                        },
+                      );
                     },
                     child: Container(
                       width: 165,

@@ -1,4 +1,5 @@
 import 'package:absent_project/controller/ApprovalController/SickLeaveController/Admin/ListSickLeaveModel.dart';
+import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/controller/LoginController.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -42,6 +43,26 @@ class AdminSickLeaveController {
       body: {
         "reqId":  reqId,
         "adminId" : userId
+      },
+    );
+    if (response.statusCode == 200) {
+      print("response: ${response.body}");
+      return true;
+    }else {
+      print("Error: ${response.statusCode} - ${response.body}");
+      return false; 
+    }
+  }
+
+  updateRejected(String reqId) async {
+     String? userId = await _loginController.getUserId();
+    final response = await http.post(
+      Uri.parse(
+          "http://192.168.2.159:8080/FlutterAPI/approvals/admin/sick_leave/update_rejected.php"),
+      body: {
+        "reqId":  reqId,
+        "adminId" : userId,
+        "rejectedReason" : rejectedReasonSickLeave.text
       },
     );
     if (response.statusCode == 200) {
