@@ -14,6 +14,8 @@ import 'MemberRequestOvertimeModel.dart';
 class MemberRequestOvertimeController {
   final MemberRequestOvertimeModel getData = MemberRequestOvertimeModel();
 
+  String getUserAdmin = "";
+
   Future getInfo() async {
     var data = await http.post(
         Uri.parse(
@@ -37,26 +39,42 @@ class MemberRequestOvertimeController {
   }
 
   save() async {
-    final response = await http.post(
-      Uri.parse(
-          "http://192.168.2.159:8080/FlutterAPI/approvals/member/overtime/saveMemberRequestOT.php"),
-      body: {
-        "fullname": nameOTController.text,
-        "location": locationOTController.text,
-        "position": positionOTController.text,
-        "project": projectOTController.text,
-        "department": departmentOTController.text,
-        "shift": shiftOTController.text,
-        "start_date": dateOTController.text,
-        "start_time": timeStartOTController.text,
-        "end_time": timeEndOTController.text,
-        "activity": activityOTController.text,
-      },
-    );
-    if (response.statusCode == 200) {
-      return true;
+    try {
+      // var data = await http.post(
+      //     Uri.parse(
+      //         "http://192.168.2.159:8080/FlutterAPI/approvals/admin/paid_leave/getAdmin.php"),
+      //     body: {'username': emailController.text});
+
+      // var jsonData = json.decode(data.body);
+      // getUserAdmin = jsonData[0]['get_admin'];
+      // print('username GET: $getUserAdmin');
+      // print("fullname: ${nameOTController.text}");
+      // print("location: ${locationOTController.text}");
+
+      var response = await http.post(
+        Uri.parse(
+            "http://192.168.2.159:8080/FlutterAPI/approvals/member/overtime/saveMemberRequestOT.php"),
+        body: {
+          "fullname": nameOTController.text,
+          "location": locationOTController.text,
+          "position": positionOTController.text,
+          "project": projectOTController.text,
+          "department": departmentOTController.text,
+          "shift": shiftOTController.text,
+          "start_date": dateOTController.text,
+          "start_time": timeStartOTController.text,
+          "end_time": timeEndOTController.text,
+          "activity": activityOTController.text,
+          "approved_by": emailController.text
+        },
+      );
+      print("fullname: ${nameOTController.text}");
+      print("location: ${locationOTController.text}");
+      print("position: ${positionOTController.text}");
+      print("nama: ${emailController.text}");
+    } catch (e) {
+      print("Error parsing JSON data: $e");
     }
-    return false;
   }
 
   clearInfo() {
@@ -121,39 +139,39 @@ class MemberRequestOvertimeController {
     return users;
   }
 
-  Future<List<MemberRequestOvertimeGetListModel>?> getAllName() async {
-    try {
-      var response = await http.post(
-        Uri.parse(
-            "http://192.168.2.159:8080/FlutterAPI/approvals/admin/overtime/getAllName.php"),
-      );
+  // Future<List<MemberRequestOvertimeGetListModel>?> getAllName() async {
+  //   try {
+  //     var response = await http.post(
+  //       Uri.parse(
+  //           "http://192.168.2.159:8080/FlutterAPI/approvals/admin/overtime/getAllName.php"),
+  //     );
 
-      // Cek status HTTP
-      if (response.statusCode == 200) {
-        var jsonData = json.decode(response.body);
-        // getData.project = jsonData[0]['project_name'];
-        print(
-            'Raw JSON response: $jsonData'); // Log untuk memeriksa respons API
+  //     // Cek status HTTP
+  //     if (response.statusCode == 200) {
+  //       var jsonData = json.decode(response.body);
+  //       // getData.project = jsonData[0]['project_name'];
+  //       print(
+  //           'Raw JSON response: $jsonData'); // Log untuk memeriksa respons API
 
-        // Pastikan jsonData adalah List
-        if (jsonData is List) {
-          List<MemberRequestOvertimeGetListModel> users = jsonData.map((u) {
-            return MemberRequestOvertimeGetListModel.fromJson(u);
-          }).toList();
+  //       // Pastikan jsonData adalah List
+  //       if (jsonData is List) {
+  //         List<MemberRequestOvertimeGetListModel> users = jsonData.map((u) {
+  //           return MemberRequestOvertimeGetListModel.fromJson(u);
+  //         }).toList();
 
-          print('Parsed user list: $users');
-          return users;
-        } else {
-          print('Unexpected JSON format');
-          return null;
-        }
-      } else {
-        print('Failed to load data. Status code: ${response.statusCode}');
-        return null;
-      }
-    } catch (e) {
-      print('Error fetching data: $e');
-      return null;
-    }
-  }
+  //         print('Parsed user list: $users');
+  //         return users;
+  //       } else {
+  //         print('Unexpected JSON format');
+  //         return null;
+  //       }
+  //     } else {
+  //       print('Failed to load data. Status code: ${response.statusCode}');
+  //       return null;
+  //     }
+  //   } catch (e) {
+  //     print('Error fetching data: $e');
+  //     return null;
+  //   }
+  // }
 }

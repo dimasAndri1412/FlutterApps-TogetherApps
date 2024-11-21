@@ -67,30 +67,6 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
     }).toList();
   }
 
-  /*List<MemberRequestOvertimeGetListModel> get filteredLembur {
-    if (getStatus.isEmpty ||
-        getStatus.every((status) => !status.selected)) {
-      return getListUser; // Return all data when no filters are selected
-    }
-
-    List<String> selectedStatus = getStatus
-        .where((status) => status.selected)
-        .map((status) => status.status)
-        .toList();
-    return getListUser
-        .where((lembur) => selectedStatus.contains(lembur.status))
-        .toList();
-  }*/
-
-  /*List<Map<String, String>> get filteredLembur {
-    if (filterStatus == "All") {
-      return userlembur;
-    }
-    return userlembur
-        .where((lembur) => lembur['status'] == filterStatus)
-        .toList();
-  }*/
-
   //Function Filter Alert Dialog
   void _showFilterOptions(BuildContext context) {
     showDialog(
@@ -514,11 +490,25 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                                   )
                                 ],
                               ),
+                              SizedBox(height: 20),
+                              Center(
+                                child: Column(
+                                  children: [
+                                    Text("Approved By",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontStyle: FontStyle.italic,
+                                            fontSize: 18)),
+                                    Text(getSelected.approved_by,
+                                        style: TextStyle(fontSize: 15))
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                         )),
                     SizedBox(
-                      height: 70,
+                      height: 20,
                     ),
                     Container(
                         margin: EdgeInsets.all(10),
@@ -535,34 +525,37 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                                 fontSize: 11),
                           ),
                         )),
-                    ElevatedButton(
-                      onPressed: () async {
-                        final pdf =
-                            await GeneratePDFOvertimeUser(getData: getSelected)
-                                .GeneratePDF();
-                        await Printing.layoutPdf(onLayout: (format) => pdf);
-                      },
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.print, color: Colors.green[300]),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Print Document',
-                            style: TextStyle(color: Colors.green[300]),
-                          ),
-                        ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          side: BorderSide(color: Colors.green, width: 2.0),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          final pdf = await GeneratePDFOvertimeUser(
+                                  getData: getSelected)
+                              .GeneratePDF();
+                          await Printing.layoutPdf(onLayout: (format) => pdf);
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.print, color: Colors.green[300]),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Print Document',
+                              style: TextStyle(color: Colors.green[300]),
+                            ),
+                          ],
                         ),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 80.0, vertical: 12.0),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: BorderSide(color: Colors.green, width: 2.0),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 80.0, vertical: 12.0),
+                        ),
                       ),
                     ),
                   ],
@@ -713,6 +706,10 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                                       style:
                                           TextStyle(fontSize: 12, height: 2)),
                                   SizedBox(width: 3),
+                                  Text(getData.approved_by,
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold)),
                                 ]),
                                 Row(
                                   children: [
@@ -754,7 +751,19 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                                       style: TextStyle(fontSize: 10),
                                     ),
                                   ],
-                                )
+                                ),
+                                // Row(
+                                //   children: [
+                                //     Text("Position: "),
+                                //     Text(getData.position),
+                                //   ],
+                                // ),
+                                // Row(
+                                //   children: [
+                                //     Text("Department: "),
+                                //     Text(getData.department),
+                                //   ],
+                                // ),
                               ],
                             ),
                           ),
@@ -768,31 +777,6 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
           ),
         ],
       ),
-      // floatingActionButton: Padding(
-      //   padding: const EdgeInsets.only(bottom: 15),
-      //   child: FloatingActionButton(
-      //     onPressed: () {
-      //       Get.to(() => const PengajuanLembur());
-      //       /* Get.to(() => const PengajuanLembur());
-      //       */
-
-      //       Navigator.of(context).push(
-      //           MaterialPageRoute(builder: (context) => PengajuanLembur()));
-      //     },
-      //     backgroundColor: Color.fromARGB(255, 98, 171, 232),
-      //     child: Icon(Icons.edit),
-      //     elevation: 5,
-      //   ),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
     );
   }
-
-  // void downloadFile() async {
-  //   var time = DateTime.now().millisecondsSinceEpoch;
-  //   var path = "/storage/emulated/0/Download/images-$time.jpg";
-  //   var file = File(path);
-  //   var res = await get(Uri.parse("https://source.unsplash.com/random"));
-  //   file.writeAsBytes(res.bodyBytes);
-  // }
 }

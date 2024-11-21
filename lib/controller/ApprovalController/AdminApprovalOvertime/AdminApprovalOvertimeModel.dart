@@ -13,6 +13,7 @@ class AdminApprovalOvertimeModel {
   String reqNo;
   String submittedDate;
   String reason_rejected;
+  String approved_by;
   bool selected;
 
   AdminApprovalOvertimeModel({
@@ -30,24 +31,26 @@ class AdminApprovalOvertimeModel {
     required this.reqNo,
     required this.submittedDate,
     required this.reason_rejected,
+    required this.approved_by,
     this.selected = false,
   });
   factory AdminApprovalOvertimeModel.fromJson(Map<String, dynamic> json) {
     return AdminApprovalOvertimeModel(
-      full_name: json['full_name'],
-      position: json['position'],
-      project: json['project'],
-      department: json['department'],
-      location: json['location'],
-      shift: json['shift'],
-      start_date: json['start_date'],
-      start_time: json['start_time'],
-      end_time: json['end_time'],
-      activity: json['activity'],
-      status: json['status'],
-      reqNo: json['reqNo'],
-      submittedDate: json['submittedDate'],
-      reason_rejected: json['reason_rejected'],
+      full_name: json['full_name'] ?? 'Unknown',
+      position: json['position_name'] ?? 'Unknown',
+      project: json['project_name'] ?? 'Unknown',
+      department: json['division_name'] ?? 'Unknown',
+      location: json['location'] ?? 'Unknown',
+      shift: json['shift'] ?? 'Unknown',
+      start_date: json['start_date'] ?? 'Unknown',
+      start_time: json['start_time'] ?? 'Unknown',
+      end_time: json['end_time'] ?? 'Unknown',
+      activity: json['activity'] ?? 'Unknown',
+      status: json['status'] ?? 'Unknown',
+      reqNo: json['reqNo'] ?? 'Unknown',
+      submittedDate: json['submittedDate'] ?? 'Unknown',
+      reason_rejected: json['reason_rejected'] ?? 'Unknown',
+      approved_by: json['approved_by'] ?? 'Unknown',
     );
   }
 

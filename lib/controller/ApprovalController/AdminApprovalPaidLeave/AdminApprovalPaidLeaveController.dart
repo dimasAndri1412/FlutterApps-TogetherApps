@@ -19,6 +19,7 @@ class AdminApprovalPaidLeaveController {
   String untilDate = "";
   String pic = "";
   String backToWork = "";
+  // String getUserAdmin = "";
 
   int remainingLeave = 0;
   int leaveUsed = 0;
@@ -58,7 +59,8 @@ class AdminApprovalPaidLeaveController {
       var jsonData = json.decode(data.body);
       List<AdminApprovalPaidLeaveModel> users = [];
       for (var u in jsonData) {
-        AdminApprovalPaidLeaveModel user = AdminApprovalPaidLeaveModel.fromJson(u);
+        AdminApprovalPaidLeaveModel user =
+            AdminApprovalPaidLeaveModel.fromJson(u);
         users.add(user);
       }
       return users;
@@ -67,7 +69,6 @@ class AdminApprovalPaidLeaveController {
       return null;
     }
   }
-
 
   Future getDetail() async {
     var data = await http.post(
@@ -121,4 +122,19 @@ class AdminApprovalPaidLeaveController {
     }
     return users;
   }
+
+  // Future getAdmin() async {
+  //   var data = await http.post(
+  //       Uri.parse(
+  //           "http://192.168.2.159:8080/FlutterAPI/approvals/admin/paid_leave/getAdmin.php"),
+  //       body: {
+  //         'username': emailController.text,
+  //       });
+
+  //   var jsonData = json.decode(data.body);
+  //   getUserAdmin = jsonData[0]['get_admin'];
+
+  //   print('username get: $getUserAdmin');
+  //   return getUserAdmin;
+  // }
 }

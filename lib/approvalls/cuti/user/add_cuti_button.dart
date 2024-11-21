@@ -76,7 +76,6 @@ class _addCutiButtonState extends State<addCutiButton> {
                                   MemberRequestPaidLeaveController()
                                       .clearInfo();
                                   Get.offAll(const ListPengajuanCuti());
-                                  // const ListPengajuanCuti();
                                   print("total hari: ${difference.inDays}");
                                   print(
                                       "sisah cuti: ${leaveInfo.remainingLeave}");
