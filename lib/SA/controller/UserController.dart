@@ -1,32 +1,48 @@
+import 'package:absent_project/SA/model/Divisions.dart';
 import 'package:flutter/material.dart';
 import '../model/Companies.dart';
 import '../model/Positions.dart';
+import '../model/Projects.dart';
 import '../services/ApiService.dart';
 
 class UserController {
-  final ApiService apiService;
+  static final ApiService _apiService = ApiService();
 
-  UserController({required this.apiService});
-
-  Future<List<Positions>> getPositions() async {
+  static Future<List<Positions>> getPositions() async {
     try {
-      return await apiService.getPosition();
+      return await _apiService.getPosition();
     } catch (error) {
       throw Exception('Failed to fetch positions');
     }
   }
 
-  Future<List<Companies>> getCompany() async{
-    try{
-      return await apiService.getCompany();
-    } catch(error){
+  static Future<List<Companies>> getCompany() async {
+    try {
+      return await _apiService.getCompany();
+    } catch (error) {
       throw Exception('Failed to fetch company');
     }
   }
 
-  Future<void> createUser(Map<String, dynamic> userData, BuildContext context) async {
+  static Future<List<Divisions>> getDivisionsByCompanyId(int companyId) async {
     try {
-      var response = await apiService.createUser(userData);
+      return await _apiService.getDivisionsByCompanyId(companyId);
+    } catch (error) {
+      throw Exception('Failed to fetch division');
+    }
+  }
+
+  static Future<List<Projects>> getProjectByCompanyIdAndDivisionId(int companyId, int divisionId) async{
+    try{
+      return await _apiService.getProjectByCompanyIdAndDivisionId(companyId, divisionId);
+    }catch (error){
+      throw Exception("Failed to fetch project");
+    }
+  }
+
+  static Future<void> createUser(Map<String, dynamic> userData, BuildContext context) async {
+    try {
+      var response = await _apiService.createUser(userData);
       if (response['status'] == 'success') {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

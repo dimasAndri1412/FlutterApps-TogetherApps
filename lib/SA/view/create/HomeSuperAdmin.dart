@@ -1,4 +1,4 @@
-import 'package:absent_project/SA/view/manage/ListUsersView.dart';
+import 'package:absent_project/SA/view/manage/ListCompaniesView.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/ApiService.dart';
@@ -15,7 +15,7 @@ class HomeSuperAdmin extends StatelessWidget {
         title: const Text("Welcome"),
         backgroundColor: Colors.blueAccent,
       ),
-      body: ListUsersView(),
+      body: ListCompaniesView(),
       floatingActionButton: FloatingActionButton(
           onPressed: (){
             showModalBottomSheet(

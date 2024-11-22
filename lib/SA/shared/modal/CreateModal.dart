@@ -36,7 +36,7 @@ class _CreateModalState extends State<CreateModal> {
   final TextEditingController _positionController = TextEditingController();
 
   // Instansiasi UserController langsung di sini
-  final UserController userController = UserController(apiService: ApiService());
+  final UserController userController = UserController();
   List<Positions> _positions = [];
   int? _selectedPositionId;
 
@@ -48,7 +48,7 @@ class _CreateModalState extends State<CreateModal> {
 
   Future<void> _fetchPosition() async{
     try{
-      List<Positions> positions = await userController.getPositions();
+      List<Positions> positions = await UserController.getPositions();
       setState(() {
         _positions = positions;
       });
@@ -75,7 +75,7 @@ class _CreateModalState extends State<CreateModal> {
         "position": {"position_id": _selectedPositionId},
       };
 
-      userController.createUser(userData, context);
+      UserController.createUser(userData, context);
       clearFields();
     }
   }
