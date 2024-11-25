@@ -73,17 +73,21 @@ class MemberRequestPaidLeaveController {
         });
     var jsonData = json.decode(data.body);
     memberInfo.full_name = jsonData[0]['full_name'];
-    memberInfo.project = jsonData[0]['grup'];
-    memberInfo.shiftingStatus = jsonData[0]['shiftingStatus'];
+    memberInfo.project = jsonData[0]['project_name'];
+    memberInfo.position = jsonData[0]['position_name'];
+    memberInfo.department = jsonData[0]['division_name'];
+    // memberInfo.shiftingStatus = jsonData[0]['shiftingStatus'];
 
     namePaidLeave.text = memberInfo.full_name;
     projectPaidLeave.text = memberInfo.project;
+    positionPaidLeave.text = memberInfo.position;
+    departmentPaidLeave.text = memberInfo.department;
 
-    if (memberInfo.shiftingStatus == "no") {
-      Get.to(() => const PengajuanCuti_Development());
-    } else {
-      Get.to(() => const PengajuanCuti());
-    }
+    // if (memberInfo.shiftingStatus == "no") {
+    //   Get.to(() => const PengajuanCuti_Development());
+    // } else {
+    //   Get.to(() => const PengajuanCuti());
+    // }
   }
 
   Future<List<MemberListPaidLeave>?> getList() async {

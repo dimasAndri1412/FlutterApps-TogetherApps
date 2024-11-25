@@ -1,9 +1,12 @@
+import 'package:absent_project/SA/view/manage/ListCompaniesView.dart';
 import 'package:flutter/material.dart';
 
+import '../../services/ApiService.dart';
 import '../../shared/modal/CreateModal.dart';
 
 class HomeSuperAdmin extends StatelessWidget {
-  const HomeSuperAdmin({super.key});
+  final ApiService apiService = ApiService();
+  HomeSuperAdmin({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,14 +15,7 @@ class HomeSuperAdmin extends StatelessWidget {
         title: const Text("Welcome"),
         backgroundColor: Colors.blueAccent,
       ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            
-          ],
-        ),
-      ),
+      body: ListCompaniesView(),
       floatingActionButton: FloatingActionButton(
           onPressed: (){
             showModalBottomSheet(

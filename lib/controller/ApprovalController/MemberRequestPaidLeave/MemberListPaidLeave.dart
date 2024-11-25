@@ -15,6 +15,7 @@ class MemberListPaidLeave {
   final String status;
   final String submittedDate;
   final String reason_rejected;
+  final String approved_by;
   final int leave_used;
   final int remaining_leave;
   final int jumlah_hari;
@@ -36,6 +37,7 @@ class MemberListPaidLeave {
     required this.status,
     required this.submittedDate,
     required this.reason_rejected,
+    required this.approved_by,
     required this.leave_used,
     required this.remaining_leave,
     required this.jumlah_hari,
@@ -59,6 +61,7 @@ class MemberListPaidLeave {
       status: json['status'] ?? '',
       submittedDate: json['submittedDate'] ?? '',
       reason_rejected: json['reason_rejected'] ?? '',
+      approved_by: json['approved_by'] ?? '',
       leave_used: json['leave_used'] ?? 0,
       remaining_leave: json['remaining_leave'] ?? 0,
       jumlah_hari: json['jumlah_hari'] ?? 0,

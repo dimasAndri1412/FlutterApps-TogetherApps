@@ -85,9 +85,39 @@ class AdminApprovalOvertimaController {
     return users;
   }
 
-  // Future getFormNames() async {
-  //   var data = await http.post(Uri.parse(
-  //       "http://192.168.2.159:8080/FlutterAPI/approvals/admin/overtime/getListUser.php"));
-  //   var jsonData = json.decode(data.body);
-  // }
+  Future<List<AdminApprovalOvertimeModel>?> getAllName() async {
+    try {
+      var response = await http.post(
+        Uri.parse(
+            "http://192.168.2.159:8080/FlutterAPI/approvals/admin/overtime/getAllName.php"),
+      );
+
+      // Cek status HTTP
+      if (response.statusCode == 200) {
+        var jsonData = json.decode(response.body);
+        // getData.project = jsonData[0]['project_name'];
+        print(
+            'Raw JSON response: $jsonData'); // Log untuk memeriksa respons API
+
+        // Pastikan jsonData adalah List
+        if (jsonData is List) {
+          List<AdminApprovalOvertimeModel> users = jsonData.map((u) {
+            return AdminApprovalOvertimeModel.fromJson(u);
+          }).toList();
+
+          print('Parsed user list: $users');
+          return users;
+        } else {
+          print('Unexpected JSON format');
+          return null;
+        }
+      } else {
+        print('Failed to load data. Status code: ${response.statusCode}');
+        return null;
+      }
+    } catch (e) {
+      print('Error fetching data: $e');
+      return null;
+    }
+  }
 }

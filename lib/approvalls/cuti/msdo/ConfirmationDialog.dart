@@ -1,4 +1,5 @@
 import 'package:absent_project/approvalls/cuti/msdo/ListUserCuti.dart';
+import 'package:absent_project/controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveController.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
   final MemberRequestPaidLeaveController getLeaveUpdate =
       MemberRequestPaidLeaveController();
 
+  String getUserAdmin = "";
   int leaveUsed = 0;
   int remainingLeave = 0;
   int countStatus = 0;
@@ -29,17 +31,31 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
 
   //update approval
   updateApproved() async {
-    final response = await http.post(
-      Uri.parse(
-          "http://192.168.2.159:8080/FlutterAPI/approvals/admin/paid_leave/update_approved.php"),
-      body: {"reqNo": widget.getUserDetail.reqNo},
-    );
-    if (response.statusCode == 200) {
-      // return true;
-      await updateLeave();
-      // await getLeaveUpdate.getLeave();
+    try {
+      var data = await http.post(
+          Uri.parse(
+              "http://192.168.2.159:8080/FlutterAPI/approvals/admin/paid_leave/getAdmin.php"),
+          body: {'username': emailController.text});
+
+      var jsonData = json.decode(data.body);
+      getUserAdmin = jsonData[0]['get_admin'];
+      print('username GET: $getUserAdmin');
+
+      var response = await http.post(
+        Uri.parse(
+            "http://192.168.2.159:8080/FlutterAPI/approvals/admin/paid_leave/update_approved.php"),
+        body: {
+          "reqNo": widget.getUserDetail.reqNo,
+          "approved_by": getUserAdmin
+        },
+      );
+
+      if (response.statusCode == 200) {
+        await updateLeave();
+      }
+    } catch (e) {
+      print("Error parsing JSON data: $e");
     }
-    return false;
   }
 
   updateLeave() async {
@@ -49,7 +65,6 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
           "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/getFullNameOther.php",
         ),
         body: {
-          // "full_name": namePaidLeave.text,
           "full_name": widget.getUserDetail.username,
         },
       );
@@ -76,7 +91,6 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
           "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/getCountLeave.php",
         ),
         body: {
-          // "name": namePaidLeave.text,
           "name": widget.getUserDetail.username,
         },
       );
@@ -111,7 +125,6 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
 
   Future refresh() async {
     await Future.delayed(const Duration(seconds: 3));
-    // await updatePaidLeave(widget.getUserDetail.username, leaveUsed, initial);
     await updatePaidLeave(leaveUsed, initial);
     await Future.delayed(const Duration(milliseconds: 100));
     Get.offAll(const ListUserCuti());
@@ -122,15 +135,12 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
         Uri.parse(
             "http://192.168.2.159:8080/FlutterAPI/approvals/admin/paid_leave/update_leave.php"),
         body: {
-          // 'username': username,
-          // 'full_name': namePaidLeave.text,
           'full_name': widget.getUserDetail.username,
           'leave_used': leaveUsed.toString(),
           'remaining_leave': initial.toString()
         });
 
     if (response.statusCode == 200) {
-      // return true;
       print("leave used TOTAL: $leaveUsed");
       print("remaining leave TOTAL: $initial");
     }
@@ -188,41 +198,43 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
             SizedBox(height: 24.0),
             Column(
               children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    // final pdf = await PDFGenerator_MSDO(
-                    //   getUserDetail: widget.getUserDetail,
-                    // ).GeneratePDF();
-                    // await Printing.layoutPdf(onLayout: (format) => pdf);
-                    setState(() {
-                      updateApproved();
-
-                      // await updateLeave();
-                    });
-                  },
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.done,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Approve Document',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
+                Container(
+                  width: 260,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      // final pdf = await PDFGenerator_MSDO(
+                      //   getUserDetail: widget.getUserDetail,
+                      // ).GeneratePDF();
+                      // await Printing.layoutPdf(onLayout: (format) => pdf);
+                      setState(() {
+                        updateApproved();
+                        // AdminApprovalPaidLeaveController().getAdmin();
+                      });
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.done,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Approve Document',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
                     ),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 32.0, vertical: 12.0),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 32.0, vertical: 12.0),
+                    ),
                   ),
                 ),
                 SizedBox(

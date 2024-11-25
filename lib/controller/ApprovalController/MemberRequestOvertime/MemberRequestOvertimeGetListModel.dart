@@ -13,6 +13,7 @@ class MemberRequestOvertimeGetListModel {
   final String reqNo;
   final String submittedDate;
   final String reason_rejected;
+  final String approved_by;
 
   MemberRequestOvertimeGetListModel({
     required this.full_name,
@@ -29,15 +30,16 @@ class MemberRequestOvertimeGetListModel {
     required this.reqNo,
     required this.submittedDate,
     required this.reason_rejected,
+    required this.approved_by,
   });
-
+//////
   factory MemberRequestOvertimeGetListModel.fromJson(
       Map<String, dynamic> json) {
     return MemberRequestOvertimeGetListModel(
       full_name: json['full_name'] ?? 'Unknown', // Nilai default jika null
-      position: json['position_name'] ?? 'Unknown',
-      project: json['project_name'] ?? 'Unknown',
-      department: json['division_name'] ?? 'Unknown',
+      position: json['position'] ?? 'Unknown',
+      project: json['project'] ?? 'Unknown',
+      department: json['department'] ?? 'Unknown',
       location: json['location'] ?? 'Unknown',
       shift: json['shift'] ?? 'Unknown',
       start_date: json['start_date'] ?? 'Unknown',
@@ -48,9 +50,10 @@ class MemberRequestOvertimeGetListModel {
       reqNo: json['req_no'] ?? 'Unknown',
       submittedDate: json['submittedDate'] ?? 'Unknown',
       reason_rejected: json['reason_rejected'] ?? 'Unknown',
+      approved_by: json['approved_by'] ?? 'Unknown',
     );
   }
-
+//////
   // Override toString untuk debugging
   @override
   String toString() {

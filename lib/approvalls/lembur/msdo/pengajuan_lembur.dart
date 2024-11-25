@@ -17,13 +17,14 @@ class PengajuanLembur extends StatefulWidget {
   State<PengajuanLembur> createState() => _PengajuanLemburState();
 }
 
+/////////
 class _PengajuanLemburState extends State<PengajuanLembur> {
-  final MemberRequestOvertimeController overtimeController =
-      MemberRequestOvertimeController();
-  List<MemberRequestOvertimeGetListModel> nameList = [];
-  MemberRequestOvertimeGetListModel? selectedName;
+  final AdminApprovalOvertimaController overtimeController =
+      AdminApprovalOvertimaController();
+  List<AdminApprovalOvertimeModel> nameList = [];
+  AdminApprovalOvertimeModel? selectedName;
 
-  MemberRequestOvertimeController request = MemberRequestOvertimeController();
+  AdminApprovalOvertimaController request = AdminApprovalOvertimaController();
   final GlobalKey<FormState> formKey =
       GlobalKey<FormState>(); // Unique GlobalKey for Form
 
@@ -45,7 +46,7 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
   }
 
   Future<void> fetchNames() async {
-    List<MemberRequestOvertimeGetListModel>? fetchedNames =
+    List<AdminApprovalOvertimeModel>? fetchedNames =
         await overtimeController.getAllName();
     if (fetchedNames != null) {
       setState(() {
@@ -118,8 +119,7 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                             ],
                           ),
                           SizedBox(height: 50),
-                          DropdownButtonFormField<
-                              MemberRequestOvertimeGetListModel>(
+                          DropdownButtonFormField<AdminApprovalOvertimeModel>(
                             decoration: InputDecoration(
                                 labelText: "Name",
                                 border: OutlineInputBorder(

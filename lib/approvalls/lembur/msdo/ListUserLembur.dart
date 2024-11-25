@@ -363,6 +363,18 @@ class _ListUserLemburState extends State<ListUserLembur> {
                                       ),
                                     ],
                                   ),
+                                  // Row(
+                                  //   children: [
+                                  //     Text("Position :"),
+                                  //     Text(getData.position)
+                                  //   ],
+                                  // ),
+                                  // Row(
+                                  //   children: [
+                                  //     Text("Department :"),
+                                  //     Text(getData.position),
+                                  //   ],
+                                  // ),
                                 ],
                               ),
                             ),

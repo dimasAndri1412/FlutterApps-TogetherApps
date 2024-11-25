@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:absent_project/approvalls/cuti/user/generatePDF_MSDOuser.dart';
 import 'package:absent_project/approvalls/cuti/user/pengajuan_cuti.dart';
+import 'package:absent_project/controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveController.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberListPaidLeave.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberStatusPaidLeave.dart';
@@ -26,6 +27,8 @@ class ListPengajuanCuti extends StatefulWidget {
 class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
   final MemberRequestPaidLeaveController memberInfo =
       MemberRequestPaidLeaveController();
+  // final AdminApprovalPaidLeaveController adminController = AdminApprovalPaidLeaveController();
+
   List<MemberListPaidLeave> getListUser = [];
   List<MemberStatuspaidleave> getStatus = [];
 
@@ -42,7 +45,8 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
 
   void _checkDate() {
     final today = DateTime.now();
-    if (today.day > 15) {
+    // if (today.day > 11) {
+    if (today.day > 31) {
       setState(() {
         isButtonEnabled = false;
       });
@@ -270,15 +274,15 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                       margin:
                           const EdgeInsets.only(top: 5, left: 10, right: 10),
                       width: 350,
-                      height: 450,
+                      // height: 450,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(0),
                         border: Border.all(width: 2, color: Colors.grey),
                       ),
                       child: Padding(
-                        padding:
-                            const EdgeInsets.only(top: 15, left: 20, right: 20),
+                        padding: const EdgeInsets.only(
+                            top: 15, left: 20, right: 20, bottom: 15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -559,44 +563,96 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                                 ),
                               ],
                             ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Center(
+                              child: Column(
+                                children: [
+                                  if (getSelected.status == "Approved" ||
+                                      getSelected.status == "New")
+                                    Text(
+                                      "Approved By ",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontStyle: FontStyle.italic,
+                                          fontSize: 18),
+                                    ),
+                                  Text(
+                                    getSelected.status == "Approved"
+                                        ? getSelected.approved_by
+                                        : getSelected.status == "Rejected"
+                                            ? ""
+                                            : " - ",
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                  SizedBox(height: 5),
+                                  if (getSelected.status == "Rejected")
+                                    Column(
+                                      children: [
+                                        Text("Reject Reason",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontStyle: FontStyle.italic,
+                                                fontSize: 18,
+                                                color: Colors.red)),
+                                        Text(getSelected.reason_rejected,
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.red)),
+                                      ],
+                                    )
+                                ],
+                              ),
+                            )
                           ],
                         ),
                       )),
                   SizedBox(height: 20),
-                  Container(
-                      margin: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Padding(
-                        padding: EdgeInsets.all(8),
-                        child: Text(
-                          "Your request has been Approved",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 11),
-                        ),
-                      )),
+                  if (getSelected.status == "Approved")
+                    Container(
+                        margin: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(15)),
+                        child: Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Text(
+                            "Your request has been Approved",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 11),
+                          ),
+                        )),
                   Padding(
                     padding: EdgeInsets.only(bottom: 20),
                     child: ElevatedButton(
-                      onPressed: () async {
-                        final pdf = await PDFGenerator_MSDOuser(
-                                getUserDetail: getSelected)
-                            .GeneratePDF();
-                        await Printing.layoutPdf(onLayout: (format) => pdf);
-                      },
+                      onPressed: getSelected.status == "Approved"
+                          ? () async {
+                              final pdf = await PDFGenerator_MSDOuser(
+                                      getUserDetail: getSelected)
+                                  .GeneratePDF();
+                              await Printing.layoutPdf(
+                                  onLayout: (format) => pdf);
+                            }
+                          : null,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.print, color: Colors.green[300]),
+                          Icon(Icons.print,
+                              color: getSelected.status == "Approved"
+                                  ? Colors.green[300]
+                                  : Colors.grey),
                           SizedBox(
                             width: 10,
                           ),
                           Text(
                             'Print Document',
-                            style: TextStyle(color: Colors.green[300]),
+                            style: TextStyle(
+                                color: getSelected.status == "Approved"
+                                    ? Colors.green[300]
+                                    : Colors.grey),
                           ),
                         ],
                       ),
@@ -604,7 +660,11 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                         backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
-                          side: BorderSide(color: Colors.green, width: 2.0),
+                          side: BorderSide(
+                              color: getSelected.status == "Approved"
+                                  ? Colors.green
+                                  : Colors.grey,
+                              width: 2.0),
                         ),
                         padding: EdgeInsets.symmetric(
                             horizontal: 80.0, vertical: 12.0),
@@ -889,10 +949,14 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                                       Icon(Icons.people_alt_outlined,
                                           size: 18, color: Colors.grey),
                                       SizedBox(width: 5),
+                                      //PANGGIL APPROVED BY :
                                       Text("Approved by ",
-                                          style: TextStyle(
-                                              fontSize: 12, height: 2)),
+                                          style: TextStyle(fontSize: 12)),
                                       SizedBox(width: 3),
+                                      Text(memberInfo.approved_by,
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold)),
                                     ],
                                   ),
                                   Row(
