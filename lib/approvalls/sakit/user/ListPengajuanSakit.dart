@@ -2,6 +2,8 @@ import 'package:absent_project/approvalls/sakit/user/ApprovedDetail.dart';
 import 'package:absent_project/approvalls/sakit/user/DetailPengajuan.dart';
 import 'package:absent_project/approvalls/sakit/user/FormPengajuanSakit.dart';
 import 'package:absent_project/approvalls/sakit/user/RejectedDetail.dart';
+import 'package:absent_project/controller/ApprovalController/MemberRequestOvertime/MemberRequestOvertimeController.dart';
+import 'package:absent_project/controller/ApprovalController/MemberRequestOvertime/MemberRequestOvertimeGetStatusModel.dart';
 import 'package:absent_project/controller/ApprovalController/SickLeaveController/Member/MemberSickLeaveController.dart';
 import 'package:absent_project/home/applicationbar_user.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,8 @@ class ListPengajuanSakit extends StatefulWidget {
 }
 
 class _ListPengajuanSakitState extends State<ListPengajuanSakit> {
+  List<MemberRequestOvertimeGetStatusModel> getStatus = [];
+  String defaultStatus = 'All';
 
   Color _getStatusColor(String status) {
     switch (status) {
@@ -27,6 +31,75 @@ class _ListPengajuanSakitState extends State<ListPengajuanSakit> {
         return Colors.blue;
       default:
         return Colors.blue; 
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchStatusOT();
+  }
+
+  void _showFilterOptions(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Center(
+              child: Text(
+            'Select Filter',
+            style: TextStyle(fontWeight: FontWeight.w500),
+          )),
+          content: Padding(
+            padding: const EdgeInsets.only(top: 20, bottom: 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Divider(),
+                ListTile(
+                  leading: Icon(Icons.select_all),
+                  title: Text('All'),
+                  onTap: () {
+                    setState(() {
+                      defaultStatus = 'All';
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
+                ...getStatus.map((status) => ListTile(
+                      leading: status.status == "New"
+                          ? Icon(Icons.new_releases)
+                          : status.status == "Approved"
+                              ? Icon(Icons.done)
+                              : status.status == "Rejected"
+                                  ? Icon(Icons.dnd_forwardslash)
+                                  : null,
+                      title: Text(status.status),
+                      onTap: () {
+                        setState(() {
+                          defaultStatus = status.status;
+                        });
+                        Navigator.pop(context);
+                      },
+                    ))
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> fetchStatusOT() async {
+    try {
+      List<MemberRequestOvertimeGetStatusModel>? statusList =
+          await MemberRequestOvertimeController().getStatus();
+
+      setState(() {
+        getStatus = statusList ?? []; 
+      });
+    } catch (e) {
+      print('Error fetching overtime requests: $e');
     }
   }
 
@@ -66,7 +139,35 @@ class _ListPengajuanSakitState extends State<ListPengajuanSakit> {
       body: Container(
         margin: EdgeInsets.all(10),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            GestureDetector(
+              onTap: () => _showFilterOptions(context),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                margin: EdgeInsets.only(left: 15, top: 10),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey, width: 2),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Filter: $defaultStatus',
+                      style: TextStyle(color: Colors.black, fontSize: 14),
+                    ),
+                    Icon(
+                      Icons.arrow_drop_down_rounded,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
             FutureBuilder(
               future: MemberSickLeaveController().getList(),
               builder: (context, snapshot) {
@@ -84,21 +185,25 @@ class _ListPengajuanSakitState extends State<ListPengajuanSakit> {
                     child: Text("An error occurred while fetching data"),
                   );
                 } else {
-                  // var filteredData = snapshot.data!.where((data) {
-                  //   bool matchesProject = selectedProject == 'Project' ||
-                  //       data.project == selectedProject;
-                  //   bool matchesStatus = selectedStatus == 'Status' ||
-                  //       data.status == selectedStatus;
-                  //   return matchesProject && matchesStatus;
-                  // }).toList();
+                 
                   final data = snapshot.data!;
+                  final filteredData = defaultStatus == 'All'
+                    ? data
+                    : data.where((data) => data.status == defaultStatus).toList();
+
+                  if (filteredData.isEmpty) {
+                    return Center(
+                      child: Text("No data matches your filter criteria"),
+                    );
+                  }
+
                   return Expanded(
                     child: ListView.builder(
                       // itemCount: snapshot.data?.length,
-                      itemCount: data.length,
+                      itemCount: filteredData.length,
                       itemBuilder: (context, index) {
                         // final getData = snapshot.data![index];
-                        final getData = data[index];
+                        final getData = filteredData[index];
                         final statusColor =
                             _getStatusColor(getData.status ?? "Unknown");
 

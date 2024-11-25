@@ -21,7 +21,7 @@ class WeeklyController {
           'user_id' : userId
         }
       );
-      print('response weekly: ${response.body}');
+      // print('response weekly: ${response.body}');
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
 
