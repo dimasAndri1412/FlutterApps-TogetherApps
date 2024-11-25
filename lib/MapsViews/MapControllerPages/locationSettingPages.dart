@@ -71,7 +71,7 @@ class _locationSettingPagesState extends State<locationSettingPages> {
 
   void insertDataLocAndAdd() async {
     for (var controlersss in projectControllerss) {
-      final insertingControllers = insertAddressLocationControllers();
+      final insertingControllers = insertAddressAndProJectLocationControllers();
       insertingControllers.projectNamesAddrController = controlersss["projectController"]?.text;
       insertingControllers.locationNamesAddrController = controlersss["locationController"]?.text;
       await insertingControllers.insertAddrLocations();

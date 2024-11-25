@@ -1,4 +1,4 @@
-import 'package:absent_project/MapsViews/MapsViewPage/GoogleMapsPages.dart';
+import 'package:absent_project/MapsViews/MatterialMaps/GmapsController.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/controller/data_controller.dart';
 import 'package:absent_project/controller/insertAddressLocations.dart';
@@ -21,11 +21,20 @@ class _googleMapsButtonsState extends State<googleMapsButtons> {
         GestureDetector(
           onTap: () async {
             if (GoogleMapsForm.currentState!.validate()) {
-              insertAddressLocationController().insertToLocationAddress();
-              final snackBar = SnackBar(content: Text("Location Save Successfully "));
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              ctr_data().clear_maps_func();
-              Get.offAll(() => ApplicationBar());
+
+              String? verifyLocationNames = await findVerifyLocationName();
+
+              if (verifyLocationNames == null || verifyLocationNames.isEmpty) {
+                insertAddressLocationController().insertToLocationAddress();
+                final snackBar = SnackBar(content: Text("Location Save Successfully"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                ctr_data().clear_maps_func();
+                Get.offAll(() => ApplicationBar());
+
+              } else {
+                final snackBar = SnackBar(content: Text("Location is Already Exsist"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              }
             } else {
               final snackBar = SnackBar(content: Text("Location Can not save"));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);

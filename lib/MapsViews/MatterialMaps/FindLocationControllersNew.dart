@@ -21,8 +21,6 @@ class findLocationsControllersNews {
     List<String> locationNames = locations.map((location) => location.locationName!).toList();
 
 
-    print("Mengirim lokasi: $locationNames");
-
     try {
       var getLocations = Uri.parse("http://192.168.2.159:8080/FlutterAPI/findLocationsNew.php");
 
@@ -51,6 +49,7 @@ class findLocationsControllersNews {
               longtitudeList.add(longitude);
               locationNamesList.add(names);
               radiusList.add(radius);
+
             }
           }
         }

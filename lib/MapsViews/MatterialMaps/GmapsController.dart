@@ -1,17 +1,20 @@
 //GettingProject
 import 'dart:async';
 import 'package:absent_project/MapsViews/MatterialMaps/FindLastLogOutControllers.dart';
+import 'package:absent_project/MapsViews/MatterialMaps/FindLocationByLatLangController.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/FindLocationControllersNew.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/FindMapLocationControllers.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/FindProjectControllers.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/findShifClockInController.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/validationDatesForClockIn.dart';
+import 'package:absent_project/MapsViews/MatterialMaps/validationLocationName.dart';
 import 'package:absent_project/MapsViews/modelMaps/usernameModel.dart' as projectsModels;
 import 'package:absent_project/MapsViews/modelMaps/mapsModels.dart' as gmapsModels;
 import 'package:absent_project/MapsViews/modelMaps/clockOutModels.dart' as clockOutModels;
 import 'package:absent_project/MapsViews/modelMaps/lastLogOutsModels.dart' as lastClockOutModel;
 import 'package:absent_project/MapsViews/modelMaps/validateModels.dart' as validationModels;
 import 'package:absent_project/MapsViews/modelMaps/newLocationProjectModels.dart' as newProjectsModels;
+import 'package:absent_project/MapsViews/modelMaps/validasiModels.dart' as validationsModels;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
@@ -50,7 +53,6 @@ Future<String?> findAvatarUrl() async {
 
 Future<String?> findLocationNames() async {
   try{
-
     final findGmapsLocation controllers = findGmapsLocation();
     await controllers.findLocations();
 
@@ -89,10 +91,6 @@ Future<LatLng> coordinateLocation() async {
       latitudes!,
       longtitude!
   );
-
-  print('latitude location: $latitudes');
-  print('longtitdeu location: $longtitude');
-
   return mapsView;
 }
 
@@ -122,6 +120,14 @@ Future<String?> findLastLogIns() async {
   return lastLogOutsValue;
 }
 
+Future<String?> findVerifyLocationName() async {
+  final verifyLocatioName = validatioLocationName();
+  await verifyLocatioName.verfiyLocationName();
+
+  String? locationNameValues = validationsModels.validationLocationNames;
+  return locationNameValues;
+}
+
 Future<String?> findShiftClockIn() async {
   final findShiftValue = findClockOutControllers();
   await findShiftValue.findClockInValues();
@@ -144,6 +150,92 @@ Future<String?> findLastClockIn() async {
 
   String? valueClockIns = validationModels.validateClockInModels;
   return valueClockIns;
+}
+
+//findLatitudeOnlyNew
+Future<List<double?>> revampFindLatitudesOnly() async {
+  try{
+    final findLocationsControllersNews findLatitudeOnlys = findLocationsControllersNews();
+    await findLatitudeOnlys.findLocationsNews();
+
+    List<double?> latitudeListing = [];
+
+    for (int i = 0; i < latitudeList.length; i++) {
+      double? latitudes = double.tryParse(latitudeList[i]);
+      if (latitudes != null) {
+        latitudeListing.add(latitudes);
+      }
+    }
+    return latitudeListing;
+  } catch(errs) {
+    print(errs);
+  }
+  return [];
+}
+
+//findLongtitudeOnlyNew
+Future<List<double?>> revampFindLongtitudeOnly() async {
+  try{
+    final findLocationsControllersNews findLongtitudeOnly = findLocationsControllersNews();
+    await findLongtitudeOnly.findLocationsNews();
+
+    List<double?> longtitudeListing = [];
+    for (int i = 0; i < latitudeList.length; i++) {
+      double? longtitudes = double.tryParse(longtitudeList[i]);
+
+      if (longtitudes != null) {
+        longtitudeListing.add(longtitudes);
+      }
+    }
+    return longtitudeListing;
+  } catch(errs) {
+    print(errs);
+  }
+  return [];
+}
+
+//findRadiusOnlyNew
+Future<List<double?>> revampFindRadiusOnly() async {
+  try{
+    final findLocationsControllersNews findRadiusOnly = findLocationsControllersNews();
+    await findRadiusOnly.findLocationsNews();
+
+    List<double?> radiusListing = [];
+
+    for (int i = 0; i < latitudeList.length; i++) {
+      double? radius = double.tryParse(radiusList[i]);
+
+      if(radius != null) {
+        radiusListing.add(radius);
+      }
+    }
+    return radiusListing;
+  } catch(errs) {
+    print(errs);
+  }
+  return [];
+}
+
+//findLocationNames
+Future<List<String?>> revampFindLocationsNamesNews() async{
+  try{
+    final findLocationsControllersNews findLocationNamesOnly = findLocationsControllersNews();
+    await findLocationNamesOnly.findLocationsNews();
+
+    List<String?> locationNamesListing = [];
+
+    for (int i = 0; i < latitudeList.length; i++) {
+      String? locationNamesNewOnly = locationNamesList[i];
+
+      if (locationNamesNewOnly != null){
+        locationNamesListing.add(locationNamesNewOnly);
+      }
+    }
+    return locationNamesListing;
+  } catch(errs) {
+    print('error : $errs');
+  }
+  return [];
 }
 
 //findRadiusNews
@@ -178,6 +270,21 @@ Future<List<Map<String, dynamic>>> findRadiusLocationNew() async {
   }
 }
 
+Future<String?> revampLocationNameForLocationNameField() async {
+  try{
+    final findLocationByLatLangControllers latLangControllerss = findLocationByLatLangControllers();
+    await latLangControllerss.findLocationNameByLatlang();
+
+    String? nameValues = gmapsModels.locationNamesModel;
+    final locationNameValues = nameValues;
+
+    return locationNameValues;
+
+  }catch(errors) {
+    print("error message : $errors");
+  }
+}
+
 //coordinateNew
 Future<List<LatLng>> coordinateLocatioNew() async {
   final findLocationsControllersNews findCoordinates = findLocationsControllersNews();
@@ -196,9 +303,6 @@ Future<List<LatLng>> coordinateLocatioNew() async {
               longtitudes
           )
       );
-
-      print('latitude location: $latitudes');
-      print('longitude location: $longtitudes');
     }
   }
 

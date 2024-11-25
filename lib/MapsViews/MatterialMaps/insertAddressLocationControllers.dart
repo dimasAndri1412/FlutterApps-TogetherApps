@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class insertAddressLocationControllers {
+class insertAddressAndProJectLocationControllers {
   String? projectNamesAddrController, locationNamesAddrController;
   var addrLoctionUsers;
 
