@@ -5,22 +5,49 @@ import '../../services/ApiService.dart';
 
 class DetailUsersView extends StatefulWidget {
   final int? companyId;
+  final int? divisionId;
+  final int? projectId;
+  final ApiService apiService = ApiService();
 
-  const DetailUsersView({Key? key, required this.companyId}) : super(key: key);
+  DetailUsersView({
+    Key? key,
+    required this.companyId,
+    required this.divisionId,
+    required this.projectId,
+  }) : super(key: key);
 
   @override
   _DetailUsersViewState createState() => _DetailUsersViewState();
 }
 
 class _DetailUsersViewState extends State<DetailUsersView> {
-  final ApiService apiService = ApiService();
   bool _isModalVisible = false;
   Users? _selectedUser;
+
+  // Controllers untuk TextFormField
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _addressController = TextEditingController();
+  final _companyController = TextEditingController();
+  final _divisionController = TextEditingController();
+  final _projectController = TextEditingController();
+  final List<TextEditingController> _newProjectControllers = []; // List untuk project baru
 
   void _showUserDetail(Users user) {
     setState(() {
       _isModalVisible = true;
       _selectedUser = user;
+
+      // Mengisi nilai awal dari TextFormField
+      _nameController.text = user.full_name ?? '';
+      _emailController.text = user.email_address ?? '';
+      _phoneController.text = user.phone_number ?? '';
+      _addressController.text = user.address ?? '';
+      _companyController.text = user.company_name ?? '';
+      _divisionController.text = user.division_name ?? '';
+      _projectController.text = user.project_name ?? '';
+      _newProjectControllers.clear(); // Reset project baru
     });
   }
 
@@ -28,6 +55,19 @@ class _DetailUsersViewState extends State<DetailUsersView> {
     setState(() {
       _isModalVisible = false;
       _selectedUser = null;
+      _newProjectControllers.clear(); // Reset semua project baru
+    });
+  }
+
+  void _addNewProjectField() {
+    setState(() {
+      _newProjectControllers.add(TextEditingController());
+    });
+  }
+
+  void _removeNewProjectField(int index) {
+    setState(() {
+      _newProjectControllers.removeAt(index);
     });
   }
 
@@ -38,7 +78,11 @@ class _DetailUsersViewState extends State<DetailUsersView> {
       body: Stack(
         children: [
           FutureBuilder<List<Users>>(
-            future: apiService.getUsersByCompanyId(widget.companyId!),
+            future: widget.apiService.getUsersByCompanyIdAndDivisionId(
+              widget.companyId!,
+              widget.divisionId!,
+              widget.projectId!,
+            ),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
@@ -62,7 +106,6 @@ class _DetailUsersViewState extends State<DetailUsersView> {
               }
             },
           ),
-
           if (_isModalVisible)
             GestureDetector(
               onTap: _hideUserDetail,
@@ -77,7 +120,6 @@ class _DetailUsersViewState extends State<DetailUsersView> {
                       ),
                     ),
                   ),
-
                   AnimatedPositioned(
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
@@ -103,19 +145,95 @@ class _DetailUsersViewState extends State<DetailUsersView> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "Name: ${_selectedUser?.full_name ?? 'N/A'}",
-                                    style: const TextStyle(fontSize: 18),
+                                  TextFormField(
+                                    controller: _nameController,
+                                    decoration: const InputDecoration(labelText: "Name"),
+                                    readOnly: true,
                                   ),
                                   const SizedBox(height: 10),
-                                  Text(
-                                    "Email: ${_selectedUser?.email_address ?? 'N/A'}",
-                                    style: const TextStyle(fontSize: 16),
+                                  TextFormField(
+                                    controller: _emailController,
+                                    decoration: const InputDecoration(labelText: "Email"),
+                                    readOnly: true,
                                   ),
                                   const SizedBox(height: 10),
-                                  const Text(
-                                    "Other Details: Example",
-                                    style: TextStyle(fontSize: 16),
+                                  TextFormField(
+                                    controller: _phoneController,
+                                    decoration: const InputDecoration(labelText: "Phone Number"),
+                                    readOnly: true,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  TextFormField(
+                                    controller: _addressController,
+                                    decoration: const InputDecoration(labelText: "Address"),
+                                    readOnly: true,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  TextFormField(
+                                    controller: _companyController,
+                                    decoration: const InputDecoration(labelText: "Company"),
+                                    readOnly: true,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  TextFormField(
+                                    controller: _divisionController,
+                                    decoration: const InputDecoration(labelText: "Division"),
+                                    readOnly: true,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  TextFormField(
+                                    controller: _projectController,
+                                    decoration: const InputDecoration(labelText: "Existing Project"),
+                                    readOnly: true,
+                                  ),
+                                  const SizedBox(height: 20),
+                                  for (int i = 0; i < _newProjectControllers.length; i++)
+                                    Padding(
+                                      padding: const EdgeInsets.only(bottom: 10),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: TextFormField(
+                                              controller: _newProjectControllers[i],
+                                              decoration: const InputDecoration(
+                                                labelText: "New Project",
+                                              ),
+                                            ),
+                                          ),
+                                          IconButton(
+                                            icon: const Icon(Icons.cancel),
+                                            onPressed: () => _removeNewProjectField(i),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ElevatedButton(
+                                    onPressed: _addNewProjectField,
+                                    child: const Text("Add New Project Field"),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      try {
+                                        for (var controller in _newProjectControllers) {
+                                          if (controller.text.isNotEmpty) {
+                                            await widget.apiService.addNewProjectAndAssignUser(
+                                              _selectedUser!.id!,
+                                              controller.text,
+                                            );
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              SnackBar(content: Text("Project '${controller.text}' added successfully!")),
+                                            );
+                                          }
+                                        }
+                                        _hideUserDetail();
+                                      } catch (e) {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(content: Text("Error: $e")),
+                                        );
+                                      }
+                                    },
+                                    child: const Text("Save Projects"),
                                   ),
                                 ],
                               ),

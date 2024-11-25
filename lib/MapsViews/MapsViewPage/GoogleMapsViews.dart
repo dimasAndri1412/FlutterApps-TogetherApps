@@ -90,6 +90,8 @@ class _googleMapsViewsState extends State<googleMapsViews> {
       StreetLocationController.text = placsMrks.first.street.toString();
       nameLocationController.text = SearchLocationController.text;
       postalCodeController.text = placsMrks.first.postalCode.toString();
+      latitudeLocationController.text = selectedPositioned.latitude.toString();
+      longtitudeLocationController.text = selectedPositioned.longitude.toString();
 
       print(placsMrks);
 

@@ -275,6 +275,10 @@ class _googleMapsFieldState extends State<googleMapsField> {
                             ),
                             value: ""),
                         DropdownMenuItem(
+                          child: Text("50 Meter"),
+                          value: "50",
+                        ),
+                        DropdownMenuItem(
                           child: Text("100 Meter"),
                           value: "100",
                         ),

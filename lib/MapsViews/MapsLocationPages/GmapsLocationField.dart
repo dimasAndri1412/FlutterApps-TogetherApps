@@ -1,7 +1,7 @@
 import 'package:absent_project/MapsViews/MatterialMaps/GmapsController.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
 
 
 class gmapsLocationFields extends StatefulWidget {
@@ -13,15 +13,25 @@ class gmapsLocationFields extends StatefulWidget {
 
 class _gmapsLocationFieldsState extends State<gmapsLocationFields> {
 
-  void  locationNamesValues() async {
-    final findlocations = await findLocationNames();
-    locationNamesController.text = findlocations!;
+  void revampLocationName() async {
+    final revamLocationName = await revampLocationNameForLocationNameField();
+
+    if (revamLocationName == null) {
+      locationNamesController.text = "Your Position is Out Of Locations";
+    } else {
+      locationNamesController.text = revamLocationName;
+    }
   }
 
-  void streetAndNameLocation() async {
-    final findlocationAndStreet = await findLocationNames();
-    locationNamesController.text = findlocationAndStreet!;
-  }
+  void  locationNamesValues() async {
+     final findlocations = await findLocationNames();
+     locationNamesController.text = findlocations!;
+   }
+
+   void streetAndNameLocation() async {
+     final findlocationAndStreet = await findLocationNames();
+     locationNamesController.text = findlocationAndStreet!;
+   }
 
   void lastLogin() async {
     final findLastLoginss = await findLastLogIns();
@@ -32,6 +42,7 @@ class _gmapsLocationFieldsState extends State<gmapsLocationFields> {
   void initState() {
     super.initState();
     streetAndNameLocation();
+    //revampLocationName();
     lastLogin();
   }
 

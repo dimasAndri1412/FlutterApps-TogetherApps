@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:absent_project/MapsViews/MatterialMaps/FindProjectControllers.dart';
 import 'package:absent_project/MapsViews/modelMaps/newProjectModels.dart' as projectsLocModel;
+import 'package:absent_project/MapsViews/modelMaps/usernameModel.dart' as projectsModels;
 import 'package:http/http.dart' as http;
 
 class findLocAndProControllers {
@@ -15,14 +16,15 @@ class findLocAndProControllers {
 
     try {
 
-      String? projectNamesInputs = "Manage Service Data Operation (MSDO)";
+      //String? projectNamesInputs = "Manage Service Data Operation (MSDO)";
+      String? projectId = projectsModels.projectModel;
+      //String? idTest = "60";
 
-
-      var getProNames = Uri.parse("http://192.168.2.159:8080/FlutterAPI/find_project_name_from_address_location_controllers.php");
+      var getProNames = Uri.parse("http://192.168.2.159:8080/FlutterAPI/findNewProjectId.php");
       var resPro = await http.post(
           getProNames,
           body: {
-            'project_name': projectNamesInputs
+            'project_id': projectId
           }
       );
 

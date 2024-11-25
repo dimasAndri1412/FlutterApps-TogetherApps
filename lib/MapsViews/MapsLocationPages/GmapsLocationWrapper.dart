@@ -16,52 +16,64 @@ class gmapsLocationWrapper extends StatefulWidget {
   State<gmapsLocationWrapper> createState() => _gmapsLocationWrapperState();
 }
 
-Future<bool?> inRadiusValues() async {
-  final latitudes = await findLatitudeOnly();
-  final longtitudes = await findLongtitudeOnly();
-  final radiusInMeters = await findRadiusLocation();
-
-
-  final double latitudeLocations  = latitudes!;
-  final double longtitudeLocations = longtitudes!;
-  final double radiusOnMeters = radiusInMeters!;
-
-  Position currentPositioneds = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high
-  );
-
-  double distanceInMeters = Geolocator.distanceBetween(
-      latitudeLocations,
-      longtitudeLocations,
-      currentPositioneds.latitude,
-      currentPositioneds.longitude
-  );
-  return distanceInMeters <= radiusOnMeters;
-}
-
-/*String  getTodayDates() {
-  return DateFormat('yyyy-MM-dd').format(DateTime.now());
-}
-
-Future<void> saveClockInDate() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String today = getTodayDates();
-  await prefs.setString('lastClockInDate', today);
-}
-
-Future<bool> hasClockedInToday() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? lastClockInDate = prefs.getString('lastClockInDate');
-  String today = getTodayDates();
-
-  if (lastClockInDate == today) {
-    return true;
-  }
-  return false;
-}*/
-
-
 class _gmapsLocationWrapperState extends State<gmapsLocationWrapper> {
+
+  bool isInRadius = false;
+
+  Future<bool> validateRadiusValues() async {
+    try {
+      List<double?> latitudeValues = await revampFindLatitudesOnly();
+      List<double?> longtitudeValues = await revampFindLongtitudeOnly();
+      List<double?> radiusValues = await revampFindRadiusOnly();
+      //List<String?> locationNamesValues = await revampFindLocationsNamesNews();
+
+      if (latitudeValues.length != longtitudeValues.length || latitudeValues.length != radiusValues.length) {
+          print("Data inconsistency detected! Trimming data to match lengths.");
+      }
+
+      Position currentPositioned = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+
+      for (int i = 0; i < latitudeValues.length; i++) {
+        double? latitude = latitudeValues[i];
+        double? longtitude = longtitudeValues[i];
+        double? radius = radiusValues[i];
+        //String? name = locationNamesValues[i];
+
+        if (latitude != null && longtitude != null && radius != null) {
+          double distanceInMeters = Geolocator.distanceBetween(
+            latitude,
+            longtitude,
+            currentPositioned.latitude,
+            currentPositioned.longitude,
+          );
+
+          if (distanceInMeters <= radius) {
+            locationNamesController.text = "Yout Position Is Out of Radius Now!!!";
+            return true;
+          }
+        }
+      }
+    } catch (errs) {
+      print("Error in validateRadiusValues: $errs");
+    }
+    return false;
+  }
+
+  Future<void> checkingInRadius() async {
+    bool inRadius = await validateRadiusValues();
+    setState(() {
+      isInRadius = inRadius;
+    });
+  }
+
+  @override
+  void initState() {
+    checkingInRadius();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,44 +112,15 @@ class _gmapsLocationWrapperState extends State<gmapsLocationWrapper> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async{
+        onPressed: isInRadius ? () async{
+          bool inRadius = await validateRadiusValues();
 
-          String? lastClockInValues = await findLastClockIn();
-          bool? inRadius = await inRadiusValues();
-
-          //if (lastClockInValues == null ){
-
-            //if (inRadius!) {
-              Get.offAll(() => CameraDetection());
-            //} else {
-             // locationNamesController.text = 'Invalid Radius Location';
-            //}
-
-          //} else{
-            //final snackBar = SnackBar(
-               // content: const Text("You Can Not Clockin Again In The Same Time!")
-            //);
-            //ScaffoldMessenger.of(context).showSnackBar(snackBar);
-         // }
-
-          //bool? hasClockedIn = await hasClockedInToday();
-          //if (hasClockedIn) {
-             //Get.snackbar('Error', 'You has been log in today');
-             //return;
-        // }
-
-          //else {
-            //Get.offAll(CameraDetection());
-          //}
-
-          //bool? inRadius = await inRadiusValues();
-          //if(inRadius!) {
-            //await saveClockInDate();
-            //Get.offAll(CameraDetection());
-          //} else {
-            //locationNamesController.text = 'Invalid Radius Location';
-          //}
-        },
+          if(inRadius) {
+            Get.offAll(CameraDetection());
+          } else {
+            locationNamesController.text = "Yout Position Is Out of Radius Now!!!";
+          }
+        } : null,
         label: Text(
           "Start",
           style: TextStyle(
@@ -150,7 +133,7 @@ class _gmapsLocationWrapperState extends State<gmapsLocationWrapper> {
           Icons.play_arrow,
           color: Colors.white,
         ),
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: isInRadius ? Colors.lightBlueAccent : Colors.grey,
       ),
     );
   }
