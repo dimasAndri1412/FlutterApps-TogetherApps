@@ -5,7 +5,7 @@ import '../model/Positions.dart';
 import '../model/Projects.dart';
 import '../services/ApiService.dart';
 
-class UserController {
+class UserController{
   static final ApiService _apiService = ApiService();
 
   static Future<List<Positions>> getPositions() async {
@@ -15,6 +15,7 @@ class UserController {
       throw Exception('Failed to fetch positions');
     }
   }
+
 
   static Future<List<Companies>> getCompany() async {
     try {
@@ -58,6 +59,7 @@ class UserController {
           ),
         );
       }
+
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -65,6 +67,18 @@ class UserController {
           backgroundColor: Colors.red,
         ),
       );
+    }
+  }
+
+  static Future<void> createUserWithExistingCompany(Map<String, dynamic> userData, BuildContext context) async{
+    try{
+      var response = await _apiService.createUserWithExistingCompany(userData);
+      if(response['status'] == 'success'){
+      }else{
+        throw Exception(response['message']);
+      }
+    }catch(error){
+      throw Exception("Failed to create user with existing company: $error");
     }
   }
 }

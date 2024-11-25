@@ -27,6 +27,24 @@ class ApiService {
     }
   }
 
+  Future<Map<String, dynamic>> createUserWithExistingCompany(Map<String, dynamic> userData) async {
+    try {
+      final response = await http.post(
+        Uri.parse("$_baseUrl/FlutterAPI/SA/create/create_user_with_existing_company.php"),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(userData),
+      );
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        throw Exception('Failed to create user: ${response.body}');
+      }
+    } catch (error) {
+      throw Exception('Error: $error');
+    }
+  }
+
   Future<bool> addNewProjectAndAssignUser(int userId, String projectName) async {
     try {
       final response = await http.post(
@@ -37,8 +55,6 @@ class ApiService {
           "user_id": userId,
         }),
       );
-
-      print(response.body);
 
       if (response.statusCode == 200) {
         final body = json.decode(response.body);
@@ -141,7 +157,6 @@ class ApiService {
             "division": {"division_id": divisionId}
           })
       );
-      print(response.body);
 
       if(response.statusCode == 200){
         final body = json.decode(response.body);

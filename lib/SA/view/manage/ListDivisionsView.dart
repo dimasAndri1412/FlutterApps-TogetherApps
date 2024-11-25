@@ -1,4 +1,5 @@
 import 'package:absent_project/SA/controller/UserController.dart';
+import 'package:absent_project/SA/shared/modal/CreateDivisionsModal.dart';
 import 'package:absent_project/SA/view/manage/DetailUsersView.dart';
 import 'package:absent_project/SA/view/manage/ListProjectsView.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,14 @@ class ListDivisionsView extends StatefulWidget {
 }
 
 class _ListDivisionsViewState extends State<ListDivisionsView> {
+
+  @override
+  void initState() {
+    super.initState();
+    print("Received companyId: ${widget.companyId}");
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +59,16 @@ class _ListDivisionsViewState extends State<ListDivisionsView> {
             );
           }
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: (){
+            showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                builder: (BuildContext context) => CreateDivisionsModal(companyId: widget.companyId,)
+            );
+          },
+        child: const Icon(Icons.add),
       ),
     );
   }
