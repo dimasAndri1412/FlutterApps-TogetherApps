@@ -1,5 +1,5 @@
+import 'package:absent_project/SA/controller/CompanyController.dart';
 import 'package:flutter/material.dart';
-import '../../controller/UserController.dart';
 import '../../model/Companies.dart';
 import '../../shared/custom/AutoRefreshList.dart';
 import '../../shared/custom/BlurredListTile.dart';
@@ -12,7 +12,7 @@ class ListCompaniesView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text("Companies")),
       body: AutoRefreshList<Companies>(
-        fetchData: UserController.getCompany,
+        fetchData: CompanyController.getCompany,
         builder: (context, companies) {
           return ListView.builder(
             itemCount: companies.length,

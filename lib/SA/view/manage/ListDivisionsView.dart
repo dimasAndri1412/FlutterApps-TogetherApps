@@ -1,27 +1,13 @@
-import 'package:absent_project/SA/controller/UserController.dart';
 import 'package:absent_project/SA/shared/modal/CreateDivisionsModal.dart';
-import 'package:absent_project/SA/view/manage/DetailUsersView.dart';
 import 'package:absent_project/SA/view/manage/ListProjectsView.dart';
 import 'package:flutter/material.dart';
+import '../../controller/DivisionController.dart';
 import '../../model/Divisions.dart';
 
-class ListDivisionsView extends StatefulWidget {
+class ListDivisionsView extends StatelessWidget {
   final int? companyId;
 
   const ListDivisionsView({super.key, required this.companyId});
-
-  @override
-  _ListDivisionsViewState createState() => _ListDivisionsViewState();
-}
-
-class _ListDivisionsViewState extends State<ListDivisionsView> {
-
-  @override
-  void initState() {
-    super.initState();
-    print("Received companyId: ${widget.companyId}");
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +16,7 @@ class _ListDivisionsViewState extends State<ListDivisionsView> {
         title: const Text("Divisions"),
       ),
       body: FutureBuilder<List<Divisions>>(
-        future: UserController.getDivisionsByCompanyId(widget.companyId!),
+        future: DivisionController.getDivisionsByCompanyId(companyId!),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -50,7 +36,7 @@ class _ListDivisionsViewState extends State<ListDivisionsView> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ListProjectsView(companyId: widget.companyId, divisionId: division.id),
+                        builder: (context) => ListProjectsView(companyId: companyId, divisionId: division.id),
                       ),
                     );
                   },
@@ -65,7 +51,7 @@ class _ListDivisionsViewState extends State<ListDivisionsView> {
             showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
-                builder: (BuildContext context) => CreateDivisionsModal(companyId: widget.companyId,)
+                builder: (BuildContext context) => CreateDivisionsModal(companyId: companyId,)
             );
           },
         child: const Icon(Icons.add),

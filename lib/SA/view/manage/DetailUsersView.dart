@@ -1,15 +1,15 @@
 import 'dart:ui';
+import 'package:absent_project/SA/controller/ProjectController.dart';
+import 'package:absent_project/SA/controller/UserController.dart';
 import 'package:flutter/material.dart';
 import '../../model/Users.dart';
-import '../../services/ApiService.dart';
 
 class DetailUsersView extends StatefulWidget {
   final int? companyId;
   final int? divisionId;
   final int? projectId;
-  final ApiService apiService = ApiService();
 
-  DetailUsersView({
+  const DetailUsersView({
     Key? key,
     required this.companyId,
     required this.divisionId,
@@ -78,7 +78,7 @@ class _DetailUsersViewState extends State<DetailUsersView> {
       body: Stack(
         children: [
           FutureBuilder<List<Users>>(
-            future: widget.apiService.getUsersByCompanyIdAndDivisionId(
+            future: UserController.getUsersByCompanyIdAndDivisionId(
               widget.companyId!,
               widget.divisionId!,
               widget.projectId!,
@@ -217,7 +217,7 @@ class _DetailUsersViewState extends State<DetailUsersView> {
                                       try {
                                         for (var controller in _newProjectControllers) {
                                           if (controller.text.isNotEmpty) {
-                                            await widget.apiService.addNewProjectAndAssignUser(
+                                            await ProjectController.addNewProjectAndAssignUser(
                                               _selectedUser!.id!,
                                               controller.text,
                                             );

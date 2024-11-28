@@ -1,4 +1,5 @@
 import 'package:absent_project/SA/model/Divisions.dart';
+import 'package:absent_project/SA/model/Users.dart';
 import 'package:flutter/material.dart';
 import '../model/Companies.dart';
 import '../model/Positions.dart';
@@ -16,30 +17,6 @@ class UserController{
     }
   }
 
-
-  static Future<List<Companies>> getCompany() async {
-    try {
-      return await _apiService.getCompany();
-    } catch (error) {
-      throw Exception('Failed to fetch company');
-    }
-  }
-
-  static Future<List<Divisions>> getDivisionsByCompanyId(int companyId) async {
-    try {
-      return await _apiService.getDivisionsByCompanyId(companyId);
-    } catch (error) {
-      throw Exception('Failed to fetch division');
-    }
-  }
-
-  static Future<List<Projects>> getProjectByCompanyIdAndDivisionId(int companyId, int divisionId) async{
-    try{
-      return await _apiService.getProjectByCompanyIdAndDivisionId(companyId, divisionId);
-    }catch (error){
-      throw Exception("Failed to fetch project");
-    }
-  }
 
   static Future<void> createUser(Map<String, dynamic> userData, BuildContext context) async {
     try {
@@ -79,6 +56,14 @@ class UserController{
       }
     }catch(error){
       throw Exception("Failed to create user with existing company: $error");
+    }
+  }
+
+  static Future<List<Users>> getUsersByCompanyIdAndDivisionId(int companyId, int divisionId, int projectId) async{
+    try{
+      return await _apiService.getUsersByCompanyIdAndDivisionId(companyId, divisionId, projectId);
+    }catch (error){
+      throw Exception("Failed to fetch project");
     }
   }
 }
