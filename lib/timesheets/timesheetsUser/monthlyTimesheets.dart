@@ -69,89 +69,166 @@ class _monthlyTimesheetsState extends State<monthlyTimesheets> {
               itemCount: timesheetList.length,
               itemBuilder: (context, index){
                 final timesheet = timesheetList[index];
-                String? formattedClockIn = timesheet.clockIn != null ? DateFormat('dd MMM yyyy').format(timesheet.clockIn!) : null;
-                return Container(
-                   decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(0),
-                      border: Border.all(width: 0.5, color: Colors.grey),
-                    ),
-                    child: ListTile(
-                      title: Text(
-                        formattedClockIn ?? "n/a",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 14),
+                String? formattedClockIn = timesheet.clockIn != null ? DateFormat('yyyy-MM-dd').format(timesheet.clockIn!) : null;
+                
+                if(timesheet.type == 'work')
+                  return Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(0),
+                        border: Border.all(width: 0.5, color: Colors.grey),
                       ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 5,),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.work,
-                                size: 18,
-                                color: Colors.grey,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                timesheet.shift ?? "n/a",
-                                style: TextStyle(
-                                    fontSize: 12),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.location_city,
-                                size: 18,
-                                color: Colors.grey,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                "Location",
-                                style: TextStyle(
-                                    fontSize: 12, height: 2),
-                              ),
-                                SizedBox(
-                                width: 3,
-                              ),
-                              Flexible(
-                                child: Text(
-                                  timesheet.location ?? "n/a",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.blue),
-                                  overflow: TextOverflow.ellipsis,
+                      child: ListTile(
+                        title: Text(
+                          formattedClockIn ?? "n/a",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 14),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 5,),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.work,
+                                  size: 18,
+                                  color: Colors.grey,
                                 ),
-                              )
-                            ],
-                          ),
-                        ],
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  timesheet.shift ?? "n/a",
+                                  style: TextStyle(
+                                      fontSize: 12),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.location_city,
+                                  size: 18,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  "Location",
+                                  style: TextStyle(
+                                      fontSize: 12, height: 2),
+                                ),
+                                  SizedBox(
+                                  width: 3,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    timesheet.location ?? "n/a",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.blue),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        trailing: IconButton(
+                          icon: Icon(Icons.assessment_outlined, color: Colors.black),
+                          onPressed: () {
+                            print('Button clicked');
+                            showDialog(
+                              context: context, 
+                              builder: (BuildContext context){
+                                return detailMonthlyDialog(
+                                  selectedMonth: widget.selectedMonth,
+                                  selectedYear: widget.selectedYear,
+                                  clockOutId: timesheet.clockOutId,
+                                );
+                              }
+                            );
+                          },
+                        ),
+                      )
+                  );
+
+                // String? formattedDate = timesheet.sickDate != null ? DateFormat('dd MMM yyyy').format(timesheet.sickDate!) : null;
+                if(timesheet.type == 'sick')
+                  return Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(0),
+                        border: Border.all(width: 0.5, color: Colors.grey),
                       ),
-                      trailing: IconButton(
-                        icon: Icon(Icons.assessment_outlined, color: Colors.black),
-                        onPressed: () {
-                          print('Button clicked');
-                          showDialog(
-                            context: context, 
-                            builder: (BuildContext context){
-                              return detailMonthlyDialog(
-                                selectedMonth: widget.selectedMonth,
-                                selectedYear: widget.selectedYear,
-                                clockOutId: timesheet.clockOutId,
-                              );
-                            }
-                          );
-                        },
-                      ),
-                    )
-                );   
+                      child: ListTile(
+                        title: Text(
+                          timesheet.sickDate ?? "n/a",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 14),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 5,),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.sick,
+                                  size: 18,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  "Sick Leave",
+                                  style: TextStyle(
+                                      fontSize: 12),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.notes_outlined,
+                                  size: 18,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  "Note",
+                                  style: TextStyle(
+                                      fontSize: 12, height: 2),
+                                ),
+                                  SizedBox(
+                                  width: 3,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    timesheet.sickNote ?? "n/a",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.blue),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        trailing: IconButton(
+                          icon: Icon(Icons.assessment_outlined, color: Colors.grey[350]),
+                          onPressed: () {
+                            null;
+                          },
+                        ),
+                      )
+                  );
               }
             );
           }

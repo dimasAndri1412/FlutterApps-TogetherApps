@@ -116,8 +116,8 @@ class _addQuestionDialogState extends State<addQuestionDialog> {
                       questionController.addQuestion(widget.positionId);
 
                       questionText.clear();
-                      Navigator.pop(context);
                       _fetchQuestions();
+                      Navigator.pop(context);
                     }, 
                     child: Text("Add Question",
                       style: TextStyle(

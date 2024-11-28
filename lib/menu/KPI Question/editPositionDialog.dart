@@ -15,12 +15,14 @@ class editPositionDialog extends StatefulWidget {
 
 class _editPositionDialogState extends State<editPositionDialog> {
   TextEditingController textController = TextEditingController();
+  final PositionController positionController = PositionController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     textController.text = widget.positionName;
+    positionController.fetchPositions();
   }
 
   @override
@@ -109,10 +111,10 @@ class _editPositionDialogState extends State<editPositionDialog> {
                     onPressed: () {
                       // Questioncontroller questionController = Questioncontroller();
                       // questionController.editQuestion(widget.questionId, textController.text);
-                      PositionController positionController = PositionController();
                       positionController.editPosition(widget.positionId, textController.text);
 
                       positionName.clear();
+                      positionController.fetchPositions();
                       Navigator.pop(context);
                     }, 
                     child: Text("Update Question",

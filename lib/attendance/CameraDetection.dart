@@ -135,6 +135,30 @@ class _CameraDetectionState extends State<CameraDetection> {
         recognition = Recognition("Face not registered", faceRect, [], 0);
       }
       recognitions.add(recognition);
+      // if (_isFaceInsideCircle(faceRect)) {
+      //   img.Image croppedFace = img.copyCrop(
+      //     image!,
+      //     x: faceRect.left.toInt(),
+      //     y: faceRect.top.toInt(),
+      //     width: faceRect.width.toInt(),
+      //     height: faceRect.height.toInt(),
+      //   );
+
+      //   // TODO: lakukan face recognition
+      //   Recognition recognition;
+      //   try {
+      //     recognition = await recognizer.recognize(croppedFace, faceRect);
+      //     if (recognition.distance > 1) {
+      //       recognition.name = "Unknown";
+      //     }
+      //   } catch (e) {
+      //     recognition = Recognition("Face not registered", faceRect, [], 0);
+      //   }
+      //   recognitions.add(recognition);
+      //   print("Wajah berada di dalam lingkaran!");
+      // } else {
+      //   print("Wajah berada di luar lingkaran!");
+      // }
     }
 
     setState(() {
@@ -142,6 +166,22 @@ class _CameraDetectionState extends State<CameraDetection> {
       _scanResults = recognitions;
     });
 
+  }
+
+  bool _isFaceInsideCircle(Rect faceRect) {
+    // Pusat lingkaran dan radius dari CircleClipper
+    final Offset center = Offset(size.width / 2, size.height / 2 - 50); 
+    final double radius = 150;
+
+    // Pusat wajah yang terdeteksi
+    final Offset faceCenter = faceRect.center;
+
+    // Hitung jarak antara pusat wajah dan pusat lingkaran
+    final double dx = faceCenter.dx - center.dx;
+    final double dy = faceCenter.dy - center.dy;
+
+    // Periksa apakah pusat wajah berada dalam radius lingkaran
+    return (dx * dx + dy * dy) <= (radius * radius);
   }
 
   //TODO Face Registration Dialogue
@@ -367,7 +407,7 @@ class _CameraDetectionState extends State<CameraDetection> {
     stackChildren.add(
       Positioned.fill(
         child: ClipPath(
-          clipper: CircleClipper(),
+          clipper: CircleClipper(size),
           child: Container(
             color: Colors.black.withOpacity(0.5),
           ),
@@ -398,13 +438,13 @@ class _CameraDetectionState extends State<CameraDetection> {
           color: Colors.white,
           iconSize: 50,
           onPressed: 
-            isNotRegist
-            ? null
-            : isUnknown
-            ? null // if Unknown maka gabisa pencet
-            : noFaceDetected
-            ? null 
-            :
+            // isNotRegist
+            // ? null
+            // : isUnknown
+            // ? null // if Unknown maka gabisa pencet
+            // : noFaceDetected
+            // ? null 
+            // :
             () async {
             try {
               await controller.stopImageStream(); 

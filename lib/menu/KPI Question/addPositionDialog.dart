@@ -10,6 +10,13 @@ class addPositionDialog extends StatefulWidget {
 }
 
 class _addPositionDialogState extends State<addPositionDialog> {
+  final PositionController positionController = PositionController();
+
+  void initState() {
+    super.initState();
+    positionController.fetchPositions();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -77,10 +84,10 @@ class _addPositionDialogState extends State<addPositionDialog> {
                   width: 260,
                   child: ElevatedButton(
                     onPressed: () {
-                      PositionController positionController = PositionController();
                       positionController.addPosition();
 
                       positionName.clear();
+                      positionController.fetchPositions();
                       Navigator.pop(context);
                     }, 
                     child: Text("Add Position",

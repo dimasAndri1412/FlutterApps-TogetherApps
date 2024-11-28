@@ -1,15 +1,30 @@
 import 'package:absent_project/controller/KPIQuestionsController/question/QuestionController.dart';
+import 'package:absent_project/controller/KPIQuestionsController/question/QuestionModel.dart';
 import 'package:flutter/material.dart';
 
 class deleteQuestionDialog extends StatefulWidget {
   final int questionId;
-  const deleteQuestionDialog({required this.questionId});
+  final int positionId;
+  const deleteQuestionDialog({required this.questionId, required this.positionId});
 
   @override
   State<deleteQuestionDialog> createState() => _deleteQuestionDialogState();
 }
 
 class _deleteQuestionDialogState extends State<deleteQuestionDialog> {
+  final Questioncontroller _controller = Questioncontroller();
+  List<QuestionModel> _questions = [];
+  bool _isLoading = true;
+
+  void _fetchQuestions() async {
+    
+    List<QuestionModel> questions = await _controller.getQuestions(widget.positionId);
+
+    setState(() {
+      _questions = questions;
+      _isLoading = false;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -70,6 +85,7 @@ class _deleteQuestionDialogState extends State<deleteQuestionDialog> {
                       Questioncontroller questionController = Questioncontroller();
                       questionController.deleteQuestion(widget.questionId);
 
+                      _fetchQuestions();
                       Navigator.pop(context);
                     }, 
                     child: Text("Delete Question",

@@ -11,6 +11,14 @@ class deletePositionDialog extends StatefulWidget {
 }
 
 class _deletePositionDialogState extends State<deletePositionDialog> {
+  final PositionController positionController = PositionController();
+
+  void initState() {
+    super.initState();
+    positionController.fetchPositions();
+  }
+  
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -68,8 +76,9 @@ class _deletePositionDialogState extends State<deletePositionDialog> {
                   width: 260,
                   child: ElevatedButton(
                     onPressed: () {
-                      PositionController positionController = PositionController();
                       positionController.deletePosition(widget.positionId);
+
+                      positionController.fetchPositions();
                       Navigator.pop(context);
                     }, 
                     child: Text("Delete Question",

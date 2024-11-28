@@ -87,8 +87,10 @@ class _PersonalSettingState extends State<PersonalSetting> {
           child: FutureBuilder(
               future: detailMember().getUsers(),
               builder: (context, snapshot) {
-                if (snapshot.data == null) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Text("Loading");
+                } else if (snapshot.hasError) {
+                return Center(child: Text("Terjadi kesalahan: ${snapshot.error}"));
                 } else {
                   return ListView.builder(
                       itemCount: snapshot.data?.length,

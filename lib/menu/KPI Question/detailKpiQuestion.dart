@@ -131,7 +131,7 @@ class _DetailkpiquestionState extends State<Detailkpiquestion> {
                             showDialog(
                               context: context, 
                               builder: (BuildContext context){
-                                return deleteQuestionDialog(questionId: question.idQuestion,);
+                                return deleteQuestionDialog(questionId: question.idQuestion, positionId: question.idPosition,);
                               }
                             ).then((_){
                               _fetchQuestions();

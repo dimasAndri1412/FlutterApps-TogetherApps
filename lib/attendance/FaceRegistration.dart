@@ -407,7 +407,7 @@ Future<void> saveUserFaceImage(img.Image croppedFace) async {
     stackChildren.add(
       Positioned.fill(
         child: ClipPath(
-          clipper: CircleClipper(),
+          // clipper: CircleClipper(),
           child: Container(
             color: Colors.black.withOpacity(0.5),
           ),

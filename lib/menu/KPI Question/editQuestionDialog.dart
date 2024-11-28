@@ -124,8 +124,8 @@ class _editQuestionDialogState extends State<editQuestionDialog> {
                       questionController.editQuestion(widget.questionId, textController.text);
 
                       questionText.clear();
-                      Navigator.pop(context);
                       _fetchQuestions();
+                      Navigator.pop(context);
                     }, 
                     child: Text("Update Question",
                       style: TextStyle(
