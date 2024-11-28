@@ -499,6 +499,57 @@ class _revampResgitartionFieldsState extends State<revampResgitartionFields> {
                 )
             ),
             child: DropdownButtonFormField<String>(
+              value: divisionListings.map((division) => division.divisionNames).contains(controllersss["revampDivisionController"]?.text)
+                  ? controllersss["revampDivisionController"]?.text
+                  : null,
+              items: [
+                DropdownMenuItem(
+                  value: null,
+                  child: Text(
+                    "-- Select Your Division --",
+                    style: TextStyle(color: Colors.black26),
+                  ),
+                ),
+                ...divisionListings.map((division) {
+                  return DropdownMenuItem(
+                    value: division.divisionNames,
+                    child: Text(division.divisionNames),
+                  );
+                }).toList(),
+              ],
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                prefixIcon: Icon(
+                  Icons.home_work,
+                ),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  dropCompanyValues = value;
+                  if (value != null && value.isNotEmpty) {
+                    controllersss["revampDivisionController"]?.text = value;
+                  } else {
+                    controllersss["revampDivisionController"]?.clear();
+                  }
+                });
+              },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please select a Division";
+                }
+                return null;
+              },
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(
+                        color: Colors.black87)
+                )
+            ),
+            child: DropdownButtonFormField<String>(
               value: companyListings.map((company) => company.companyNames).contains(controllersss["revampCompanyController"]?.text)
                   ? controllersss["revampCompanyController"]?.text
                   : null,
@@ -548,7 +599,7 @@ class _revampResgitartionFieldsState extends State<revampResgitartionFields> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                "Add Other Location",
+                "Add Other Registrations",
                 style: TextStyle(
                     color: Colors.blueAccent,
                     fontSize: 18,

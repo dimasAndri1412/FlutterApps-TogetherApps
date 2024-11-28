@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:absent_project/ChangesPasswordPage/ChangesPasswordMenu.dart';
+import 'package:absent_project/MapsViews/MatterialMaps/GmapsController.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/login/getDevice.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,12 @@ class LoginController {
 
     try {
       if (formKey.currentState!.validate()) {
+
         String deviceId = await deviceService.getDeviceId();
+        String? positionNames = await findPositionName();
+        String? projectNamess = await findNewProjectName();
+        String? fullNamess = await findFullNameLocation();
+
         bool isDeviceLockEnabled = box.read('isDeviceLockEnabled') ?? false;
 
         var url = Uri.parse("http://192.168.2.159:8080/FlutterAPI/AdminLogin.php");
@@ -65,7 +71,11 @@ class LoginController {
           IDUsers = dataUser[0]['ID'];
           position = dataUser[0]['ID'];
           device = dataUser[0]['device'];
-          
+
+          positioNamesControllers.text = positionNames!;
+          projectNamesControllers.text = projectNamess!;
+          fullNamesLocationController.text = fullNamess!;
+
         };
 
         await saveUserId(IDUsers!);

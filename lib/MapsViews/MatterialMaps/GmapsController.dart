@@ -4,7 +4,10 @@ import 'package:absent_project/MapsViews/MatterialMaps/FindLastLogOutControllers
 import 'package:absent_project/MapsViews/MatterialMaps/FindLocationByLatLangController.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/FindLocationControllersNew.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/FindMapLocationControllers.dart';
+import 'package:absent_project/MapsViews/MatterialMaps/FindNewProjectControllers.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/FindProjectControllers.dart';
+import 'package:absent_project/MapsViews/MatterialMaps/findPositionNameControllers.dart';
+import 'package:absent_project/MapsViews/MatterialMaps/findProjectNamesNew.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/findShifClockInController.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/validationDatesForClockIn.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/validationLocationName.dart';
@@ -25,6 +28,11 @@ Future<String?> findProjectss() async {
 
   String? projectsNamesValues = newProjectsModels.projectNamesLocations;
   return projectsNamesValues;
+}
+
+Future<String?> findProjectNamesNews() async {
+  final findNewProjectsControllers projectNames = findNewProjectsControllers();
+  await projectNames.findLocationsNamesNew();
 }
 
 Future<String?> findUserNameLocation() async {
@@ -307,4 +315,20 @@ Future<List<LatLng>> coordinateLocatioNew() async {
   }
 
   return mapsViewCoordinates;
+}
+
+Future<String?> findPositionName() async {
+  final findPositionControllers positionNames = findPositionControllers();
+  await positionNames.findPositionNames();
+
+  String? positionNameValues = projectsModels.positionNames;
+  return positionNameValues;
+}
+
+Future<String?> findNewProjectName() async {
+  final FindProjectNamesControllers projectNames = FindProjectNamesControllers();
+  await projectNames.findProjectNameNews();
+
+  String? projectNameValues = projectsModels.projectNames;
+  return projectNameValues;
 }
