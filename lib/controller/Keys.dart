@@ -114,6 +114,10 @@ final avatarUrlController = TextEditingController();
 final historyController = TextEditingController();
 String avatarURLs = '';
 
+//homeContollers
+final positioNamesControllers = TextEditingController();
+final projectNamesControllers = TextEditingController();
+
 // clock-in
 final locationClockIn = TextEditingController();
 final shiftController = TextEditingController();

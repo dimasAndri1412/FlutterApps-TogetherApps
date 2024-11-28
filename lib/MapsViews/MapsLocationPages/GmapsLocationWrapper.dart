@@ -114,12 +114,19 @@ class _gmapsLocationWrapperState extends State<gmapsLocationWrapper> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: isInRadius ? () async{
           bool inRadius = await validateRadiusValues();
+          String? lastClockINValues = await findLastClockIn();
 
-          if(inRadius) {
-            Get.offAll(CameraDetection());
+          if (lastClockINValues == null) {
+            if(inRadius) {
+              Get.offAll(CameraDetection());
+            } else {
+              locationNamesController.text = "Yout Position Is Out of Radius Now!!!";
+            }
           } else {
-            locationNamesController.text = "Yout Position Is Out of Radius Now!!!";
+            final snackBars = SnackBar(content: const Text("You Can Not Clockin Again In The Same Time!"));
+            ScaffoldMessenger.of(context).showSnackBar(snackBars);
           }
+
         } : null,
         label: Text(
           "Start",

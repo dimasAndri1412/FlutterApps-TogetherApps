@@ -1,27 +1,24 @@
+import 'package:absent_project/SA/json/UsersJson/AddUserJson.dart';
+import 'package:absent_project/SA/model/Companies.dart';
+import 'package:absent_project/SA/model/Divisions.dart';
+import 'package:absent_project/SA/model/Projects.dart';
+import 'package:absent_project/SA/model/Users.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
-
 import '../../controller/UserController.dart';
-import '../../json/UsersJson/AddUserJson.dart';
-import '../../model/Companies.dart';
-import '../../model/Divisions.dart';
 import '../../model/Positions.dart';
-import '../../model/Projects.dart';
-import '../../model/Users.dart';
-import '../../services/ApiService.dart';
 import '../custom/AddButtonCustom.dart';
 import '../custom/TextFormFieldCustom.dart';
 
 
-class CreateModal extends StatefulWidget {
+class CreateCompaniesModal extends StatefulWidget {
 
-  const CreateModal({super.key});
+  const CreateCompaniesModal({super.key});
 
   @override
-  State<CreateModal> createState() => _CreateModalState();
+  State<CreateCompaniesModal> createState() => _CreateModalCompaniesState();
 }
 
-class _CreateModalState extends State<CreateModal> {
+class _CreateModalCompaniesState extends State<CreateCompaniesModal> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -59,23 +56,39 @@ class _CreateModalState extends State<CreateModal> {
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      Map<String, dynamic> userData = {
-        "login": {
-          "username": _usernameController.text,
-          "password": _passwordController.text,
-          "full_name": _fullnameController.text,
-          "phone_number": _phoneController.text,
-          "birth_date": _birthdateController.text,
-          "address": _addressController.text,
-          "email_address": _emailController.text,
-        },
-        "company": {"company_name": _companyController.text},
-        "division": {"division_name": _divisionController.text},
-        "project": {"project_name": _projectController.text},
-        "position": {"position_id": _selectedPositionId},
-      };
+      AddUserJson addUserJson = AddUserJson(
+          login: Users(
+              id: null,
+              username: _usernameController.text,
+              password: _passwordController.text,
+              full_name: _fullnameController.text,
+              phone_number: _phoneController.text,
+              birth_date: _birthdateController.text,
+              address: _addressController.text,
+              email_address: _emailController.text,
+              company_name: null,
+              division_name: null,
+              project_name: null
+          ),
+          company: Companies(
+              id: null,
+              company_name: _companyController.text
+          ),
+          division: Divisions(
+              id: null,
+              division_name: _divisionController.text
+          ),
+          project: Projects(
+              project_name: _projectController.text,
+              id: null
+          ),
+          position: Positions(
+              id: _selectedPositionId,
+              position_name: ""
+          )
+      );
 
-      UserController.createUser(userData, context);
+      UserController.createUser(addUserJson.toJson(), context);
       clearFields();
     }
   }
@@ -214,9 +227,9 @@ class _CreateModalState extends State<CreateModal> {
                                     icon: Icons.email,
                                     validator: (value) {
                                       bool inValidEmail = RegExp(
-                                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                          r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                           .hasMatch(value!);
-                                      if (value == null || value.isEmpty) {
+                                      if (value == '' || value.isEmpty) {
                                         return "Email can't be empty";
                                       }
                                       return null;

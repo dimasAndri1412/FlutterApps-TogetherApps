@@ -23,12 +23,13 @@ class findsProjectController {
         }
       );
       projectUsers = jsonDecode(resps.body);
-      projectsModels.idUsersModels = projectUsers[0]['ID'];
+      projectsModels.idUsersModels = projectUsers[0]['id'];
       projectsModels.projectModel = projectUsers[0]['project_id'];
       projectsModels.fullNameModel = projectUsers[0]['full_name'];
       projectsModels.usersModels = projectUsers[0]['USERNAME'];
       projectsModels.avatarModel = projectUsers[0]['image_path'];
       projectsModels.companyIdModel = projectUsers[0]['company_id'];
+      projectsModels.positionIdModel = projectUsers[0]['position_id'];
 
     } catch(errs) {
       return "Can Not Find The Project";

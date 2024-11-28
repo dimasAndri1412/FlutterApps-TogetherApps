@@ -24,6 +24,7 @@ class ListUsersJson{
       user: Users(
           id: json['user']['id'] ?? 0,
           username: json['user']['username'] ?? '',
+          password: json['user']['password'] ?? '',
           email_address: json['user']['email'] ?? '',
           full_name: json['user']['full_name'] ?? '',
           phone_number: json['user']['phone_number'] ?? '',

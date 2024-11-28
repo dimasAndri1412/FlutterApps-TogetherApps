@@ -1,12 +1,10 @@
 import 'package:absent_project/SA/view/manage/ListCompaniesView.dart';
 import 'package:flutter/material.dart';
 
-import '../../services/ApiService.dart';
-import '../../shared/modal/CreateModal.dart';
+import '../../shared/modal/CreateCompaniesModal.dart';
 
 class HomeSuperAdmin extends StatelessWidget {
-  final ApiService apiService = ApiService();
-  HomeSuperAdmin({super.key});
+  const HomeSuperAdmin({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +20,7 @@ class HomeSuperAdmin extends StatelessWidget {
                 context: context,
                 isScrollControlled: true,
                 builder: (BuildContext context){
-                  return const CreateModal();
+                  return const CreateCompaniesModal();
                 }
             );
           },

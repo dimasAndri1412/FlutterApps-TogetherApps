@@ -1,6 +1,7 @@
 class Users {
   int? id;
   String? username;
+  String? password;
   String? full_name;
   String? phone_number;
   String? birth_date;
@@ -13,6 +14,7 @@ class Users {
   Users({
     required this.id,
     required this.username,
+    this.password,
     required this.full_name,
     required this.phone_number,
     required this.birth_date,
@@ -27,6 +29,7 @@ class Users {
   Map<String, dynamic> toJson() {
     return {
       "username": username,
+      "password": password,
       "full_name": full_name,
       "phone_number": phone_number,
       "birth_date": birth_date,

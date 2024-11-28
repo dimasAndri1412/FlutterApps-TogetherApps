@@ -21,6 +21,7 @@ class Home extends StatefulWidget {
 class HomeState extends State<Home> {
   late List<_ChartData> data;
   late TooltipBehavior _tooltip;
+
   void initState() {
     data = [
       _ChartData('CHN', 12),
@@ -75,6 +76,34 @@ class HomeState extends State<Home> {
                         focusedBorder: InputBorder.none,
                       ),
                     ),
+                    TextField(
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(
+                          left: 35,
+                          top: 85
+                        ),
+                        hintText: positioNamesControllers.text,
+                        hintStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20 ),
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none
+                      ),
+                    ),
+                    TextField(
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(
+                              left: 35,
+                              top: 110
+                          ),
+                          hintText: projectNamesControllers.text,
+                          hintStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15 ),
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none
+                      ),
+                    )
                   ],
                 ),
                 SizedBox(height: 10),
