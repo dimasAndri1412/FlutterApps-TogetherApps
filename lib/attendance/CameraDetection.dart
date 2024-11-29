@@ -42,6 +42,7 @@ class _CameraDetectionState extends State<CameraDetection> {
 
   // bolean buat face detected 
   bool noFaceDetected = false;
+  bool isFaceInsideCircle = false;
 
 
   @override
@@ -121,44 +122,58 @@ class _CameraDetectionState extends State<CameraDetection> {
 
     for (Face face in faces) {
       Rect faceRect = face.boundingBox;
+
+       Rect scaledFaceRect = Rect.fromLTRB(
+        faceRect.left * size.width / image!.width,
+        faceRect.top * size.height / image!.height,
+        faceRect.right * size.width / image!.width,
+        faceRect.bottom * size.height / image!.height,
+      );
       //TODO crop face
-      img.Image croppedFace = img.copyCrop(image!, x:faceRect.left.toInt(),y:faceRect.top.toInt(),width:faceRect.width.toInt(),height:faceRect.height.toInt());
+        // img.Image croppedFace = img.copyCrop(
+        //   image!, 
+        //   x:faceRect.left.toInt(),
+        //   y:faceRect.top.toInt(),
+        //   width:faceRect.width.toInt(),
+        //   height:faceRect.height.toInt()
+        // );
 
-      //TODO pass cropped face to face recognition model
-      Recognition recognition;
-      try {
-        recognition = await recognizer.recognize(croppedFace!, faceRect);
-        if(recognition.distance>1){
-          recognition.name = "Unknown";
+        // // TODO pass cropped face to face recognition model
+        // Recognition recognition;
+        // try {
+        //   recognition = await recognizer.recognize(croppedFace!, faceRect);
+        //   if(recognition.distance>1){
+        //     recognition.name = "Unknown";
+        //   }
+        // } catch (e) {
+        //   recognition = Recognition("Face not registered", faceRect, [], 0);
+        // }
+        // recognitions.add(recognition);
+      
+      if (_isFaceInsideCircle(scaledFaceRect)) {
+        img.Image croppedFace = img.copyCrop(
+          image!,
+          x: faceRect.left.toInt(),
+          y: faceRect.top.toInt(),
+          width: faceRect.width.toInt(),
+          height: faceRect.height.toInt(),
+        );
+
+        // TODO: lakukan face recognition
+        Recognition recognition;
+        try {
+          recognition = await recognizer.recognize(croppedFace, faceRect);
+          if (recognition.distance > 1) {
+            recognition.name = "Unknown";
+          }
+        } catch (e) {
+          recognition = Recognition("Face not registered", faceRect, [], 0);
         }
-      } catch (e) {
-        recognition = Recognition("Face not registered", faceRect, [], 0);
+        recognitions.add(recognition);
+        print("Wajah berada di dalam lingkaran!");
+      } else {
+        print("Wajah berada di luar lingkaran!");
       }
-      recognitions.add(recognition);
-      // if (_isFaceInsideCircle(faceRect)) {
-      //   img.Image croppedFace = img.copyCrop(
-      //     image!,
-      //     x: faceRect.left.toInt(),
-      //     y: faceRect.top.toInt(),
-      //     width: faceRect.width.toInt(),
-      //     height: faceRect.height.toInt(),
-      //   );
-
-      //   // TODO: lakukan face recognition
-      //   Recognition recognition;
-      //   try {
-      //     recognition = await recognizer.recognize(croppedFace, faceRect);
-      //     if (recognition.distance > 1) {
-      //       recognition.name = "Unknown";
-      //     }
-      //   } catch (e) {
-      //     recognition = Recognition("Face not registered", faceRect, [], 0);
-      //   }
-      //   recognitions.add(recognition);
-      //   print("Wajah berada di dalam lingkaran!");
-      // } else {
-      //   print("Wajah berada di luar lingkaran!");
-      // }
     }
 
     setState(() {
@@ -172,16 +187,19 @@ class _CameraDetectionState extends State<CameraDetection> {
     // Pusat lingkaran dan radius dari CircleClipper
     final Offset center = Offset(size.width / 2, size.height / 2 - 50); 
     final double radius = 150;
-
-    // Pusat wajah yang terdeteksi
     final Offset faceCenter = faceRect.center;
 
-    // Hitung jarak antara pusat wajah dan pusat lingkaran
     final double dx = faceCenter.dx - center.dx;
     final double dy = faceCenter.dy - center.dy;
 
-    // Periksa apakah pusat wajah berada dalam radius lingkaran
-    return (dx * dx + dy * dy) <= (radius * radius);
+    final bool isInside = (dx * dx + dy * dy) <= (radius * radius);
+    print("Face Center: $faceCenter, Circle Center: $center, Radius: $radius, Inside: $isInside");
+
+    setState(() {
+      isFaceInsideCircle = isInside;
+    });
+
+    return isInside;
   }
 
   //TODO Face Registration Dialogue
@@ -409,7 +427,7 @@ class _CameraDetectionState extends State<CameraDetection> {
         child: ClipPath(
           clipper: CircleClipper(size),
           child: Container(
-            color: Colors.black.withOpacity(0.5),
+            color: Colors.black.withOpacity(0.9),
           ),
         ),
       ),
@@ -426,6 +444,28 @@ class _CameraDetectionState extends State<CameraDetection> {
       );
     }
 
+    if (!isFaceInsideCircle) {
+    stackChildren.add(Positioned(
+      top: 20,
+      left: 0,
+      right: 0,
+      child: Center(
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          color: Colors.red,
+          child: Text(
+            'Face Not In Circle!',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    ));
+  } 
+
     bool isUnknown = recognitions.any((rec) => rec.name == "Unknown");
     bool isNotRegist = recognitions.any((rec) => rec.name == "Face not registered");
     stackChildren.add(Positioned(
@@ -438,13 +478,15 @@ class _CameraDetectionState extends State<CameraDetection> {
           color: Colors.white,
           iconSize: 50,
           onPressed: 
-            // isNotRegist
-            // ? null
-            // : isUnknown
-            // ? null // if Unknown maka gabisa pencet
-            // : noFaceDetected
-            // ? null 
-            // :
+            !isFaceInsideCircle
+            ? null
+            : isNotRegist
+            ? null
+            : isUnknown
+            ? null // if Unknown maka gabisa pencet
+            : noFaceDetected
+            ? null 
+            :
             () async {
             try {
               await controller.stopImageStream(); 

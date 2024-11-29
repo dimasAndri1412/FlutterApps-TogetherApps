@@ -47,7 +47,7 @@ class HomeState extends State<Home> {
                 Stack(
                   children: [
                     Container(
-                      height: size.height * 0.2 - 30,
+                      height: size.height * 0.2 - 20,
                       decoration: BoxDecoration(
                           gradient: LinearGradient(colors: [
                             Color.fromARGB(255, 147, 195, 234),
@@ -58,51 +58,30 @@ class HomeState extends State<Home> {
                               bottomLeft: Radius.circular(20),
                               bottomRight: Radius.circular(20))),
                     ),
-                    TextField(
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(left: 30),
-                        hintText: "Welcome",
-                        hintStyle: TextStyle(color: Colors.white, fontSize: 35),
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                      ),
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(left: 35, top: 46),
-                        hintText: emailController.text,
-                        hintStyle: TextStyle(color: Colors.white, fontSize: 25),
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                      ),
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(
-                          left: 35,
-                          top: 85
-                        ),
-                        hintText: positioNamesControllers.text,
-                        hintStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20 ),
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none
-                      ),
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(
-                              left: 35,
-                              top: 110
+                    Container(
+                      margin: EdgeInsets.only(left: 20, bottom: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start, 
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Welcome",
+                            style: TextStyle(color: Colors.white, fontSize: 35, fontWeight: FontWeight.bold),
                           ),
-                          hintText: projectNamesControllers.text,
-                          hintStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15 ),
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none
-                      ),
+                          Text(
+                            emailController.text,
+                            style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "as ${positioNamesControllers.text}",
+                            style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "in ${projectNamesControllers.text} project",
+                            style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      )
                     )
                   ],
                 ),

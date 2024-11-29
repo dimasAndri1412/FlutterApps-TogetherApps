@@ -53,6 +53,17 @@ class Recognizer {
         for (int w = 0; w < width; w++) {
           int index = c * height * width + h * width + w;
           reshapedArray[index] = (float32Array[c * height * width + h * width + w]-127.5)/127.5;
+
+          // double minValue = reshapedArray.reduce((a, b) => a < b ? a : b);
+          // double maxValue = reshapedArray.reduce((a, b) => a > b ? a : b);
+
+          // print("Nilai minimum setelah normalisasi: $minValue");
+          // print("Nilai maksimum setelah normalisasi: $maxValue");
+
+          // // Validasi apakah berada di rentang [-1, 1]
+          // if (minValue < -1.0 || maxValue > 1.0) {
+          //   print("Peringatan: Nilai normalisasi berada di luar rentang [-1, 1]");
+          // }
         }
       }
       print("Nilai minimum setelah normalisasi: ${reshapedArray.reduce((a, b) => a < b ? a : b)}");
@@ -189,8 +200,8 @@ class Recognizer {
     }
     distance = sqrt(distance);
 
-    // Tentukan ambang batas untuk mencocokkan
-    double threshold = 0.5; // Sesuaikan dengan kebutuhan Anda
+    //  ambang batas untuk mencocokkan
+    double threshold = 0.7; 
     if (distance <= threshold) {
       return Pair("Success", distance);
     } else {

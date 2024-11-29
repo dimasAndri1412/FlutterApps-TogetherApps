@@ -156,7 +156,7 @@ Future<void> saveUserFaceImage(img.Image croppedFace) async {
     String userName = await clockInController.fetchUserName();
     for (Face face in faces) {
       Rect faceRect = face.boundingBox;
-      //TODO crop face
+        //TODO crop face
       img.Image croppedFace = img.copyCrop(image!, x:faceRect.left.toInt(),y:faceRect.top.toInt(),width:faceRect.width.toInt(),height:faceRect.height.toInt());
 
       // Save cropped image to file
@@ -407,9 +407,9 @@ Future<void> saveUserFaceImage(img.Image croppedFace) async {
     stackChildren.add(
       Positioned.fill(
         child: ClipPath(
-          // clipper: CircleClipper(),
+          clipper: CircleClipper(size),
           child: Container(
-            color: Colors.black.withOpacity(0.5),
+            color: Colors.black.withOpacity(0.9),
           ),
         ),
       ),
@@ -426,8 +426,6 @@ Future<void> saveUserFaceImage(img.Image croppedFace) async {
       );
     }
 
-    bool isUnknown = recognitions.any((rec) => rec.name == "Unknown");
-    bool isNotRegist = recognitions.any((rec) => rec.name == "Face not registered");
     stackChildren.add(Positioned(
       bottom: 40,
       left: 0,

@@ -166,7 +166,7 @@ class ctr_data {
     elapsedTimesController.value.clear();
   }
 
-  change_pwd(int? selectedPosition) async {
+  change_pwd() async {
     // if (image == null || !faceDetected) return false;
     final deviceService = Getdevice();
     String deviceId = await deviceService.getDeviceId();
@@ -186,11 +186,11 @@ class ctr_data {
       request.fields['PASSWORD'] = NewPasswordContorller.text;
       request.fields['user_id'] = userId;
       
-      if (selectedPosition != null) {
-        request.fields['position_id'] = selectedPosition.toString();
-      } else {
-        request.fields['position_id'] = ''; 
-      }
+      // if (selectedPosition != null) {
+      //   request.fields['position_id'] = selectedPosition.toString();
+      // } else {
+      //   request.fields['position_id'] = ''; 
+      // }
 
       request.fields['embedding'] = EmbeddingController.text;
       request.fields['device'] = deviceId;

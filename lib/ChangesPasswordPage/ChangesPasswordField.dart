@@ -133,44 +133,44 @@ class _ChangesPasswordFieldState extends State<ChangesPasswordField> {
                     },
                   ),
                 ),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      border: Border(bottom: BorderSide(color: Colors.black87))),
-                  child: Obx(() {
-                    if (positionController.isLoading.value) {
-                      return CircularProgressIndicator(); 
-                    } else if (positionController.errorMessage.isNotEmpty) {
-                      return Text(positionController.errorMessage.value);
-                    } else {
-                      return DropdownButtonFormField<int>(
-                        items: positionController.positions.map((position) {
-                          return DropdownMenuItem<int>(
-                            value: position.idPosition,
-                            child: Text(position.positionName),
-                          );
-                        }).toList(),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          prefixIcon: Icon(Icons.work),
-                        ),
-                        value: positionController.selectedPosition.value,
-                        onChanged: (value) {
-                          setState(() {
-                            positionController.setPosition(value);
-                            print(value);
-                          });
-                        },
-                        validator: (value) {
-                          if (value == null) {
-                            return "Please Select Position";
-                          }
-                          return null;
-                        },
-                      );
-                    }
-                  }),
-                ),
+                // Container(
+                //   padding: EdgeInsets.all(10),
+                //   decoration: BoxDecoration(
+                //       border: Border(bottom: BorderSide(color: Colors.black87))),
+                //   child: Obx(() {
+                //     if (positionController.isLoading.value) {
+                //       return CircularProgressIndicator(); 
+                //     } else if (positionController.errorMessage.isNotEmpty) {
+                //       return Text(positionController.errorMessage.value);
+                //     } else {
+                //       return DropdownButtonFormField<int>(
+                //         items: positionController.positions.map((position) {
+                //           return DropdownMenuItem<int>(
+                //             value: position.idPosition,
+                //             child: Text(position.positionName),
+                //           );
+                //         }).toList(),
+                //         decoration: InputDecoration(
+                //           border: InputBorder.none,
+                //           prefixIcon: Icon(Icons.work),
+                //         ),
+                //         value: positionController.selectedPosition.value,
+                //         onChanged: (value) {
+                //           setState(() {
+                //             positionController.setPosition(value);
+                //             print(value);
+                //           });
+                //         },
+                //         validator: (value) {
+                //           if (value == null) {
+                //             return "Please Select Position";
+                //           }
+                //           return null;
+                //         },
+                //       );
+                //     }
+                //   }),
+                // ),
               ],
             ))
       ],

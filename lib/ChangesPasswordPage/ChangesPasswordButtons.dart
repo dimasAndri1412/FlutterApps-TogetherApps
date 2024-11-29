@@ -33,7 +33,7 @@ class _ChangesPasswordButtonsState extends State<ChangesPasswordButtons> {
           onTap: () {
             if (formsKeys.currentState!.validate()) {
               int? selectedPosition = positionController.selectedPosition.value;
-              ctr_data().change_pwd(selectedPosition).then((value) {
+              ctr_data().change_pwd().then((value) {
                 if (value) {
                   final snackBar =
                       SnackBar(content: const Text("Password Success Changes"));
