@@ -50,7 +50,7 @@ class _gmapsLocationWrapperState extends State<gmapsLocationWrapper> {
           );
 
           if (distanceInMeters <= radius) {
-            locationNamesController.text = "Yout Position Is Out of Radius Now!!!";
+            //locationNamesController.text = "Your Position Is Out of Radius Now!!!";
             return true;
           }
         }
@@ -120,7 +120,7 @@ class _gmapsLocationWrapperState extends State<gmapsLocationWrapper> {
             if(inRadius) {
               Get.offAll(CameraDetection());
             } else {
-              locationNamesController.text = "Yout Position Is Out of Radius Now!!!";
+              locationNamesController.text = "Your Position Is Out of Radius Now!!!";
             }
           } else {
             final snackBars = SnackBar(content: const Text("You Can Not Clockin Again In The Same Time!"));
