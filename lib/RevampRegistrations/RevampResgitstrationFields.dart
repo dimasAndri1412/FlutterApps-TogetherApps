@@ -605,7 +605,7 @@ class _revampResgitartionFieldsState extends State<revampResgitartionFields> {
                     fontSize: 18,
                     fontWeight: FontWeight.bold),
               ),
-              SizedBox(width: 10),
+              SizedBox(width: 5),
               FloatingActionButton(
                 onPressed: addNewsContainers,
                 heroTag: null,
@@ -615,7 +615,7 @@ class _revampResgitartionFieldsState extends State<revampResgitartionFields> {
                   color: Colors.white,
                 ),
               ),
-              SizedBox(width: 15),
+              SizedBox(width:5),
               FloatingActionButton(
                 onPressed: removeRegistContainer,
                 heroTag: null,

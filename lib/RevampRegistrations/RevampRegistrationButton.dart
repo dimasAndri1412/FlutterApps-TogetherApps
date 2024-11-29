@@ -2,6 +2,7 @@ import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/controller/data_controller.dart';
 import 'package:absent_project/controller/insertRevampRegistration.dart';
 import 'package:absent_project/controller/sendingEmailfunc.dart';
+import 'package:absent_project/home/ApplicationBar.dart';
 import 'package:absent_project/login/LoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,7 +50,7 @@ class _revampRegistrationButtonsState extends State<revampRegistrationButtons> {
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 sendingEmail().sendingEmailFunc();
                 //clearInsertRegist();
-                Get.offAll(() => LoginPage());
+                Get.offAll(() => ApplicationBar());
               } else{
                 const snackBar = SnackBar(
                   content: Text('Data Gagal Disimpan'),

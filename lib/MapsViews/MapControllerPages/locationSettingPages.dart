@@ -1,8 +1,10 @@
 import 'package:absent_project/MapsViews/MapControllerPages/dropDownListProjectValues.dart';
 import 'package:absent_project/MapsViews/MapControllerPages/dropdownListControllers.dart';
+import 'package:absent_project/MapsViews/MapsInformationPages/ListLocationMapsPages.dart';
 import 'package:absent_project/MapsViews/MatterialMaps/insertAddressLocationControllers.dart';
 import 'package:flutter/material.dart';
 import 'package:absent_project/MapsViews/MapControllerPages/dropLocationsList.dart';
+import 'package:get/get.dart';
 import '../../controller/Keys.dart';
 
 class locationSettingPages extends StatefulWidget {
@@ -124,6 +126,9 @@ class _locationSettingPagesState extends State<locationSettingPages> {
                 onPressed: savedEnabled ? (){
                   if(mapsContollerSettingsKey.currentState!.validate()) {
                     insertDataLocAndAdd();
+                    controlersss["projectController"]?.clear();
+                    controlersss["locationController"]?.clear();
+                    Get.offAll(() => listLocationsMaps());
                     final snackBar = SnackBar(content: Text("Location Save Successfully "));
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
@@ -307,7 +312,7 @@ class _locationSettingPagesState extends State<locationSettingPages> {
                   color: Colors.white,
                 ),
               ),
-              SizedBox(width: 15),
+              SizedBox(width: 10),
               FloatingActionButton(
                 onPressed: removeContainers,
                 heroTag: null,
