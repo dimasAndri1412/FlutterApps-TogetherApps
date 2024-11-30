@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:absent_project/approvalls/cuti/user/edit_pengajuan_cuti.dart';
 import 'package:absent_project/approvalls/cuti/user/generatePDF_MSDOuser.dart';
 import 'package:absent_project/approvalls/cuti/user/pengajuan_cuti.dart';
 import 'package:absent_project/controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveController.dart';
@@ -56,6 +57,10 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
         isButtonEnabled = true;
         Get.to(() => const PengajuanCuti());
         reasonPaidLeave.text = '';
+        phonePaidLeave.text = '';
+        startDatePaidLeave.text = '';
+        endDatePaidLeave.text = '';
+        onDutyPaidLeave.text = '';
       });
     }
   }
@@ -608,10 +613,10 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                           ],
                         ),
                       )),
-                  SizedBox(height: 20),
+                  SizedBox(height: 10),
                   if (getSelected.status == "Approved")
                     Container(
-                        margin: EdgeInsets.all(10),
+                        margin: EdgeInsets.only(bottom: 10),
                         decoration: BoxDecoration(
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(15)),
@@ -626,49 +631,96 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
                           ),
                         )),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 20),
-                    child: ElevatedButton(
-                      onPressed: getSelected.status == "Approved"
-                          ? () async {
-                              final pdf = await PDFGenerator_MSDOuser(
-                                      getUserDetail: getSelected)
-                                  .GeneratePDF();
-                              await Printing.layoutPdf(
-                                  onLayout: (format) => pdf);
-                            }
-                          : null,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.print,
-                              color: getSelected.status == "Approved"
-                                  ? Colors.green[300]
-                                  : Colors.grey),
-                          SizedBox(
-                            width: 10,
+                    padding: EdgeInsets.only(bottom: 20, right: 30, left: 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ElevatedButton(
+                              onPressed: getSelected.status == "Approved"
+                                  ? () async {
+                                      final pdf = await PDFGenerator_MSDOuser(
+                                              getUserDetail: getSelected)
+                                          .GeneratePDF();
+                                      await Printing.layoutPdf(
+                                          onLayout: (format) => pdf);
+                                    }
+                                  : null,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.print,
+                                      color: getSelected.status == "Approved"
+                                          ? Colors.green[300]
+                                          : Colors.grey),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Text(
+                                    'Print Document',
+                                    style: TextStyle(
+                                        color: getSelected.status == "Approved"
+                                            ? Colors.green[300]
+                                            : Colors.grey),
+                                  ),
+                                ],
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  side: BorderSide(
+                                    color: getSelected.status == "Approved"
+                                        ? Colors.green
+                                        : Colors.grey,
+                                    // width: 2.0
+                                  ),
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    // horizontal: 80.0,
+                                    // vertical: 12.0
+                                    ),
+                              ),
+                            ),
                           ),
-                          Text(
-                            'Print Document',
-                            style: TextStyle(
-                                color: getSelected.status == "Approved"
-                                    ? Colors.green[300]
-                                    : Colors.grey),
-                          ),
-                        ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          side: BorderSide(
-                              color: getSelected.status == "Approved"
-                                  ? Colors.green
-                                  : Colors.grey,
-                              width: 2.0),
                         ),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 80.0, vertical: 12.0),
-                      ),
+                        if (getSelected.status == "Approved")
+                          Expanded(
+                              child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                Get.to(EditPengajuanCuti(
+                                    currentMember: getSelected));
+                                reasonPaidLeave.text = '';
+                                phonePaidLeave.text = '';
+                                startDatePaidLeave.text = '';
+                                endDatePaidLeave.text = '';
+                                onDutyPaidLeave.text = '';
+                              });
+                            },
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.edit,
+                                  color: Colors.orange[300],
+                                ),
+                                SizedBox(width: 20),
+                                Text(
+                                  "Edit",
+                                  style: TextStyle(color: Colors.orange[300]),
+                                ),
+                              ],
+                            ),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    side: BorderSide(color: Colors.orange))),
+                          ))
+                      ],
                     ),
                   )
                 ],

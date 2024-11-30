@@ -13,6 +13,7 @@ import 'UserListPaidLeave.dart';
 
 class MemberRequestPaidLeaveController {
   final MemberRequestPaidLeave memberInfo = MemberRequestPaidLeave();
+
   int remainingLeave = 0;
   int leaveUsed = 0;
   int initial = 0;
@@ -156,54 +157,6 @@ class MemberRequestPaidLeaveController {
     leaveUsed = int.parse(jsonGetName[0]['leave_used']);
     remainingLeave = int.parse(jsonGetName[0]['remaining_leave']);
   }
-  // Future getLeave() async {
-  //   var data = await http.post(
-  //       Uri.parse(
-  //           "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/getFullName.php"),
-  //       body: {
-  //         "username": emailController.text,
-  //         // "full_name": namePaidLeave.text,
-  //       });
-  //   var jsonData = json.decode(data.body);
-  //   print("Data.body: ${data.body}");
-
-  //   leaveUsed = int.parse(jsonData[0]['leave_used']);
-  //   remainingLeave = int.parse(jsonData[0]['remaining_leave']);
-
-  //   leave_used.text = leaveUsed.toString();
-  //   remaining_leave.text = remainingLeave.toString();
-
-  //   print("Leave Used dari API: $leaveUsed");
-  //   print("Remaining Leave dari API: $remainingLeave");
-
-  //   var getData = await http.post(
-  //       Uri.parse(
-  //           "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/getCountLeave.php"),
-  //       body: {
-  //         "name": namePaidLeave.text,
-  //       });
-  //   var getJsondata = json.decode(getData.body);
-  //   print("getData.body: ${getData.body}");
-
-  //   countStatus = int.parse(getJsondata[0]['countStatus']);
-  //   initial = remainingLeave;
-
-  //   if (countStatus > 0) {
-  //     leaveUsed = (countStatus);
-  //     // initial -= leaveUsed;
-  //     initial = -leaveUsed;
-  //   } else {
-  //     // leaveUsed = 0;
-  //     print("NO DATA COUNT");
-  //   }
-
-  //   print("countStatus getting : $countStatus");
-  //   print("Leave used getting: $leaveUsed");
-  //   print("initial getting: $initial");
-  //   print("Remaining Leave getting: $remainingLeave");
-
-  //   // await updatePaidLeave(emailController.text, leaveUsed, initial);
-  // }
 
   Future<List<MemberStatuspaidleave>?> getStatus() async {
     var data = await http.post(Uri.parse(
