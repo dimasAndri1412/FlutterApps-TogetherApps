@@ -33,6 +33,26 @@ class _revampRegistrationButtonsState extends State<revampRegistrationButtons> {
       revampInsertsControllers.revampCompanyName = buttonControllersss["revampCompanyController"]?.text;
       await revampInsertsControllers.revapGegist();
     }
+
+    if (mounted) {
+
+      setState(() {
+        for (var buttonControllersss in revampResgistControllerss ) {
+          buttonControllersss["revampFullNameController"]?.clear();
+          buttonControllersss["revampUserNameController"]?.clear();
+          buttonControllersss["revampBirthDayController"]?.clear();
+          buttonControllersss["revampAddressController"]?.clear();
+          buttonControllersss["revampRolesController"]?.clear();
+          buttonControllersss["revampEmailController"]?.clear();
+          buttonControllersss["revampPhoneNumberController"]?.clear();
+          buttonControllersss["revampPasswordController"]?.clear();
+          buttonControllersss["revampProjectController"]?.clear();
+          buttonControllersss["revampPositionController"]?.clear();
+          buttonControllersss["revampDivisionController"]?.clear();
+          buttonControllersss["revampCompanyController"]?.clear();
+        }
+      });
+    }
   }
 
   @override

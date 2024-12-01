@@ -71,12 +71,20 @@ class _locationSettingPagesState extends State<locationSettingPages> {
     });
   }
 
-  void insertDataLocAndAdd() async {
+  Future<void> insertDataLocAndAdd() async {
     for (var controlersss in projectControllerss) {
       final insertingControllers = insertAddressAndProJectLocationControllers();
       insertingControllers.projectNamesAddrController = controlersss["projectController"]?.text;
       insertingControllers.locationNamesAddrController = controlersss["locationController"]?.text;
       await insertingControllers.insertAddrLocations();
+    }
+    if (mounted) {
+      setState(() {
+        for (var controlersss in projectControllerss) {
+            controlersss["projectController"]?.clear();
+            controlersss["locationController"]?.clear();
+        }
+      });
     }
   }
 
@@ -126,8 +134,6 @@ class _locationSettingPagesState extends State<locationSettingPages> {
                 onPressed: savedEnabled ? (){
                   if(mapsContollerSettingsKey.currentState!.validate()) {
                     insertDataLocAndAdd();
-                    controlersss["projectController"]?.clear();
-                    controlersss["locationController"]?.clear();
                     Get.offAll(() => listLocationsMaps());
                     final snackBar = SnackBar(content: Text("Location Save Successfully "));
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -331,8 +337,10 @@ class _locationSettingPagesState extends State<locationSettingPages> {
 
   @override
   void dispose() {
-    for (var controllersMap in projectControllerss) {
-      controllersMap.values.forEach((controller) => controller.dispose());
+    for (var controllers in projectControllerss) {
+      controllers.values.forEach((controller) {
+        if (controller.hasListeners) controller.dispose();
+      });
     }
     super.dispose();
   }

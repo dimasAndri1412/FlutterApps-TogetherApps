@@ -104,8 +104,10 @@ class _revampResgitartionFieldsState extends State<revampResgitartionFields> {
 
   @override
   void dispose() {
-    for (var controllersMap in projectControllerss) {
-      controllersMap.values.forEach((controller) => controller.dispose());
+    for (var controllers in projectControllerss) {
+      controllers.values.forEach((controller) {
+        if (controller.hasListeners) controller.dispose();
+      });
     }
     super.dispose();
   }
