@@ -140,104 +140,106 @@ class _DetailUsersViewState extends State<DetailUsersView> {
                             ),
                           ),
                           Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  TextFormField(
-                                    controller: _nameController,
-                                    decoration: const InputDecoration(labelText: "Name"),
-                                    readOnly: true,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  TextFormField(
-                                    controller: _emailController,
-                                    decoration: const InputDecoration(labelText: "Email"),
-                                    readOnly: true,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  TextFormField(
-                                    controller: _phoneController,
-                                    decoration: const InputDecoration(labelText: "Phone Number"),
-                                    readOnly: true,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  TextFormField(
-                                    controller: _addressController,
-                                    decoration: const InputDecoration(labelText: "Address"),
-                                    readOnly: true,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  TextFormField(
-                                    controller: _companyController,
-                                    decoration: const InputDecoration(labelText: "Company"),
-                                    readOnly: true,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  TextFormField(
-                                    controller: _divisionController,
-                                    decoration: const InputDecoration(labelText: "Division"),
-                                    readOnly: true,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  TextFormField(
-                                    controller: _projectController,
-                                    decoration: const InputDecoration(labelText: "Existing Project"),
-                                    readOnly: true,
-                                  ),
-                                  const SizedBox(height: 20),
-                                  for (int i = 0; i < _newProjectControllers.length; i++)
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 10),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: TextFormField(
-                                              controller: _newProjectControllers[i],
-                                              decoration: const InputDecoration(
-                                                labelText: "New Project",
+                            child: SingleChildScrollView(
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TextFormField(
+                                      controller: _nameController,
+                                      decoration: const InputDecoration(labelText: "Name"),
+                                      readOnly: true,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    TextFormField(
+                                      controller: _emailController,
+                                      decoration: const InputDecoration(labelText: "Email"),
+                                      readOnly: true,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    TextFormField(
+                                      controller: _phoneController,
+                                      decoration: const InputDecoration(labelText: "Phone Number"),
+                                      readOnly: true,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    TextFormField(
+                                      controller: _addressController,
+                                      decoration: const InputDecoration(labelText: "Address"),
+                                      readOnly: true,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    TextFormField(
+                                      controller: _companyController,
+                                      decoration: const InputDecoration(labelText: "Company"),
+                                      readOnly: true,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    TextFormField(
+                                      controller: _divisionController,
+                                      decoration: const InputDecoration(labelText: "Division"),
+                                      readOnly: true,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    TextFormField(
+                                      controller: _projectController,
+                                      decoration: const InputDecoration(labelText: "Existing Project"),
+                                      readOnly: true,
+                                    ),
+                                    const SizedBox(height: 20),
+                                    for (int i = 0; i < _newProjectControllers.length; i++)
+                                      Padding(
+                                        padding: const EdgeInsets.only(bottom: 10),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: TextFormField(
+                                                controller: _newProjectControllers[i],
+                                                decoration: const InputDecoration(
+                                                  labelText: "New Project",
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          IconButton(
-                                            icon: const Icon(Icons.cancel),
-                                            onPressed: () => _removeNewProjectField(i),
-                                          ),
-                                        ],
+                                            IconButton(
+                                              icon: const Icon(Icons.cancel),
+                                              onPressed: () => _removeNewProjectField(i),
+                                            ),
+                                          ],
+                                        ),
                                       ),
+                                    ElevatedButton(
+                                      onPressed: _addNewProjectField,
+                                      child: const Text("Add New Project Field"),
                                     ),
-                                  ElevatedButton(
-                                    onPressed: _addNewProjectField,
-                                    child: const Text("Add New Project Field"),
-                                  ),
-                                  const SizedBox(height: 20),
-                                  ElevatedButton(
-                                    onPressed: () async {
-                                      try {
-                                        for (var controller in _newProjectControllers) {
-                                          if (controller.text.isNotEmpty) {
-                                            await ProjectController.addNewProjectAndAssignUser(
-                                              _selectedUser!.id!,
-                                              controller.text,
-                                            );
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                              SnackBar(content: Text("Project '${controller.text}' added successfully!")),
-                                            );
+                                    const SizedBox(height: 20),
+                                    ElevatedButton(
+                                      onPressed: () async {
+                                        try {
+                                          for (var controller in _newProjectControllers) {
+                                            if (controller.text.isNotEmpty) {
+                                              await ProjectController.addNewProjectAndAssignUser(
+                                                _selectedUser!.id!,
+                                                controller.text,
+                                              );
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                SnackBar(content: Text("Project '${controller.text}' added successfully!")),
+                                              );
+                                            }
                                           }
+                                          _hideUserDetail();
+                                        } catch (e) {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            SnackBar(content: Text("Error: $e")),
+                                          );
                                         }
-                                        _hideUserDetail();
-                                      } catch (e) {
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                          SnackBar(content: Text("Error: $e")),
-                                        );
-                                      }
-                                    },
-                                    child: const Text("Save Projects"),
-                                  ),
-                                ],
+                                      },
+                                      child: const Text("Save Projects"),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
+                            )
                           ),
                         ],
                       ),

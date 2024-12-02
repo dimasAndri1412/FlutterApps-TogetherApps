@@ -1,8 +1,6 @@
+import 'package:absent_project/MapsViews/MapsInformationPages/ListLocationMapsPages.dart';
 import 'package:absent_project/MapsViews/MapsViewPage/GoogleMapsWrapper.dart';
 import 'package:absent_project/controller/data_controller.dart';
-import 'package:absent_project/home/ApplicationBar.dart';
-import 'package:absent_project/login/LoginPage.dart';
-import 'package:absent_project/menu/MenuPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -74,7 +72,7 @@ class _googleMapsPagesState extends State<googleMapsPages> {
                 ),
               ),
               TextButton(onPressed: (){
-                Get.offAll(() => ApplicationBar());
+                Get.offAll(() => listLocationsMaps());
                 ctr_data().clear_maps_func();
               },
                 child:Text("YES",style:

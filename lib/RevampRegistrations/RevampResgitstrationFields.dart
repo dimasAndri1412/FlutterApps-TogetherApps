@@ -104,8 +104,10 @@ class _revampResgitartionFieldsState extends State<revampResgitartionFields> {
 
   @override
   void dispose() {
-    for (var controllersMap in projectControllerss) {
-      controllersMap.values.forEach((controller) => controller.dispose());
+    for (var controllers in projectControllerss) {
+      controllers.values.forEach((controller) {
+        if (controller.hasListeners) controller.dispose();
+      });
     }
     super.dispose();
   }
@@ -605,7 +607,7 @@ class _revampResgitartionFieldsState extends State<revampResgitartionFields> {
                     fontSize: 18,
                     fontWeight: FontWeight.bold),
               ),
-              SizedBox(width: 10),
+              SizedBox(width: 5),
               FloatingActionButton(
                 onPressed: addNewsContainers,
                 heroTag: null,
@@ -615,7 +617,7 @@ class _revampResgitartionFieldsState extends State<revampResgitartionFields> {
                   color: Colors.white,
                 ),
               ),
-              SizedBox(width: 15),
+              SizedBox(width:5),
               FloatingActionButton(
                 onPressed: removeRegistContainer,
                 heroTag: null,

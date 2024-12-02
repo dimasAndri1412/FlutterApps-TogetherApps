@@ -2,6 +2,7 @@ import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/controller/data_controller.dart';
 import 'package:absent_project/controller/insertRevampRegistration.dart';
 import 'package:absent_project/controller/sendingEmailfunc.dart';
+import 'package:absent_project/home/ApplicationBar.dart';
 import 'package:absent_project/login/LoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,6 +33,26 @@ class _revampRegistrationButtonsState extends State<revampRegistrationButtons> {
       revampInsertsControllers.revampCompanyName = buttonControllersss["revampCompanyController"]?.text;
       await revampInsertsControllers.revapGegist();
     }
+
+    if (mounted) {
+
+      setState(() {
+        for (var buttonControllersss in revampResgistControllerss ) {
+          buttonControllersss["revampFullNameController"]?.clear();
+          buttonControllersss["revampUserNameController"]?.clear();
+          buttonControllersss["revampBirthDayController"]?.clear();
+          buttonControllersss["revampAddressController"]?.clear();
+          buttonControllersss["revampRolesController"]?.clear();
+          buttonControllersss["revampEmailController"]?.clear();
+          buttonControllersss["revampPhoneNumberController"]?.clear();
+          buttonControllersss["revampPasswordController"]?.clear();
+          buttonControllersss["revampProjectController"]?.clear();
+          buttonControllersss["revampPositionController"]?.clear();
+          buttonControllersss["revampDivisionController"]?.clear();
+          buttonControllersss["revampCompanyController"]?.clear();
+        }
+      });
+    }
   }
 
   @override
@@ -49,7 +70,7 @@ class _revampRegistrationButtonsState extends State<revampRegistrationButtons> {
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 sendingEmail().sendingEmailFunc();
                 //clearInsertRegist();
-                Get.offAll(() => LoginPage());
+                Get.offAll(() => ApplicationBar());
               } else{
                 const snackBar = SnackBar(
                   content: Text('Data Gagal Disimpan'),
