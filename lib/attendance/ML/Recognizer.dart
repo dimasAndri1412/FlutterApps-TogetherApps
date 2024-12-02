@@ -201,7 +201,7 @@ class Recognizer {
     distance = sqrt(distance);
 
     //  ambang batas untuk mencocokkan
-    double threshold = 0.7; 
+    double threshold = 1.0; 
     if (distance <= threshold) {
       return Pair("Success", distance);
     } else {

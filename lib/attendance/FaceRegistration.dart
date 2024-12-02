@@ -150,7 +150,7 @@ Future<void> saveUserFaceImage(img.Image croppedFace) async {
 
     //TODO convert CameraImage to Image and rotate it so that our frame will be in a portrait
     image = Platform.isIOS?_convertBGRA8888ToImage(frame!) as img.Image?:_convertNV21(frame!);
-    image =img.copyRotate(image!, angle: camDirec == CameraLensDirection.front?90:270);
+    image =img.copyRotate(image!, angle: camDirec == CameraLensDirection.front?270:90);
 
     ClockInController clockInController = ClockInController();
     String userName = await clockInController.fetchUserName();

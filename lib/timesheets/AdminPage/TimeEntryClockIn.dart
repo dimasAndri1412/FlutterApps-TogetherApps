@@ -2,6 +2,7 @@ import 'package:absent_project/controller/TimeSheetsController/TimesheetAdmin/Ti
 import 'package:absent_project/controller/TimeSheetsController/TimesheetAdmin/TimeEntryController.dart';
 import 'package:absent_project/timesheets/AdminPage/DailyTimeheets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class TimeEntry extends StatefulWidget {
@@ -204,10 +205,8 @@ class _TimeEntryState extends State<TimeEntry> {
                       String formattedClockInTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(editableClockIn!);
                       await timeEntryController.editClockInTime(widget.ClockInId, formattedClockInTime);
 
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => DailyTimesheets(selectedDay: editableClockIn!, clockInId: widget.ClockInId,)), 
-                      );
+                      Get.off(() => DailyTimesheets(selectedDay: editableClockIn!, clockInId: widget.ClockInId,));
+                      
                       // Navigator.pop(context);
                     },
                     child: Container(

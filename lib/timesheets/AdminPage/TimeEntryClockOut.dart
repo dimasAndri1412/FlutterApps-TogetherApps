@@ -2,6 +2,7 @@ import 'package:absent_project/controller/TimeSheetsController/TimesheetAdmin/Ti
 import 'package:absent_project/controller/TimeSheetsController/TimesheetAdmin/TimeEntryController.dart';
 import 'package:absent_project/timesheets/AdminPage/DailyTimeheets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class TimeEntryClockOut extends StatefulWidget {
@@ -205,10 +206,7 @@ class _TimeEntryState extends State<TimeEntryClockOut> {
                       String formattedClockOutTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(editableClockOut!);
                       await timeEntryController.editClockOutTime(widget.clockOutId, formattedClockOutTime);
 
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => DailyTimesheets(selectedDay: editableClockOut!, clockInId: widget.clockInId,)), 
-                      );
+                      Get.off(() => DailyTimesheets(selectedDay: editableClockOut!, clockInId: widget.clockInId,));
                       // Navigator.pop(context);
                     },
                     child: Container(

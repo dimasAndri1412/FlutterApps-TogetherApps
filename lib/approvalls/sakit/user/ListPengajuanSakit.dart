@@ -176,7 +176,7 @@ class _ListPengajuanSakitState extends State<ListPengajuanSakit> {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                   return const Center(
                     child: Text("You haven't made a request yet"),
                   );

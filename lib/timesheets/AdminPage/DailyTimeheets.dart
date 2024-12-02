@@ -10,6 +10,7 @@ import 'package:absent_project/timesheets/AdminPage/TimeEntryClockIn.dart';
 import 'package:absent_project/timesheets/AdminPage/TimeEntryClockOut.dart';
 import 'package:absent_project/timesheets/AdminPage/Timesheets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:printing/printing.dart';
 
@@ -297,8 +298,7 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                             children: <Widget>[
                               GestureDetector(
                                 onTap: (){
-                                Navigator.of(context)
-                                  .push(MaterialPageRoute(builder: (context) => TimeEntry(ClockInId: daily.clockInID)));
+                                Get.off(() => TimeEntry(ClockInId: daily.clockInID));
                               },
                                 child: ListTile(
                                   title: Text(formattedClockIn ?? "-"),
@@ -332,8 +332,7 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                               if(daily.clockOut != null)
                               GestureDetector(
                                 onTap: (){
-                                Navigator.of(context)
-                                  .push(MaterialPageRoute(builder: (context) => TimeEntryClockOut(clockOutId: daily.clockOutID, clockInId: daily.clockInID,)));
+                                Get.off(() => TimeEntryClockOut(clockOutId: daily.clockOutID, clockInId: daily.clockInID,));
                               },
                                 child: ListTile(
                                   title: Text(formattedClockOut ?? "-"),
