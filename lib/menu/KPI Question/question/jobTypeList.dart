@@ -1,21 +1,24 @@
+import 'package:absent_project/controller/KPIQuestionsController/position/PositionModel.dart';
 import 'package:absent_project/controller/KPIQuestionsController/question/QuestionController.dart';
 import 'package:absent_project/controller/KPIQuestionsController/question/QuestionModel.dart';
-import 'package:absent_project/menu/KPI%20Question/addQuestionDialog.dart';
-import 'package:absent_project/menu/KPI%20Question/deleteQuestionDialog.dart';
-import 'package:absent_project/menu/KPI%20Question/editQuestionDialog.dart';
+import 'package:absent_project/menu/KPI%20Question/question/addQuestionDialog.dart';
+import 'package:absent_project/menu/KPI%20Question/question/deleteQuestionDialog.dart';
+import 'package:absent_project/menu/KPI%20Question/question/editQuestionDialog.dart';
+import 'package:absent_project/menu/KPI%20Question/platform/platformList.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Detailkpiquestion extends StatefulWidget {
+class jobTypeList extends StatefulWidget {
   final int positionId;
+  final positionModel getPositionDetail;
 
-  const Detailkpiquestion({required this.positionId});
+  const jobTypeList({required this.positionId, required this.getPositionDetail});
 
   @override
-  State<Detailkpiquestion> createState() => _DetailkpiquestionState();
+  State<jobTypeList> createState() => _jobTypeListState();
 }
 
-class _DetailkpiquestionState extends State<Detailkpiquestion> {
+class _jobTypeListState extends State<jobTypeList> {
   final Questioncontroller _controller = Questioncontroller();
   List<QuestionModel> _questions = [];
   bool _isLoading = true;
@@ -50,12 +53,12 @@ class _DetailkpiquestionState extends State<Detailkpiquestion> {
                   Container(
                     margin: EdgeInsets.all(20),
                     child: Image.asset(
-                      'assets/images/clipboard.png',
+                      'assets/images/distributed.png',
                       width: 80,
                     )
                   ),
                   Text(
-                    "Question list",
+                    "Job Type list",
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -70,7 +73,7 @@ class _DetailkpiquestionState extends State<Detailkpiquestion> {
                     ),
                   ),
                   Text(
-                    "question list templates.",
+                    "job type list templates.",
                     style: TextStyle(
                       fontSize: 13,
                       color: Colors.grey[600]

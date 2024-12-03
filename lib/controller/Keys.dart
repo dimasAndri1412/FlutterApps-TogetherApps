@@ -141,6 +141,7 @@ final elapsedTimesController = TextEditingController().obs;
 final positionId = TextEditingController();
 final questionText = TextEditingController();
 final positionName = TextEditingController();
+final platformName = TextEditingController();
 final Map<String, TextEditingController> answerController = {};
 List<TextEditingController> selectedQuestionControllers = [];
 List<TextEditingController> selectedPlatformControllers = [];

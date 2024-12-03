@@ -1,23 +1,40 @@
 import 'package:absent_project/controller/KPIQuestionsController/question/QuestionController.dart';
 import 'package:absent_project/controller/KPIQuestionsController/question/QuestionModel.dart';
+import 'package:absent_project/controller/Keys.dart';
 import 'package:flutter/material.dart';
 
-class deleteQuestionDialog extends StatefulWidget {
+class editQuestionDialog extends StatefulWidget {
   final int questionId;
+  final String questionText;
   final int positionId;
-  const deleteQuestionDialog({required this.questionId, required this.positionId});
+
+  const editQuestionDialog({required this.questionId, required this.questionText, required this.positionId});
 
   @override
-  State<deleteQuestionDialog> createState() => _deleteQuestionDialogState();
+  State<editQuestionDialog> createState() => _editQuestionDialogState();
 }
 
-class _deleteQuestionDialogState extends State<deleteQuestionDialog> {
+class _editQuestionDialogState extends State<editQuestionDialog> {
+  TextEditingController textController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    textController.text = widget.questionText;
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    textController.dispose();
+    super.dispose();
+  }
+
   final Questioncontroller _controller = Questioncontroller();
   List<QuestionModel> _questions = [];
   bool _isLoading = true;
-
   void _fetchQuestions() async {
-    
     List<QuestionModel> questions = await _controller.getQuestions(widget.positionId);
 
     setState(() {
@@ -25,6 +42,7 @@ class _deleteQuestionDialogState extends State<deleteQuestionDialog> {
       _isLoading = false;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -40,7 +58,7 @@ class _deleteQuestionDialogState extends State<deleteQuestionDialog> {
               width: 400,
               height: 120,
               decoration: BoxDecoration(
-                color: Colors.red,
+                color: Colors.blue[700],
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20.0),
                   topRight: Radius.circular(20.0),
@@ -51,7 +69,7 @@ class _deleteQuestionDialogState extends State<deleteQuestionDialog> {
                 child: Center(
                   child: 
                   Icon(
-                    Icons.delete_outline,
+                    Icons.update,
                     color: Colors.white,
                     size: 70.0,
                   ),
@@ -60,7 +78,7 @@ class _deleteQuestionDialogState extends State<deleteQuestionDialog> {
             ),
             SizedBox(height: 16.0),
             Text(
-              'Are you sure?',
+              'Update Question',
               style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
@@ -68,7 +86,7 @@ class _deleteQuestionDialogState extends State<deleteQuestionDialog> {
             ),
             SizedBox(height: 8.0),
             Text(
-              'delete this question? ${widget.questionId} ',
+              'id question ${widget.questionId}',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16.0,
@@ -77,27 +95,48 @@ class _deleteQuestionDialogState extends State<deleteQuestionDialog> {
             SizedBox(height: 14.0),
             Column(
               children: [
+                Container(
+                  height: 100,
+                  width: 270,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 5, left: 8),
+                    child: TextField(
+                      controller: textController,
+                      maxLines: null,
+                      minLines: 1,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        // labelText: '${widget.questionText}',
+                      ),
+                    ),
+                  ),
+                ),
                 SizedBox(height: 10,),
                 Container(
                   width: 260,
                   child: ElevatedButton(
                     onPressed: () {
                       Questioncontroller questionController = Questioncontroller();
-                      questionController.deleteQuestion(widget.questionId);
+                      questionController.editQuestion(widget.questionId, textController.text);
 
-                      _fetchQuestions();
+                      questionText.clear();
                       Navigator.pop(context);
+                      _fetchQuestions();
                     }, 
-                    child: Text("Delete Question",
+                    child: Text("Update Question",
                       style: TextStyle(
-                        color: Colors.red
+                        color: Colors.blue[400]
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.red, width: 2.0)
+                        side: BorderSide(color: Colors.blue, width: 2.0)
 
                       ),
                       padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 12.0),

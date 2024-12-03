@@ -1,7 +1,7 @@
 import 'package:absent_project/controller/KPIQuestionsController/position/PositionController.dart';
 import 'package:absent_project/menu/KPI%20Question/addPositionDialog.dart';
 import 'package:absent_project/menu/KPI%20Question/deletePositionDialog.dart';
-import 'package:absent_project/menu/KPI%20Question/detailKpiQuestion.dart';
+import 'package:absent_project/menu/KPI%20Question/detailKpi.dart';
 import 'package:absent_project/menu/KPI%20Question/editPositionDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -132,7 +132,10 @@ class _kpiQuestionState extends State<kpiQuestion> {
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          Get.to(() => Detailkpiquestion(positionId: position.idPosition));
+                          Get.to(() => Detailkpiquestion(
+                            positionId: position.idPosition,
+                            getPositionDetail: position,
+                          ));
                         },
                         child: Container(
                           margin: EdgeInsets.only(top: 10, right: 25, left: 25, bottom: 10),

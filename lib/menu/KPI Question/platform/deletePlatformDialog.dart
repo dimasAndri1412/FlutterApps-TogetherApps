@@ -1,44 +1,36 @@
-import 'package:absent_project/controller/KPIQuestionsController/position/PositionController.dart';
+import 'package:absent_project/controller/KPIQuestionsController/platform/platformController.dart';
 import 'package:absent_project/controller/KPIQuestionsController/question/QuestionController.dart';
-import 'package:absent_project/controller/Keys.dart';
+import 'package:absent_project/controller/KPIQuestionsController/question/QuestionModel.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import '../../controller/KPIQuestionsController/question/QuestionModel.dart';
-
-class addQuestionDialog extends StatefulWidget {
+class deletePlatformDialog extends StatefulWidget {
+  final int platformId;
   final int positionId;
-
-  const addQuestionDialog({required this.positionId});
+  const deletePlatformDialog({required this.platformId, required this.positionId});
 
   @override
-  State<addQuestionDialog> createState() => _addQuestionDialogState();
+  State<deletePlatformDialog> createState() => _deletePlatformDialogState();
 }
 
-class _addQuestionDialogState extends State<addQuestionDialog> {
-  final Questioncontroller _controller = Questioncontroller();
-  List<QuestionModel> _questions = [];
+class _deletePlatformDialogState extends State<deletePlatformDialog> {
+ final platformController _controller = platformController();
+  // List<PlatformModel> _platforms = [];
   bool _isLoading = true;
 
-  void _fetchQuestions() async {
-    List<QuestionModel> questions = await _controller.getQuestions(widget.positionId);
+  @override
+  void initState(){
+    super.initState();
+    _fetchPlatforms();
+  }
 
+  void _fetchPlatforms() async {
+    await _controller.fetchPlatform(widget.positionId);
     setState(() {
-      _questions = questions;
       _isLoading = false;
     });
   }
-
   @override
   Widget build(BuildContext context) {
-    // String positionName = 'uknown';
-    // var matchedPosition = positionController.positions
-    //   .firstWhereOrNull((position) => position.idPosition == widget.positionId);
-
-    // if (matchedPosition != null) {
-    //   positionName = matchedPosition.positionName;
-    // }
-
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
@@ -52,7 +44,7 @@ class _addQuestionDialogState extends State<addQuestionDialog> {
               width: 400,
               height: 120,
               decoration: BoxDecoration(
-                color: Colors.orange[600],
+                color: Colors.red,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20.0),
                   topRight: Radius.circular(20.0),
@@ -63,7 +55,7 @@ class _addQuestionDialogState extends State<addQuestionDialog> {
                 child: Center(
                   child: 
                   Icon(
-                    Icons.question_answer_rounded,
+                    Icons.delete_outline,
                     color: Colors.white,
                     size: 70.0,
                   ),
@@ -72,7 +64,7 @@ class _addQuestionDialogState extends State<addQuestionDialog> {
             ),
             SizedBox(height: 16.0),
             Text(
-              'Add Question',
+              'Are you sure?',
               style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
@@ -80,7 +72,7 @@ class _addQuestionDialogState extends State<addQuestionDialog> {
             ),
             SizedBox(height: 8.0),
             Text(
-              'id role ${widget.positionId}',
+              'delete this platform? ${widget.platformId} ',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16.0,
@@ -89,46 +81,27 @@ class _addQuestionDialogState extends State<addQuestionDialog> {
             SizedBox(height: 14.0),
             Column(
               children: [
-                Container(
-                  height: 100,
-                  width: 270,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(10)
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 5, left: 8),
-                    child: TextField(
-                      controller: questionText,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Enter the question here',
-                      ),
-                    ),
-                  ),
-                ),
                 SizedBox(height: 10,),
                 Container(
                   width: 260,
                   child: ElevatedButton(
                     onPressed: () {
-                      Questioncontroller questionController = Questioncontroller(); 
-                      questionController.addQuestion(widget.positionId);
+                     _controller.deletePlatform(widget.platformId);
 
-                      questionText.clear();
-                      _fetchQuestions();
                       Navigator.pop(context);
+                      _fetchPlatforms();
                     }, 
-                    child: Text("Add Question",
+                    child: Text("Delete Question",
                       style: TextStyle(
-                        color: Colors.orange[400]
+                        color: Colors.red
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.orange, width: 2.0)
+                        side: BorderSide(color: Colors.red, width: 2.0)
+
                       ),
                       padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 12.0),
                     ),
