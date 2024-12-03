@@ -78,6 +78,7 @@ class PositionController extends GetxController {
           'id_position' : positionId.toString()
         }
       );
+      // print('response${response.body}');
       if (response.statusCode == 200) {
         print('Position deleted');
       } else {

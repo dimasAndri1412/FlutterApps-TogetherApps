@@ -78,8 +78,8 @@ class _deletePositionDialogState extends State<deletePositionDialog> {
                     onPressed: () {
                       positionController.deletePosition(widget.positionId);
 
-                      positionController.fetchPositions();
                       Navigator.pop(context);
+                      positionController.fetchPositions();
                     }, 
                     child: Text("Delete Question",
                       style: TextStyle(

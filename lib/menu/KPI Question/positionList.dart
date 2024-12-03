@@ -119,7 +119,7 @@ class _kpiQuestionState extends State<kpiQuestion> {
                                 }
                               ).then((_){
                                 positionController.fetchPositions();
-                                Get.snackbar('Success', 'Position deleted successfully');
+                                // Get.snackbar('Success', 'Position deleted successfully');
                               }); 
                             },
                             backgroundColor: Colors.red,
@@ -180,7 +180,7 @@ class _kpiQuestionState extends State<kpiQuestion> {
             }
           ).then((_){
             positionController.fetchPositions();
-            Get.snackbar('Success', 'Position added successfully');
+            // Get.snackbar('Success', 'Position added successfully');
           });
         },
         backgroundColor: Colors.orange[600],

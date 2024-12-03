@@ -114,8 +114,8 @@ class _editPositionDialogState extends State<editPositionDialog> {
                       positionController.editPosition(widget.positionId, textController.text);
 
                       positionName.clear();
-                      positionController.fetchPositions();
                       Navigator.pop(context);
+                      positionController.fetchPositions();
                     }, 
                     child: Text("Update Question",
                       style: TextStyle(

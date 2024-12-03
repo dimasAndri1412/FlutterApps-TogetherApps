@@ -87,8 +87,8 @@ class _addPositionDialogState extends State<addPositionDialog> {
                       positionController.addPosition();
 
                       positionName.clear();
-                      positionController.fetchPositions();
                       Navigator.pop(context);
+                      positionController.fetchPositions();
                     }, 
                     child: Text("Add Position",
                       style: TextStyle(
