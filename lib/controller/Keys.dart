@@ -52,6 +52,7 @@ final TextEditingController activityOTController = TextEditingController();
 final TextEditingController statusOTController = TextEditingController();
 final TextEditingController reason_OTrejectedController =
     TextEditingController();
+List<String> locationList = [];
 
 //Controller
 final UserNameController = TextEditingController();
@@ -149,10 +150,9 @@ List<TextEditingController> answersControllers = [];
 
 //locationControllerNew
 Map<String, TextEditingController> controlersss = {
-    "projectController": TextEditingController(),
-    "locationController": TextEditingController(),
+  "projectController": TextEditingController(),
+  "locationController": TextEditingController(),
 };
-
 
 //revamp registration
 final revampPostionController = TextEditingController();
@@ -181,7 +181,6 @@ final GlobalKey<FormState> sickLeaveKey = GlobalKey<FormState>();
 final dateSickLeaveController = TextEditingController();
 final noteSickLeaveController = TextEditingController();
 final rejectedReasonSickLeave = TextEditingController();
-
 
 final GlobalKey<FormState> questionKey = GlobalKey<FormState>();
 

@@ -3,7 +3,7 @@ class AdminApprovalOvertimeModel {
   String position;
   String project;
   String department;
-  String location;
+  List<String> location; // Tambahkan daftar lokasi
   String shift;
   String start_date;
   String start_time;
@@ -21,7 +21,7 @@ class AdminApprovalOvertimeModel {
     required this.position,
     required this.project,
     required this.department,
-    required this.location,
+    required this.location, // Inisialisasi locations
     required this.shift,
     required this.start_date,
     required this.start_time,
@@ -40,7 +40,8 @@ class AdminApprovalOvertimeModel {
       position: json['position_name'] ?? 'Unknown',
       project: json['project_name'] ?? 'Unknown',
       department: json['division_name'] ?? 'Unknown',
-      location: json['location'] ?? 'Unknown',
+      location: json['location']?.split(',') ??
+          [], // Asumsikan API mengembalikan string dengan koma
       shift: json['shift'] ?? 'Unknown',
       start_date: json['start_date'] ?? 'Unknown',
       start_time: json['start_time'] ?? 'Unknown',

@@ -208,10 +208,27 @@ class _RejectedDetailState extends State<RejectedDetail> {
                                           fontSize: 13),
                                     ),
                                     SizedBox(height: 5),
-                                    Text(
-                                      widget.getData.location,
-                                      style: TextStyle(fontSize: 13),
-                                    ),
+                                    // Text(
+                                    //   widget.getData.location,
+                                    //   style: TextStyle(fontSize: 13),
+                                    // ),
+                                    widget.getData.location.isNotEmpty
+                                        ? Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: widget.getData.location
+                                                .map((loc) {
+                                              return Text(loc,
+                                                  style:
+                                                      TextStyle(fontSize: 13));
+                                            }).toList(),
+                                          )
+                                        : Text(
+                                            'No location available',
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.grey),
+                                          )
                                   ],
                                 ),
                               ),

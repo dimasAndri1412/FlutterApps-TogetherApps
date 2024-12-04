@@ -17,7 +17,6 @@ class PengajuanLembur extends StatefulWidget {
   State<PengajuanLembur> createState() => _PengajuanLemburState();
 }
 
-/////////
 class _PengajuanLemburState extends State<PengajuanLembur> {
   final AdminApprovalOvertimaController overtimeController =
       AdminApprovalOvertimaController();
@@ -37,6 +36,7 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
   ];
 
   String selectedShiftLeave = '';
+  String? selectedLocation;
 
   @override
   void initState() {
@@ -133,6 +133,7 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                               );
                             }).toList(),
                             onChanged: (value) {
+                              print("Dropdown changed: $value");
                               setState(() {
                                 selectedName = value;
 
@@ -145,6 +146,15 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                                       selectedName!.project;
                                   departmentOTController.text =
                                       selectedName!.department;
+                                  if (selectedName!.location.isNotEmpty) {
+                                    locationList = selectedName!.location;
+                                    selectedLocation =
+                                        null; // Reset pilihan lokasi
+                                  } else {
+                                    locationList = [];
+                                  }
+                                  print(
+                                      "Location List: $locationList"); // Debug
                                 } else {
                                   nameOTController.clear();
                                   projectController.clear();
@@ -237,28 +247,54 @@ class _PengajuanLemburState extends State<PengajuanLembur> {
                             ),
                           ),
                           SizedBox(height: 20),
-                          Container(
-                            decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.grey, width: 1),
-                                borderRadius: BorderRadius.circular(12)),
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                    labelText: "Location",
-                                    hintText: "Please input your location here",
-                                    hintStyle: TextStyle(color: Colors.grey),
-                                    border: InputBorder.none),
-                                controller: locationOTController,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter your location here';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
+                          // Container(
+                          //   decoration: BoxDecoration(
+                          //       border:
+                          //           Border.all(color: Colors.grey, width: 1),
+                          //       borderRadius: BorderRadius.circular(12)),
+                          //   child: Padding(
+                          //     padding: EdgeInsets.only(left: 10),
+                          //     child: TextFormField(
+                          //       decoration: InputDecoration(
+                          //           labelText: "Location",
+                          //           hintText: "Please input your location here",
+                          //           hintStyle: TextStyle(color: Colors.grey),
+                          //           border: InputBorder.none),
+                          //       controller: locationOTController,
+                          //       validator: (value) {
+                          //         if (value == null || value.isEmpty) {
+                          //           return 'Please enter your location here';
+                          //         }
+                          //         return null;
+                          //       },
+                          //     ),
+                          //   ),
+                          // ),
+                          DropdownButtonFormField<String>(
+                            decoration: InputDecoration(
+                                labelText: "Location",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                )),
+                            hint: Text("Please select location"),
+                            items: locationList.map((location) {
+                              return DropdownMenuItem(
+                                value: location,
+                                child: Text(location),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                selectedLocation = value;
+                                locationOTController.text = selectedLocation!;
+                              });
+                            },
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please select location';
+                              }
+                              return null;
+                            },
                           ),
                           SizedBox(height: 20),
                           Container(

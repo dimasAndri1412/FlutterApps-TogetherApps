@@ -57,7 +57,7 @@ class _ApplicationBarState extends State<ApplicationBar> {
       print("Leave Requests: $leaveRequest");
       if (leaveRequest != null) {
         for (var request in leaveRequest) {
-          print("Checking status for request: ${request.status}");
+          // print("Checking status for request: ${request.status}");
           if (request.status == "New") {
             setState(() {
               // notifications.add("New leave request: ${request.username}");
