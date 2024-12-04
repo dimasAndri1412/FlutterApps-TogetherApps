@@ -102,7 +102,8 @@ class _listLocationsMapsState extends State<listLocationsMaps> {
                           suffixIcon: Icon(Icons.search_rounded),
                           prefixIcon: IconButton(
                               onPressed: (){
-                                _showConfirmDialog(context);
+                                Get.back();
+                                Get.back();
                               },
                               icon: Icon(
                                 Icons.arrow_back_ios_new,
@@ -197,7 +198,9 @@ class _listLocationsMapsState extends State<listLocationsMaps> {
             FloatingActionButton(
               heroTag: null,
               onPressed: settingEnabled ? null : () {
-                Get.offAll(locationsControllersPages());
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => locationsControllersPages()),
+                );
               },
               backgroundColor: settingEnabled ? Colors.grey : Colors.blueAccent,
               child: const Icon(
@@ -208,48 +211,6 @@ class _listLocationsMapsState extends State<listLocationsMaps> {
           ],
         ),
       )
-    );
-  }
-
-  Future<Future<bool?>> _showConfirmDialog(BuildContext context) async {
-    return showDialog<bool>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            icon: Icon(Icons.warning_amber,
-                color: Colors.deepOrange),
-            title: Text(
-              "Attentions!",
-              style: TextStyle(
-                color: Colors.blue,
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            content: Text("ARE YOU SURE WANT TO EXIT"),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(false);
-                },
-                child: Text("NO",style:
-                TextStyle(color: Colors.blueAccent,
-                    fontWeight: FontWeight.bold),
-                ),
-              ),
-              TextButton(onPressed: (){
-                Get.offAll(() => ApplicationBar());
-                //ctr_data().clear_maps_func();
-              },
-                child:Text("YES",style:
-                TextStyle(color: Colors.blueAccent,
-                    fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          );
-        }
     );
   }
 }

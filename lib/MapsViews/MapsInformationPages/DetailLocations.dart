@@ -1,5 +1,7 @@
+import 'package:absent_project/MapsViews/MapsInformationPages/ListLocationMapsPages.dart';
 import 'package:absent_project/MapsViews/MapsInformationPages/locationList.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class detailLocatiosMaps extends StatelessWidget {
   final listLocations listLocationMaps;
@@ -13,7 +15,20 @@ class detailLocatiosMaps extends StatelessWidget {
           appBar: AppBar(
             title: Text(
               listLocationMaps.locationsNames,
-              style: const TextStyle(fontSize: 15),
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold
+              ),
+            ),
+            leading: IconButton(
+              onPressed: () {
+                Get.offAll(listLocationsMaps());
+              },
+              icon: Icon(
+                  Icons.arrow_back_ios_new
+              ),
+              color: Colors.white,
             ),
             flexibleSpace: Container(
               decoration: const BoxDecoration(
@@ -56,23 +71,23 @@ class detailLocatiosMaps extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(width: 4, color: Colors.white),
-                              color: Colors.blue,
-                            ),
-                            child: const Icon(
-                              Icons.edit,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                        // Positioned(
+                        //   bottom: 0,
+                        //   right: 0,
+                        //   child: Container(
+                        //     height: 40,
+                        //     width: 40,
+                        //     decoration: BoxDecoration(
+                        //       shape: BoxShape.circle,
+                        //       border: Border.all(width: 4, color: Colors.white),
+                        //       //color: Colors.blue,
+                        //     ),
+                        //     // child: const Icon(
+                        //     //   Icons.edit,
+                        //     //   color: Colors.white,
+                        //     // ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -137,7 +152,7 @@ class detailLocatiosMaps extends StatelessWidget {
         child: ListTile(
           title: Text(title),
           subtitle: Text(subtitle),
-          trailing: Icon(Icons.chevron_right, color: Colors.grey.shade400),
+          //trailing: Icon(Icons.chevron_right, color: Colors.grey.shade400),
           tileColor: Colors.white,
         ),
       ),

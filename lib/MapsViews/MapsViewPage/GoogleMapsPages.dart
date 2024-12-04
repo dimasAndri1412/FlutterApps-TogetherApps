@@ -16,10 +16,7 @@ class _googleMapsPagesState extends State<googleMapsPages> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {
-        bool shouldNavigateBack = (await _showConfirmDialog(context)) as bool;
-        return shouldNavigateBack;
-      },
+      onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -72,8 +69,9 @@ class _googleMapsPagesState extends State<googleMapsPages> {
                 ),
               ),
               TextButton(onPressed: (){
-                Get.offAll(() => listLocationsMaps());
+                Get.back();
                 ctr_data().clear_maps_func();
+                Get.back();
               },
                 child:Text("YES",style:
                 TextStyle(color: Colors.blueAccent,

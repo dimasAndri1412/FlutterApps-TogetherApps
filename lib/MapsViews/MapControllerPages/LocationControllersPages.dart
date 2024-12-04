@@ -75,8 +75,10 @@ class _locationsControllersPagesState extends State<locationsControllersPages> {
                 ),
               ),
               TextButton(onPressed: (){
-                Get.offAll(() => listLocationsMaps());
+                Get.back();
+                //Get.offAll(() => listLocationsMaps());
                 //ctr_data().clear_maps_func();
+                Get.back();
               },
                 child:Text("YES",style:
                 TextStyle(color: Colors.blueAccent,
