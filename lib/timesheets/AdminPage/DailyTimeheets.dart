@@ -15,7 +15,7 @@ import 'package:intl/intl.dart';
 import 'package:printing/printing.dart';
 
 class DailyTimesheets extends StatefulWidget {
-  final DateTime selectedDay;
+  final DateTime? selectedDay;
   final String clockInId;
   const DailyTimesheets({super.key,
     required this.selectedDay,
@@ -48,14 +48,14 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
 
   void _loadData() {
   setState(() {
-    _future = listTimesheetsController.getDaily(widget.selectedDay, widget.clockInId);
+    _future = listTimesheetsController.getDaily(widget.clockInId);
   });
 }
 
   @override
   Widget build(BuildContext context) {
     final DateFormat formatter = DateFormat('EE, d MMM yyyy');
-    final String formattedDate = formatter.format(widget.selectedDay);
+    final String formattedDate = formatter.format(widget.selectedDay!);
 
     return Scaffold(
       appBar: AppBar(
@@ -375,180 +375,6 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                       )
                     ),
                     SizedBox(height: 20,),
-                    // Container(
-                    //   // height: 260,
-                    //   decoration: BoxDecoration(
-                    //   color: Colors.white,
-                    //   boxShadow: [
-                    //     BoxShadow(
-                    //       color: Colors.grey.withOpacity(0.5),
-                    //       spreadRadius: 0,
-                    //       blurRadius: 2,
-                    //       offset: Offset(0, 3), // changes position of shadow
-                    //     ),
-                    //   ],
-                    //   ),
-                    //   child: Column(
-                    //     crossAxisAlignment: CrossAxisAlignment.start,
-                    //     children: [
-                    //       Container(
-                    //         margin: EdgeInsets.all(10),
-                    //         child: Text(
-                    //           'Payroll Hours',
-                    //           style: TextStyle(
-                    //             fontSize: 13,
-                    //             fontWeight: FontWeight.bold
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       Container(
-                    //         margin: EdgeInsets.only(left: 20, right: 80, bottom: 5),
-                    //         child: Row(
-                    //           children: [
-                    //             Text('Regular hours',
-                    //               style: TextStyle(
-                    //                 color: Colors.grey,
-                    //                 fontSize: 12,
-                    //                 fontWeight: FontWeight.normal
-                    //               ),
-                    //             ),
-                    //             SizedBox(width: 100,),
-                    //             Text('Overtime hours  ',
-                    //               style: TextStyle(
-                    //                 color: Colors.grey,
-                    //                 fontSize: 12,
-                    //                 fontWeight: FontWeight.normal
-                    //               ),
-                    //             )
-                    //           ],
-                    //         )
-                    //       ),
-                    //       Container(
-                    //         margin: EdgeInsets.only(left: 20, right: 20, top: 2),
-                    //         child: Row(
-                    //           mainAxisAlignment: MainAxisAlignment.start,
-                    //           children: [
-                    //             Text(daily.elapsedTime ?? "-",
-                    //               style: TextStyle(
-                    //                 fontSize: 14,
-                    //                 fontWeight: FontWeight.bold
-                    //               ),
-                    //             ),
-                    //             SizedBox(width: 150,),
-                    //             Text('-',
-                    //               style: TextStyle(
-                    //                 fontSize: 14,
-                    //                 fontWeight: FontWeight.bold
-                    //               ),
-                    //             )
-                    //           ],
-                    //         )
-                    //       ),
-                    //       SizedBox(height: 10,),
-                    //       ExpansionTile(
-                    //         title: const Text('Breakdown',
-                    //           style: TextStyle(
-                    //             fontSize: 13,
-                    //             fontWeight: FontWeight.bold
-                    //           ),
-                    //         ),
-                    //         // subtitle: const Text('Custom expansion arrow icon'),
-                    //         children: <Widget>[
-                    //           Container(
-                    //             margin: EdgeInsets.only(left: 10, right: 10),
-                    //             height: 50,
-                    //             decoration: BoxDecoration(
-                    //               border: Border.all(),
-                    //             ),
-                    //             child: Padding(
-                    //               padding: EdgeInsets.all(10),
-                    //               child: Row(
-                    //                 children: [
-                    //                   Text("Tracked hours"),
-                    //                   Spacer(),
-                    //                   Text("7h 56m",
-                    //                     style: TextStyle(
-                    //                       fontWeight: FontWeight.bold
-                    //                     ),
-                    //                   )
-                    //                 ],
-                    //               ),
-                    //             )
-                    //           ),
-                    //           Container(
-                    //             margin: EdgeInsets.only(left: 10, right: 10),
-                    //             height: 50,
-                    //             decoration: BoxDecoration(
-                    //               border: Border.all(),
-                    //             ),
-                    //             child: Padding(
-                    //               padding: EdgeInsets.all(10),
-                    //               child: Row(
-                    //                 children: [
-                    //                   Text("Worked hours"),
-                    //                   Spacer(),
-                    //                   Text("7h 56m",
-                    //                     style: TextStyle(
-                    //                       fontWeight: FontWeight.bold
-                    //                     ),
-                    //                   )
-                    //                 ],
-                    //               ),
-                    //             )
-                    //           ),
-                    //           SizedBox(height: 20,),
-                    //           Container(
-                    //             margin: EdgeInsets.only(left: 10, right: 10),
-                    //             height: 50,
-                    //             decoration: BoxDecoration(
-                    //               border: Border.all(),
-                    //             ),
-                    //             child: Padding(
-                    //               padding: EdgeInsets.all(10),
-                    //               child: Row(
-                    //                 children: [
-                    //                   Text("Payroll hours"),
-                    //                   Spacer(),
-                    //                   Text("7h 56m",
-                    //                     style: TextStyle(
-                    //                       fontWeight: FontWeight.bold
-                    //                     ),
-                    //                   )
-                    //                 ],
-                    //               ),
-                    //             )
-                    //           ),
-                    //           Container(
-                    //             margin: EdgeInsets.only(left: 10, right: 10, bottom: 30),
-                    //             height: 50,
-                    //             decoration: BoxDecoration(
-                    //               border: Border.all(),
-                    //             ),
-                    //             child: Padding(
-                    //               padding: EdgeInsets.all(10),
-                    //               child: Row(
-                    //                 children: [
-                    //                   Text("Regular hours"),
-                    //                   Spacer(),
-                    //                   Text("7h 56m",
-                    //                     style: TextStyle(
-                    //                       fontWeight: FontWeight.bold
-                    //                     ),
-                    //                   )
-                    //                 ],
-                    //               ),
-                    //             )
-                    //           )
-                    //         ],
-                    //         onExpansionChanged: (bool expanded) {
-                    //           setState(() {
-                    //             _customTileExpanded = expanded;
-                    //           });
-                    //         },
-                    //       ),
-                    //     ],
-                    //   )
-                    // ),
                     SizedBox(height: 10,),
                     TextButton(
                       child: Center(
@@ -560,8 +386,8 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                         ),
                       ),
                       onPressed: () async {
-                        int selectedMonth = widget.selectedDay.month;
-                        int selectedYear = widget.selectedDay.year;
+                        int selectedMonth = widget.selectedDay!.month;
+                        int selectedYear = widget.selectedDay!.year;
                         String userId = daily.userId;
                         final pdf = await MonthlyTimesheets().generatePdf(
                           userId,
@@ -581,8 +407,8 @@ class _DailyTimesheetsState extends State<DailyTimesheets> {
                         ),
                       ),
                       onPressed: () async {
-                        int selectedMonth = widget.selectedDay.month;
-                        int selectedYear = widget.selectedDay.year;
+                        int selectedMonth = widget.selectedDay!.month;
+                        int selectedYear = widget.selectedDay!.year;
                         String userId = daily.userId;
                         final pdf = await MonthlyReport().GeneratePDF(
                           userId,

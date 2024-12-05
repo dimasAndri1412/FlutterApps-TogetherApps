@@ -43,7 +43,7 @@ class Timesheets extends StatefulWidget {
 class _TimesheetsState extends State<Timesheets> {
   CalendarFormat _calendarFormat = CalendarFormat.week;
   DateTime today = DateTime.now();
-  DateTime _selectedDay = DateTime.now();
+  DateTime? _selectedDay; 
 
   late Future<List<ListTimesheetsModel>> _listTimesheets;
   ListTimesheetsController listTimesheetsController = ListTimesheetsController();
@@ -52,12 +52,21 @@ class _TimesheetsState extends State<Timesheets> {
     setState(() {
       _selectedDay = selectedDay;
       today = focusedDay;
-      _listTimesheets = listTimesheetsController.getList(_selectedDay);
+      _listTimesheets = listTimesheetsController.getList(_selectedDay!);
+    });
+  }
+
+  void _onPageChanged(DateTime focusedDay) {
+    setState(() {
+      today = focusedDay;
+      _selectedDay = null;
+      _fetchDataForCurrentFormat();
     });
   }
 
   void _initializeListTimesheets(){
-    _listTimesheets = listTimesheetsController.getList(_selectedDay);
+    // _listTimesheets = listTimesheetsController.getList(today);
+    _fetchDataForCurrentFormat();
   }
 
   @override
@@ -67,19 +76,36 @@ class _TimesheetsState extends State<Timesheets> {
     _initializeListTimesheets();
   }
 
-  void _onFormatChanged(format){
+  void _onFormatChanged(CalendarFormat format) {
     if (_calendarFormat != format) {
       setState(() {
         _calendarFormat = format;
+        _fetchDataForCurrentFormat(); 
       });
+    }
+  }
+
+  void _fetchDataForCurrentFormat() {
+    if (_calendarFormat == CalendarFormat.week) {
+      DateTime startOfWeek = today.subtract(Duration(days: today.weekday - 1));
+      DateTime endOfWeek = startOfWeek.add(Duration(days: 6));
+      _listTimesheets = listTimesheetsController.getListFilter(startOfWeek, endOfWeek);
+    } else if (_calendarFormat == CalendarFormat.month) {
+      DateTime startOfMonth = DateTime(today.year, today.month, 1);
+      DateTime endOfMonth = DateTime(today.year, today.month + 1, 0);
+      _listTimesheets = listTimesheetsController.getListFilter(startOfMonth, endOfMonth);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     
-final DateFormat formatter = DateFormat('EE, d MMM yyyy');
-    final String formattedDate = formatter.format(_selectedDay);
+    // final DateFormat formatter = DateFormat('EE, d MMM yyyy');
+    // final String formattedDate = formatter.format(_selectedDay);
+    final String formattedDate = _selectedDay != null
+        ? DateFormat('EE, d MMM yyyy').format(_selectedDay!) 
+        : DateFormat('MMMM yyyy').format(today); 
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -115,18 +141,19 @@ final DateFormat formatter = DateFormat('EE, d MMM yyyy');
                         final list = timesheet[index];
                         String? clock_in = list.clockIn != null ? DateFormat('HH:mm').format(list.clockIn!) : null;
                         String? clock_out = list.clockOut != null ? DateFormat('HH:mm').format(list.clockOut!) : null;
+
                         return GestureDetector(
                           onTap: (){
                             Navigator.of(context)
                               .push(MaterialPageRoute(builder: (context) => DailyTimesheets(
-                                selectedDay: _selectedDay,
+                                selectedDay: list.clockIn,
                                 clockInId: list.clockInID,
                                 )));
                           },
                           child: ListTile (
                             /*imageUrl: "https://picsum.photos/id/$index/200/300",*/
                             title:Text(list.fullName ?? "n/a"),
-                            subtitle: Text("${clock_in} - ${clock_out}" ?? "n/a"),
+                            subtitle: Text("${clock_in} - ${clock_out ?? "null"}" ?? "n/a"),
                             leading: CircleAvatar(
                               backgroundImage: NetworkImage(list.imagePath),
                             ),
@@ -170,6 +197,7 @@ final DateFormat formatter = DateFormat('EE, d MMM yyyy');
               onDaySelected: _onDaySelected,
               calendarFormat: _calendarFormat,
               onFormatChanged: _onFormatChanged,
+              onPageChanged: _onPageChanged,
             ),
           )
         ],

@@ -27,101 +27,104 @@ class _WeeklyBarState extends State<WeeklyBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<WeeklyModel>>(
-        future: _weeklyData,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Failed to load data'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No data available'));
-          } else {
-            // print('Snapshot data: ${snapshot.data}');
+      body: Container(
+        color: Colors.white,
+        child: FutureBuilder<List<WeeklyModel>>(
+          future: _weeklyData,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Failed to load data'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return Center(child: Text('No data available'));
+            } else {
+              // print('Snapshot data: ${snapshot.data}');
 
-            List<_ChartData> chartData = snapshot.data!.map((weeklyModel) {
+              List<_ChartData> chartData = snapshot.data!.map((weeklyModel) {
 
-              // print('WeeklyModel: ${weeklyModel.day}, ${weeklyModel.totalHours}');
+                // print('WeeklyModel: ${weeklyModel.day}, ${weeklyModel.totalHours}');
 
-              double totalHours = _parseDurationToHours(weeklyModel.totalHours);
-              String formattedDay = _getDayFromDateString(weeklyModel.day);
+                double totalHours = _parseDurationToHours(weeklyModel.totalHours);
+                String formattedDay = _getDayFromDateString(weeklyModel.day);
 
-              // print('Formatted Day: $formattedDay');
-              return _ChartData(formattedDay, totalHours);
-            }).toList();
+                // print('Formatted Day: $formattedDay');
+                return _ChartData(formattedDay, totalHours);
+              }).toList();
 
-            List<String> weekDaysOrder = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-            // chartData.sort((a, b) => weekDaysOrder.indexOf(a.day).compareTo(weekDaysOrder.indexOf(b.day)));
+              List<String> weekDaysOrder = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+              // chartData.sort((a, b) => weekDaysOrder.indexOf(a.day).compareTo(weekDaysOrder.indexOf(b.day)));
 
-            // print("Ordered chart data:");
-            // for (var data in chartData) {
-            //   print("${data.day} - ${data.totalHours}");
-            // }
-            chartData.sort((a, b) => weekDaysOrder.indexOf(a.day).compareTo(weekDaysOrder.indexOf(b.day)));
+              // print("Ordered chart data:");
+              // for (var data in chartData) {
+              //   print("${data.day} - ${data.totalHours}");
+              // }
+              chartData.sort((a, b) => weekDaysOrder.indexOf(a.day).compareTo(weekDaysOrder.indexOf(b.day)));
 
-            //hitung workedHours
-            double totalWorkedHours = chartData.fold(0, (sum, item) => sum + item.totalHours);
-            int totalHours = totalWorkedHours.toInt();
-            int totalMinutes = ((totalWorkedHours - totalHours) * 60).round();
-            String formattedTotalWorkedHours = '${totalHours}h ${totalMinutes}m';
+              //hitung workedHours
+              double totalWorkedHours = chartData.fold(0, (sum, item) => sum + item.totalHours);
+              int totalHours = totalWorkedHours.toInt();
+              int totalMinutes = ((totalWorkedHours - totalHours) * 60).round();
+              String formattedTotalWorkedHours = '${totalHours}h ${totalMinutes}m';
 
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text("Worked Hours : $formattedTotalWorkedHours",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text("Worked Hours : $formattedTotalWorkedHours",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13
+                      ),
                     ),
-                  ),
-                  SfCartesianChart(
-                    primaryXAxis: CategoryAxis(
-                      isInversed: true,
-                    ),
-                    primaryYAxis: NumericAxis(
-                      minimum: 0,
-                      maximum: 18,
-                      interval: 3,
-                      opposedPosition: true,
-                    ),
-                    tooltipBehavior: _tooltip,
-                    series: <CartesianSeries<_ChartData, String>>[
-                      BarSeries<_ChartData, String>(
-                        dataSource: chartData,
-                        xValueMapper: (_ChartData data, _) => data.day, // Hari 
-                        yValueMapper: (_ChartData data, _) => data.totalHours, // Total jam 
-                        name: 'Total Time',
-                        color: Colors.green,
-                        dataLabelSettings: DataLabelSettings(
-                          isVisible: true,
-                          labelAlignment: ChartDataLabelAlignment.outer,
-                          builder: (dynamic data, dynamic point, dynamic series, int pointIndex, int seriesIndex) {
-                            // Mengonversi jam ke format "18h 00m"
-                            int hours = data.totalHours.toInt();
-                            int minutes = ((data.totalHours - hours) * 60).toInt();
-                            String timeText = '${hours}h ${minutes.toString().padLeft(2, '0')}m';
+                    SfCartesianChart(
+                      primaryXAxis: CategoryAxis(
+                        isInversed: true,
+                      ),
+                      primaryYAxis: NumericAxis(
+                        minimum: 0,
+                        maximum: 18,
+                        interval: 3,
+                        opposedPosition: true,
+                      ),
+                      tooltipBehavior: _tooltip,
+                      series: <CartesianSeries<_ChartData, String>>[
+                        BarSeries<_ChartData, String>(
+                          dataSource: chartData,
+                          xValueMapper: (_ChartData data, _) => data.day, // Hari 
+                          yValueMapper: (_ChartData data, _) => data.totalHours, // Total jam 
+                          name: 'Total Time',
+                          color: Colors.green,
+                          dataLabelSettings: DataLabelSettings(
+                            isVisible: true,
+                            labelAlignment: ChartDataLabelAlignment.outer,
+                            builder: (dynamic data, dynamic point, dynamic series, int pointIndex, int seriesIndex) {
+                              // Mengonversi jam ke format "18h 00m"
+                              int hours = data.totalHours.toInt();
+                              int minutes = ((data.totalHours - hours) * 60).toInt();
+                              String timeText = '${hours}h ${minutes.toString().padLeft(2, '0')}m';
 
-                            return Text(
-                              timeText, 
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12
-                              )
-                            );
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              )
-            );
-          }
-        },
-      ),
+                              return Text(
+                                timeText, 
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12
+                                )
+                              );
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                )
+              );
+            }
+          },
+        ),
+      )
     );
   }
 

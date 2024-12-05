@@ -59,7 +59,7 @@ class HomeState extends State<Home> {
                               bottomRight: Radius.circular(20))),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 20, bottom: 20),
+                      margin: EdgeInsets.only(left: 40, bottom: 10, top: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start, 
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -197,8 +197,8 @@ class HomeState extends State<Home> {
                     ),
                     Container(
                       margin: EdgeInsets.only(
-                          top: 20, bottom: 20, left: 30, right: 30),
-                      width: 350,
+                          top: 15, bottom: 20, left: 30, right: 30),
+                      width: 380,
                       height: 150,
                       decoration: BoxDecoration(
                           color: Colors.white,

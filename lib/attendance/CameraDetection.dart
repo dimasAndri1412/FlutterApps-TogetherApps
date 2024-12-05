@@ -61,13 +61,16 @@ class _CameraDetectionState extends State<CameraDetection> {
   initializeCamera() async {
     cameras = await availableCameras();
     description = cameras[1];
-    controller = CameraController(description, ResolutionPreset.medium,imageFormatGroup: Platform.isAndroid
+    controller = CameraController(description, ResolutionPreset.high,imageFormatGroup: Platform.isAndroid
     ? ImageFormatGroup.nv21 // for Android
         : ImageFormatGroup.bgra8888,enableAudio: false); // for iOS);
     await controller.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
+      if (!mounted) return;
+
+      // Hitung ukuran untuk memastikan rasio kamera tetap
+      setState(() {
+      size = controller.value.previewSize!;
+      });
       controller.startImageStream((image) => {
         if (!isBusy) {isBusy = true, frame = image, doFaceDetectionOnFrame()}
       });
@@ -415,7 +418,10 @@ class _CameraDetectionState extends State<CameraDetection> {
           child: SizedBox(
             width: size.width,
             height: size.height,
-            child: CameraPreview(controller),
+            child: AspectRatio(
+              aspectRatio: controller.value.aspectRatio,
+              child: CameraPreview(controller),
+            ),
           ),
         ),
       ),

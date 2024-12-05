@@ -35,14 +35,42 @@ class ListTimesheetsController {
     }
   }
 
-  Future<ListTimesheetsModel> getDaily (DateTime selectedDate, String clockInId) async {
-    String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
+  Future<List<ListTimesheetsModel>> getListFilter (DateTime startDate, DateTime endDate) async {
+    String formattedStartDate = DateFormat('yyyy-MM-dd').format(startDate);
+    String formattedEndDate = DateFormat('yyyy-MM-dd').format(endDate);
+
+    try {
+      final response = await http.post(
+        Uri.parse("http://192.168.2.159:8080/FlutterAPI/timesheet/admin/timesheetsFilter.php"),
+        body: {
+          'start_date': formattedStartDate,
+          'end_date': formattedEndDate
+        },
+      );
+
+      // print("API Response Status: ${response.statusCode}");
+      // print("API Response Body: ${response.body}"); 
+
+      if (response.statusCode == 200) {
+        final List<dynamic> jsonData = json.decode(response.body);
+        final List<ListTimesheetsModel> listTimesheetsModel= jsonData.map((item) => ListTimesheetsModel.fromJson(item)).toList();
+        return listTimesheetsModel  ;
+      }  else {
+        throw Exception("Failed to fetch data");
+      }
+    } catch (e) {
+      throw Exception("Error: $e");
+    }
+  }
+
+  Future<ListTimesheetsModel> getDaily (String clockInId) async {
+    // String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
 
     try {
       final response = await http.post(
         Uri.parse("http://192.168.2.159:8080/FlutterAPI/timesheet/admin/dailyTimesheets.php"),
         body: {
-          'date': formattedDate,
+          // 'date': formattedDate,
           'clock_in_id' : clockInId
         },
       );
