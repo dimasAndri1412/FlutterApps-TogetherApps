@@ -7,11 +7,13 @@ import 'package:absent_project/controller/ApprovalController/AdminApprovalPaidLe
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberListPaidLeave.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberStatusPaidLeave.dart';
+import 'package:absent_project/controller/ApprovalController/NotificationProvider.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/home/applicationbar_user.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:printing/printing.dart';
+import 'package:provider/provider.dart';
 
 import '../../../controller/ApprovalController/AdminApprovalPaidLeave/AdminApprovalPaidLeaveModel.dart';
 import '../GeneratePDF_MSDO.dart';
@@ -93,7 +95,7 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
         getListUser = paidLeaveRequest!;
       });
     } catch (e) {
-      print('Error fetching overtime requests: $e');
+      print('Error fetching leave requests: $e');
     }
   }
 
@@ -108,6 +110,31 @@ class _ListPengajuanCutiState extends State<ListPengajuanCuti> {
       print('Error fetching overtime requests: $e');
     }
   }
+
+  // ANIMASI POP UP APPROVE, cek status approve
+  // void _checkApprovedRequests() {
+  //   List<MemberListPaidLeave> approvedRequest =
+  //       getListUser.where((request) => request.status == 'Approved').toList();
+  //   if (approvedRequest.isNotEmpty) {
+  //     for (var request in approvedRequest) {
+  //       _showSnackbarNotification(request);
+  //     }
+  //   }
+  // }
+  // // ANIMASI POP UP APPROVE
+  // void _showSnackbarNotification(MemberListPaidLeave request) {
+  //   Get.snackbar(
+  //     "Leave Approved", // Title of the notification
+  //     "Your leave request (No. ${request.reqNo}) has been approved.",
+  //     snackPosition: SnackPosition.TOP, // Snackbar at the top
+  //     backgroundColor: Colors.green,
+  //     colorText: Colors.white,
+  //     icon: const Icon(
+  //       Icons.check_circle,
+  //       color: Colors.white,
+  //     ),
+  //   );
+  // }
 
   List<MemberListPaidLeave> get filteredCuti {
     return getListUser.where((cuti) {

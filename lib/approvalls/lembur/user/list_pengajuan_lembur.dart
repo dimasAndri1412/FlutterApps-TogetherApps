@@ -3,12 +3,14 @@ import 'dart:io';
 import 'package:absent_project/approvalls/lembur/msdo/pengajuan_lembur.dart';
 import 'package:absent_project/approvalls/lembur/user/GeneratePDFuser.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestOvertime/MemberRequestOvertimeGetListModel.dart';
+import 'package:absent_project/controller/ApprovalController/NotificationProvider.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/home/applicationbar_user.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:printing/printing.dart';
+import 'package:provider/provider.dart';
 
 import '../../../controller/ApprovalController/MemberRequestOvertime/MemberRequestOvertimeController.dart';
 import '../../../controller/ApprovalController/MemberRequestOvertime/MemberRequestOvertimeGetStatusModel.dart';
@@ -31,17 +33,33 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
     super.initState();
     fetchOvertimeRequests();
     fetchStatusOT();
+    // checkApprovedOvertime();
   }
 
   Future<void> fetchOvertimeRequests() async {
     try {
       List<MemberRequestOvertimeGetListModel>? overtimeRequests =
           await MemberRequestOvertimeController().getList();
+      // if (overtimeRequests != null && overtimeRequests.isNotEmpty) {
       setState(() {
         getListUser = overtimeRequests!;
       });
+
+      // Check for approved requests
+      // List<MemberRequestOvertimeGetListModel> approvedRequests = getListUser
+      //     .where((request) => request.status == 'Approved')
+      //     .toList();
+
+      // if (approvedRequests.isNotEmpty) {
+      //   for (var request in approvedRequests) {
+      //     context.read<NotificationProvider>().addNotification(
+      //         "New Overtime Request Approved (${request.reqNo})", "overtime");
+      //   }
+      // }
+      // } else {
+      //   print("No overtime requests found");
+      // }
     } catch (e) {
-      // Handle errors or exceptions here
       print('Error fetching overtime requests: $e');
     }
   }
@@ -752,18 +770,6 @@ class _ListPengajuanLemburState extends State<ListPengajuanLembur> {
                                     ),
                                   ],
                                 ),
-                                // Row(
-                                //   children: [
-                                //     Text("Position: "),
-                                //     Text(getData.position),
-                                //   ],
-                                // ),
-                                // Row(
-                                //   children: [
-                                //     Text("Department: "),
-                                //     Text(getData.department),
-                                //   ],
-                                // ),
                               ],
                             ),
                           ),

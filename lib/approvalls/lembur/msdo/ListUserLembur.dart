@@ -5,6 +5,7 @@ import 'package:absent_project/approvalls/lembur/msdo/pengajuan_lembur.dart';
 import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertimeGetStatusModel.dart';
 import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertimeModel.dart';
 import 'package:absent_project/controller/ApprovalController/AdminApprovalOvertime/AdminApprovalOvertmaControlleri.dart';
+import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/home/ApplicationBar.dart';
 // import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
@@ -389,6 +390,7 @@ class _ListUserLemburState extends State<ListUserLembur> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Get.to(const PengajuanLembur());
+            activityOTController.text = '';
           },
           backgroundColor: const Color.fromARGB(255, 98, 171, 232),
           elevation: 5,
