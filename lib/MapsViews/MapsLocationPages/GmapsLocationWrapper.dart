@@ -63,9 +63,9 @@ class _gmapsLocationWrapperState extends State<gmapsLocationWrapper> {
 
   Future<void> checkingInRadius() async {
     bool inRadius = await validateRadiusValues();
-    setState(() {
-      isInRadius = inRadius;
-    });
+    // setState(() {
+    //   isInRadius = inRadius;
+    // });
   }
 
   @override
@@ -112,22 +112,22 @@ class _gmapsLocationWrapperState extends State<gmapsLocationWrapper> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: isInRadius ? () async{
-          bool inRadius = await validateRadiusValues();
-          String? lastClockINValues = await findLastClockIn();
+        onPressed: () async{
+          // bool inRadius = await validateRadiusValues();
+          // String? lastClockINValues = await findLastClockIn();
+          //
+          // if (lastClockINValues == null) {
+          //   if(inRadius) {
+               Get.offAll(CameraDetection());
+          //   } else {
+          //     locationNamesController.text = "Your Position Is Out of Radius Now!!!";
+          //   }
+          // } else {
+          //   final snackBars = SnackBar(content: const Text("You Can Not Clockin Again In The Same Time!"));
+          //   ScaffoldMessenger.of(context).showSnackBar(snackBars);
+          // }
 
-          if (lastClockINValues == null) {
-            if(inRadius) {
-              Get.offAll(CameraDetection());
-            } else {
-              locationNamesController.text = "Your Position Is Out of Radius Now!!!";
-            }
-          } else {
-            final snackBars = SnackBar(content: const Text("You Can Not Clockin Again In The Same Time!"));
-            ScaffoldMessenger.of(context).showSnackBar(snackBars);
-          }
-
-        } : null,
+        }, //: null,
         label: Text(
           "Start",
           style: TextStyle(

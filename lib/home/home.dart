@@ -1,8 +1,9 @@
+import 'package:absent_project/MapsViews/MatterialMaps/GmapsStopWatchController.dart';
 import 'package:absent_project/home/WeeklyBar.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
+import 'package:get/get.dart';
 import '../controller/Keys.dart';
 
 class _ChartData {
@@ -21,6 +22,8 @@ class Home extends StatefulWidget {
 class HomeState extends State<Home> {
   late List<_ChartData> data;
   late TooltipBehavior _tooltip;
+
+  final stopWatchControll = Get.put(gmapsStopWatchController());
 
   void initState() {
     data = [

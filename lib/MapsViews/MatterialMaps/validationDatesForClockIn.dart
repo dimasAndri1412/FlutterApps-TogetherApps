@@ -1,9 +1,6 @@
 import 'dart:convert';
-import 'package:absent_project/attendance/CameraDetection.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:absent_project/MapsViews/modelMaps/validateModels.dart' as validationModels;
 
 class verifyDateClockIn {

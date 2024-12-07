@@ -18,6 +18,8 @@ import 'package:absent_project/MapsViews/modelMaps/lastLogOutsModels.dart' as la
 import 'package:absent_project/MapsViews/modelMaps/validateModels.dart' as validationModels;
 import 'package:absent_project/MapsViews/modelMaps/newLocationProjectModels.dart' as newProjectsModels;
 import 'package:absent_project/MapsViews/modelMaps/validasiModels.dart' as validationsModels;
+import 'package:absent_project/MapsViews/modelMaps/validateModels.dart' as validationModels;
+import 'package:absent_project/controller/verifyPasswordLogin.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
@@ -331,4 +333,13 @@ Future<String?> findNewProjectName() async {
 
   String? projectNameValues = projectsModels.projectNames;
   return projectNameValues;
+}
+
+Future<String?>verifyPasswordControllers() async {
+  final VerifyPasswordValue inputPassword = VerifyPasswordValue();
+  await inputPassword.verifyPassowrd();
+
+  String? passwordValues = validationModels.validatePassword;
+  return passwordValues;
+
 }
