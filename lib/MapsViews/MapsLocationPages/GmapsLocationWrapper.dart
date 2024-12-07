@@ -112,22 +112,22 @@ class _gmapsLocationWrapperState extends State<gmapsLocationWrapper> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async{
-          // bool inRadius = await validateRadiusValues();
-          // String? lastClockINValues = await findLastClockIn();
-          //
-          // if (lastClockINValues == null) {
-          //   if(inRadius) {
-               Get.offAll(CameraDetection());
-          //   } else {
-          //     locationNamesController.text = "Your Position Is Out of Radius Now!!!";
-          //   }
-          // } else {
-          //   final snackBars = SnackBar(content: const Text("You Can Not Clockin Again In The Same Time!"));
-          //   ScaffoldMessenger.of(context).showSnackBar(snackBars);
-          // }
+        onPressed: isInRadius ? () async{
+           bool inRadius = await validateRadiusValues();
+           String? lastClockINValues = await findLastClockIn();
 
-        }, //: null,
+           if (lastClockINValues == null) {
+             if(inRadius) {
+               Get.offAll(CameraDetection());
+             } else {
+               locationNamesController.text = "Your Position Is Out of Radius Now!!!";
+             }
+           } else {
+             final snackBars = SnackBar(content: const Text("You Can Not Clockin Again In The Same Time!"));
+             ScaffoldMessenger.of(context).showSnackBar(snackBars);
+           }
+
+        } : null,
         label: Text(
           "Start",
           style: TextStyle(
