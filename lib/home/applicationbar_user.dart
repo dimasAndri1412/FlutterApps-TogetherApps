@@ -3,12 +3,15 @@ import 'package:absent_project/MapsViews/MapsLocationPages/GmapsLocationPage.dar
 import 'package:absent_project/approvalls/approvalls_user.dart';
 import 'package:absent_project/approvalls/cuti/user/list_pengajuan_cuti.dart';
 import 'package:absent_project/approvalls/lembur/user/list_pengajuan_lembur.dart';
+import 'package:absent_project/approvalls/sakit/user/ListPengajuanSakit.dart';
 import 'package:absent_project/controller/AbsentController/ClockInState.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestOvertime/MemberRequestOvertimeController.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestOvertime/MemberRequestOvertimeGetListModel.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberListPaidLeave.dart';
 import 'package:absent_project/controller/ApprovalController/MemberRequestPaidLeave/MemberRequestPaidLeaveController.dart';
 import 'package:absent_project/controller/ApprovalController/NotificationProvider.dart';
+import 'package:absent_project/controller/ApprovalController/SickLeaveController/Admin/ListSickLeaveModel.dart';
+import 'package:absent_project/controller/ApprovalController/SickLeaveController/Member/MemberSickLeaveController.dart';
 import 'package:absent_project/controller/ApprovalController/notification_model.dart';
 import 'package:absent_project/home/Userhome.dart';
 import 'package:absent_project/menu/menu_page_user.dart';
@@ -37,6 +40,7 @@ class _ApplicationBarUserState extends State<ApplicationBarUser> {
   Future<void> _initializeNotification() async {
     await fetchOvertimeRequests();
     await fetchPaidLeaveRequest();
+    await fetchSickLeaveRequest();
   }
 
   Future<void> fetchOvertimeRequests() async {
@@ -79,6 +83,30 @@ class _ApplicationBarUserState extends State<ApplicationBarUser> {
             context.read<NotificationProvider>().addNotification(
                 "New Paidleave Request Approved (${request.reqNo})",
                 'paidleave');
+          }
+        }
+      }
+    } catch (e) {
+      print('Error fetching sick leave requests: $e');
+    }
+  }
+
+  Future<void> fetchSickLeaveRequest() async {
+    try {
+      List<ListSickLeaveModel>? sickLeaveRequest =
+          await MemberSickLeaveController().getList();
+      if (sickLeaveRequest != null && sickLeaveRequest.isNotEmpty) {
+        //Filter approved request
+        List<ListSickLeaveModel> approvedRequests = sickLeaveRequest
+            .where((request) => request.status == 'Approved')
+            .toList();
+
+        //notifikasi apabila status approved
+        if (approvedRequests.isNotEmpty) {
+          for (var request in approvedRequests) {
+            context.read<NotificationProvider>().addNotification(
+                "New Sickleave Request Approved (${request.reqId})",
+                "sickleave");
           }
         }
       }
@@ -127,7 +155,6 @@ class _ApplicationBarUserState extends State<ApplicationBarUser> {
                       color: Colors.white,
                     ),
                     onSelected: (NotificationModel selectedNotification) {
-                      // Arahkan ke halaman yang sesuai berdasarkan jenis notifikasi
                       if (selectedNotification.type == 'paidleave') {
                         Navigator.push(
                           context,
@@ -139,6 +166,12 @@ class _ApplicationBarUserState extends State<ApplicationBarUser> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => ListPengajuanLembur()),
+                        );
+                      } else if (selectedNotification.type == 'sickleave') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ListPengajuanSakit()),
                         );
                       }
 

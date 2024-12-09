@@ -1,8 +1,8 @@
 import 'package:absent_project/MapsViews/MapsClockInElapsedTime/GmapsElapsedTimePages.dart';
 import 'package:absent_project/MapsViews/MapsLocationPages/GmapsLocationPage.dart';
 import 'package:absent_project/approvalls/cuti/msdo/DetailCutiUser.dart';
-import 'package:absent_project/approvalls/sakit/user/DetailPengajuan.dart';
-import 'package:absent_project/controller/ApprovalController/SickLeaveController/Member/MemberSickLeaveController.dart';
+import 'package:absent_project/approvalls/sakit/admin/DetailUserSakit.dart';
+import 'package:absent_project/controller/ApprovalController/SickLeaveController/Admin/AdminSickLeaveController.dart';
 import 'package:absent_project/timesheets/AdminPage/Timesheets.dart';
 import 'package:flutter/material.dart';
 import 'package:absent_project/home/Home.dart';
@@ -56,14 +56,12 @@ class _ApplicationBarState extends State<ApplicationBar> {
   //pemanggilan status new cuti
   Future<void> _loadNewLeaveRequest() async {
     try {
+      // Fetch leave requests (existing functionality)
       var leaveRequest = await AdminApprovalPaidLeaveController().getUsers();
-      print("Leave Requests: $leaveRequest");
       if (leaveRequest != null) {
         for (var request in leaveRequest) {
-          // print("Checking status for request: ${request.status}");
           if (request.status == "New") {
             setState(() {
-              // notifications.add("New leave request: ${request.username}");
               notifications.add(NotificationItem(
                   message: "New Leave Request from ${request.username}",
                   targetPage: DetailCutiUser(getUserDetail: request)));
@@ -71,30 +69,35 @@ class _ApplicationBarState extends State<ApplicationBar> {
           }
         }
       }
-    } catch (e) {
-      print("Error loading leave requests: $e");
-    }
-  }
 
-  //pemannggilan status new ijin sakit
-  Future<void> _loadNewSickRequest() async {
-    try {
-      var sickRequest = await MemberSickLeaveController().getList();
-      if (sickRequest != null) {
-        for (var request in sickRequest) {
+      // Fetch sick leave requests (new functionality)
+      var sickRequests = await AdminSickLeaveController().getUsers();
+      if (sickRequests != null) {
+        for (var request in sickRequests) {
           if (request.status == "New") {
+            print("New Sick Leave Request from ${request.fullName}");
             setState(() {
               notifications.add(NotificationItem(
                   message: "New Sick Leave Request from ${request.fullName}",
-                  targetPage: DetailPengajuan(getUserDetail: request)));
+                  // targetPage: DetailPengajuan(getUserDetail: request)));
+                  targetPage: DetailUserSakit(getUserDetail: request)));
             });
           }
         }
       }
     } catch (e) {
-      print("Error loading leave requests: $e");
+      print("Error loading requests: $e");
     }
   }
+
+  //pemannggilan status new ijin sakit
+  // Future<void> _loadNewSickRequest() async {
+  //   try {
+
+  //   } catch (e) {
+  //     print("Error loading leave requests: $e");
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
