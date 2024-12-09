@@ -63,9 +63,9 @@ class _gmapsLocationWrapperState extends State<gmapsLocationWrapper> {
 
   Future<void> checkingInRadius() async {
     bool inRadius = await validateRadiusValues();
-    // setState(() {
-    //   isInRadius = inRadius;
-    // });
+     setState(() {
+       isInRadius = inRadius;
+     });
   }
 
   @override
