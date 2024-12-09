@@ -35,6 +35,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
     "Shift I",
     "Shift II",
     "Shift III",
+    "Non shift",
   ];
 
   String selectedShiftLeave = '';
