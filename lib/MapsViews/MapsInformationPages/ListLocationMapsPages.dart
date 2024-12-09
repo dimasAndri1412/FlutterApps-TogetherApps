@@ -51,8 +51,14 @@ class _listLocationsMapsState extends State<listLocationsMaps> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        Get.offAll(
+          ApplicationBar(initialIndex: 4,
+          )
+        );
+      },
       child: Scaffold(
         body: Column(
           children: [
@@ -102,8 +108,11 @@ class _listLocationsMapsState extends State<listLocationsMaps> {
                           suffixIcon: Icon(Icons.search_rounded),
                           prefixIcon: IconButton(
                               onPressed: (){
-                                Get.back();
-                                Get.back();
+                                Get.offAll(
+                                  ApplicationBar(
+                                    initialIndex: 4,
+                                  )
+                                );
                               },
                               icon: Icon(
                                 Icons.arrow_back_ios_new,
@@ -178,39 +187,39 @@ class _listLocationsMapsState extends State<listLocationsMaps> {
             ),
           ],
         ),
-        floatingActionButton: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            FloatingActionButton(
-              heroTag: null,
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => googleMapsPages()),
-                );
-              },
-              backgroundColor: Colors.blueAccent,
-              child: const Icon(
-                Icons.add,
-                color: Colors.white,
+          floatingActionButton: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FloatingActionButton(
+                heroTag: null,
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => googleMapsPages()),
+                  );
+                },
+                backgroundColor: Colors.blueAccent,
+                child: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
               ),
-            ),
-            SizedBox(height: 10),
-            FloatingActionButton(
-              heroTag: null,
-              onPressed: settingEnabled ? null : () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => locationsControllersPages()),
-                );
-              },
-              backgroundColor: settingEnabled ? Colors.grey : Colors.blueAccent,
-              child: const Icon(
-                Icons.settings,
-                color: Colors.white,
+              SizedBox(height: 10),
+              FloatingActionButton(
+                heroTag: null,
+                onPressed: settingEnabled ? null : () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => locationsControllersPages()),
+                  );
+                },
+                backgroundColor: settingEnabled ? Colors.grey : Colors.blueAccent,
+                child: const Icon(
+                  Icons.settings,
+                  color: Colors.white,
+                ),
               ),
-            ),
-          ],
-        ),
-      )
+            ],
+          ),
+      ),
     );
   }
 }
