@@ -1,3 +1,4 @@
+import 'package:absent_project/MapsViews/MatterialMaps/GmapsController.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/controller/KPIQuestionsController/position/PositionController.dart';
 import 'package:absent_project/login/LoginPage.dart';
@@ -25,27 +26,42 @@ class ChangesPasswordButtons extends StatefulWidget {
 class _ChangesPasswordButtonsState extends State<ChangesPasswordButtons> {
   // final Changespasswordcamera _cameraState = Changespasswordcamera(); 
   final PositionController positionController = Get.find();
+
+  void checkPassword() async {
+    final checkPass = await verifyPasswordControllers();
+    PasswordValidateControllers.text = checkPass!;
+
+    if (NewConfPasswordController.text != PasswordValidateControllers.text) {
+      int? selectedPosition = positionController.selectedPosition.value;
+      ctr_data().change_pwd().then((value) {
+        if (value) {
+          final snackBar =
+          SnackBar(content: const Text("Password Success Changes"));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          ctr_data().clear_func_otp();
+          Get.offAll(() => const LoginPage());
+        } else {
+          final snackBar = SnackBar(
+              content: const Text("Password Failure Changes!"));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+      });
+    } else {
+      final snackBar = SnackBar(
+          content: const Text("Password Has Been Used"));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         GestureDetector(
-          onTap: () {
+          onTap: () async {
             if (formsKeys.currentState!.validate()) {
-              int? selectedPosition = positionController.selectedPosition.value;
-              ctr_data().change_pwd().then((value) {
-                if (value) {
-                  final snackBar =
-                      SnackBar(content: const Text("Password Success Changes"));
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  ctr_data().clear_func_otp();
-                  Get.offAll(() => const LoginPage());
-                } else {
-                  final snackBar = SnackBar(
-                      content: const Text("Password Failure Changes!"));
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                }
-              });
+              checkPassword();
             }
           },
           child: Container(

@@ -1,8 +1,7 @@
 import 'dart:convert';
-
 import 'package:absent_project/controller/Keys.dart';
 import 'package:http/http.dart' as http;
-import 'package:absent_project/MapsViews/modelMaps/validateModels.dart' as validationModels;
+import 'package:absent_project/MapsViews/modelMaps/validasiModelPassword.dart' as passwordModels;
 
 class VerifyPasswordValue {
   
@@ -12,7 +11,6 @@ class VerifyPasswordValue {
   Future verifyPassowrd() async {
 
     String passwordInputs = NewPasswordContorller.text;
-    String userNameInputs = emailController.text;
 
     try{
 
@@ -20,17 +18,13 @@ class VerifyPasswordValue {
       var respPassword = await http.post(
           getPassword,
           body: {
-            'USERNAME' : userNameInputs,
-            'PASSWORD' : passwordInputs
+            'PASSWORD' : passwordInputs,
           }
       );
       passwordUsers = jsonDecode(respPassword.body);
-      validationModels.validatePassword = passwordUsers[0]['PASSWORD'];
-      validationModels.validateUserNames = passwordUsers[0]['USERNAME'];
+      passwordModels.validatePasswords = passwordUsers[0]['PASSWORD'];
 
-      print('Reslut : $passwordUsers');
-      print('Password : ${validationModels.validatePassword}');
-      print('UserName : ${validationModels.validateUserNames}');
+      print('Password : ${passwordModels.validatePasswords}');
 
     } catch(errors) {
       print(errors);

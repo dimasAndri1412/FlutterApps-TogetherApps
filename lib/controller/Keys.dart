@@ -74,6 +74,7 @@ final UserIdController = TextEditingController();
 final FaceImageController = TextEditingController();
 final EmbeddingController = TextEditingController();
 final IdMemberControllers = TextEditingController();
+final PasswordValidateControllers = TextEditingController();
 
 //GoogleMapController
 final nameLocationController = TextEditingController();
