@@ -26,8 +26,6 @@ class ApplicationBarUser extends StatefulWidget {
 
 class _ApplicationBarUserState extends State<ApplicationBarUser> {
   int currentIndex = 0;
-  /////
-  ///
 
   @override
   void initState() {

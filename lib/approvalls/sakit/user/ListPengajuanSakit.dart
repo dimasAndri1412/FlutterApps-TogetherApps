@@ -30,7 +30,7 @@ class _ListPengajuanSakitState extends State<ListPengajuanSakit> {
       case 'New':
         return Colors.blue;
       default:
-        return Colors.blue; 
+        return Colors.blue;
     }
   }
 
@@ -96,7 +96,7 @@ class _ListPengajuanSakitState extends State<ListPengajuanSakit> {
           await MemberRequestOvertimeController().getStatus();
 
       setState(() {
-        getStatus = statusList ?? []; 
+        getStatus = statusList ?? [];
       });
     } catch (e) {
       print('Error fetching overtime requests: $e');
@@ -105,295 +105,307 @@ class _ListPengajuanSakitState extends State<ListPengajuanSakit> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              Get.to(ApplicationBarUser(
-                initialIndex: 3,
-              ));
-            },
-            icon: Icon(
-              Icons.arrow_back_ios_sharp,
-              color: Colors.white,
-            )),
-        title:Text(
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        Get.to(ApplicationBarUser(
+          initialIndex: 3,
+        ));
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+              onPressed: () {
+                Get.to(ApplicationBarUser(
+                  initialIndex: 3,
+                ));
+              },
+              icon: Icon(
+                Icons.arrow_back_ios_sharp,
+                color: Colors.white,
+              )),
+          title: Text(
             "Sick Approval",
             style: TextStyle(
-                fontSize: 18,
-                color: Colors.white,
-                fontWeight: FontWeight.bold),
+                fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
           ),
-        automaticallyImplyLeading: false,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(colors: [
-              Color.fromARGB(255, 147, 195, 234),
-              Color.fromARGB(255, 98, 171, 232),
-              Color.fromARGB(255, 123, 185, 235),
-            ]),
+          automaticallyImplyLeading: false,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [
+                Color.fromARGB(255, 147, 195, 234),
+                Color.fromARGB(255, 98, 171, 232),
+                Color.fromARGB(255, 123, 185, 235),
+              ]),
+            ),
           ),
+          elevation: 0,
         ),
-        elevation: 0,
-      ),
-      body: Container(
-        margin: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            GestureDetector(
-              onTap: () => _showFilterOptions(context),
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                margin: EdgeInsets.only(left: 15, top: 10),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 2),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'Filter: $defaultStatus',
-                      style: TextStyle(color: Colors.black, fontSize: 14),
-                    ),
-                    Icon(
-                      Icons.arrow_drop_down_rounded,
-                      color: Colors.black,
-                    ),
-                  ],
+        body: Container(
+          margin: EdgeInsets.all(10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GestureDetector(
+                onTap: () => _showFilterOptions(context),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  margin: EdgeInsets.only(left: 15, top: 10),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey, width: 2),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Filter: $defaultStatus',
+                        style: TextStyle(color: Colors.black, fontSize: 14),
+                      ),
+                      Icon(
+                        Icons.arrow_drop_down_rounded,
+                        color: Colors.black,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            FutureBuilder(
-              future: MemberSickLeaveController().getList(),
-              builder: (context, snapshot) {
-                print("Snapshot data: ${snapshot.data}");
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Center(
-                    child: Text("You haven't made a request yet"),
-                  );
-                } else if (snapshot.hasError) {
-                  return const Center(
-                    child: Text("An error occurred while fetching data"),
-                  );
-                } else {
-                 
-                  final data = snapshot.data!;
-                  final filteredData = defaultStatus == 'All'
-                    ? data
-                    : data.where((data) => data.status == defaultStatus).toList();
+              SizedBox(
+                height: 20,
+              ),
+              FutureBuilder(
+                  future: MemberSickLeaveController().getList(),
+                  builder: (context, snapshot) {
+                    print("Snapshot data: ${snapshot.data}");
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Center(
+                        child: Text("You haven't made a request yet"),
+                      );
+                    } else if (snapshot.hasError) {
+                      return const Center(
+                        child: Text("An error occurred while fetching data"),
+                      );
+                    } else {
+                      final data = snapshot.data!;
+                      final filteredData = defaultStatus == 'All'
+                          ? data
+                          : data
+                              .where((data) => data.status == defaultStatus)
+                              .toList();
 
-                  if (filteredData.isEmpty) {
-                    return Center(
-                      child: Text("No data matches your filter criteria"),
-                    );
-                  }
+                      if (filteredData.isEmpty) {
+                        return Center(
+                          child: Text("No data matches your filter criteria"),
+                        );
+                      }
 
-                  return Expanded(
-                    child: ListView.builder(
-                      // itemCount: snapshot.data?.length,
-                      itemCount: filteredData.length,
-                      itemBuilder: (context, index) {
-                        // final getData = snapshot.data![index];
-                        final getData = filteredData[index];
-                        final statusColor =
-                            _getStatusColor(getData.status ?? "Unknown");
+                      return Expanded(
+                        child: ListView.builder(
+                          // itemCount: snapshot.data?.length,
+                          itemCount: filteredData.length,
+                          itemBuilder: (context, index) {
+                            // final getData = snapshot.data![index];
+                            final getData = filteredData[index];
+                            final statusColor =
+                                _getStatusColor(getData.status ?? "Unknown");
 
-                        String? formattedDate = getData.date != null ? DateFormat('dd MMM yyyy').format(getData.date!) : null;
-                        
-                        return GestureDetector(
-                            onTap: () {
-                              if (getData.status == "New") {
-                                Get.to(() =>
-                                    DetailPengajuan(getUserDetail: getData));
-                              } 
-                              else if (getData.status == "Approved") {
-                                Get.to(() =>
-                                    ApprovedDetail(getUserDetail: getData));
-                              }
-                              else if (getData.status == "Rejected") {
-                                Get.to(() =>
-                                    RejectedDetail(getUserDetail: getData));
-                              }
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.all(10),
-                              width: 350,
-                              height: 160,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(0),
-                                border: Border.all(
-                                    width: 0.5, color: Colors.grey),
-                              ),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 20, top: 15, right: 20),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "No. Req : ",
-                                          style:
-                                              TextStyle(color: Colors.grey),
-                                        ),
-                                        Text("REQ-${getData.reqId}"),
-                                        Spacer(),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: statusColor,
-                                          ),
-                                          height: 20,
-                                          width: 80,
-                                          child: Center(
-                                            child: Text(
-                                              getData.status,
-                                              style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight:
-                                                      FontWeight.bold,
-                                                  fontSize: 12),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
+                            String? formattedDate = getData.date != null
+                                ? DateFormat('dd MMM yyyy')
+                                    .format(getData.date!)
+                                : null;
+
+                            return GestureDetector(
+                                onTap: () {
+                                  if (getData.status == "New") {
+                                    Get.to(() => DetailPengajuan(
+                                        getUserDetail: getData));
+                                  } else if (getData.status == "Approved") {
+                                    Get.to(() =>
+                                        ApprovedDetail(getUserDetail: getData));
+                                  } else if (getData.status == "Rejected") {
+                                    Get.to(() =>
+                                        RejectedDetail(getUserDetail: getData));
+                                  }
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.all(10),
+                                  width: 350,
+                                  height: 160,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(0),
+                                    border: Border.all(
+                                        width: 0.5, color: Colors.grey),
                                   ),
-                                  Divider(
-                                    color: Colors.grey,
-                                    thickness: 0.5,
-                                    indent: 20,
-                                    endIndent: 20,
-                                  ),
-                                  ListTile(
-                                    leading: CircleAvatar(
-                                        backgroundImage: AssetImage(
-                                      'assets/images/sick.png',
-                                    )),
-                                    title: Text(
-                                      "Sick Leave Request",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14),
-                                    ),
-                                    subtitle: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 20, top: 15, right: 20),
+                                        child: Row(
                                           children: [
-                                            Icon(
-                                              Icons.sick,
-                                              size: 18,
-                                              color: Colors.grey,
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
                                             Text(
-                                              "Sick type",
-                                              style: TextStyle(
-                                                  fontSize: 12, height: 2),
+                                              "No. Req : ",
+                                              style:
+                                                  TextStyle(color: Colors.grey),
                                             ),
-                                            SizedBox(
-                                              width: 3,
-                                            ),
-                                            Expanded(
-                                              child : Text(
-                                                getData.note,
-                                                style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: Colors.blue),
-                                                softWrap: true, // Membungkus teks
-                                                overflow: TextOverflow.ellipsis,
+                                            Text("REQ-${getData.reqId}"),
+                                            Spacer(),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                color: statusColor,
+                                              ),
+                                              height: 20,
+                                              width: 80,
+                                              child: Center(
+                                                child: Text(
+                                                  getData.status,
+                                                  style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 12),
+                                                ),
                                               ),
                                             )
                                           ],
                                         ),
-                                        Row(
+                                      ),
+                                      Divider(
+                                        color: Colors.grey,
+                                        thickness: 0.5,
+                                        indent: 20,
+                                        endIndent: 20,
+                                      ),
+                                      ListTile(
+                                        leading: CircleAvatar(
+                                            backgroundImage: AssetImage(
+                                          'assets/images/sick.png',
+                                        )),
+                                        title: Text(
+                                          "Sick Leave Request",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14),
+                                        ),
+                                        subtitle: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Icon(
-                                              Icons.calendar_month,
-                                              size: 18,
-                                              color: Colors.grey,
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.sick,
+                                                  size: 18,
+                                                  color: Colors.grey,
+                                                ),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(
+                                                  "Sick type",
+                                                  style: TextStyle(
+                                                      fontSize: 12, height: 2),
+                                                ),
+                                                SizedBox(
+                                                  width: 3,
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                    getData.note,
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.blue),
+                                                    softWrap:
+                                                        true, // Membungkus teks
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                )
+                                              ],
                                             ),
-                                            SizedBox(
-                                              width: 5,
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.calendar_month,
+                                                  size: 18,
+                                                  color: Colors.grey,
+                                                ),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(
+                                                  formattedDate ?? "-",
+                                                  style:
+                                                      TextStyle(fontSize: 12),
+                                                ),
+                                              ],
                                             ),
-                                            Text(
-                                             formattedDate ?? "-",
-                                              style:
-                                              TextStyle(fontSize: 12),
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.people_alt_outlined,
+                                                  size: 18,
+                                                  color: Colors.grey,
+                                                ),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(
+                                                  getData.status == "Rejected"
+                                                      ? "Rejected by"
+                                                      : getData.status ==
+                                                              "Approved"
+                                                          ? "Approved by"
+                                                          : "Status",
+                                                  style: TextStyle(
+                                                      fontSize: 12, height: 2),
+                                                ),
+                                                SizedBox(
+                                                  width: 3,
+                                                ),
+                                                Text(
+                                                  getData.approvedBy,
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.blue),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.people_alt_outlined,
-                                              size: 18,
-                                              color: Colors.grey,
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              getData.status == "Rejected"
-                                              ? "Rejected by"
-                                              : getData.status == "Approved"
-                                                  ? "Approved by"
-                                                  : "Status",
-                                              style: TextStyle(
-                                                  fontSize: 12, height: 2),
-                                            ),
-                                            SizedBox(
-                                              width: 3,
-                                            ),
-                                            Text(
-                                              getData.approvedBy,
-                                              style: TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.blue),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            )
-                          );
-                      },
-                    ),
-                  );
-                }
-              }
-            ),
-          ],
+                                ));
+                          },
+                        ),
+                      );
+                    }
+                  }),
+            ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const FormPengajuanSakit()),
-          );
-        },
-        backgroundColor: Colors.blue[600],
-        child: const Icon(Icons.add, color: Colors.white,),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const FormPengajuanSakit()),
+            );
+          },
+          backgroundColor: Colors.blue[600],
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+        ),
       ),
     );
   }

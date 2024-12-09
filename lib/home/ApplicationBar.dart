@@ -1,6 +1,8 @@
 import 'package:absent_project/MapsViews/MapsClockInElapsedTime/GmapsElapsedTimePages.dart';
 import 'package:absent_project/MapsViews/MapsLocationPages/GmapsLocationPage.dart';
 import 'package:absent_project/approvalls/cuti/msdo/DetailCutiUser.dart';
+import 'package:absent_project/approvalls/sakit/user/DetailPengajuan.dart';
+import 'package:absent_project/controller/ApprovalController/SickLeaveController/Member/MemberSickLeaveController.dart';
 import 'package:absent_project/timesheets/AdminPage/Timesheets.dart';
 import 'package:flutter/material.dart';
 import 'package:absent_project/home/Home.dart';
@@ -51,6 +53,7 @@ class _ApplicationBarState extends State<ApplicationBar> {
     _loadNewLeaveRequest();
   }
 
+  //pemanggilan status new cuti
   Future<void> _loadNewLeaveRequest() async {
     try {
       var leaveRequest = await AdminApprovalPaidLeaveController().getUsers();
@@ -64,6 +67,26 @@ class _ApplicationBarState extends State<ApplicationBar> {
               notifications.add(NotificationItem(
                   message: "New Leave Request from ${request.username}",
                   targetPage: DetailCutiUser(getUserDetail: request)));
+            });
+          }
+        }
+      }
+    } catch (e) {
+      print("Error loading leave requests: $e");
+    }
+  }
+
+  //pemannggilan status new ijin sakit
+  Future<void> _loadNewSickRequest() async {
+    try {
+      var sickRequest = await MemberSickLeaveController().getList();
+      if (sickRequest != null) {
+        for (var request in sickRequest) {
+          if (request.status == "New") {
+            setState(() {
+              notifications.add(NotificationItem(
+                  message: "New Sick Leave Request from ${request.fullName}",
+                  targetPage: DetailPengajuan(getUserDetail: request)));
             });
           }
         }
