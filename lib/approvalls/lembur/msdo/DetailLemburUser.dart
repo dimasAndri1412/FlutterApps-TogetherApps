@@ -110,7 +110,7 @@ class _DetailLemburUserState extends State<DetailLemburUser> {
                     title: Row(
                       children: [
                         Text(
-                          "No Request : ",
+                          "Request Number : ",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 14),
                         ),
