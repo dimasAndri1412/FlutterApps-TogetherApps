@@ -19,7 +19,9 @@ import 'package:absent_project/MapsViews/modelMaps/validateModels.dart' as valid
 import 'package:absent_project/MapsViews/modelMaps/newLocationProjectModels.dart' as newProjectsModels;
 import 'package:absent_project/MapsViews/modelMaps/validasiModels.dart' as validationsModels;
 import 'package:absent_project/MapsViews/modelMaps/validasiModelPassword.dart' as passwordModels;
+import 'package:absent_project/MapsViews/modelMaps/validateModels.dart' as validationModelsss;
 import 'package:absent_project/controller/verifyPasswordLogin.dart';
+import 'package:absent_project/controller/verifyUSernameAndPassword.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
@@ -342,4 +344,20 @@ Future<String?>verifyPasswordControllers() async {
   String? passwordValues = passwordModels.validatePasswords;
   return passwordValues;
 
+}
+
+Future<String?>verifyUserNames() async {
+  final VerfiedUserNameAndPassword inputsUserNames = VerfiedUserNameAndPassword();
+  await inputsUserNames.verifyEmailPass();
+
+  String? userNamesValues = validationModelsss.validateUserNames;
+  return userNamesValues;
+}
+
+Future<String?>verifiedPassword() async {
+  final VerfiedUserNameAndPassword inputsPassword = VerfiedUserNameAndPassword();
+  await inputsPassword.verifyEmailPass();
+
+  String? passwordValues = validationModelsss.validatePassword;
+  return passwordValues;
 }

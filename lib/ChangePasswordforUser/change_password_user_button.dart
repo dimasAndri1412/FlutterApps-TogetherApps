@@ -27,6 +27,7 @@ class _ChangePasswordUserButtonState extends State<ChangePasswordUserButton> {
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
           ctr_data().clear_func();
           Get.offAll(() => const ApplicationBarUser());
+          PasswordValidateControllers.clear();
         } else {
           final snackBar = SnackBar(
               content: const Text("Password Failure Changes!"));

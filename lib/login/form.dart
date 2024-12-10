@@ -1,3 +1,4 @@
+import 'package:absent_project/MapsViews/MatterialMaps/GmapsController.dart';
 import 'package:absent_project/OTPVerfication/OTPVerficationPage.dart';
 import 'package:absent_project/controller/LoginController.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,44 @@ class myForm extends StatefulWidget {
 class _myFormState extends State<myForm> {
 
   bool passwordObscured = true;
+
+  void loginVerified() async {
+    final validateUserNames = await verifyUserNames();
+    final validatePassword = await verifiedPassword();
+
+    // Handle null values safely
+    if (validateUserNames == null || validatePassword == null) {
+      final snackBar = SnackBar(
+        content: Text("Login data is missing, please check your input."),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      emailController.clear();
+      passwordController.clear();
+      return;
+    }
+
+    loginPasswordValidateControllers.text = validatePassword;
+    loginUserNamesValidateControllers.text = validateUserNames;
+
+    if ((emailController.text == loginUserNamesValidateControllers.text && validateUserNames.isNotEmpty) &&
+        (passwordController.text == loginPasswordValidateControllers.text && validatePassword.isNotEmpty)) {
+
+      loginPasswordValidateControllers.clear();
+      loginUserNamesValidateControllers.clear();
+      LoginController().doLogin();
+
+      final snackBar = SnackBar(content: Text("Login Successfully"));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+    } else {
+      final snackBar = SnackBar(
+        content: Text("Your Password or User Names is incorrect! Please try again."),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      loginPasswordValidateControllers.clear();
+      loginUserNamesValidateControllers.clear();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -134,38 +173,37 @@ class _myFormState extends State<myForm> {
                           Get.offAll(() => OTPVerficationPage());
                         });
                       },
-                      child: const Text('Forgot Password ? '),
-                    ),
-                    const SizedBox(height: 20,),
-                    GestureDetector(
-                      onTap: () {
-                        LoginController().doLogin();
-                        print("tes");
-                      },
-                      // onTap: (){
-                      //   check();
-                      //    // if (check()) {
-                      //    //    Navigator.push(
-                      //    //      context,
-                      //    //      MaterialPageRoute(builder: (context) => const BottomBar()),
-                      //    //    );
-                      //    //  }
-                      //   },
-                      child: Container(
-                        // child: Padding(padding: EdgeInsets.all(135)),
-                        height: 60,
-                        margin: const EdgeInsets.symmetric(horizontal: 50),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: const Color.fromARGB(255, 79, 168, 240)
-                        ),
-                        child: const Center(
-                          child: Text(
-                              "Login", style: TextStyle(
-                              color: Colors.white)),
-                        ),
+                      child: const Text(''
+                          'Forgot Password ?',
+                           style: TextStyle(
+                             color: Colors.blue,
+                             fontWeight: FontWeight.normal,
+                             fontSize: 25
+                           ),
                       ),
                     ),
+                    const SizedBox(height: 30,
+                    ),
+                    FloatingActionButton.extended (
+                        onPressed: () {
+                          if(formKey.currentState!.validate()) {
+                            loginVerified();
+                          }
+                        },
+                      backgroundColor: Colors.blueAccent,
+                      label: Text(
+                        "LOGIN",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      icon: Icon(
+                        Icons.login,
+                        color: Colors.white,
+                      ),
+                    )
                   ],
                 ),
               ],

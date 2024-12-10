@@ -40,6 +40,7 @@ class _ChangesPasswordButtonsState extends State<ChangesPasswordButtons> {
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
           ctr_data().clear_func_otp();
           Get.offAll(() => const LoginPage());
+          PasswordValidateControllers.clear();
         } else {
           final snackBar = SnackBar(
               content: const Text("Password Failure Changes!"));
