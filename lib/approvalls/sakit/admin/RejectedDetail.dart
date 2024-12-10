@@ -102,7 +102,7 @@ class RejectedDetail extends StatelessWidget {
                 title:Row(
                   children: [
                     Text(
-                      "No Request : ",
+                      "Request Number : ",
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 14),
                       ),

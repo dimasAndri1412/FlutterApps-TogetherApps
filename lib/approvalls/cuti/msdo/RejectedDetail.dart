@@ -117,7 +117,7 @@ class _RejectedDetailState extends State<RejectedDetail> {
                 title: Row(
                   children: [
                     Text(
-                      "No Request : ",
+                      "Request Number : ",
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                     ),
                     Text(
