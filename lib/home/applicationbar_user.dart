@@ -105,7 +105,7 @@ class _ApplicationBarUserState extends State<ApplicationBarUser> {
         if (approvedRequests.isNotEmpty) {
           for (var request in approvedRequests) {
             context.read<NotificationProvider>().addNotification(
-                "New Sickleave Request Approved (${request.reqId})",
+                "New Sickleave Request Approved (REQ-${request.reqId})",
                 "sickleave");
           }
         }
