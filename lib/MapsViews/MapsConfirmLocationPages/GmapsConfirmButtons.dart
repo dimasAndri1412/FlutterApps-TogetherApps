@@ -69,6 +69,7 @@ class _gmapsConfirmButtonsState extends State<gmapsConfirmButtons> {
                 "Clock In",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
+                    fontSize: 25,
                     color: Colors.white
                 ),
               ),

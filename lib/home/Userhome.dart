@@ -216,22 +216,22 @@ class _UserHomeState extends State<UserHome> {
                           child: WeeklyBar(),  
                         ),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(
-                          top: 20, bottom: 20, left: 30, right: 30),
-                      width: 350,
-                      height: 150,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color.fromARGB(255, 147, 195, 234),
-                              blurRadius: 15,
-                              offset: Offset(5, 10),
-                            )
-                          ]),
-                    ),
+                    // Container(
+                    //   margin: EdgeInsets.only(
+                    //       top: 20, bottom: 20, left: 30, right: 30),
+                    //   width: 350,
+                    //   height: 150,
+                    //   decoration: BoxDecoration(
+                    //       color: Colors.white,
+                    //       borderRadius: BorderRadius.circular(20),
+                    //       boxShadow: [
+                    //         BoxShadow(
+                    //           color: Color.fromARGB(255, 147, 195, 234),
+                    //           blurRadius: 15,
+                    //           offset: Offset(5, 10),
+                    //         )
+                    //       ]),
+                    // ),
                   ],
                 ),
               ],

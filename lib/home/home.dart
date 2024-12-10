@@ -198,22 +198,22 @@ class HomeState extends State<Home> {
                           child: WeeklyBar(),  
                         ),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(
-                          top: 15, bottom: 20, left: 30, right: 30),
-                      width: 380,
-                      height: 150,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color.fromARGB(255, 147, 195, 234),
-                              blurRadius: 15,
-                              offset: Offset(5, 10),
-                            )
-                          ]),
-                    ),
+                    // Container(
+                    //   margin: EdgeInsets.only(
+                    //       top: 15, bottom: 20, left: 30, right: 30),
+                    //   width: 380,
+                    //   height: 150,
+                    //   decoration: BoxDecoration(
+                    //       color: Colors.white,
+                    //       borderRadius: BorderRadius.circular(20),
+                    //       boxShadow: [
+                    //         BoxShadow(
+                    //           color: Color.fromARGB(255, 147, 195, 234),
+                    //           blurRadius: 15,
+                    //           offset: Offset(5, 10),
+                    //         )
+                    //       ]),
+                    // ),
                   ],
                 ),
               ],

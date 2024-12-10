@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:absent_project/home/ApplicationBar.dart';
 import 'package:absent_project/home/ApplicationBarClockInUsers.dart';
+import 'package:absent_project/home/applicationbar_user.dart';
 import 'package:get/get.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/home/ApplicationBarClockIn.dart';
@@ -28,11 +30,12 @@ class verifyRolesClockIn {
       dataUsers = jsonDecode(resp.body);
       rolesClockIn = dataUsers[0]['ROLE'];
 
-      if (rolesClockIn == 'ADMIN') {
-          Get.to(applicationBarClockIn());
+      print('ROLES : $rolesClockIn');
 
-      } else if (rolesClockIn == 'MEMBER') {
-          Get.to(applicationBarClockInUsers());
+      if(rolesClockIn == 'ADMIN') {
+        Get.to(ApplicationBar());
+      } else {
+        Get.to(ApplicationBarUser());
       }
 
 

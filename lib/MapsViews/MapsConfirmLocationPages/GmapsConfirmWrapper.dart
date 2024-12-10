@@ -30,7 +30,7 @@ class _gmapsConfirmWrappersState extends State<gmapsConfirmWrappers> {
               ),
             ),
             SizedBox(
-              height: 90,
+              height: 70,
             ),
             gmapsConfirmButtons()
           ],
