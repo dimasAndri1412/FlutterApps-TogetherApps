@@ -16,11 +16,12 @@ class ChangePasswordUserButton extends StatefulWidget {
 class _ChangePasswordUserButtonState extends State<ChangePasswordUserButton> {
 
   void checkPasswordUsers() async {
-    final checkPass = await verifyPasswordControllers();
-    PasswordValidateControllers.text = checkPass!;
+    final checkPass = await verifyPasswordControllers() ?? '';
+    PasswordValidateControllers.text = checkPass;
 
-    if(NewConfPasswordController.text != PasswordValidateControllers.text) {
-      ctr_data().update_pwd_user().then((value) {
+    if (NewPasswordContorller.text != PasswordValidateControllers.text ||
+        PasswordValidateControllers.text.isEmpty) {
+      ctr_data().change_pwd().then((value) {
         if (value) {
           final snackBar =
           SnackBar(content: const Text("Password Success Changes"));
@@ -28,16 +29,23 @@ class _ChangePasswordUserButtonState extends State<ChangePasswordUserButton> {
           ctr_data().clear_func();
           Get.offAll(() => const ApplicationBarUser());
           PasswordValidateControllers.clear();
+
         } else {
-          final snackBar = SnackBar(
-              content: const Text("Password Failure Changes!"));
+          final snackBar = SnackBar(content: const Text("Password Failure Changes!"));
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
+
+      }).catchError((error) {
+        print("Exception during change_pwd request: $error");
+        final snackBar = SnackBar(content: Text("Error: ${error.toString()}"));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       });
+
     } else {
-      final snackBar = SnackBar(
-          content: const Text("Password Has Been Used!"));
+      final snackBar = SnackBar(content: const Text("Password Has Been Used"));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      NewPasswordContorller.clear();
+      NewConfPasswordController.clear();
     }
   }
 

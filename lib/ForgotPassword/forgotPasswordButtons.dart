@@ -1,3 +1,4 @@
+import 'package:absent_project/MapsViews/MatterialMaps/GmapsController.dart';
 import 'package:absent_project/controller/Keys.dart';
 import 'package:absent_project/controller/sendingEmailForgotPassword.dart';
 import 'package:absent_project/login/LoginPage.dart';
@@ -15,6 +16,29 @@ class forgotPasswordButtons extends StatefulWidget {
 
 class _forgotPasswordButtonsState extends State<forgotPasswordButtons> {
 
+  void checkPassworForgots() async {
+    final checkPass = await verifyPasswordControllers() ?? '';
+    PasswordValidateControllers.text = checkPass;
+
+    if (NewPasswordContorller.text != PasswordValidateControllers.text ||
+        PasswordValidateControllers.text.isEmpty) {
+
+      final snackBar =
+      SnackBar(content: const Text("Password Success Changes"));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      sendingEmailForgotPassword().sendingEmailForgotPasswordFunc();
+      ctr_data().forgot_pwd();
+      ctr_data().clear_func();
+      Get.offAll(() => LoginPage());
+
+    } else {
+      final snackBar = SnackBar(content: const Text("Password Has Been Used"));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      NewPasswordContorller.clear();
+      NewConfPasswordController.clear();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,13 +46,9 @@ class _forgotPasswordButtonsState extends State<forgotPasswordButtons> {
         GestureDetector(
           onTap: () {
             if (formsForgotKeys.currentState!.validate()) {
-              final snackBar =
-              SnackBar(content: const Text("Password Success Changes"));
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              sendingEmailForgotPassword().sendingEmailForgotPasswordFunc();
-              ctr_data().forgot_pwd();
-              ctr_data().clear_func();
-              Get.offAll(() => LoginPage());
+
+              checkPassworForgots();
+
             } else {
               final snackBar =
               SnackBar(content: const Text("Password Changes Failed"));
