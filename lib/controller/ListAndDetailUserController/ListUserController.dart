@@ -36,6 +36,7 @@ class ListUserController {
 
       for (var u in jsonData) {
         UserList user = UserList(
+            u["user_id"] ?? "",
             u["username"] ?? "",
             u["full_name"] ?? "",
             u["role"] ?? "",
@@ -52,10 +53,10 @@ class ListUserController {
   }
 
 
-  Future<Map<String, dynamic>> deleteUser(String email) async {
+  Future<Map<String, dynamic>> deleteUser(int userId) async {
     var response = await http.post(
       Uri.parse("http://192.168.2.159:8080/FlutterAPI/delete_user.php"),
-      body: {"email": email},
+      body: {"user_id": userId.toString()},
     );
     print(response.body); // Log respons untuk debugging
     var jsonData = json.decode(response.body);

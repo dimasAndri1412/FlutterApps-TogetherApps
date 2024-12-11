@@ -35,8 +35,8 @@ class _ListUserState extends State<ListUser> {
     });
   }
 
-  Future<void> _onDismissed(String email) async {
-    var response = await _controller.deleteUser(email);
+  Future<void> _onDismissed(int userId) async {
+    var response = await _controller.deleteUser(userId);
     if (response['success']) {
       await _fetchUsers();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -143,7 +143,7 @@ class _ListUserState extends State<ListUser> {
                               backgroundColor: Colors.red,
                               icon: Icons.delete,
                               label: "Delete",
-                              onPressed: (context) => _onDismissed(user.email),
+                              onPressed: (context) => _onDismissed(user.userId),
                             ),
                           ],
                         ),
