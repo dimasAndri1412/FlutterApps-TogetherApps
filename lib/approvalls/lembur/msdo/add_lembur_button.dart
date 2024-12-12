@@ -41,6 +41,7 @@ class _addLemburButtonState extends State<addLemburButton> {
                 false) {
               showDialog(
                 context: context,
+                barrierDismissible: false,
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: Text('Form Approved'),

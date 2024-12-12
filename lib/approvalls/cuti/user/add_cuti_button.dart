@@ -121,6 +121,7 @@ class _addCutiButtonState extends State<addCutiButton> {
                         print("sisah cuti: ${leaveInfo.remainingLeave}");
                         showDialog(
                           context: context,
+                          barrierDismissible: false,
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: Text('Form Approved'),

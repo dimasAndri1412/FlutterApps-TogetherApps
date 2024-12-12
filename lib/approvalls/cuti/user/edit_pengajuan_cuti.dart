@@ -797,6 +797,7 @@ class _EditPengajuanCutiState extends State<EditPengajuanCuti> {
                                           deletePaidLeave();
                                           showDialog(
                                               context: context,
+                                              barrierDismissible: false,
                                               builder: (BuildContext context) {
                                                 return AlertDialog(
                                                   title: Text("Form Approved"),
@@ -846,6 +847,7 @@ class _EditPengajuanCutiState extends State<EditPengajuanCuti> {
                                           deletePaidLeave();
                                           showDialog(
                                               context: context,
+                                              barrierDismissible: false,
                                               builder: (BuildContext context) {
                                                 return AlertDialog(
                                                   title: Text("Form Approved"),
