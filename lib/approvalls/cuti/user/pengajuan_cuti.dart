@@ -572,7 +572,7 @@ class _PengajuanCutiState extends State<PengajuanCuti> {
                           ),
 
                           //BUTTON SUBMIT
-                          addCutiButton(),
+                          addCutiButton(selectedShift: selectedShiftLeave),
                         ],
                       )),
                 ),

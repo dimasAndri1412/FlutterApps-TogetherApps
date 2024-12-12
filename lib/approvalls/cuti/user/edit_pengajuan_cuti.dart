@@ -151,6 +151,29 @@ class _EditPengajuanCutiState extends State<EditPengajuanCuti> {
     }
   }
 
+  editNonShift() async {
+    final response = await http.post(
+        Uri.parse(
+            "http://192.168.2.159:8080/FlutterAPI/approvals/member/paid_leave/editSetUserApprovalNonShift.php"),
+        body: {
+          "types_leave": typePaidLeave.text,
+          "reason_leave": reasonPaidLeave.text,
+          "name_of_pic": picPaidLeave.text,
+          "phone_number": phonePaidLeave.text,
+          "shift": shiftPaidLeave.text,
+          "date_start_leave": startDatePaidLeave.text,
+          "date_end_leave": endDatePaidLeave.text,
+          "date_back_to_work": onDutyPaidLeave.text,
+          "reqNo": widget.currentMember.reqNo,
+        });
+    if (response.statusCode == 200) {
+      print("process update");
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   List<String> typeLeave = [
     "Maternity leave ",
     "Permission leave",
@@ -159,11 +182,7 @@ class _EditPengajuanCutiState extends State<EditPengajuanCuti> {
 
   String selectedLeaveType = '';
 
-  List<String> shiftLeave = [
-    "Shift I",
-    "Shift II",
-    "Shift III",
-  ];
+  List<String> shiftLeave = ["Shift I", "Shift II", "Shift III", "Non shift"];
 
   String selectedShiftLeave = '';
 
@@ -733,44 +752,121 @@ class _EditPengajuanCutiState extends State<EditPengajuanCuti> {
                                           DateFormat('yyyy-MM-dd')
                                               .parse(endDatePaidLeave.text);
 
-                                      Duration difference =
-                                          endDate.difference(startDate);
-                                      if (difference.inDays + 1 >
-                                          request.remainingLeave + countEdit) {
-                                        print("gak bisa cuti");
-                                        print(
-                                            "total hari: ${difference.inDays + 1}");
-                                        print(
-                                            "sisah cuti: ${request.remainingLeave + countEdit}");
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(SnackBar(
-                                                content: Text(
-                                                    "You cannot take more leave than your remaining leave")));
-                                      } else if (request.remainingLeave != 0) {
-                                        print("bisa ajuin cuti");
-                                        deletePaidLeave();
-                                        showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: Text("Form Approved"),
-                                                content: Text(
-                                                    'The form has been submit !'),
-                                                actions: <Widget>[
-                                                  TextButton(
-                                                      onPressed: () {
-                                                        edit();
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                        MemberRequestPaidLeaveController()
-                                                            .clearInfo();
-                                                        Get.offAll(
-                                                            ListPengajuanCuti());
-                                                      },
-                                                      child: Text("OK"))
-                                                ],
-                                              );
-                                            });
+                                      if (selectedShiftLeave == "Non shift") {
+                                        int calculateWorkDays(
+                                            DateTime start, DateTime end) {
+                                          int workDays = 0;
+                                          DateTime currentDate = start;
+
+                                          while (currentDate.isBefore(end) ||
+                                              currentDate
+                                                  .isAtSameMomentAs(end)) {
+                                            if (currentDate.weekday !=
+                                                    DateTime.saturday &&
+                                                currentDate.weekday !=
+                                                    DateTime.sunday) {
+                                              workDays++;
+                                            }
+                                            currentDate = currentDate
+                                                .add(Duration(days: 1));
+                                          }
+
+                                          return workDays;
+                                        }
+
+                                        int totalWorkDays = calculateWorkDays(
+                                            startDate, endDate);
+
+                                        if (totalWorkDays >
+                                            request.remainingLeave +
+                                                countEdit) {
+                                          print("gak bisa cuti");
+                                          print("total hari: $totalWorkDays");
+                                          print(
+                                              "sisah cuti: ${request.remainingLeave + countEdit}");
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                                  content: Text(
+                                                      "You cannot take more leave than your remaining leave")));
+                                        } else if (request.remainingLeave !=
+                                            0) {
+                                          print("bisa ajuin cuti");
+                                          print("total hari: $totalWorkDays");
+                                          print(
+                                              "sisah cuti: ${request.remainingLeave + countEdit}");
+                                          deletePaidLeave();
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  title: Text("Form Approved"),
+                                                  content: Text(
+                                                      'The form has been submit !'),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                        onPressed: () {
+                                                          editNonShift();
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                          MemberRequestPaidLeaveController()
+                                                              .clearInfo();
+                                                          Get.offAll(
+                                                              ListPengajuanCuti());
+                                                        },
+                                                        child: Text("OK"))
+                                                  ],
+                                                );
+                                              });
+                                        }
+                                      } else if (selectedShiftLeave ==
+                                              "Shift I" ||
+                                          selectedShiftLeave == "Shift II" ||
+                                          selectedShiftLeave == "Shift III") {
+                                        Duration difference =
+                                            endDate.difference(startDate);
+                                        if (difference.inDays + 1 >
+                                            request.remainingLeave +
+                                                countEdit) {
+                                          print("gak bisa cuti");
+                                          print(
+                                              "total hari: ${difference.inDays + 1}");
+                                          print(
+                                              "sisah cuti: ${request.remainingLeave + countEdit}");
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                                  content: Text(
+                                                      "You cannot take more leave than your remaining leave")));
+                                        } else if (request.remainingLeave !=
+                                            0) {
+                                          print("bisa ajuin cuti");
+                                          print(
+                                              "total hari: ${difference.inDays + 1}");
+                                          print(
+                                              "sisah cuti: ${request.remainingLeave + countEdit}");
+                                          deletePaidLeave();
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  title: Text("Form Approved"),
+                                                  content: Text(
+                                                      'The form has been submit !'),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                        onPressed: () {
+                                                          edit();
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                          MemberRequestPaidLeaveController()
+                                                              .clearInfo();
+                                                          Get.offAll(
+                                                              ListPengajuanCuti());
+                                                        },
+                                                        child: Text("OK"))
+                                                  ],
+                                                );
+                                              });
+                                        }
                                       }
                                     } else {
                                       ScaffoldMessenger.of(context)
