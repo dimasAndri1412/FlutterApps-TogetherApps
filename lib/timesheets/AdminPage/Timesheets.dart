@@ -42,11 +42,16 @@ class Timesheets extends StatefulWidget {
 
 class _TimesheetsState extends State<Timesheets> {
   CalendarFormat _calendarFormat = CalendarFormat.week;
+  String _calendarFormatText = 'Week';
+
   DateTime today = DateTime.now();
   DateTime? _selectedDay; 
 
   late Future<List<ListTimesheetsModel>> _listTimesheets;
   ListTimesheetsController listTimesheetsController = ListTimesheetsController();
+
+  // String _filterButtonText = "Week";
+  // String _currentFormat = "Week";
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     setState(() {
@@ -77,19 +82,40 @@ class _TimesheetsState extends State<Timesheets> {
   }
 
   void _onFormatChanged(CalendarFormat format) {
-    if (_calendarFormat != format) {
+    
       setState(() {
         _calendarFormat = format;
+        if (_calendarFormat == CalendarFormat.week) {
+          _calendarFormatText = 'Week';
+        } else if (_calendarFormat == CalendarFormat.twoWeeks) {
+          _calendarFormatText = '2 Weeks';
+        } else if (_calendarFormat == CalendarFormat.month) {
+          _calendarFormatText = 'Month';
+        }
         _fetchDataForCurrentFormat(); 
       });
-    }
+    
   }
 
   void _fetchDataForCurrentFormat() {
+    // if (_calendarFormat == CalendarFormat.week) {
+    //   DateTime startOfWeek = today.subtract(Duration(days: today.weekday - 1));
+    //   DateTime endOfWeek = startOfWeek.add(Duration(days: 6));
+    //   _listTimesheets = listTimesheetsController.getListFilter(startOfWeek, endOfWeek);
+    // } else if (_calendarFormat == CalendarFormat.month) {
+    //   DateTime startOfMonth = DateTime(today.year, today.month, 1);
+    //   DateTime endOfMonth = DateTime(today.year, today.month + 1, 0);
+    //   _listTimesheets = listTimesheetsController.getListFilter(startOfMonth, endOfMonth);
+    // }
+
     if (_calendarFormat == CalendarFormat.week) {
       DateTime startOfWeek = today.subtract(Duration(days: today.weekday - 1));
       DateTime endOfWeek = startOfWeek.add(Duration(days: 6));
       _listTimesheets = listTimesheetsController.getListFilter(startOfWeek, endOfWeek);
+    } else if (_calendarFormat == CalendarFormat.twoWeeks) {
+      DateTime startOfWeek = today.subtract(Duration(days: today.weekday - 1));
+      DateTime endOfTwoWeeks = startOfWeek.add(Duration(days: 13));
+      _listTimesheets = listTimesheetsController.getListFilter(startOfWeek, endOfTwoWeeks);
     } else if (_calendarFormat == CalendarFormat.month) {
       DateTime startOfMonth = DateTime(today.year, today.month, 1);
       DateTime endOfMonth = DateTime(today.year, today.month + 1, 0);
@@ -198,6 +224,54 @@ class _TimesheetsState extends State<Timesheets> {
               calendarFormat: _calendarFormat,
               onFormatChanged: _onFormatChanged,
               onPageChanged: _onPageChanged,
+              headerStyle: HeaderStyle(
+                formatButtonVisible: false, 
+                titleCentered: true,
+              ),
+              calendarBuilders: CalendarBuilders(
+                headerTitleBuilder: (context, date) {
+                  final monthName = DateFormat('MMMM').format(date);
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        monthName, 
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          if (_calendarFormat == CalendarFormat.week) {
+                            _onFormatChanged(CalendarFormat.month);
+                          } else if (_calendarFormat == CalendarFormat.month) {
+                            _onFormatChanged(CalendarFormat.twoWeeks);
+                          } else {
+                            _onFormatChanged(CalendarFormat.week);
+                          }
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 6), 
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black, 
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8), 
+                          ),
+                          child: Text(
+                            _calendarFormatText, 
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  );
+                },
+              ),
             ),
           )
         ],

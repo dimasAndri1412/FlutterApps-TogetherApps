@@ -18,6 +18,7 @@ class TimesheetsUser extends StatefulWidget {
 
 class _TimesheetsUserState extends State<TimesheetsUser> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
+   String _calendarFormatText = 'Month';
   DateTime today = DateTime.now();
   DateTime _selectedDay = DateTime.now();
   DateTime _focusedDay = DateTime.now();
@@ -57,11 +58,27 @@ class _TimesheetsUserState extends State<TimesheetsUser> {
     });
   }
 
-  void _onFormatChanged(format) {
-    if (_calendarFormat != format) {
-      setState(() => _calendarFormat = format);
-    }
+  // void _onFormatChanged(format) {
+  //   if (_calendarFormat != format) {
+  //     setState(() => _calendarFormat = format);
+  //   }
+  // }
+
+  void _onFormatChanged(CalendarFormat format) {
+  if (_calendarFormat != format) {
+    setState(() {
+      _calendarFormat = format;
+      // Perbarui _calendarFormatText sesuai dengan format yang dipilih
+      if (_calendarFormat == CalendarFormat.week) {
+        _calendarFormatText = 'Week';
+      } else if (_calendarFormat == CalendarFormat.twoWeeks) {
+        _calendarFormatText = '2 Weeks';
+      } else if (_calendarFormat == CalendarFormat.month) {
+        _calendarFormatText = 'Month';
+      }
+    });
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -151,16 +168,58 @@ class _TimesheetsUserState extends State<TimesheetsUser> {
                     _focusedDay = focusedDay;
                   });
                 },
-                onFormatChanged: (format) {
-                  if (_calendarFormat != format) {
-                    setState(() {
-                      _calendarFormat = format;
-                    });
-                  }
-                },
+                onFormatChanged: _onFormatChanged,
                 // onDaySelected: _onDaySelected,
                 // onFormatChanged: _onFormatChanged,
                 calendarFormat: _calendarFormat,
+                headerStyle: HeaderStyle(
+                  formatButtonVisible: false, 
+                  titleCentered: true,
+                ),
+                calendarBuilders: CalendarBuilders(
+                  headerTitleBuilder: (context, date) {
+                    final monthName = DateFormat('MMMM').format(date);
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          monthName, 
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            if (_calendarFormat == CalendarFormat.week) {
+                              _onFormatChanged(CalendarFormat.month);
+                            } else if (_calendarFormat == CalendarFormat.month) {
+                              _onFormatChanged(CalendarFormat.twoWeeks);
+                            } else {
+                              _onFormatChanged(CalendarFormat.week);
+                            }
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 6), 
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.black, 
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8), 
+                            ),
+                            child: Text(
+                              _calendarFormatText, 
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    );
+                  },
+                )
               ),
             ),
           ),
