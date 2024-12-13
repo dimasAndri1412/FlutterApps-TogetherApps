@@ -178,7 +178,7 @@ class _myFormState extends State<myForm> {
                            style: TextStyle(
                              color: Colors.blue,
                              fontWeight: FontWeight.normal,
-                             fontSize: 25
+                             fontSize: 15
                            ),
                       ),
                     ),
