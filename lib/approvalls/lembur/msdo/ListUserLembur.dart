@@ -173,7 +173,7 @@ class _ListUserLemburState extends State<ListUserLembur> {
                     items: [
                       DropdownMenuItem<String>(
                         value: "Project",
-                        child: Text("Project"),
+                        child: Text("All"),
                       ),
                       ...getProject.map((project) {
                         return DropdownMenuItem(
@@ -195,7 +195,7 @@ class _ListUserLemburState extends State<ListUserLembur> {
                     items: [
                       DropdownMenuItem<String>(
                         value: "Status",
-                        child: Text("Status"),
+                        child: Text("All"),
                       ),
                       ...getStatus.map((status) {
                         return DropdownMenuItem<String>(

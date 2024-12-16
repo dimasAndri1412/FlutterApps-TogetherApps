@@ -166,7 +166,8 @@ class MonthlyTimesheets extends StatelessWidget {
                       questionText: [],
                       answerText: ['Off'],
                       grup: 'Off',
-                      overtime: null
+                      overtime: null,
+                      paidLeaveActivity: null
                     ),
                   );
                   // print("timesheet: ${timesheets}"); 
@@ -200,18 +201,56 @@ class MonthlyTimesheets extends StatelessWidget {
                     ),
 
                   );
+
+                  final paidLeaveEntry = timesheets.firstWhere(
+                    (item) {
+                      if (item.type == "paid_leave" && item.paidLeaveDate != null && item.paidLeaveDate!.isNotEmpty) {
+                        try {
+                          DateTime dateLeave = DateTime.parse(item.paidLeaveDate!);
+                          return dateLeave.year == date.year &&
+                                dateLeave.month == date.month &&
+                                dateLeave.day == date.day;
+                        } catch (e) {
+                          print("Error parsing leaveDate: ${item.paidLeaveDate}");
+                          return false;
+                        }
+                      }
+                      return false;
+                    },
+                    orElse: () => MonthlyTimesheetModel(
+                      clockIn: null,
+                      location: 'Off',
+                      shift: 'Off',
+                      clockOut: null,
+                      clockOutId: 'Off',
+                      elapsedTime: 'Off',
+                      questionText: [],
+                      answerText: ['Off'],
+                      grup: 'Off',
+                      overtime: null,
+                      paidLeaveDate: null,
+                      paidLeaveActivity: null,
+                      paidLeaveStatus: null,
+                      type: null,
+                    ),
+                  );
                   
                   final overtimeData = timesheet.overtime;
                   final isSickDay = sickEntry.sickDate != null && sickEntry.sickDate == date.toIso8601String().split('T').first;
+                  final isPaidLeave = paidLeaveEntry.paidLeaveDate != null && paidLeaveEntry.paidLeaveDate == date.toIso8601String().split('T').first;
                   final isDataAvailable = timesheet.clockIn != null;
-                  print('isSickDay: $isSickDay');
+                  // print('isPaidLeave: $isPaidLeave');
+                  
 
                   List<pw.TableRow> rows = [
                     pw.TableRow(
                       children: [
                         pw.Container(
                           alignment: pw.Alignment.center,
-                          color: isSickDay 
+                          color: 
+                          isPaidLeave
+                          ? PdfColors.pink
+                          : isSickDay 
                           ? PdfColors.blue 
                           : (isDataAvailable ? PdfColors.white : PdfColors.yellow),
                           child: pw.Text(
@@ -221,7 +260,9 @@ class MonthlyTimesheets extends StatelessWidget {
                         ),
                         pw.Container(
                           alignment: pw.Alignment.center,
-                          color: isSickDay ? PdfColors.blue : (isDataAvailable ? PdfColors.white : PdfColors.yellow),
+                          color: isPaidLeave
+                          ? PdfColors.pink
+                          : isSickDay ? PdfColors.blue : (isDataAvailable ? PdfColors.white : PdfColors.yellow),
                           child: pw.Text(
                             isDataAvailable ? timesheet.grup ?? 'Unknown' : 'Off',
                             style: pw.TextStyle(fontSize: 11),
@@ -229,7 +270,9 @@ class MonthlyTimesheets extends StatelessWidget {
                         ),
                         pw.Container(
                           alignment: pw.Alignment.center,
-                          color: isSickDay ? PdfColors.blue : (isDataAvailable ? PdfColors.white : PdfColors.yellow),
+                          color: isPaidLeave
+                          ? PdfColors.pink
+                          : isSickDay ? PdfColors.blue : (isDataAvailable ? PdfColors.white : PdfColors.yellow),
                           child: pw.Text(
                             isDataAvailable ? timesheet.location ?? 'Unknown' : 'Off',
                             style: pw.TextStyle(fontSize: 11),
@@ -237,7 +280,9 @@ class MonthlyTimesheets extends StatelessWidget {
                         ),
                         pw.Container(
                           alignment: pw.Alignment.center,
-                          color: isSickDay ? PdfColors.blue : (isDataAvailable ? PdfColors.white : PdfColors.yellow),
+                          color: isPaidLeave
+                          ? PdfColors.pink
+                          : isSickDay ? PdfColors.blue : (isDataAvailable ? PdfColors.white : PdfColors.yellow),
                           child: pw.Text(
                             isDataAvailable && timesheet.clockIn != null ? '${timesheet.clockIn!.hour}:${timesheet.clockIn!.minute}' : '-',
                             style: pw.TextStyle(fontSize: 11),
@@ -245,7 +290,9 @@ class MonthlyTimesheets extends StatelessWidget {
                         ),
                         pw.Container(
                           alignment: pw.Alignment.center,
-                          color: isSickDay ? PdfColors.blue : (isDataAvailable ? PdfColors.white : PdfColors.yellow),
+                          color: isPaidLeave
+                          ? PdfColors.pink
+                          : isSickDay ? PdfColors.blue : (isDataAvailable ? PdfColors.white : PdfColors.yellow),
                           child: pw.Text(
                             isDataAvailable && timesheet.clockOut != null ? '${timesheet.clockOut!.hour}:${timesheet.clockOut!.minute}' : '-',
                             style: pw.TextStyle(fontSize: 11),
@@ -253,7 +300,9 @@ class MonthlyTimesheets extends StatelessWidget {
                         ),
                         pw.Container(
                           alignment: pw.Alignment.center,
-                          color: isSickDay ? PdfColors.blue : (isDataAvailable ? PdfColors.white : PdfColors.yellow),
+                          color: isPaidLeave
+                          ? PdfColors.pink
+                          : isSickDay ? PdfColors.blue : (isDataAvailable ? PdfColors.white : PdfColors.yellow),
                           child: pw.Text(
                             isDataAvailable ? timesheet.elapsedTime ?? '0' : '-',
                             style: pw.TextStyle(fontSize: 11),
@@ -261,9 +310,11 @@ class MonthlyTimesheets extends StatelessWidget {
                         ),
                         pw.Container(
                           alignment: pw.Alignment.center,
-                          color: isSickDay ? PdfColors.blue : (isDataAvailable ? PdfColors.white : PdfColors.yellow),
+                          color: isPaidLeave
+                          ? PdfColors.pink
+                          : isSickDay ? PdfColors.blue : (isDataAvailable ? PdfColors.white : PdfColors.yellow),
                           child: pw.Text(
-                            isSickDay ? 'Sick' : isDataAvailable ? "Running ${timesheet.shift}" : 'Off',
+                            isPaidLeave ? "CUTI" : isSickDay ? 'Sick' : isDataAvailable ? "Running ${timesheet.shift}" : 'Off',
                             style: pw.TextStyle(fontSize: 11),
                           ),
                         ),

@@ -156,7 +156,7 @@ class _ListUserSakitState extends State<ListUserSakit> {
                       items: [
                         DropdownMenuItem<String>(
                           value: "Project",
-                          child: Text("Project"),
+                          child: Text("All"),
                         ),
                         ...getProject.map((project) {
                           return DropdownMenuItem<String>(
@@ -176,7 +176,7 @@ class _ListUserSakitState extends State<ListUserSakit> {
                       },
                       items: [
                         DropdownMenuItem(
-                            value: "Status", child: Text("Status")),
+                            value: "Status", child: Text("All")),
                         ...getStatus.map((status) {
                           return DropdownMenuItem(
                               value: status.status, child: Text(status.status));

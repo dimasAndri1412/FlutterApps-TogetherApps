@@ -17,6 +17,9 @@ class MonthlyTimesheetModel {
   final String? sickNote;  
   final String? sickStatus; 
   final String? sickDate; 
+  final String? paidLeaveDate;         
+  final String? paidLeaveActivity; 
+  final String? paidLeaveStatus;  
 
   MonthlyTimesheetModel({
     this.clockIn,
@@ -32,9 +35,12 @@ class MonthlyTimesheetModel {
     this.grup,
     this.fullName,
     this.type,
-    this.sickNote,  // Inisialisasi atribut sickNote
-    this.sickStatus, // Inisialisasi atribut sickStatus
-    this.sickDate
+    this.sickNote,  
+    this.sickStatus,
+    this.sickDate,
+    this.paidLeaveDate,
+    this.paidLeaveActivity,
+    this.paidLeaveStatus,
   });
 
   factory MonthlyTimesheetModel.fromJson(Map<String, dynamic> json) {
@@ -53,9 +59,12 @@ class MonthlyTimesheetModel {
       grup: json['grup'] as String?,
       fullName: json['full_name'] as String?,
       type: json['type'] as String?,
-      sickNote: json['note'] as String?,  // Menambahkan pemetaan note
-      sickStatus: json['status'] as String?, // Menambahkan pemetaan status
+      sickNote: json['note'] as String?,  
+      sickStatus: json['status'] as String?, 
       sickDate: json['date'] as String?, 
+      paidLeaveDate: json['date'] as String?, 
+      paidLeaveActivity: json['activity'] as String?, 
+      paidLeaveStatus: json['status'] as String?,
     );
   }
 }
