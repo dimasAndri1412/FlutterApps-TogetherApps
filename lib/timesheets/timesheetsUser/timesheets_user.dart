@@ -121,7 +121,7 @@ class _TimesheetsUserState extends State<TimesheetsUser> {
               child: Center(
                 child: Container(
                   child: Text(
-                    "View Monthly Timesheet",
+                    "View Monthly Report",
                     style: TextStyle(color: Colors.blue, fontSize: 16),
                   ),
                 ),

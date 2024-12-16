@@ -229,6 +229,80 @@ class _monthlyTimesheetsState extends State<monthlyTimesheets> {
                         ),
                       )
                   );
+
+                  if(timesheet.type == 'paid_leave')
+                  return Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(0),
+                        border: Border.all(width: 0.5, color: Colors.grey),
+                      ),
+                      child: ListTile(
+                        title: Text(
+                          timesheet.paidLeaveDate ?? "n/a",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 14),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 5,),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.paid_outlined,
+                                  size: 18,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  "Paid Leave",
+                                  style: TextStyle(
+                                      fontSize: 12),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.notes_outlined,
+                                  size: 18,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  "Note",
+                                  style: TextStyle(
+                                      fontSize: 12, height: 2),
+                                ),
+                                  SizedBox(
+                                  width: 3,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    timesheet.paidLeaveActivity ?? "n/a",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.blue),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        trailing: IconButton(
+                          icon: Icon(Icons.assessment_outlined, color: Colors.grey[350]),
+                          onPressed: () {
+                            null;
+                          },
+                        ),
+                      )
+                  );
               }
             );
           }
