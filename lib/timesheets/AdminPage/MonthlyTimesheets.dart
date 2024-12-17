@@ -90,7 +90,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       color: PdfColors.red200,
                       child: pw.Text(
                         'Date', 
-                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 10),
                       ),
                     ),
                     pw.Container(
@@ -99,7 +99,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       color: PdfColors.red200,
                       child: pw.Text(
                         'Name of Project', 
-                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 10),
                       ),
                     ),
                     pw.Container(
@@ -108,7 +108,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       color: PdfColors.red200,
                       child: pw.Text(
                         'Location', 
-                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 10),
                       ),
                     ),
                     pw.Container(
@@ -118,7 +118,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       color: PdfColors.red200,
                       child: pw.Text(
                         'Start', 
-                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 10),
                       ),
                     ),
                     pw.Container(
@@ -128,7 +128,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       color: PdfColors.red200,
                       child: pw.Text(
                         'End', 
-                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 10),
                       ),
                     ),
                     pw.Container(
@@ -138,7 +138,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       color: PdfColors.red200,
                       child: pw.Text(
                         'Total', 
-                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 10),
                       ),
                     ),
                     pw.Container(
@@ -147,7 +147,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       color: PdfColors.red200,
                       child: pw.Text(
                         'Activity / Remark',
-                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 10),
                       ),
                     ),
                   ],
@@ -248,6 +248,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       children: [
                         pw.Container(
                           alignment: pw.Alignment.center,
+                          height: 15,
                           color: 
                           isPaidLeave
                           ? PdfColors.pink
@@ -256,67 +257,73 @@ class MonthlyTimesheets extends StatelessWidget {
                           : (isDataAvailable ? PdfColors.white : PdfColors.yellow),
                           child: pw.Text(
                             '${date.day}-${date.month}-${date.year}',
-                            style: pw.TextStyle(fontSize: 11),
+                            style: pw.TextStyle(fontSize: 7),
                           ),
                         ),
                         pw.Container(
                           alignment: pw.Alignment.center,
+                          height: 15,
                           color: isPaidLeave
                           ? PdfColors.pink
                           : isSickDay ? PdfColors.blue : (isDataAvailable ? PdfColors.white : PdfColors.yellow),
                           child: pw.Text(
                             isDataAvailable ? timesheet.grup ?? 'Unknown' : 'Off',
-                            style: pw.TextStyle(fontSize: 11),
+                            style: pw.TextStyle(fontSize: 7),
                           ),
                         ),
                         pw.Container(
                           alignment: pw.Alignment.center,
+                          height: 15,
                           color: isPaidLeave
                           ? PdfColors.pink
                           : isSickDay ? PdfColors.blue : (isDataAvailable ? PdfColors.white : PdfColors.yellow),
                           child: pw.Text(
                             isDataAvailable ? timesheet.location ?? 'Unknown' : 'Off',
-                            style: pw.TextStyle(fontSize: 11),
+                            style: pw.TextStyle(fontSize: 7),
                           ),
                         ),
                         pw.Container(
                           alignment: pw.Alignment.center,
+                          height: 15,
                           color: isPaidLeave
                           ? PdfColors.pink
                           : isSickDay ? PdfColors.blue : (isDataAvailable ? PdfColors.white : PdfColors.yellow),
                           child: pw.Text(
                             isDataAvailable && timesheet.clockIn != null ? '${timesheet.clockIn!.hour}:${timesheet.clockIn!.minute}' : '-',
-                            style: pw.TextStyle(fontSize: 11),
+                            style: pw.TextStyle(fontSize: 7),
                           ),
                         ),
                         pw.Container(
                           alignment: pw.Alignment.center,
+                          height: 15,
                           color: isPaidLeave
                           ? PdfColors.pink
                           : isSickDay ? PdfColors.blue : (isDataAvailable ? PdfColors.white : PdfColors.yellow),
                           child: pw.Text(
                             isDataAvailable && timesheet.clockOut != null ? '${timesheet.clockOut!.hour}:${timesheet.clockOut!.minute}' : '-',
-                            style: pw.TextStyle(fontSize: 11),
+                            style: pw.TextStyle(fontSize: 7),
                           ),
                         ),
                         pw.Container(
                           alignment: pw.Alignment.center,
+                          height: 15,
                           color: isPaidLeave
                           ? PdfColors.pink
                           : isSickDay ? PdfColors.blue : (isDataAvailable ? PdfColors.white : PdfColors.yellow),
                           child: pw.Text(
                             isDataAvailable ? timesheet.elapsedTime ?? '0' : '-',
-                            style: pw.TextStyle(fontSize: 11),
+                            style: pw.TextStyle(fontSize: 7),
                           ),
                         ),
                         pw.Container(
                           alignment: pw.Alignment.center,
+                          height: 15,
                           color: isPaidLeave
                           ? PdfColors.pink
                           : isSickDay ? PdfColors.blue : (isDataAvailable ? PdfColors.white : PdfColors.yellow),
                           child: pw.Text(
                             isPaidLeave ? "CUTI" : isSickDay ? 'Sick' : isDataAvailable ? "Running ${timesheet.shift}" : 'Off',
-                            style: pw.TextStyle(fontSize: 11),
+                            style: pw.TextStyle(fontSize: 7),
                           ),
                         ),
                       ],
