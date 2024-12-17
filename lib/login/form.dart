@@ -110,7 +110,7 @@ class _myFormState extends State<myForm> {
                                   contentPadding: EdgeInsets.only(left: 5),
                                   icon: Icon(
                                     Icons.person, color: Colors.grey,),
-                                  hintText: "Email or Phone Number",
+                                  hintText: "Username",
                                   hintStyle: TextStyle(color: Colors.grey),
                                   border: InputBorder.none
                               ),
