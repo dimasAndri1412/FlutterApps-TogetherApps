@@ -64,11 +64,24 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      const myForm()
+                      const myForm(),
                     ],
                   ))
             ],
           )),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(color: Colors.white),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        child: const Text(
+          'version : V1.0.0',
+          style: TextStyle(
+            color: Color.fromARGB(255, 178, 177, 177),
+            fontSize: 12,
+            fontStyle: FontStyle.italic,
+          ),
+          // textAlign: TextAlign.center,
+        ),
+      ),
     );
   }
 }
