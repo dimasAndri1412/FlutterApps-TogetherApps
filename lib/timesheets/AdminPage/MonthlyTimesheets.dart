@@ -90,7 +90,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       color: PdfColors.red200,
                       child: pw.Text(
                         'Date', 
-                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 10),
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 9),
                       ),
                     ),
                     pw.Container(
@@ -99,7 +99,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       color: PdfColors.red200,
                       child: pw.Text(
                         'Name of Project', 
-                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 10),
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 9),
                       ),
                     ),
                     pw.Container(
@@ -108,7 +108,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       color: PdfColors.red200,
                       child: pw.Text(
                         'Location', 
-                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 10),
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 9),
                       ),
                     ),
                     pw.Container(
@@ -118,7 +118,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       color: PdfColors.red200,
                       child: pw.Text(
                         'Start', 
-                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 10),
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 9),
                       ),
                     ),
                     pw.Container(
@@ -128,7 +128,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       color: PdfColors.red200,
                       child: pw.Text(
                         'End', 
-                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 10),
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 9),
                       ),
                     ),
                     pw.Container(
@@ -138,7 +138,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       color: PdfColors.red200,
                       child: pw.Text(
                         'Total', 
-                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 10),
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 9),
                       ),
                     ),
                     pw.Container(
@@ -147,7 +147,7 @@ class MonthlyTimesheets extends StatelessWidget {
                       color: PdfColors.red200,
                       child: pw.Text(
                         'Activity / Remark',
-                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 10),
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 9),
                       ),
                     ),
                   ],
@@ -337,64 +337,64 @@ class MonthlyTimesheets extends StatelessWidget {
                           pw.Container(
                             color: PdfColors.green,
                             alignment: pw.Alignment.center,
-                            height: 30,
+                            height: 15,
                             child: pw.Text(
                               overtimeData.formattedDate ?? '-',
-                              style: pw.TextStyle(fontSize: 11),
+                              style: pw.TextStyle(fontSize: 7),
                             ),
                           ),
                           pw.Container(
                             color: PdfColors.green,
                             alignment: pw.Alignment.center,
-                            height: 30,
+                            height: 15,
                             child: pw.Text(
                               timesheet.grup ?? '-',
-                              style: pw.TextStyle(fontSize: 11),
+                              style: pw.TextStyle(fontSize: 7),
                             ),
                           ),
                           pw.Container(
                             color: PdfColors.green,
                             alignment: pw.Alignment.center,
-                            height: 30,
+                            height: 15,
                             child: pw.Text(
                               overtimeData.location ?? '-',
-                              style: pw.TextStyle(fontSize: 11),
+                              style: pw.TextStyle(fontSize: 7),
                             ),
                           ),
                           pw.Container(
                             color: PdfColors.green,
                             alignment: pw.Alignment.center,
-                            height: 30,
+                            height: 15,
                             child: pw.Text(
                               overtimeData.formattedStartTime ?? '-',
-                              style: pw.TextStyle(fontSize: 11),
+                              style: pw.TextStyle(fontSize: 7),
                             ),
                           ),
                           pw.Container(
                             color: PdfColors.green,
                             alignment: pw.Alignment.center,
-                            height: 30,
+                            height: 15,
                             child: pw.Text(
                               overtimeData.formattedEndTime ?? '-',
-                              style: pw.TextStyle(fontSize: 11),
+                              style: pw.TextStyle(fontSize: 7),
                             ),
                           ),
                           pw.Container(
                             color: PdfColors.green,
                             alignment: pw.Alignment.center,
-                            height: 30,
+                            height: 15,
                             child: pw.Text(
                               overtimeData.totalDuration ?? '-',
-                              style: pw.TextStyle(fontSize: 11),
+                              style: pw.TextStyle(fontSize: 7),
                             ),
                           ),
                           pw.Container(
                             color: PdfColors.green,
-                            height: 30,
+                            height: 15,
                             alignment: pw.Alignment.center,
                             child: pw.Text(
                               overtimeData.activity ?? '-',
-                              style: pw.TextStyle(fontSize: 11),
+                              style: pw.TextStyle(fontSize: 7),
                             ),
                           ),
                         ],
