@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -12,6 +13,7 @@ final formOTKeyShifting = new GlobalKey<FormState>();
 final TextEditingController passwordController = TextEditingController();
 final TextEditingController emailController = TextEditingController();
 final TextEditingController projectController = TextEditingController();
+final FlutterSecureStorage secureStorage = FlutterSecureStorage();
 
 //Keys
 final GlobalKey<FormState> formKeys = GlobalKey<FormState>();

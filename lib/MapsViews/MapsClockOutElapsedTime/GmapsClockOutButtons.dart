@@ -14,59 +14,57 @@ class gmapsClockOutButtons extends StatefulWidget {
   State<gmapsClockOutButtons> createState() => _gmapsClockOutButtonsState();
 }
 
-
 class _gmapsClockOutButtonsState extends State<gmapsClockOutButtons> {
-
   final stopWatchControllers = Get.put(gmapsStopWatchController());
+
+  Future<void> clearClockInStatus() async {
+    await secureStorage.delete(key: 'isClockIn');
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         GestureDetector(
-          onTap: (){
-            if(gmapsClockConfirmKey.currentState!.validate() && questionKey.currentState!.validate()){
-              ClockInController().clock_out().then((value) {
-                print("Clock Out Result: $value");
+          onTap: () async {
+            if (gmapsClockConfirmKey.currentState!.validate() &&
+                questionKey.currentState!.validate()) {
+              ClockInController().clock_out().then((value) async {
                 if (value) {
                   Provider.of<ClockInState>(context, listen: false).clockOut();
-                  final snackBar =
-                  SnackBar(
-                      content: const Text("Success Clock Out")
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   stopWatchControllers.resetStopwatch();
                   answerController.clear();
                   verifyRolesClockOut().verifyRolesUsersClockOut();
-                } else {
-                  final snackBar = SnackBar(
-                      content: const Text("Failure Clock Out!")
+                  await clearClockInStatus();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Success Clock Out")),
                   );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  print("Clock Out and stopwatch reset completed.");
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Failure Clock Out!")),
+                  );
                   answerController.clear();
+                  print("Clock Out failed.");
                 }
               });
             }
-            // Get.offAll(() => gmapsLocationPages());
-
           },
           child: Container(
             height: 50,
             width: 250,
-            margin: EdgeInsets.symmetric(
-              horizontal: 50,
-            ),
+            margin: const EdgeInsets.symmetric(horizontal: 50),
             decoration: BoxDecoration(
-                color: Colors.blueAccent,
-                borderRadius: BorderRadius.circular(30)
+              color: Colors.blueAccent,
+              borderRadius: BorderRadius.circular(30),
             ),
-            child: Center(
+            child: const Center(
               child: Text(
                 "Clock Out",
                 style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
                 ),
               ),
             ),
